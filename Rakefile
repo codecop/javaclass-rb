@@ -4,46 +4,45 @@ require 'rake'
 require 'rake/testtask'
 require 'rake/packagetask'
 require 'rake/gempackagetask'
-require 'rcov/rcovtask'
 require 'rake/rdoctask'
 
+jcversion = '0.1'
+
 gemspec = Gem::Specification.new do |s|
-  s.name = 'JavaClass'
-  s.version = '0.1'
-  s.summary ='TODO'
-  s.files = FileList['{lib,test}/**/*.*'] # , 'README.rdoc', 'rakefile.rb']
+  s.name = 'javaclass'
+  s.version = jcversion
+  s.summary ='A parser and disassembler for Java class files'
+  s.files = FileList['Readme.txt', '{lib,test}/**/*.*' , 'Rakefile']
+  s.test_files = FileList["{test}/**/tc_*.rb"]
   s.require_path = 'lib'
   s.has_rdoc = true
   s.rubyforge_project = 'javaclass'
   s.homepage = 'http://javaclass.rubyforge.org/'
   s.author = 'Peter Kofler'
+  s.email = 'bruno41 at rubyforge dot org'
+  s.platform = Gem::Platform::RUBY
 end
 
 Rake::GemPackageTask.new(gemspec) do |pkg|
-  pkg.need_tar_gz = true
+  pkg.need_tar = true
 end
 
 Rake::PackageTask.new(gemspec.name, gemspec.version) do |pkg|
-  pkg.need_tar_gz = true
+  pkg.need_tar = true
   pkg.package_files.include gemspec.files
 end
 
-desc "run unit tests in test/unit"
-Rake::TestTask.new "test_units" do |t|
-  t.pattern = '**/t[cs]_*.rb'
+Rake::TestTask.new do |t|
+  t.pattern = 'test/**/tc_*.rb'
   t.warning = true
   t.verbose = false
 end
 
-desc "Generate documentation"
-Rake::RDocTask.new("appdoc") do |rdoc|
-  # rdoc.rdoc_dir = 'doc'
-  # rdoc.title    = "Kugel's \"Code & Tools Library\" Documentation"
-  # rdoc.main     =  'readme.txt'
-  # rdoc.options << '--line-numbers'
-  # rdoc.options << '--inline-source'
-  # rdoc.options << '--charset=utf-8'
-  rdoc.rdoc_files.include('lib/**/*.rb') # 'README.rdoc', 
+Rake::RDocTask.new do |rdoc|
+  # rdoc.rdoc_dir = 'html'
+  rdoc.title    = "JavaClass javaclass-#{jcversion} Documentation"
+  rdoc.main     = 'Readme.txt'
+  rdoc.rdoc_files.include 'Readme.txt', 'lib/**/*.rb'  
 end
 
-task :default => :test_units
+task :default => :test
