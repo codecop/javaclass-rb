@@ -1,0 +1,4 @@
+== 0.0.1 01/03/2009
+	
+* initial version
+  * reads the package/public flag of a class
