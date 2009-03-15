@@ -1,0 +1,36 @@
+# -*- ruby -*-
+
+# require 'autotest/autoupdate'
+# require 'autotest/camping'
+# require 'autotest/cctray'
+# require 'autotest/emacs'
+# require 'autotest/email_notify'
+# require 'autotest/fixtures'
+# require 'autotest/growl' # osx notify
+# require 'autotest/heckle'
+# require 'autotest/html_report'
+# require 'autotest/jabber_notify'
+# require 'autotest/kdenotify' # kde notify
+# require 'autotest/menu'
+# require 'autotest/migrate'
+# require 'autotest/notify'
+# require 'autotest/once'
+# require 'autotest/pretty'
+# require 'autotest/rcov'
+# require 'autotest/redgreen' # red or green color
+# require 'autotest/restart'
+# require 'autotest/screen'
+# require 'autotest/shame'
+# require 'autotest/snarl' # win32 notify
+# require 'autotest/timestamp'
+
+# Override autotest default magic deciding which test to run when
+# a file is changed : enable more flexible naming conventions
+# trading some of the efficiency: we rerun all the tests each time.
+class Autotest
+
+  def tests_for_file(filename)
+    return Dir["test/**/*.rb"] # tc_#{filename}
+  end
+
+end
