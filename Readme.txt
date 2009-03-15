@@ -19,9 +19,10 @@ of the classes passed to it together with a list of all outgoing references.
 == Usage
 
   require 'javaclass'
-
-  TODO sth
-  ...fields                                    # => [...]
+  
+  clazz = JavaClass.parse('folder/PublicClass.class')
+  clazz.version                                # => 50.0
+  clazz.accessible?                            # => true 
 
 == Requirements
 
