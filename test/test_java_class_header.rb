@@ -5,12 +5,9 @@ module TestJavaClass
   
   class TestJavaClassHeader < Test::Unit::TestCase
     
-    PUBLIC = File.expand_path("#{TEST_DATA_PATH}/PublicClass.class")
-    PACKAGE = File.expand_path("#{TEST_DATA_PATH}/PackageClass.class")
-    
     def setup
-      @public = JavaClass::JavaClassHeader.new(File.open(PUBLIC, 'rb') {|io| io.read } )
-      @package = JavaClass::JavaClassHeader.new(File.open(PACKAGE, 'rb') {|io| io.read } )
+      @public = JavaClass::JavaClassHeader.new(load_class("PublicClass"))
+      @package = JavaClass::JavaClassHeader.new(load_class("PackageClass"))
     end
     
     def test_magic
