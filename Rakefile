@@ -13,7 +13,7 @@ gemspec = Gem::Specification.new do |s|
   s.version = jcversion
   s.summary ='A parser and disassembler for Java class files'
   s.files = FileList['Readme.txt', 'History.txt', '{lib,test}/**/*.*' , 'Rakefile']
-  s.test_files = FileList["{test}/**/tc_*.rb"]
+  s.test_files = FileList["{test}/**/test_*.rb"]
   s.require_path = 'lib'
   s.has_rdoc = true
   s.rubyforge_project = 'javaclass'
@@ -21,6 +21,7 @@ gemspec = Gem::Specification.new do |s|
   s.author = 'Peter Kofler'
   s.email = 'bruno41 at rubyforge dot org'
   s.platform = Gem::Platform::RUBY
+  # TODO Gem::manage_gems is deprecated and will be removed on or after March 2009.
 end
 
 Rake::GemPackageTask.new(gemspec) do |pkg|
@@ -33,7 +34,7 @@ Rake::PackageTask.new(gemspec.name, gemspec.version) do |pkg|
 end
 
 Rake::TestTask.new do |t|
-  t.pattern = 'test/**/tc_*.rb'
+  t.pattern = 'test/**/test_*.rb'
   t.warning = true
   t.verbose = false
 end
