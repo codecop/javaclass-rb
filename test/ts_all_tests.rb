@@ -3,11 +3,12 @@ require 'test/unit/testsuite'
 #require 'test/unit/ui/tk/testrunner'
 #require 'test/unit/ui/console/testrunner'
 
-require File.dirname(__FILE__) + '/tc_string_ux'
-# require File.dirname(__FILE__) + '/tc_class_magic'
-require File.dirname(__FILE__) + '/tc_class_version'
-require File.dirname(__FILE__) + '/tc_constant_pool'
-require File.dirname(__FILE__) + '/tc_java_class_header'
+require File.dirname(__FILE__) + '/test_string_ux'
+# require File.dirname(__FILE__) + '/test_class_magic'
+require File.dirname(__FILE__) + '/test_class_version'
+require File.dirname(__FILE__) + '/test_base'
+require File.dirname(__FILE__) + '/test_constant_pool'
+require File.dirname(__FILE__) + '/test_java_class_header'
 
 module TestJavaClass
   
@@ -17,6 +18,7 @@ module TestJavaClass
       
       suite << TestString.suite
       suite << TestClassVersion.suite
+      suite << TestBase.suite
       suite << TestConstantPool.suite
       suite << TestJavaClassHeader.suite
       

@@ -27,10 +27,10 @@
 # Override autotest default magic deciding which test to run when
 # a file is changed : enable more flexible naming conventions
 # trading some of the efficiency: we rerun all the tests each time.
-class Autotest
-
-  def tests_for_file(filename)
-    return Dir["test/**/*.rb"] # tc_#{filename}
-  end
-
-end
+# class Autotest
+#
+#   def tests_for_file(filename)
+#     return Dir["test/**/*.rb"] # tc_#{filename}
+#   end
+#
+# end
