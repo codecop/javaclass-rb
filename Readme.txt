@@ -12,6 +12,12 @@ parser and disassembler for Java class files, similar to the javap command.
 It provides access to the package, protected, and public fields and methods 
 of the classes passed to it together with a list of all outgoing references.   
 
+== Motivation
+ 
+TODO, 
+Java for money, Ruby for fun, class anaysis to do...
+"This might be the base for static code analysis tools." 
+
 == Install
 
   sudo gem install javaclass
