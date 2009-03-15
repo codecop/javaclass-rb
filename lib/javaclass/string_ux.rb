@@ -1,5 +1,5 @@
 # Add some +unpack+ helper methods for HI-LO byte orders contained in the String.
-# Author::          Kugel, <i>Theossos Comp Group</i>
+# Author::          Peter Kofler
 class String
   
   # Return the _index_ 'th element as byte.
@@ -18,7 +18,9 @@ class String
     self[index..index+3].unpack('N')[0]
   end
   
+  # Return the _index_ 'th and the 7 next elements as unsigned qword.
   def u8(index)
-    u4(index)*256**4 + u4(index+4)
+    u4(index) * 256**4 + u4(index+4)
   end
+  
 end
