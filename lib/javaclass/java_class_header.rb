@@ -21,7 +21,9 @@ module JavaClass # :nodoc:
     # Return true if the data was valid, i.e. if the class started with <code>CAFEBABE</code>.
     attr_reader :magic    
     # Return the class file version, like 48.0 (Java 1.4) or 50.0 (Java 6).
-    attr_reader :version    
+    attr_reader :version
+    
+    attr_reader :constant_pool
     
     # Create a new header with the binary _data_ from the class file.
     def initialize(data)
@@ -52,7 +54,7 @@ module JavaClass # :nodoc:
       #dump += << @version.dump 
       
       @constant_pool = ConstantPool.new(data)
-      #dump += << @cp.dump 
+      #dump += << @constant_pool.dump 
       pos = 8 + @constant_pool.size
       
       @access_flags = data.u2(pos)
