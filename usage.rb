@@ -5,7 +5,9 @@ if __FILE__ == $0
   
   require 'javaclass'
   
-  # TODO Generated stub
+  clazz = JavaClass.parse('test/data/PublicClass.class')
+  clazz.version                                # => 50.0
+  clazz.accessible?                            # => true 
   
 end
 
