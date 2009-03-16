@@ -1,9 +1,9 @@
 require 'javaclass/constants/base'
 
-module JavaClass # :nodoc:
+module JavaClass 
   module Constants # :nodoc:
     
-    # Superclass of single reference value constants in the constant pool. 
+    # Superclass of single reference constants like +Class+ in the constant pool. 
     # Author::   Peter Kofler
     class SingleReference < Base
       
@@ -12,17 +12,18 @@ module JavaClass # :nodoc:
       # Define a single reference into _pool_ from _data_ beginning at _start_
       def initialize(pool, data, start, name=nil)
         super(name)
-        @cp_info_tag = data.u1(start)
+        @tag = data.u1(start)
         
         @enclosing_pool = pool
         @first_index = data.u2(start+1)
       end
       
-      # Return the value, which is the referenced value.
+      # Return the value, which is the referenced value from the pool.
       def to_s
         get(@first_index)
       end
       
+      # Return part of debug output.
       def dump
         super + "##{@first_index};\t//  #{to_s}"
       end
@@ -37,12 +38,14 @@ module JavaClass # :nodoc:
     end
     
     class ConstantClass < SingleReference
+      alias name_index first_index
       def initialize(pool, data, start)
         super(pool, data, start, "class")
       end
     end
     
     class ConstantString < SingleReference
+      alias string_index first_index
       def initialize(pool, data, start) 
         super(pool, data, start)
       end

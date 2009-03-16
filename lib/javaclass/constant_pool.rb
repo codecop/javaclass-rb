@@ -3,13 +3,13 @@ require 'javaclass/constants/value'
 require 'javaclass/constants/single_reference'
 require 'javaclass/constants/double_reference'
 
-module JavaClass # :nodoc:
+module JavaClass
   
-  # Container of the constant pool.
+  # Container of the constant pool's constants.
   # Author::   Peter Kofler
   class ConstantPool
     
-    # Types of constant pool constants.
+    # Types of constants by their +tag+.
     CONSTANT_TYPES = {
       7 => Constants::ConstantClass, 
       9 => Constants::ConstantField, 
@@ -24,10 +24,10 @@ module JavaClass # :nodoc:
       1 => Constants::ConstantAsciz,
     }
     
-    # The size in bytes of this constant pool.
+    # Size of the whole constant pool in bytes.
     attr_reader :size
     
-    # Parse the constant pool from the byte _data_ at position _start_ which is usually 8.
+    # Parse the constant pool from the bytes _data_ beginning at position _start_ (which is usually 8).
     def initialize(data, start=8)
       @pool = {} # cnt (fixnum) => constant
       
@@ -53,19 +53,25 @@ module JavaClass # :nodoc:
       @size = pos - start
     end
     
-    # Return the number of pool items.
+    # Return the number of pool items. This number might be larger than +items+ available, 
+    # because +long+ and +double+ constants take two slots.
     def item_count
       @item_count-1
     end
     
-    # Return the ordered list of pool constants.
-    def items
-      @pool.keys.sort.collect { |k| @pool[k] }
+    # Return the _index_'th pool item. _index_ is the real index in the pool which may skip numbers. 
+    def[](index)
+      @pool[index]
     end
     
-    # Return a debug dump of this pool.
+    # Return an array of the ordered list of constants.
+    def items
+      @pool.keys.sort.collect { |k| self[k] }
+    end
+    
+    # Return a debug output of the whole pool.
     def dump
-      ["  Constant pool:"]+ @pool.keys.sort.collect { |k| "const ##{k} = #{@pool[k].dump}"}
+      ["  Constant pool:"] + @pool.keys.sort.collect { |k| "const ##{k} = #{self[k].dump}"}
     end
     
   end

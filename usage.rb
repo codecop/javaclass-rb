@@ -6,8 +6,9 @@ if __FILE__ == $0
   require 'javaclass'
   
   clazz = JavaClass.parse('test/data/PublicClass.class')
-  clazz.version                                # => 50.0
-  clazz.accessible?                            # => true 
+  puts clazz.version                        # => 50.0
+  puts clazz.constant_pool.items[1]         # => packagename/PublicClass
+  puts clazz.accessible?                    # => true 
   
 end
 

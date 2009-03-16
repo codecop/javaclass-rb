@@ -1,18 +1,18 @@
-module JavaClass # :nodoc:
+module JavaClass
   
-  # The <code>CAFEBABE</code> magic of a class file.
+  # The +CAFEBABE+ magic of a class file.
   # Author::   Peter Kofler
   class ClassMagic
     
     CAFE_BABE = "\xCA\xFE\xBA\xBE"
     
-    # Check the class magic from the byte _data_ at position _start_ which is usually 0.
+    # Check the class magic in the bytes _data_ beginning at position _start_ (which is usually 0).
     def initialize(data, start=0)
       # "parsing"
       @bytes = data[start..start+3]
     end
     
-    # Return true if the data was valid, i.e. if the class started with <code>CAFEBABE</code>.
+    # Return +true+ if the data was valid, i.e. if the class started with +CAFEBABE+.
     def valid?
       @bytes == CAFE_BABE
     end

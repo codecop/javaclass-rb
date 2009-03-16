@@ -1,33 +1,34 @@
 require 'javaclass/constants/base'
 
-module JavaClass # :nodoc:
+module JavaClass 
   module Constants # :nodoc:
     
-    # Superclass of value constants in the constant pool. 
+    # Superclass of value constants like +Integer+ in the constant pool. 
     # Author::   Peter Kofler
     class Value < Base
       
       attr_reader :value
       
-      # Create a new value with a downcase name.
+      # Create a constant value with an optional downcase _name_
       def initialize(name=self.class.to_s[/::[^:]+$/][10..-1].downcase)
         super(name)
       end
       
-      # Return the value as String.
+      # Return the value as string.
       def to_s
         @value.to_s
       end
       
+      # Return part of debug output.
       def dump
         super + "#{@value}"
       end
       
       protected
       
-      # Define a +value+ from _data_ beginning at _start_ withe _size_ and _slots_
+      # Define a +value+ from _data_ beginning at position _start_ with the _size_ in bytes and _slots_ (1 or 2).
       def get_value(data, start, size, slots=1)
-        @cp_info_tag = data.u1(start)
+        @tag = data.u1(start)
         @size = size
         @slots = slots
         
@@ -87,16 +88,11 @@ module JavaClass # :nodoc:
       alias string value
       def initialize(pool, data, start) 
         super('Asciz')
-        @cp_info_tag = data.u1(start)
+        @tag = data.u1(start)
         
         @length = data.u2(start+1)
         @size = 3 + @length
         @value = data[start+3..start+3+@length-1]
-        
-        #if @value =~ /\.java$/
-        #  dump.insert(0, "  SourceFile: \"#{@value}\"")
-        #  dump.insert(0, "Compiled from \"#{@value}\"")
-        #end
       end
       
       def dump

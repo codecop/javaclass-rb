@@ -1,9 +1,12 @@
 require 'javaclass/java_class_header'
 
+# Parse and disassemble Java class files, similar to the +javap+ command.
 # Author::          Peter Kofler
-module JavaClass # :nodoc:
+# See::             http://java.sun.com/docs/books/jvms/second_edition/html/ClassFile.doc.html
+# See::             http://en.wikipedia.org/wiki/Class_(file_format)
+module JavaClass 
   
-  # Convinience method to read and parse a class named _name_
+  # Read and disassemble the given class called _name_ (full file name).
   def self.parse(name)
     JavaClassHeader.new(File.open(name, 'rb') {|io| io.read } )
   end

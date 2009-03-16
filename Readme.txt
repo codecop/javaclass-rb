@@ -13,10 +13,13 @@ It provides access to the package, protected, and public fields and methods
 of the classes passed to it together with a list of all outgoing references.   
 
 == Motivation
- 
-TODO, 
-Java for money, Ruby for fun, class anaysis to do...
-"This might be the base for static code analysis tools." 
+
+I am still doing Java most of the time. I used to be quite enthusiatic about
+it, but after 9 years I can see the advantages of being a polyglot. So I use
+Ruby for all kind of stuff, just for fun. Recently I needed some Java class
+analysis and happened to write it with Ruby. As I am a puritan, I did not
+want to call javap from my script, so I started disassembling the class files,
+which might be the the base for some serious static code analysis tools. 
 
 == Install
 
@@ -26,9 +29,10 @@ Java for money, Ruby for fun, class anaysis to do...
 
   require 'javaclass'
   
-  clazz = JavaClass.parse('folder/PublicClass.class')
-  clazz.version                                # => 50.0
-  clazz.accessible?                            # => true 
+  clazz = JavaClass.parse('packagename/PublicClass.class')
+  clazz.version                        # => 50.0
+  clazz.constant_pool.items[1]         # => packagename/PublicClass
+  clazz.accessible?                    # => true 
 
 == Requirements
 
