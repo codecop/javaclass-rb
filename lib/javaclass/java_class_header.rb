@@ -3,29 +3,28 @@ require 'javaclass/class_magic'
 require 'javaclass/class_version'
 require 'javaclass/constant_pool'
 
-module JavaClass # :nodoc:
+module JavaClass 
   
-  # Provide information of a Java class file header, like done by Javap. 
-  # See::             http://java.sun.com/docs/books/jvms/second_edition/html/ClassFile.doc.html
-  # See::             http://en.wikipedia.org/wiki/Class_(file_format)
+  # Provide all information of a Java class file. 
   # Author::          Peter Kofler
   class JavaClassHeader
     
     # Access flags as defined by JVM spec.
     ACC_PUBLIC = 0x0001    
-    #ACC_FINAL = 0x0010    
-    #ACC_SUPER = 0x0020    
-    #ACC_INTERFACE = 0x0200    
-    #ACC_ABSTRACT = 0x0400  
+    ACC_FINAL = 0x0010    
+    ACC_SUPER = 0x0020    
+    ACC_INTERFACE = 0x0200    
+    ACC_ABSTRACT = 0x0400  
     
-    # Return true if the data was valid, i.e. if the class started with <code>CAFEBABE</code>.
     attr_reader :magic    
-    # Return the class file version, like 48.0 (Java 1.4) or 50.0 (Java 6).
     attr_reader :version
-    
     attr_reader :constant_pool
+    # Name of this class.
+    attr_reader :this_class
+    # Name of the superclass of this class or +nil+.
+    attr_reader :super_class
     
-    # Create a new header with the binary _data_ from the class file.
+    # Create a header with the binary _data_ from the class file.
     def initialize(data)
       
       #  ClassFile {
@@ -47,22 +46,39 @@ module JavaClass # :nodoc:
       #    attribute_info attributes[attributes_count];
       #  }
       
-      #dump = []
-      
       @magic = ClassMagic.new(data)
       @version = ClassVersion.new(data)
-      #dump += << @version.dump 
       
       @constant_pool = ConstantPool.new(data)
-      #dump += << @constant_pool.dump 
       pos = 8 + @constant_pool.size
       
       @access_flags = data.u2(pos)
+      pos += 2
+      # TODO make own class for AccessFlags and provide all methods to query it together with constants
+      
+      idx = data.u2(pos)
+      pos += 2
+      @this_class = @constant_pool[idx].to_s
+      
+      idx = data.u2(pos)
+      pos += 2
+      @super_class = nil
+      @super_class = @constant_pool[idx].to_s if idx>0
     end
     
-    # Return true if the class is public.
+    # Return +true+ if the class is public.
     def accessible?
      (@access_flags & ACC_PUBLIC) != 0
+    end
+    
+    # Return a debug output of this class that looks similar to +javap+ output.
+    def dump
+      d = []
+      # dump << "  SourceFile: \"#{@value}\""
+      # dump << "Compiled from \"#{@value}\""
+      d += @version.dump 
+      d += @constant_pool.dump
+      d
     end
     
   end

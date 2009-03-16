@@ -47,7 +47,7 @@ module TestJavaClass
       assert_classes(%w[1.0 1.0 1.2 1.3 1.4 1.5 1.6]) {|v| v.jdk_version}
       
       v = JavaClass::ClassVersion.new("....\000\xff\0002")
-      assert_equal('invalid', v.jdk_version)
+      assert_equal('unknown', v.jdk_version)
     end
     
   end
