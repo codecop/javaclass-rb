@@ -1,14 +1,14 @@
 require 'javaclass/string_ux'
 
-module JavaClass # :nodoc:
+module JavaClass 
   module Constants # :nodoc:
     
-    # Superclass of constant values in the constant pool. Every constant has a name, a tag and a size.
+    # Superclass of constant values in the constant pool. Every constant has a +name+, a +tag+ and a +size+ in bytes.
     # Author::   Peter Kofler
     class Base
       
       attr_reader :name
-      attr_reader :cp_info_tag
+      attr_reader :tag
       attr_reader :size
       attr_reader :slots
       
@@ -20,8 +20,9 @@ module JavaClass # :nodoc:
         @slots = 1
       end
       
+      # Return part of debug output.
       def dump
-        "#{@name}\t" # #{@cp_info_tag} 
+        "#{@name}\t" # #{@tag} 
       end
       
     end

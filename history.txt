@@ -1,0 +1,11 @@
+=== 0.0.2 16/03/2009
+
+* refactored code to smaller objects for version and constant pool
+* fixed float and double constant pool items
+* added tests
+
+=== 0.0.1 01/03/2009
+	
+* initial version extracted from ClassList project
+  * reads the class version and package/public flag of a class
+  * understands the constant pool but does not use it

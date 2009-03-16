@@ -6,13 +6,13 @@ require 'rake/packagetask'
 require 'rake/gempackagetask'
 require 'rake/rdoctask'
 
-jcversion = '0.0.1'
+jcversion = '0.0.2'
 
 gemspec = Gem::Specification.new do |s|
   s.name = 'javaclass'
   s.version = jcversion
   s.summary ='A parser and disassembler for Java class files'
-  s.files = FileList['Readme.txt', 'History.txt', '{lib,test}/**/*.*' , 'Rakefile']
+  s.files = FileList['Readme.txt', '{lib,test}/**/*.*', 'history.txt', 'Rakefile']
   s.test_files = FileList["{test}/**/test_*.rb"]
   s.require_path = 'lib'
   s.has_rdoc = true
@@ -43,7 +43,7 @@ Rake::RDocTask.new do |rdoc|
   # rdoc.rdoc_dir = 'html'
   rdoc.title    = "JavaClass javaclass-#{jcversion} Documentation"
   rdoc.main     = 'Readme.txt'
-  rdoc.rdoc_files.include 'Readme.txt', 'History.txt', 'lib/**/*.rb'
+  rdoc.rdoc_files.include 'Readme.txt', 'lib/**/*.rb', 'history.txt'
 end
 
 task :default => :test

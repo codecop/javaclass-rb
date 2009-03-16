@@ -1,9 +1,9 @@
 require 'javaclass/constants/single_reference'
 
-module JavaClass # :nodoc:
+module JavaClass 
   module Constants # :nodoc:
     
-    # Superclass of single reference value constants in the constant pool. 
+    # Superclass of double reference constants like +FieldRef+ in the constant pool. 
     # Author::   Peter Kofler
     class DoubleReference < SingleReference
       
@@ -17,11 +17,12 @@ module JavaClass # :nodoc:
         @second_index = data.u2(start+3)
       end
       
-      # Return the value, which are the referenced values.
+      # Return the value, which are both referenced values from the pool.
       def to_s
         "#{super}.#{get(@second_index)}"
       end
       
+      # Return part of debug output.
       def dump
         "#{@name}\t##{@first_index}.##{@second_index};\t//  #{to_s}"
       end
