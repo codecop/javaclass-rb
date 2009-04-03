@@ -53,6 +53,15 @@ const #43 = Asciz       java/lang/Runnable;'
       @cp = JavaClass::ConstantPool.new(load_class('ConstantPoolTest'))
     end
     
+    def test_index
+      assert_equal('Method', @cp[1].name)
+      assert_equal('Field', @cp[10].name)
+    end
+    
+    def test_size
+      assert_equal(331, @cp.size)
+    end
+    
     def test_item_count
       assert_equal(43, @cp.item_count)
     end
@@ -67,6 +76,13 @@ const #43 = Asciz       java/lang/Runnable;'
       assert_equal(41, pool.size) # 2 double
       assert_equal('Method', pool[0].name)
       assert_equal('stringField', pool[14].value)
+    end
+    
+    def test_find
+      found = @cp.find(JavaClass::ConstantPool::STRING_TAG)
+      assert_equal(1, found.size)
+      assert_equal('String', found[0].name)
+      assert_equal(34, found[0].string_index)
     end
     
   end

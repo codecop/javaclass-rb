@@ -2,6 +2,8 @@ require 'javaclass/string_ux'
 require 'javaclass/class_magic'
 require 'javaclass/class_version'
 require 'javaclass/constant_pool'
+require 'javaclass/references'
+require 'javaclass/access_flags'
 
 module JavaClass 
   
@@ -9,20 +11,11 @@ module JavaClass
   # Author::          Peter Kofler
   class JavaClassHeader
     
-    # Access flags as defined by JVM spec.
-    ACC_PUBLIC = 0x0001    
-    ACC_FINAL = 0x0010    
-    ACC_SUPER = 0x0020    
-    ACC_INTERFACE = 0x0200    
-    ACC_ABSTRACT = 0x0400  
-    
     attr_reader :magic    
     attr_reader :version
     attr_reader :constant_pool
-    # Name of this class.
-    attr_reader :this_class
-    # Name of the superclass of this class or +nil+.
-    attr_reader :super_class
+    attr_reader :access_flags
+    attr_reader :references
     
     # Create a header with the binary _data_ from the class file.
     def initialize(data)
@@ -52,23 +45,32 @@ module JavaClass
       @constant_pool = ConstantPool.new(data)
       pos = 8 + @constant_pool.size
       
-      @access_flags = data.u2(pos)
+      @access_flags = AccessFlags.new(data, pos)
       pos += 2
-      # TODO make own class for AccessFlags and provide all methods to query it together with constants
       
       idx = data.u2(pos)
       pos += 2
-      @this_class = @constant_pool[idx].to_s
+      @this_class_idx = idx
+      
+      @references = References.new(@constant_pool, @this_class_idx)
       
       idx = data.u2(pos)
       pos += 2
-      @super_class = nil
-      @super_class = @constant_pool[idx].to_s if idx>0
+      @super_class_idx = idx
     end
     
-    # Return +true+ if the class is public.
-    def accessible?
-     (@access_flags & ACC_PUBLIC) != 0
+    # Return the name of this class.
+    def this_class
+      @constant_pool[@this_class_idx].to_s
+    end
+    
+    # Return the name of the superclass of this class or +nil+.
+    def super_class
+      if @super_class_idx>0
+        @constant_pool[@super_class_idx].to_s
+      else
+        nil
+      end
     end
     
     # Return a debug output of this class that looks similar to +javap+ output.

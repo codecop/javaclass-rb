@@ -10,18 +10,18 @@ module JavaClass
   class ConstantPool
     
     # Types of constants by their +tag+.
-    CONSTANT_TYPES = {
-      7 => Constants::ConstantClass, 
-      9 => Constants::ConstantField, 
-      10 => Constants::ConstantMethod, 
-      11 => Constants::ConstantInterfaceMethod, 
-      8 => Constants::ConstantString, 
-      3 => Constants::ConstantInt, 
-      4 => Constants::ConstantFloat, 
-      5 => Constants::ConstantLong, 
-      6 => Constants::ConstantDouble, 
-      12 => Constants::ConstantNameAndType, 
-      1 => Constants::ConstantAsciz,
+    CONSTANT_TYPE_TAGS = {
+      CLASS_TAG     = 7 => Constants::ConstantClass, 
+      FIELD_TAG     = 9 => Constants::ConstantField, 
+      METHOD_TAG    = 10 => Constants::ConstantMethod, 
+      INTERFACE_METHOD_TAG = 11 => Constants::ConstantInterfaceMethod, 
+      STRING_TAG    = 8 => Constants::ConstantString, 
+      INT_TAG       = 3 => Constants::ConstantInt, 
+      FLOAT_TAG     = 4 => Constants::ConstantFloat, 
+      LONG_TAG      = 5 => Constants::ConstantLong, 
+      DOUBLE_TAG    = 6 => Constants::ConstantDouble, 
+      NAME_AND_TYPE_TAG = 12 => Constants::ConstantNameAndType, 
+      ASCIZ_TAG     = 1 => Constants::ConstantAsciz,
     }
     
     # Size of the whole constant pool in bytes.
@@ -37,7 +37,7 @@ module JavaClass
       cnt = 1
       while cnt <= @item_count-1
         
-        type = CONSTANT_TYPES[data.u1(pos)]
+        type = CONSTANT_TYPE_TAGS[data.u1(pos)]
         unless type
           #puts dump.join("\n") 
           raise "const ##{cnt} = unknown constant pool tag #{data[pos]} at pos #{pos} in class"
@@ -67,6 +67,11 @@ module JavaClass
     # Return an array of the ordered list of constants.
     def items
       @pool.keys.sort.collect { |k| self[k] }
+    end
+    
+    # Return an array of all constants of the given _tags_ types.
+    def find(*tags)
+      items.find_all { |item| tags.include? item.tag }
     end
     
     # Return a debug output of the whole pool.
