@@ -8,6 +8,8 @@ require File.dirname(__FILE__) + '/test_string_ux'
 require File.dirname(__FILE__) + '/test_class_version'
 require File.dirname(__FILE__) + '/test_base'
 require File.dirname(__FILE__) + '/test_constant_pool'
+require File.dirname(__FILE__) + '/test_references'
+require File.dirname(__FILE__) + '/test_access_flags'
 require File.dirname(__FILE__) + '/test_java_class_header'
 
 module TestJavaClass
@@ -20,6 +22,8 @@ module TestJavaClass
       suite << TestClassVersion.suite
       suite << TestBase.suite
       suite << TestConstantPool.suite
+      suite << TestReferences.suite
+      suite << TestAccessFlags
       suite << TestJavaClassHeader.suite
       
       return suite

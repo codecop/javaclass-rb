@@ -9,3 +9,9 @@
 * initial version extracted from ClassList project
   * reads the class version and package/public flag of a class
   * understands the constant pool but does not use it
+
+=== Planned
+
+* implement
+  * dump to return the class same as javap
+  

@@ -19,9 +19,10 @@ module JavaClass
       end
       
       # Return the value, which is the referenced value from the pool.
-      def to_s
+      def first_value
         get(@first_index)
       end
+      alias to_s first_value
       
       # Return part of debug output.
       def dump
@@ -42,6 +43,7 @@ module JavaClass
       def initialize(pool, data, start)
         super(pool, data, start, "class")
       end
+      alias class_name first_value
     end
     
     class ConstantString < SingleReference
@@ -49,6 +51,7 @@ module JavaClass
       def initialize(pool, data, start) 
         super(pool, data, start)
       end
+      alias string_value first_value
     end
     
   end

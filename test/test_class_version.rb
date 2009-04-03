@@ -32,6 +32,10 @@ module TestJavaClass
       assert_equal('45.3', @v[0].to_s)
     end
     
+    def test_dump
+      assert_equal(["  minor version: 0", "  major version: 50"], @v[6].dump)
+    end
+    
     def test_to_f
       assert_equal(50.0, @v[6].to_f)
       assert_equal(45.3, @v[0].to_f)

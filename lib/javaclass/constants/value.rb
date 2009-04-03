@@ -35,11 +35,17 @@ module JavaClass
         data[start+1..start+size-1]
       end
       
+      # Dummy method to "fix" unused warning.
+      def silence_unused_warning(pool)
+        raise "pool is nil" unless pool
+      end
+      
     end
     
     class ConstantInt < Value
       def initialize(pool, data, start) 
         super()
+        silence_unused_warning(pool)
         @value = get_value(data, start, 5).u4
       end
       
@@ -51,6 +57,7 @@ module JavaClass
     class ConstantFloat < Value
       def initialize(pool, data, start) 
         super()
+        silence_unused_warning(pool)
         @value = get_value(data, start, 5).single 
       end
       def to_s
@@ -64,6 +71,7 @@ module JavaClass
     class ConstantLong < Value
       def initialize(pool, data, start) 
         super()
+        silence_unused_warning(pool)
         @value = get_value(data, start, 9, 2).u8
       end
       def dump
@@ -74,6 +82,7 @@ module JavaClass
     class ConstantDouble < Value
       def initialize(pool, data, start) 
         super()
+        silence_unused_warning(pool)
         @value = get_value(data, start, 9, 2).double
       end
       def to_s
@@ -88,6 +97,7 @@ module JavaClass
       alias string value
       def initialize(pool, data, start) 
         super('Asciz')
+        silence_unused_warning(pool)
         @tag = data.u1(start)
         
         @length = data.u2(start+1)

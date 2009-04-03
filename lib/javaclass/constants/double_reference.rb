@@ -17,9 +17,14 @@ module JavaClass
         @second_index = data.u2(start+3)
       end
       
+      # Return the second value, which is the referenced value from the pool.
+      def second_value
+        get(@second_index)
+      end
+      
       # Return the value, which are both referenced values from the pool.
       def to_s
-        "#{super}.#{get(@second_index)}"
+        "#{super}.#{second_value}"
       end
       
       # Return part of debug output.
@@ -34,7 +39,8 @@ module JavaClass
       alias name_and_type_index second_index 
       def initialize(pool, data, start) 
         super(pool, data, start)
-      end  
+      end
+      alias class_name first_value
     end
     
     class ConstantMethod < DoubleReference
@@ -43,6 +49,7 @@ module JavaClass
       def initialize(pool, data, start) 
         super(pool, data, start)
       end  
+      alias class_name first_value
     end
     
     class ConstantInterfaceMethod < DoubleReference
@@ -51,6 +58,7 @@ module JavaClass
       def initialize(pool, data, start) 
         super(pool, data, start)
       end  
+      alias class_name first_value
     end
     
     class ConstantNameAndType < DoubleReference
