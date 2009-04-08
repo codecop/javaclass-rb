@@ -3,7 +3,7 @@ require 'javaclass/constants/base'
 module JavaClass 
   module Constants # :nodoc:
     
-    # Superclass of single reference constants like +Class+ in the constant pool. 
+    # Superclass of single reference constants like +ConstantClass+ (+Class+) in the constant pool. 
     # Author::   Peter Kofler
     class SingleReference < Base
       

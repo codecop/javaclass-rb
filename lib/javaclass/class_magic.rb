@@ -6,7 +6,7 @@ module JavaClass
     
     CAFE_BABE = "\xCA\xFE\xBA\xBE"
     
-    # Check the class magic in the bytes _data_ beginning at position _start_ (which is usually 0).
+    # Check the class magic in the _data_ beginning at position _start_ (which is usually 0).
     def initialize(data, start=0)
       # "parsing"
       @bytes = data[start..start+3]

@@ -3,7 +3,7 @@ require 'javaclass/constants/single_reference'
 module JavaClass 
   module Constants # :nodoc:
     
-    # Superclass of double reference constants like +FieldRef+ in the constant pool. 
+    # Superclass of double reference constants like +ConstantField+ (+FieldRef+) in the constant pool. 
     # Author::   Peter Kofler
     class DoubleReference < SingleReference
       
