@@ -18,9 +18,11 @@ module TestJavaClass
       methods = @refs.referenced_methods(false)
       assert_equal(1, methods.size) # ctor init
       assert_equal('java/lang/Object', methods[0].class_name)
+      
+      # TODO test with myself (true)...
     end
     
-    # TODO test referenced classes 
+    # TODO test referenced classes
     
   end
   
