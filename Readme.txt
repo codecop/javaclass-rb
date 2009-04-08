@@ -1,5 +1,5 @@
-JavaClass
-   by Peter Kofler
+= JavaClass
+by {Peter Kofler}[http://kofler.dot.at/work/]
 
 * {Homepage}[http://javaclass.rubyforge.org/]
 * {Rubyforge Project}[http://rubyforge.org/projects/javaclass]
@@ -19,7 +19,8 @@ it, but after 9 years I can see the advantages of being a polyglot. So I use
 Ruby for all kind of stuff, just for fun. Recently I needed some Java class
 analysis and happened to write it with Ruby. As I am a puritan, I did not
 want to call javap from my script, so I started disassembling the class files,
-which might be the the base for some serious static code analysis tools. 
+which might be the the base for some serious static code analysis tools. (I
+started adding methods to that end...) 
 
 == Install
 
@@ -29,10 +30,13 @@ which might be the the base for some serious static code analysis tools.
 
   require 'javaclass'
   
-  clazz = JavaClass.parse('packagename/PublicClass.class')
-  clazz.version                        # => 50.0
-  clazz.constant_pool.items[1]         # => packagename/PublicClass
-  clazz.accessible?                    # => true 
+  clazz = JavaClass.parse('packagename/Public.class')
+  clazz.version                          # => 50.0
+  clazz.constant_pool.items[1]           # => packagename/Public
+  clazz.access_flags.public?             # => true
+  clazz.this_class                       # => packagename/Public
+  clazz.super_class                      # => java/lang/Object
+  clazz.references.referenced_methods[0] # => java/lang/Object.<init>:()V
 
 == Requirements
 
