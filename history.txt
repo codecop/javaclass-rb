@@ -1,8 +1,9 @@
-=== 0.0.2 16/03/2009
+=== 0.0.2 08/04/2009
 
 * refactored code to smaller objects for version and constant pool
 * fixed float and double constant pool items
 * added tests
+* continued implementation with class names and references
 
 === 0.0.1 01/03/2009
 	
@@ -12,6 +13,17 @@
 
 === Planned
 
+* continue function for fields and methods
 * implement
   * dump to return the class same as javap
-  
+  * isAnnotation (checks version>=5 & superclass)
+    * are Annotation extendable, if so how do they look? (javap)
+  * isEnum (checks version>=5 & superclass)
+    * are Enums extendable (yes), if so how do they look? (javap)
+* test
+  * test with all classes of all JDKs against javap from this version
+  * Java 1.0 - private protected fields.
+  * Java 1.0 - http://www.javaworld.com/javaworld/javaqa/1999-06/03-synchronized.html 
+* think about
+  * "metric" if all referencing classes of a class is another package, propose moving it there.
+  * add zip gem to load classes directly from the classpath (i.e. the jars), add gem dependency
