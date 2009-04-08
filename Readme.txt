@@ -1,4 +1,4 @@
-= JavaClass
+JavaClass
 by {Peter Kofler}[http://kofler.dot.at/work/]
 
 * {Homepage}[http://javaclass.rubyforge.org/]
