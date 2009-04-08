@@ -3,7 +3,7 @@ require 'javaclass/constants/base'
 module JavaClass 
   module Constants # :nodoc:
     
-    # Superclass of value constants like +Integer+ in the constant pool. 
+    # Superclass of value constants like +ConstantInt+ (+Integer+) in the constant pool. 
     # Author::   Peter Kofler
     class Value < Base
       
@@ -35,7 +35,7 @@ module JavaClass
         data[start+1..start+size-1]
       end
       
-      # Dummy method to "fix" unused warning.
+      # Dummy method to "fix" unused warning of param _pool_ in Eclipse.
       def silence_unused_warning(pool)
         raise "pool is nil" unless pool
       end
