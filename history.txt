@@ -1,3 +1,5 @@
+=== 0.0.3 TODO
+
 === 0.0.2 08/04/2009
 
 * refactored code to smaller objects for version and constant pool
