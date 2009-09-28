@@ -26,6 +26,12 @@ module JavaClass
       end
     end
     
+    # Return the list of all class names of all used classes.
+    # TODO add test for this
+    def used_classes
+      @constant_pool.find(ConstantPool::CLASS_TAG).find_all { |cl| cl.class_name != @constant_pool[@class_idx].to_s }
+    end
+    
   end
   
 end
