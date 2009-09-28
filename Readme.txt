@@ -1,9 +1,9 @@
 JavaClass
-by {Peter Kofler}[http://kofler.dot.at/work/]
+by {Peter Kofler}[http://www.code-cop.org/]
 
 * {Homepage}[http://javaclass.rubyforge.org/]
 * {Rubyforge Project}[http://rubyforge.org/projects/javaclass]
-* email bruno41 at rubyforge dot org 
+* email peter dot kofler at code-cop dot org
 
 == Description
 
