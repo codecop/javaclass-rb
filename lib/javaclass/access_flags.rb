@@ -12,13 +12,14 @@ module JavaClass
     ACC_SUPER = 0x0020 # old invokespecial instruction semantics    
     ACC_INTERFACE = 0x0200    
     ACC_ABSTRACT = 0x0400
-    ACC_OTHER = 0xffff ^ ACC_PUBLIC ^ ACC_FINAL ^ ACC_SUPER ^ ACC_INTERFACE ^ ACC_ABSTRACT
+    ACC_INNER = 0x1000 # TODO unknown flag, find spec
+    ACC_OTHER = 0xffff ^ ACC_PUBLIC ^ ACC_FINAL ^ ACC_SUPER ^ ACC_INTERFACE ^ ACC_ABSTRACT ^ ACC_INNER
     
     def initialize(data, pos)
       @flags = data.u2(pos)
-      raise "inconsistent flags #{flags}" if abstract? && final?
-      raise "inconsistent flags #{flags}" if interface? && (!abstract? || final?)
-      raise "inconsistent flags #{flags}" if (@flags & ACC_OTHER) != 0
+      raise "inconsistent flags #{@flags} (abstract and final)" if abstract? && final?
+      raise "inconsistent flags #{@flags} (interface not abstract or final)" if interface? && (!abstract? || final?)
+      raise "inconsistent flags #{@flags} (other value #{@flags & ACC_OTHER})" if (@flags & ACC_OTHER) != 0
     end
     
     # Return +true+ if the class is public.
