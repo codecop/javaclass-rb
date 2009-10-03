@@ -12,12 +12,17 @@ require File.dirname(__FILE__) + '/test_references'
 require File.dirname(__FILE__) + '/test_access_flags'
 require File.dirname(__FILE__) + '/test_java_class_header'
 
+require File.dirname(__FILE__) + '/test_jar_classpath'
+require File.dirname(__FILE__) + '/test_java_home_classpath'
+require File.dirname(__FILE__) + '/test_classpath_parser'
+
 module TestJavaClass
   
   class TestSuite_AllTests
     def self.suite
-      suite = Test::Unit::TestSuite.new("Ruby Java Class Parser")
+      suite = Test::Unit::TestSuite.new("Ruby Java Class")
       
+      # Java class parser
       suite << TestString.suite
       suite << TestClassVersion.suite
       suite << TestBase.suite
@@ -25,6 +30,11 @@ module TestJavaClass
       suite << TestReferences.suite
       suite << TestAccessFlags
       suite << TestJavaClassHeader.suite
+
+      # classpath parser
+      suite << TestJarClasspath
+      suite << TestJavaHomeClasspath
+      suite << TestClasspathParser
       
       return suite
     end
