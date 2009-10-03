@@ -1,4 +1,4 @@
-=== 0.0.3 TODO
+=== 0.0.3 not unreleased yet
 
 === 0.0.2 08/04/2009
 
@@ -15,17 +15,26 @@
 
 === Planned
 
-* continue function for fields and methods
+* continue to implement function for fields and methods
 * implement
   * dump to return the class same as javap
   * isAnnotation (checks version>=5 & superclass)
     * are Annotation extendable, if so how do they look? (javap)
   * isEnum (checks version>=5 & superclass)
     * are Enums extendable (yes), if so how do they look? (javap)
+* analyse
+  * how do Scala classes look like? sth special
 * test
   * test with all classes of all JDKs against javap from this version
   * Java 1.0 - private protected fields.
-  * Java 1.0 - http://www.javaworld.com/javaworld/javaqa/1999-06/03-synchronized.html 
+  * Java 1.0 - http://www.javaworld.com/javaworld/javaqa/1999-06/03-synchronized.html
+* deployment
+  * find a method to add target parent to all hrefs with absolute URLs, so Links work as expected
 * think about
   * "metric" if all referencing classes of a class is another package, propose moving it there.
   * add zip gem to load classes directly from the classpath (i.e. the jars), add gem dependency
+    * classpath abstraction, classpatj contains list of JARs, folders, ZIPs
+    * JARs have a manifest with other JARs
+    * WARs and EARs contain JARs and folders
+    * compare against my old Java implementation 
+    * Testdata: class folders, jars, zips, jar with manifest, etc.
