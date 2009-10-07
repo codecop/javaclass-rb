@@ -3,6 +3,7 @@ require 'zip/zipfilesystem'
 module JavaClass
   module Classpath # :nodoc:
     
+    # Abstraction of a ZIP or JAR on the CLASSPATH. 
     # Author::   Peter Kofler
     class JarClasspath
       
@@ -20,17 +21,17 @@ module JavaClass
         end
       end
       
-      # Return if the given classpath element is a jar
+      # Return if the given classpath element is a jar.
       def jar?
         @manifest != nil
       end
-
+      
       # Return list of additional classpath elements relative to this jarfile.
       def additional_classpath
         if @manifest
           cp = @manifest.gsub(/\s{4,}/, ' ').scan(/^(.*): (.*)\s*$/).find { |p| p[0] == 'Class-Path' }
           if cp
-            cp[1].strip.split
+            cp[1].strip.split.collect { |jar| File.join(File.dirname(@jarfile), jar) }
           else
             []
           end
@@ -40,16 +41,11 @@ module JavaClass
       end
       
       # Return the list of class names found in this jar.
-      def class_names
+      def names
         @classes.dup
       end
       
-      #/**
-      # * Abstraction of a place where to find the physical class files for a given full class name. This must also configure
-      # * the <code>org.apache.bcel.Repository</code> to use the right repository for BCEL automatic class loading, i.e. for
-      # * interfaces.
-      # */
-      
+      # Return if _classname_ is included in this jar.
       def includes?(classname)
         @classes.include?(normalize(classname))
       end
@@ -77,7 +73,7 @@ module JavaClass
           next unless entry.file? and name =~ /\.class$/ # class file
           list << name 
         end
-        list
+        list.sort
       end
       
       # Normalize the file name or class name _classname_ to be a file name in the jar.
