@@ -1,4 +1,7 @@
 === 0.0.3 not unreleased yet
+* added access flag $1000
+* added references to used classes
+* classpath abstraction
 
 === 0.0.2 08/04/2009
 
@@ -33,8 +36,6 @@
 * think about
   * "metric" if all referencing classes of a class is another package, propose moving it there.
   * add zip gem to load classes directly from the classpath (i.e. the jars), add gem dependency
-    * classpath abstraction, classpatj contains list of JARs, folders, ZIPs
-    * JARs have a manifest with other JARs
+    * classpath abstraction, classpath contains list of JARs, folders, ZIPs
     * WARs and EARs contain JARs and folders
     * compare against my old Java implementation 
-    * Testdata: class folders, jars, zips, jar with manifest, etc.
