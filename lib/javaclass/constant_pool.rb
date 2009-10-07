@@ -74,6 +74,11 @@ module JavaClass
       items.find_all { |item| tags.include? item.tag }
     end
     
+    # Return all string constants.
+    def strings
+      find(STRING_TAG)
+    end
+    
     # Return a debug output of the whole pool.
     def dump
       ["  Constant pool:"] + @pool.keys.sort.collect { |k| "const ##{k} = #{self[k].dump}"}

@@ -85,6 +85,12 @@ const #43 = Asciz       java/lang/Runnable;'
       assert_equal(34, found[0].string_index)
     end
     
+    def test_strings
+      found = @cp.strings
+      assert_equal(1, found.size)
+      assert_equal('String', found[0].name)
+    end
+    
   end
   
 end
