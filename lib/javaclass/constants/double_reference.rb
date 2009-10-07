@@ -41,6 +41,7 @@ module JavaClass
         super(pool, data, start)
       end
       alias class_name first_value
+      alias signature second_value
     end
     
     class ConstantMethod < DoubleReference
@@ -50,6 +51,7 @@ module JavaClass
         super(pool, data, start)
       end  
       alias class_name first_value
+      alias signature second_value
     end
     
     class ConstantInterfaceMethod < DoubleReference
@@ -59,6 +61,7 @@ module JavaClass
         super(pool, data, start)
       end  
       alias class_name first_value
+      alias signature second_value
     end
     
     class ConstantNameAndType < DoubleReference
