@@ -7,8 +7,8 @@ module TestJavaClass
     
     def setup
       @cls = {}
-      %w[Public Package Abstract Interface Final].each do |t| 
-        eval("@#{t.downcase} = JavaClass::JavaClassHeader.new(load_class('AccessFlagsTest#{t}')).access_flags") 
+      %w[Public Package Abstract Interface Final Public$Inner Public$StaticInner Public$InnerInterface].each do |t| 
+        eval("@#{t.sub(/Public\$/, '').downcase} = JavaClass::JavaClassHeader.new(load_class('AccessFlagsTest#{t}')).access_flags") 
       end
     end
     
@@ -30,6 +30,7 @@ module TestJavaClass
       assert(!@abstract.interface?)
       assert(@interface.interface?)
       assert(!@final.interface?)
+      assert(@innerinterface.interface?)
     end
     
     def test_abstract_eh
@@ -38,6 +39,7 @@ module TestJavaClass
       assert(@abstract.abstract?)
       assert(@interface.abstract?)
       assert(!@final.abstract?)
+      assert(@innerinterface.abstract?)
     end
     
     def test_final_eh
@@ -47,6 +49,17 @@ module TestJavaClass
       assert(!@interface.final?)
       assert(@final.final?)
     end
+    
+#    def test_inner_eh
+#      assert(!@public.inner?)
+#      assert(!@package.inner?)
+#      assert(!@abstract.inner?)
+#      assert(!@interface.inner?)
+#      assert(!@final.inner?)
+#      assert(@inner.inner?)
+#      assert(@staticinner.inner?)
+#      assert(@innerinterface.inner?)
+#    end
     
   end
   

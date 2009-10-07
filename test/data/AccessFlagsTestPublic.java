@@ -2,6 +2,10 @@ package packagename;
 
 public class AccessFlagsTestPublic {
 
-   class InnerClass { }
+   private class Inner { }
+
+   static class StaticInner { }
+
+   interface InnerInterface { }
 
 }
