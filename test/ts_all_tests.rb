@@ -13,6 +13,7 @@ require File.dirname(__FILE__) + '/test_access_flags'
 require File.dirname(__FILE__) + '/test_java_class_header'
 
 require File.dirname(__FILE__) + '/test_jar_classpath'
+require File.dirname(__FILE__) + '/test_folder_classpath'
 require File.dirname(__FILE__) + '/test_java_home_classpath'
 require File.dirname(__FILE__) + '/test_classpath_parser'
 
@@ -33,6 +34,7 @@ module TestJavaClass
 
       # classpath parser
       suite << TestJarClasspath
+      suite << TestFolderClasspath
       suite << TestJavaHomeClasspath
       suite << TestClasspathParser
       
