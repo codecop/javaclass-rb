@@ -44,6 +44,10 @@ module JavaClass
         @classes.size
       end
       
+      def to_s
+        @folder
+      end
+      
       private 
       
       # Return the list of classnames (in fact file names) found in this folder. 

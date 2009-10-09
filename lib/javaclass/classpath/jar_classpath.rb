@@ -65,6 +65,10 @@ module JavaClass
         @classes.size
       end
       
+      def to_s
+        @jarfile
+      end
+      
       private 
       
       # Return the list of classnames (in fact file names) found in this jarfile. 
