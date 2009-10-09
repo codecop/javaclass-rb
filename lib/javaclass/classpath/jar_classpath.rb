@@ -10,6 +10,8 @@ module JavaClass
       # Return the list of classnames found in this _jarfile_ . 
       def initialize(jarfile)
         @jarfile = jarfile
+        raise IOError, "jarfile #{@jarfile} not found" if !FileTest.exist? @jarfile
+        raise "#{@jarfile} is no file" if !FileTest.file? @jarfile
         @classes = list_classes
         @manifest =
         begin
@@ -26,7 +28,7 @@ module JavaClass
         @manifest != nil
       end
       
-      # Return list of additional classpath elements relative to this jarfile.
+      # Return list of additional classpath elements defined in the manifest of this jarfile.
       def additional_classpath
         if @manifest
           cp = @manifest.gsub(/\s{4,}/, ' ').scan(/^(.*): (.*)\s*$/).find { |p| p[0] == 'Class-Path' }

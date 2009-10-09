@@ -8,6 +8,8 @@ module JavaClass
       # Return the list of classnames found in this _folder_ . 
       def initialize(folder)
         @folder = folder
+        raise IOError, "folder #{@folder} not found" if !FileTest.exist? @folder
+        raise "#{@folder} is no folder" if !FileTest.directory? @folder
         @classes = list_classes
       end
       
@@ -47,7 +49,7 @@ module JavaClass
       # Return the list of classnames (in fact file names) found in this folder. 
       def list_classes
         current = Dir.getwd
-        Dir.chdir File.expand_path(@folder)
+        Dir.chdir @folder
         
         list = Dir['**/*.class']        
         
