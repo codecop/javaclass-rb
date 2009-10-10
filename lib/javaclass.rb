@@ -1,16 +1,31 @@
 require 'javaclass/java_class_header'
+require 'javaclass/classpath/java_home_classpath'
+require 'javaclass/classpath/composite_classpath'
 
 # Parse and disassemble Java class files, similar to the +javap+ command.
 # Author::          Peter Kofler
 # See::             http://java.sun.com/docs/books/jvms/second_edition/html/ClassFile.doc.html
 # See::             http://en.wikipedia.org/wiki/Class_(file_format)
 module JavaClass
-
+  
   # Read and disassemble the given class called _name_ (full file name).
   def self.parse(name)
     JavaClassHeader.new(File.open(name, 'rb') {|io| io.read } )
   end
-
+  
+  # Parse and scan the system classpath. 
+  def self.system_classpath
+    parse(ENV['JAVA_HOME'], ENV['CLASSPATH'])
+  end
+  
+  # Parse the given path _classpath_ and return a chain of class path elements.
+  def self.classpath(javahome, path='')
+    cp = Classpath::CompositeClasspath.new
+    cp.add_element(Classpath::JavaHomeClasspath.new(javahome)) if javahome
+    path.split(File::PATH_SEPARATOR).each { |cpe| cp.add_file_name(cpe) } if path
+    cp
+  end
+  
 end
 
 def process_class(name, already=[], intend=0)
@@ -20,7 +35,7 @@ def process_class(name, already=[], intend=0)
   clazz = JavaClass.parse(file_name)
   # p clazz
   puts " "*intend + clazz.this_class
-
+  
   imported = clazz.references.used_classes.collect { |c| c.to_s }.sort
   new_used = imported - already
   already << new_used
