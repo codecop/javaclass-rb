@@ -15,7 +15,7 @@ require File.dirname(__FILE__) + '/test_java_class_header'
 require File.dirname(__FILE__) + '/test_jar_classpath'
 require File.dirname(__FILE__) + '/test_folder_classpath'
 require File.dirname(__FILE__) + '/test_java_home_classpath'
-require File.dirname(__FILE__) + '/test_classpath_parser'
+require File.dirname(__FILE__) + '/test_composite_classpath'
 
 module TestJavaClass
   
@@ -36,7 +36,7 @@ module TestJavaClass
       suite << TestJarClasspath
       suite << TestFolderClasspath
       suite << TestJavaHomeClasspath
-      suite << TestClasspathParser
+      suite << TestCompositeClasspath
       
       return suite
     end
