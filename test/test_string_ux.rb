@@ -21,10 +21,12 @@ class TestString < Test::Unit::TestCase
   
   def test_single
     assert_in_delta(3.14159, '@IÐ'.single(0), 0.0000002) 
+    # assert_in_delta(3.14159, '@Iï¿½ '.single(0), 0.0000002) 
   end
   
   def test_double
     assert_in_delta(3.14159265258981, "@\t!ûT!Ñ ".double(0), 0.00000000000001) 
+    # assert_in_delta(3.14159265258981, "@\t!ï¿½T!ï¿½ ".double(0), 0.00000000000001) 
   end
   
   # --- fake methods for zentest ---
