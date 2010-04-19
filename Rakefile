@@ -19,9 +19,9 @@ gemspec = Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.has_rdoc = true
   s.rubyforge_project = 'javaclass'
-  s.homepage = 'http://javaclass.rubyforge.org/'
+  s.homepage = 'http://code.google.com/p/javaclass-rb/'
   s.author = 'Peter Kofler'
-  s.email = 'bruno41 at rubyforge dot org'
+  s.email = 'peter dot kofler at code-cop dot org'
   s.platform = Gem::Platform::RUBY
 end
 

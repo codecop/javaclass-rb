@@ -1,4 +1,6 @@
 === 0.0.3 not unreleased yet
+
+* migrated to Google Code and Mercurial
 * added access flag $1000
 * added references to used classes
 * classpath abstraction

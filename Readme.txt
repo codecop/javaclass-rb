@@ -1,8 +1,7 @@
 JavaClass
 by {Peter Kofler}[http://www.code-cop.org/]
 
-* {Homepage}[http://javaclass.rubyforge.org/]
-* {Rubyforge Project}[http://rubyforge.org/projects/javaclass]
+* {Google Code Project}[http://code.google.com/p/javaclass-rb/]
 * email peter dot kofler at code-cop dot org
 
 == Description
@@ -44,7 +43,7 @@ JavaClass does not depend on any other installed libraries or gems.
 
 == License
 
-Same as Ruby.
+BSD.
 
 == Disclaimer Note
 
