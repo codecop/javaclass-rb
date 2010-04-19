@@ -1,5 +1,3 @@
 
-syntax: regexp
-^todo$
-syntax: regexp
-^todo$
+syntax: glob
+todo/**
