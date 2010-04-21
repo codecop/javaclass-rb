@@ -1,3 +1,7 @@
 
 syntax: glob
+hosting/**
+
+syntax: glob
 todo/**
+
