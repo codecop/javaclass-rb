@@ -1,7 +1,7 @@
 JavaClass
 by {Peter Kofler}[http://www.code-cop.org/]
 
-* {Google Code Project}[http://code.google.com/p/javaclass-rb/]
+* {Homepage (Google Code)}[http://code.google.com/p/javaclass-rb/]
 * email peter dot kofler at code-cop dot org
 
 == Description
@@ -14,9 +14,9 @@ of the classes passed to it together with a list of all outgoing references.
 == Motivation
 
 I am still doing Java most of the time. I used to be quite enthusiatic about
-it, but after 9 years I can see the advantages of being a polyglot. So I use
-Ruby for all kind of stuff, just for fun. Recently I needed some Java class
-analysis and happened to write it with Ruby. As I am a puritan, I did not
+it, but after 11 years I can see the advantages of being a polyglot. So I use
+Ruby for all kind of stuff, just for fun. When I needed some Java class
+analysis I wrote it with Ruby. As I am a puritan, I did not
 want to call javap from my script, so I started disassembling the class files,
 which might be the the base for some serious static code analysis tools. (I
 started adding methods to that end...) 
