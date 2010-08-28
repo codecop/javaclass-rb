@@ -14,7 +14,7 @@ gemspec = Gem::Specification.new do |s|
   s.version = '0.0.3'
   s.name = 'javaclass'
   s.summary ='A parser and disassembler for Java class files'
-  s.files = FileList['Readme.txt', '{lib,test}/**/*.*', 'history.txt', 'Rakefile']
+  s.files = FileList['Readme.txt', '{lib,test}/**/*.*', 'history.txt', 'planned.txt', 'Rakefile']
   s.test_files = FileList['test/**/test_*.rb']
   s.require_path = 'lib'
   s.has_rdoc = true
@@ -46,7 +46,7 @@ Rake::RDocTask.new do |rdoc|
   # rdoc.rdoc_dir = 'html' is default
   rdoc.title = "JavaClass #{gemspec.name}-#{gemspec.version} Documentation"
   rdoc.main = gemspec.files.to_a[0]
-  rdoc.rdoc_files.include 'Readme.txt', 'lib/**/*.rb', 'history.txt'
+  rdoc.rdoc_files.include 'Readme.txt', 'lib/**/*.rb', 'history.txt', 'planned.txt'
 end
 
 desc 'Remove package and rdoc products'
