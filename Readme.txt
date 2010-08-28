@@ -1,4 +1,4 @@
-JavaClass
+JavaClass-rb
 by {Peter Kofler}[http://www.code-cop.org/]
 
 * {Homepage (Google Code)}[http://code.google.com/p/javaclass-rb/]
@@ -6,7 +6,7 @@ by {Peter Kofler}[http://www.code-cop.org/]
 
 == Description
 
-JavaClass (Java Class File Parser) is a
+JavaClass-rb (Java Class File Parser for Ruby) is a
 parser and disassembler for Java class files, similar to the javap command. 
 It provides access to the package, protected, and public fields and methods 
 of the classes passed to it together with a list of all outgoing references.   
@@ -43,11 +43,10 @@ JavaClass does not depend on any other installed libraries or gems.
 
 == License
 
-BSD.
+{New BSD License}[http://www.opensource.org/licenses/bsd-license.php]
 
 == Disclaimer Note
 
 This software is provided "as is" and without any express or implied warranties, 
 including, without limitation, the implied warranties of merchantibility and 
 fitness for a particular purpose.
-
