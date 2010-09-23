@@ -1,5 +1,5 @@
+* move test data to subfolders
 * abrunden code der drinnen ist und rausziehen, etc.
-* kleinigkeiten aus planned machen
 
 
 ---
