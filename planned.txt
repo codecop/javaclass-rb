@@ -1,7 +1,15 @@
 === Planned
 
-* continue to implement function for fields and methods
-* document dependency to ZIP gem in Readme
+* document dependency to ZIP gem in Readme and Gem
+* deployment
+  * Migrate to rubygems
+  * find a method to add target parent to all hrefs with absolute URLs, so Links work as expected
+  * automate deyployment
+
+* create a favicon for api and project (BCEL with R?)
+
+* continue to implement function for fields and methods (JVM spec)
+
 * implement
   * dump to return the class same as javap
   * isAnnotation (checks version>=5 & superclass)
@@ -15,10 +23,7 @@
   * test with all classes of all JDKs against javap from this version "compileTheWorld"
   * Java 1.0 - private protected fields.
   * Java 1.0 - http://www.javaworld.com/javaworld/javaqa/1999-06/03-synchronized.html
-* deployment
-  * find a method to add target parent to all hrefs with absolute URLs, so Links work as expected
 * think about
-  * "metric" if all referencing classes of a class is another package, propose moving it there.
   * add zip gem to load classes directly from the classpath (i.e. the jars), add gem dependency
     * classpath abstraction, classpath contains list of JARs, folders, ZIPs
     * WARs and EARs contain JARs and folders
