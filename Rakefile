@@ -21,7 +21,7 @@ gemspec = Gem::Specification.new do |s|
   s.rubyforge_project = 'javaclass'
   s.homepage = 'http://code.google.com/p/javaclass-rb/'
   s.author = 'Peter Kofler'
-  s.email = 'peter dot kofler at code-cop dot org'
+  s.email = 'peter dot kofler at code minus cop dot org'
   s.platform = Gem::Platform::RUBY
 end
 
@@ -44,7 +44,7 @@ end
 
 Rake::RDocTask.new do |rdoc|
   # rdoc.rdoc_dir = 'html' is default
-  rdoc.title = "JavaClass #{gemspec.name}-#{gemspec.version} Documentation"
+  rdoc.title = "#{gemspec.name}-#{gemspec.version} Documentation"
   rdoc.main = gemspec.files.to_a[0]
   rdoc.rdoc_files.include 'Readme.txt', 'lib/**/*.rb', 'history.txt', 'planned.txt'
 end
@@ -52,40 +52,31 @@ end
 desc 'Remove package and rdoc products'
 task :clobber => %w(clobber_package clobber_rdoc)
 
-# Publish an entire directory to an existing remote directory using PuTTY.
-class PuttySshDirPublisher < Rake::SshDirPublisher
-  def upload
-    # call E:\Tool\putty\pscp -r html/* bruno41@rubyforge.org:/var/www/gforge-projects/javaclass
-    sh %{E:\\Tool\\PuTTY\\PSCP.EXE -r -q #{@local_dir}/* #{@host}:#{@remote_dir}}
-  end
-end
-
-desc 'Publish the RDOC files to RubyForge'
+desc 'Publish the RDOC files to Google Code repo (unfinished)'
 task :publish_rdoc => %w(clobber_rdoc rdoc) do
   
-  # Save the original robots.txt again
-  File.open('./html/robots.txt', 'w') do |f| 
-    f.print "User-agent: *
-Disallow: /softwaremap/ # This is an infinite virtual URL space
-Disallow: /statcvs/ # This is an infinite virtual URL space
-Disallow: /usage/ # This is an infinite virtual URL space
-Disallow: /wiki/ # This is an infinite virtual URL space
-" 
-  end
-  
-  # generic code would be...
-  #config = YAML.load(File.read(File.expand_path('~/.rubyforge/user-config.yml')))
-  #host = "#{config['username']}@rubyforge.org"
-  host = "bruno41@rubyforge.org"
-  remote_dir = "/var/www/gforge-projects/#{gemspec.rubyforge_project}/"
+  repo = "api.#{s.name}-rb.googlecode.com/hg/"
+  remote_dir = "#{gemspec.version}"
   local_dir = 'html'
   
-  PuttySshDirPublisher.new(host, remote_dir, local_dir).upload
+  # add folder if it does not exist
+  # update redirect in frameset
+  # TODO RDOC - clone, update, commit, push, remove clone
 end
 
-desc 'Package and upload to RubyForge (unfinished)'
+#* migration rubyforge
+#  * http://javaclass.rubyforge.org/ redirecten
+#  * target_parent file verschieben ?
+#  * Gemcutter Push einrichten im Rake statt Rubyforge
+#  * neuen Gem releasen
+#  http://www.infoq.com/news/2010/03/rubygems
+#  * api 0.0.3 uploaden
+#  * Deployment von API doc automatisch ins Repo, Redirect updaten
+
+desc 'Package and upload to Gemcutter and Google Code (unfinished)'
 task :publish_gem => [:clobber_package, :package] do |t|
   
+  # TODO Release to Gemcutter and Google Code 
   #  rf = RubyForge.new
   #  rf.configure rescue nil
   #  puts 'Logging in'
