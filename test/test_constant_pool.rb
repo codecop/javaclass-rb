@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/setup'
-require 'javaclass/constant_pool'
+require 'javaclass/classfile/constant_pool'
 
 module TestJavaClass
   
@@ -50,7 +50,7 @@ const #42 = Asciz       java/lang/Object;
 const #43 = Asciz       java/lang/Runnable;'
     
     def setup
-      @cp = JavaClass::ConstantPool.new(load_class('ConstantPoolTest'))
+      @cp = JavaClass::ClassFile::ConstantPool.new(load_class('ConstantPoolTest'))
     end
     
     def test_index
@@ -79,7 +79,7 @@ const #43 = Asciz       java/lang/Runnable;'
     end
     
     def test_find
-      found = @cp.find(JavaClass::ConstantPool::STRING_TAG)
+      found = @cp.find(JavaClass::ClassFile::ConstantPool::STRING_TAG)
       assert_equal(1, found.size)
       assert_equal('String', found[0].name)
       assert_equal(34, found[0].string_index)

@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/setup'
-require 'javaclass/constants/base'
+require 'javaclass/classfile/constants/base'
 
 module TestJavaClass
   
   class TestConstantBase < Test::Unit::TestCase
     
-    class ConstantClass < JavaClass::Constants::Base;
+    class ConstantClass < JavaClass::ClassFile::Constants::Base;
       def initialize(name=nil); super(name); end
     end
     

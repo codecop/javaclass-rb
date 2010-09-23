@@ -1,12 +1,12 @@
 require File.dirname(__FILE__) + '/setup'
-require 'javaclass/java_class_header'
+require 'javaclass/classfile/java_class_header'
 
 module TestJavaClass
   
   class TestJavaClassHeader < Test::Unit::TestCase
     
     def setup
-      @public = JavaClass::JavaClassHeader.new(load_class("AccessFlagsTestPublic"))
+      @public = JavaClass::ClassFile::JavaClassHeader.new(load_class("AccessFlagsTestPublic"))
     end
     
     def test_magic
