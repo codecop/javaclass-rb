@@ -10,7 +10,7 @@ module JavaClass
   
   # Read and disassemble the given class called _name_ (full file name).
   def self.parse(name)
-    JavaClassHeader.new(File.open(name, 'rb') {|io| io.read } )
+    ClassFile::JavaClassHeader.new(File.open(name, 'rb') {|io| io.read } )
   end
   
   # Parse and scan the system classpath. 
