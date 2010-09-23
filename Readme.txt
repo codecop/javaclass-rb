@@ -1,8 +1,8 @@
 JavaClass-rb
-by {Peter Kofler}[http://www.code-cop.org/]
+by {Peter 'Code Cop' Kofler}[http://www.code-cop.org/]
 
 * {Homepage (Google Code)}[http://code.google.com/p/javaclass-rb/]
-* email peter dot kofler at code-cop dot org
+* email peter dot kofler at code minus cop dot org
 
 == Description
 
@@ -41,6 +41,8 @@ started adding methods to that end...)
 
 JavaClass does not depend on any other installed libraries or gems.
 
+TODO http://rubyzip.sourceforge.net/
+
 == License
 
 {New BSD License}[http://www.opensource.org/licenses/bsd-license.php]
@@ -50,3 +52,8 @@ JavaClass does not depend on any other installed libraries or gems.
 This software is provided "as is" and without any express or implied warranties, 
 including, without limitation, the implied warranties of merchantibility and 
 fitness for a particular purpose.
+
+== References
+
+* {JavaWorld: The Java class file lifestyle}[http://www.javaworld.com/javaworld/jw-07-1996/jw-07-classfile.html]
+* {VM Spec: The class File Format}[http://java.sun.com/docs/books/jvms/second_edition/html/ClassFile.doc.html]

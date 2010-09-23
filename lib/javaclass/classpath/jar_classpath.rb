@@ -1,4 +1,4 @@
-require 'zip/zipfilesystem'
+require 'zip/zipfilesystem' # rubyzip (0.9.1)
 
 module JavaClass
   module Classpath # :nodoc:
