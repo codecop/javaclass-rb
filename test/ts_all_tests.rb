@@ -17,6 +17,8 @@ require File.dirname(__FILE__) + '/test_folder_classpath'
 require File.dirname(__FILE__) + '/test_java_home_classpath'
 require File.dirname(__FILE__) + '/test_composite_classpath'
 
+require File.dirname(__FILE__) + '/test_java_class_name.rb'
+
 module TestJavaClass
   
   class TestSuite_AllTests
@@ -37,6 +39,8 @@ module TestJavaClass
       suite << TestFolderClasspath
       suite << TestJavaHomeClasspath
       suite << TestCompositeClasspath
+      
+      suite << TestJavaClassName
       
       return suite
     end
