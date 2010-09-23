@@ -1,4 +1,4 @@
-require 'javaclass/java_class_header'
+require 'javaclass/classfile/java_class_header'
 require 'javaclass/classpath/java_home_classpath'
 require 'javaclass/classpath/composite_classpath'
 

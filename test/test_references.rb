@@ -1,12 +1,12 @@
 require File.dirname(__FILE__) + '/setup'
-require 'javaclass/java_class_header'
+require 'javaclass/classfile/java_class_header'
 
 module TestJavaClass
   
   class TestReferences < Test::Unit::TestCase
     
     def setup
-      @refs = JavaClass::JavaClassHeader.new(load_class("ReferencesTest")).references
+      @refs = JavaClass::ClassFile::JavaClassHeader.new(load_class("ReferencesTest")).references
     end
     
     def test_referenced_fields
