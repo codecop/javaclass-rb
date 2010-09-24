@@ -148,7 +148,7 @@ def add_frameset_version(file, dir)
   end
 end
 
-desc 'Publish the RDoc files to Google Code'
+desc 'Publish the RDoc files to Google Code and push to origin'
 task :publish_rdoc => [:clobber_rdoc, :rdoc, :fix_rdoc] do 
   remote_repo = 'api.javaclass-rb.googlecode.com/hg/'
   local_repo = 'api'
@@ -168,7 +168,7 @@ task :publish_rdoc => [:clobber_rdoc, :rdoc, :fix_rdoc] do
   add_frameset_version(file, remote_dir)
   
   hg ['ci', "-m \"Released gem version #{gemspec.version}\"", "-R #{local_repo}"]
-  #TODO hg ['push', "-R #{local_repo}"]
+  hg ['push', "-R #{local_repo}"]
 end
 
 desc 'Remove package and rdoc products'
