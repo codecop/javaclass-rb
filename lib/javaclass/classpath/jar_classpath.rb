@@ -1,4 +1,4 @@
-require 'zip/zipfilesystem' # gem install rubyzip (0.9.1)
+require 'zip/zipfilesystem'
 
 module JavaClass
   module Classpath # :nodoc:

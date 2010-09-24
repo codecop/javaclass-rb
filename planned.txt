@@ -1,6 +1,5 @@
 === Planned
 
-* document dependency to ZIP gem in Readme and Gem
 * deployment
   * Migrate to rubygems
   * find a method to add target parent to all hrefs with absolute URLs, so Links work as expected
