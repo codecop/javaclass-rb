@@ -7,21 +7,22 @@ module TestJavaClass
     class TestJavaHomeClasspath < Test::Unit::TestCase
       
       def setup
-        @cpe = JavaClass::Classpath::JavaHomeClasspath.new("#{TEST_DATA_PATH}/JavaHomeClasspathTest/jre")
+        @folder = "#{TEST_DATA_PATH}/java_home_classpath"
+        @cpe = JavaClass::Classpath::JavaHomeClasspath.new("#{@folder}/jre")
       end
       
       def test_count
         assert_equal(1, @cpe.count)
 
-        @cpe = JavaClass::Classpath::JavaHomeClasspath.new("#{TEST_DATA_PATH}/JavaHomeClasspathTest/jdk")
+        @cpe = JavaClass::Classpath::JavaHomeClasspath.new("#{@folder}/jdk")
         assert_equal(1, @cpe.count)
       end
       
       def test_additional_classpath
         assert_equal([], @cpe.additional_classpath)
         
-        @cpe = JavaClass::Classpath::JavaHomeClasspath.new("#{TEST_DATA_PATH}/JavaHomeClasspathTest/jre-ext")
-        assert_equal(["#{TEST_DATA_PATH}/JavaHomeClasspathTest/jre-ext/lib/ext/ext.jar"], @cpe.additional_classpath)
+        @cpe = JavaClass::Classpath::JavaHomeClasspath.new("#{@folder}/jre-ext")
+        assert_equal(["#{@folder}/jre-ext/lib/ext/ext.jar"], @cpe.additional_classpath)
       end
       
       def test_jar_eh
@@ -36,7 +37,7 @@ module TestJavaClass
       end
       
       def test_load_binary
-        assert_equal(load_class('ClassVersionTest10'), @cpe.load_binary('ClassVersionTest10'))
+        assert_equal(load_class('class_version/ClassVersionTest10'), @cpe.load_binary('ClassVersionTest10'))
       end
       
       def test_names

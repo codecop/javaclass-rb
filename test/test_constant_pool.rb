@@ -50,7 +50,7 @@ const #42 = Asciz       java/lang/Object;
 const #43 = Asciz       java/lang/Runnable;'
     
     def setup
-      @cp = JavaClass::ClassFile::ConstantPool.new(load_class('ConstantPoolTest'))
+      @cp = JavaClass::ClassFile::ConstantPool.new(load_class('constant_pool/ConstantPoolTest'))
     end
     
     def test_index

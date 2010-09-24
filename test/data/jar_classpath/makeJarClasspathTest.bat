@@ -1,8 +1,8 @@
 if exist JarClasspathTest*.* del JarClasspathTest*.*
 
 md JarClasspathTestFolder\package
-copy ClassVersionTest10.class JarClasspathTestFolder
-copy ClassVersionTest11.class JarClasspathTestFolder\package
+copy ..\class_version\ClassVersionTest10.class JarClasspathTestFolder
+copy ..\class_version\ClassVersionTest11.class JarClasspathTestFolder\package
 
 cd JarClasspathTestFolder
 jar -cf ..\JarClasspathTest.jar .

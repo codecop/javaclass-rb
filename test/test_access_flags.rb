@@ -8,7 +8,7 @@ module TestJavaClass
     def setup
       @cls = {}
       %w[Public Package Abstract Interface Final Public$Inner Public$StaticInner Public$InnerInterface].each do |t| 
-        eval("@#{t.sub(/Public\$/, '').downcase} = JavaClass::ClassFile::JavaClassHeader.new(load_class('AccessFlagsTest#{t}')).access_flags") 
+        eval("@#{t.sub(/Public\$/, '').downcase} = JavaClass::ClassFile::JavaClassHeader.new(load_class('access_flags/AccessFlagsTest#{t}')).access_flags") 
       end
     end
     

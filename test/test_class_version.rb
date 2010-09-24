@@ -7,7 +7,7 @@ module TestJavaClass
     
     def setup
       @v = (0..6).collect do |i| 
-        JavaClass::ClassFile::ClassVersion.new(load_class("ClassVersionTest1#{i}")) 
+        JavaClass::ClassFile::ClassVersion.new(load_class("class_version/ClassVersionTest1#{i}")) 
       end
     end
     
@@ -33,7 +33,7 @@ module TestJavaClass
     end
     
     def test_dump
-      assert_equal(["  minor version: 0", "  major version: 50"], @v[6].dump)
+      assert_equal(['  minor version: 0', '  major version: 50'], @v[6].dump)
     end
     
     def test_to_f
