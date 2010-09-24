@@ -1,5 +1,7 @@
 === trunk (0.0.3 not unreleased yet)
 
+* fix links in RDoc
+* split classes into submodules
 * migrated to Google Code and Mercurial
 * added access flag $1000
 * added references to used classes
@@ -15,5 +17,5 @@
 === 0.0.1 01/03/2009
 	
 * initial version extracted from ClassList project
-  * reads the class version and package/public flag of a class
-  * understands the constant pool but does not use it
+* reads the class version and package/public flag of a class
+* understands the constant pool but does not use it

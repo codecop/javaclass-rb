@@ -1,4 +1,4 @@
-JavaClass-rb
+javaclass-rb
 by {Peter 'Code Cop' Kofler}[http://www.code-cop.org/]
 
 * {Homepage (Google Code)}[http://code.google.com/p/javaclass-rb/]
@@ -6,7 +6,7 @@ by {Peter 'Code Cop' Kofler}[http://www.code-cop.org/]
 
 == Description
 
-JavaClass-rb (Java Class File Parser for Ruby) is a
+javaclass-rb (Java Class File Parser for Ruby) is a
 parser and disassembler for Java class files, similar to the javap command. 
 It provides access to the package, protected, and public fields and methods 
 of the classes passed to it together with a list of all outgoing references.   
@@ -37,11 +37,22 @@ started adding methods to that end...)
   clazz.super_class                      # => java/lang/Object
   clazz.references.referenced_methods[0] # => java/lang/Object.<init>:()V
 
+== Documentation
+
+The main class is JavaClass::ClassFile::JavaClassHeader which provides access to
+all information of a Java class file.
+ 
+* {API (RDoc)}[http://api.javaclass-rb.googlecode.com/hg/index.html]
+
 == Support
 
 The bug tracker is available here:
 
 * http://code.google.com/p/javaclass-rb/issues/list
+
+Download (tarballs and gems)
+
+* http://code.google.com/p/javaclass-rb/downloads/list 
 
 == Dependencies
 
@@ -55,7 +66,7 @@ The bug tracker is available here:
 
 == License
 
-{New BSD License}[http://www.opensource.org/licenses/bsd-license.php]
+* {New BSD License}[http://www.opensource.org/licenses/bsd-license.php]
 
 == Disclaimer Note
 
