@@ -19,7 +19,7 @@ gemspec = Gem::Specification.new do |s|
   s.author = 'Peter Kofler'
   s.email = 'peter dot kofler at code minus cop dot org'
 
-  s.files = FileList['Readme.txt', '{lib,test}/**/*.*', 'history.txt', 'planned.txt', 'Rakefile']
+  s.files = FileList['Readme.txt', '{lib,test}/**/*.*', 'history.txt', 'Rakefile']
   s.test_files = FileList['test/**/test_*.rb']
   s.require_path = 'lib'
   s.add_dependency('rubyzip', '>= 0.9.1') 
@@ -27,8 +27,8 @@ gemspec = Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   
   s.has_rdoc = true
-  s.extra_rdoc_files = ['Readme.txt', 'history.txt', 'planned.txt']
-  s.rdoc_options << '--title' << "#{gemspec.name}-#{gemspec.version} Documentation" <<
+  s.extra_rdoc_files = ['Readme.txt', 'history.txt']
+  s.rdoc_options << '--title' << "#{s.name}-#{s.version} Documentation" <<
                     '--main' << 'Readme.txt' 
 end
 
@@ -53,7 +53,7 @@ Rake::RDocTask.new do |rdoc|
   # rdoc.rdoc_dir = 'html' is default
   rdoc.title = "#{gemspec.name}-#{gemspec.version} Documentation"
   rdoc.main = 'Readme.txt'
-  rdoc.rdoc_files.include 'Readme.txt', 'lib/**/*.rb', 'history.txt', 'planned.txt'
+  rdoc.rdoc_files.include 'Readme.txt', 'lib/**/*.rb', 'history.txt'
 end
 
 desc 'Remove package and rdoc products'
