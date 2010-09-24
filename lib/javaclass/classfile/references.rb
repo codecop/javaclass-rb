@@ -4,10 +4,11 @@ module JavaClass
   module ClassFile # :nodoc:
     
     # Container class for list of all classes, methods and fields referenced by this class.
+    # This information is derived from the constant pool, no analysis.
     # Author::   Peter Kofler
     class References
       
-      # Create a references container with the constant _pool_ and skip references to _classidx_ which is the host class itself.  
+      # Create a references container with the constant _pool_ and skip references to index _classidx_ which is the host class itself.  
       def initialize(pool, classidx)
         @constant_pool = pool
         @class_idx = classidx

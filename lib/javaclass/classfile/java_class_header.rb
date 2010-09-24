@@ -8,7 +8,8 @@ require 'javaclass/classfile/access_flags'
 module JavaClass 
   module ClassFile # :nodoc:
     
-    # Provide all information of a Java class file. 
+    # Provide all information of a Java class file. This is just a container for all kind of
+    # specialised elements. 
     # Author::          Peter Kofler
     class JavaClassHeader
       
