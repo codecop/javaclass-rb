@@ -7,7 +7,8 @@ module TestJavaClass
     class TestJarClasspath < Test::Unit::TestCase
       
       def setup
-        @cpe = JavaClass::Classpath::JarClasspath.new("#{TEST_DATA_PATH}/JarClasspathTest.jar")
+        @folder = "#{TEST_DATA_PATH}/jar_classpath"
+        @cpe = JavaClass::Classpath::JarClasspath.new("#{@folder}/JarClasspathTest.jar")
       end
       
       def test_count
@@ -17,18 +18,18 @@ module TestJavaClass
       def test_additional_classpath
         assert_equal([], @cpe.additional_classpath)
         
-        @cpe = JavaClass::Classpath::JarClasspath.new("#{TEST_DATA_PATH}/JarClasspathTestManifest.jar")
-        assert_equal(["#{TEST_DATA_PATH}/JarClasspathTest.jar"], @cpe.additional_classpath)
+        @cpe = JavaClass::Classpath::JarClasspath.new("#{@folder}/JarClasspathTestManifest.jar")
+        assert_equal(["#{@folder}/JarClasspathTest.jar"], @cpe.additional_classpath)
         
-        @cpe = JavaClass::Classpath::JarClasspath.new("#{TEST_DATA_PATH}/JarClasspathTestMultiManifest.jar")
-        assert_equal(["#{TEST_DATA_PATH}/lib/httpunit-1.6.2.jar", "#{TEST_DATA_PATH}/lib/nekohtml-0.9.1.jar", 
-        "#{TEST_DATA_PATH}/lib/xercesImpl-2.5.jar", "#{TEST_DATA_PATH}/lib/js-1.5R4.1.jar"], @cpe.additional_classpath)
+        @cpe = JavaClass::Classpath::JarClasspath.new("#{@folder}/JarClasspathTestMultiManifest.jar")
+        assert_equal(["#{@folder}/lib/httpunit-1.6.2.jar", "#{@folder}/lib/nekohtml-0.9.1.jar", 
+          "#{@folder}/lib/xercesImpl-2.5.jar", "#{@folder}/lib/js-1.5R4.1.jar"], @cpe.additional_classpath)
       end
       
       def test_jar_eh
         assert(@cpe.jar?)
         
-        @cpe = JavaClass::Classpath::JarClasspath.new("#{TEST_DATA_PATH}/JarClasspathTest.zip")
+        @cpe = JavaClass::Classpath::JarClasspath.new("#{@folder}/JarClasspathTest.zip")
         assert(!@cpe.jar?)
       end
       
@@ -40,10 +41,10 @@ module TestJavaClass
       end
       
       def test_load_binary
-        assert_equal(load_class('ClassVersionTest10'), @cpe.load_binary('ClassVersionTest10'))
+        assert_equal(load_class('class_version/ClassVersionTest10'), @cpe.load_binary('ClassVersionTest10'))
         
-        @cpe = JavaClass::Classpath::JarClasspath.new("#{TEST_DATA_PATH}/JarClasspathTest.zip")
-        assert_equal(load_class('ClassVersionTest10'), @cpe.load_binary('ClassVersionTest10'))
+        @cpe = JavaClass::Classpath::JarClasspath.new("#{@folder}/JarClasspathTest.zip")
+        assert_equal(load_class('class_version/ClassVersionTest10'), @cpe.load_binary('ClassVersionTest10'))
       end
       
       def test_names

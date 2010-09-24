@@ -6,7 +6,7 @@ module TestJavaClass
   class TestJavaClassHeader < Test::Unit::TestCase
     
     def setup
-      @public = JavaClass::ClassFile::JavaClassHeader.new(load_class("AccessFlagsTestPublic"))
+      @public = JavaClass::ClassFile::JavaClassHeader.new(load_class('access_flags/AccessFlagsTestPublic'))
     end
     
     def test_magic

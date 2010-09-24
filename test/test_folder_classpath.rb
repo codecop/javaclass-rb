@@ -7,7 +7,7 @@ module TestJavaClass
     class TestFolderClasspath < Test::Unit::TestCase
       
       def setup
-        @cpe = JavaClass::Classpath::FolderClasspath.new("#{TEST_DATA_PATH}/JarClasspathTestFolder")
+        @cpe = JavaClass::Classpath::FolderClasspath.new("#{TEST_DATA_PATH}/folder_classpath/JarClasspathTestFolder")
       end
       
       def test_count
@@ -34,7 +34,7 @@ module TestJavaClass
       end
       
       def test_load_binary
-        assert_equal(load_class('ClassVersionTest10'), @cpe.load_binary('ClassVersionTest10'))
+        assert_equal(load_class('class_version/ClassVersionTest10'), @cpe.load_binary('ClassVersionTest10'))
       end
       
       def test_names
