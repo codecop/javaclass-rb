@@ -1,4 +1,4 @@
-#require 'FileUtils'
+#require 'FileUtils' # already required
 require 'rubygems'
 require 'rubygems/gem_runner' # install and uninstall
 require 'rake'
@@ -19,7 +19,7 @@ gemspec = Gem::Specification.new do |s|
   s.homepage = 'http://code.google.com/p/javaclass-rb/'
   s.author = 'Peter Kofler'
   s.email = 'peter dot kofler at code minus cop dot org'
-
+  
   s.files = FileList['Readme.txt', '{lib,test}/**/*.*', 'history.txt', 'Rakefile']
   s.test_files = FileList['test/**/test_*.rb']
   s.require_path = 'lib'
@@ -35,12 +35,12 @@ end
 full_gem_name = "#{gemspec.name}-#{gemspec.version}"
 
 desc 'Validates the gemspec'
-task :validate_gem do
+task :validate_gem do 
   gemspec.validate
 end
 
 desc 'Displays the current version'
-task :version do
+task :version do 
   puts gemspec.version
 end
 
@@ -71,12 +71,12 @@ end
 
 desc 'Uninstall the gem'
 task :uninstall do
-  Gem::GemRunner.new.run ['uninstall',  gemspec.name]
+  Gem::GemRunner.new.run ['uninstall', gemspec.name]
 end
 
-# Helper method to execute _param_ with Mercurial.
-def hg(param)
-  puts `hg #{param.join(' ')}`
+# Helper method to execute array _params_ with Mercurial.
+def hg(params)
+  puts `hg #{params.join(' ')}`
 end
 
 desc 'Tag version in Hg and push to origin'
@@ -109,7 +109,7 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include 'Readme.txt', 'lib/**/*.rb', 'history.txt'
 end
 
-# Helper method to add a target="parent" to _file_ html.
+# Helper method to add target="_parent" to _file_ html.
 def add_href_parent(file)
   lines = IO.readlines(file).collect do |line|
     if line =~ /(href=(?:'|")https?:\/\/)/
@@ -124,7 +124,7 @@ def add_href_parent(file)
 end
 
 desc 'Fix the rdoc hrefs in framesets'
-task :fix_rdoc => [:rdoc] do |t|
+task :fix_rdoc => [:rdoc] do 
   Dir['html/**/*.html'].each do |file| 
     next if file =~ /\.src/
     add_href_parent(file) 
@@ -132,32 +132,49 @@ task :fix_rdoc => [:rdoc] do |t|
 end
 
 # TODO http://javaclass.rubyforge.org/ redirecten
+#  * api 0.0.3 uploaden
 
-desc 'Publish the RDOC files to Google Code'
-task :publish_rdoc => [:clobber_rdoc, :rdoc, :fix_rdoc] do
+# Helper method to add the gem version _dir_ into index _file_ to frameset links.
+def add_frameset_version(file, dir)
+  lines = IO.readlines(file).collect do |line|
+    if line =~ /(frame src=")/
+      "#{$`}#{$1}#{dir}/#{$'}"
+    else 
+      line
+    end
+  end
+  File.open(file, 'w') do |f|
+    f.print lines.join
+  end
+end
+
+desc 'Publish the RDoc files to Google Code'
+task :publish_rdoc => [:clobber_rdoc, :rdoc, :fix_rdoc] do 
   remote_repo = 'api.javaclass-rb.googlecode.com/hg/'
   local_repo = 'api'
-  
-  # TODO add api to clobber_rdoc
-  
   local_dir = 'html'
   remote_dir = "#{gemspec.version}"
-
-  FileUtils.rm_rf local_repo
-  hg ['clone', "https://#{remote_repo}", "#{local_repo}"]
   
+  FileUtils.rm_r local_repo rescue nil
+  hg ['clone', "https://#{remote_repo}", local_repo]
+  
+  FileUtils.rm_r "#{local_repo}/#{remote_dir}" rescue nil
   FileUtils.cp_r local_dir, "#{local_repo}/#{remote_dir}"
   hg ['addremove', "-R #{local_repo}"]
-  # TODO index modifizieren - update redirect in frameset
-  hg ['ci', "-m \"Released gem version #{gemspec.version}\"", "-R #{local_repo}"]
   
-  #  * api 0.0.3 uploaden
-  #  * Deployment von API doc automatisch ins Repo, Redirect updaten
-  # TODO RDOC - clone, update, commit, push, remove clone
+  # modify index, update redirect in frameset
+  file = "#{local_repo}/index.html"
+  FileUtils.cp "#{local_repo}/#{remote_dir}/index.html", file
+  add_frameset_version(file, remote_dir)
+  
+  hg ['ci', "-m \"Released gem version #{gemspec.version}\"", "-R #{local_repo}"]
+  #TODO hg ['push', "-R #{local_repo}"]
 end
 
 desc 'Remove package and rdoc products'
-task :clobber => [:clobber_package, :clobber_rdoc]
+task :clobber => [:clobber_package, :clobber_rdoc] do
+  FileUtils.rm_r 'api' rescue nil
+end
 
 # Helper method to grep the sources for some _pattern_ words.
 def egrep(pattern)
