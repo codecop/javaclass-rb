@@ -1,9 +1,8 @@
-* move test data to subfolders
 * abrunden code der drinnen ist und rausziehen, etc.
 
 
 ---
 
-? andere projects = packages, den jdk class list allgemein ohne merger, mit Methoden wie Kabutz sich wünscht.
+? andere projects = packages, den jdk class list allgemein ohne merger, mit Methoden wie Kabutz sich wï¿½nscht.
 
 ---
