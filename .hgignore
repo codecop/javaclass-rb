@@ -2,3 +2,8 @@
 syntax: glob
 hosting/**
 
+syntax: glob
+html/**
+
+syntax: glob
+pkg/**
