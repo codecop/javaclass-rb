@@ -1,5 +1,6 @@
+#require 'FileUtils'
 require 'rubygems'
-
+require 'rubygems/gem_runner' # install and uninstall
 require 'rake'
 require 'rake/testtask'
 require 'rake/gempackagetask'
@@ -31,13 +32,14 @@ gemspec = Gem::Specification.new do |s|
   s.rdoc_options << '--title' << "#{s.name}-#{s.version} Documentation" <<
                     '--main' << 'Readme.txt' 
 end
+full_gem_name = "#{gemspec.name}-#{gemspec.version}"
 
-desc "Validates the gemspec"
-task :gemspec do
+desc 'Validates the gemspec'
+task :validate_gem do
   gemspec.validate
 end
 
-desc "Displays the current version"
+desc 'Displays the current version'
 task :version do
   puts gemspec.version
 end
@@ -62,53 +64,47 @@ Rake::PackageTask.new(gemspec.name, gemspec.version) do |pkg|
   pkg.package_files.include gemspec.files
 end
 
-desc "Installs the gem locally"
+desc 'Install the gem locally'
 task :install => :package do
-  puts `gem install pkg/#{gemspec.name}-#{gemspec.version}`
+  Gem::GemRunner.new.run ['install', "pkg/#{full_gem_name}"]
 end
 
-desc "Tag version in Hg and push to origin"
+desc 'Uninstall the gem'
+task :uninstall do
+  Gem::GemRunner.new.run ['uninstall',  gemspec.name]
+end
+
+# Helper method to execute _param_ with Mercurial.
+def hg(param)
+  puts `hg #{param.join(' ')}`
+end
+
+desc 'Tag version in Hg and push to origin'
 task :tag do
-  tag_name = "#{gemspec.name}-#{gemspec.version}"
-  puts `hg tag -f -m "Released gem version #{gemspec.version}" #{tag_name}`
-  puts `hg push`
+  hg ['tag', '-f', "-m \"Released gem version #{gemspec.version}\"", "#{full_gem_name}"]
+  hg ['push'] 
 end
 
-desc "Release the gem to Rubygems"
+# internal - desc 'Release the gem to Rubygems'
 task :release_rubygems => :package do
-  puts `gem push pkg/#{gemspec.name}-#{gemspec.version}.gem`
+  puts "Releasing #{full_gem_name} to Rubygems"
+  Gem::GemRunner.new.run ['push', "pkg/#{full_gem_name}.gem"]
 end
 
-#* migration rubyforge
-#  * http://javaclass.rubyforge.org/ redirecten
-#  * neuen Gem releasen
-#  * api 0.0.3 uploaden
-#  * Deployment von API doc automatisch ins Repo, Redirect updaten
-
-desc 'Package and upload to Rubygems and Google Code (unfinished)'
-task :publish_gem => [:clobber_package, :package] do |t|
-  
-  # TODO Release to Gemcutter and Google Code 
-  #  rf = RubyForge.new
-  #  rf.configure rescue nil
-  #  puts 'Logging in'
-  #  rf.login
-  #  
-  #  c = rf.userconfig
-  #  c['release_notes'] = PROJ.description if PROJ.description
-  #  c['release_changes'] = PROJ.changes if PROJ.changes
-  #  c['preformatted'] = true
-  
-  pkg = "pkg/#{gemspec.full_name}"
-  files = Dir.glob("#{pkg}*.*")
-  
-  puts "Releasing #{gemspec.name} v. #{gemspec.version}"
-  #  rf.add_release gemspec.rubyforge_project, gemspec.name, gemspec.version, *files
+# internal - desc 'Release the gem to Google Code'
+task :release_googlecode => :package do
+  puts "Releasing #{full_gem_name} to GoogleCode"
+  # TODO is this automatable?
+  # TODO http://raulraja.com/2009/07/11/script-from-google-code-svn-to-google-code-downloads/
 end
 
+desc 'Package and upload gem to Rubygems and Google Code'
+task :publish_gem => [:clobber_package, :package, :release_rubygems, :release_googlecode] 
+
+# :rdoc, :clobber_rdoc, :rerdoc
 Rake::RDocTask.new do |rdoc|
   # rdoc.rdoc_dir = 'html' is default
-  rdoc.title = "#{gemspec.name}-#{gemspec.version} Documentation"
+  rdoc.title = "#{full_gem_name} Documentation"
   rdoc.main = 'Readme.txt'
   rdoc.rdoc_files.include 'Readme.txt', 'lib/**/*.rb', 'history.txt'
 end
@@ -127,29 +123,41 @@ def add_href_parent(file)
   end
 end
 
-desc 'Fix the rdoc HREFs in frameset'
-task :rdoc_fix => [:rdoc] do |t|
+desc 'Fix the rdoc hrefs in framesets'
+task :fix_rdoc => [:rdoc] do |t|
   Dir['html/**/*.html'].each do |file| 
     next if file =~ /\.src/
     add_href_parent(file) 
   end
 end
 
-desc 'Remove package and rdoc products'
-task :clobber => [:clobber_package, :clobber_rdoc]
+# TODO http://javaclass.rubyforge.org/ redirecten
 
-desc 'Publish the RDOC files to Google Code repo (unfinished)'
-task :publish_rdoc => [:clobber_rdoc, :rdoc, :rdoc_fix] do
+desc 'Publish the RDOC files to Google Code'
+task :publish_rdoc => [:clobber_rdoc, :rdoc, :fix_rdoc] do
+  remote_repo = 'api.javaclass-rb.googlecode.com/hg/'
+  local_repo = 'api'
   
-  repo = "api.#{s.name}-rb.googlecode.com/hg/"
-  remote_dir = "#{gemspec.version}"
+  # TODO add api to clobber_rdoc
+  
   local_dir = 'html'
+  remote_dir = "#{gemspec.version}"
+
+  FileUtils.rm_rf local_repo
+  hg ['clone', "https://#{remote_repo}", "#{local_repo}"]
   
-  # add folder if it does not exist
-  # update redirect in frameset
+  FileUtils.cp_r local_dir, "#{local_repo}/#{remote_dir}"
+  hg ['addremove', "-R #{local_repo}"]
+  # TODO index modifizieren - update redirect in frameset
+  hg ['ci', "-m \"Released gem version #{gemspec.version}\"", "-R #{local_repo}"]
+  
+  #  * api 0.0.3 uploaden
+  #  * Deployment von API doc automatisch ins Repo, Redirect updaten
   # TODO RDOC - clone, update, commit, push, remove clone
 end
 
+desc 'Remove package and rdoc products'
+task :clobber => [:clobber_package, :clobber_rdoc]
 
 # Helper method to grep the sources for some _pattern_ words.
 def egrep(pattern)
@@ -166,7 +174,7 @@ def egrep(pattern)
   end
 end
 
-desc "Look for TODO and FIXME tags"
+desc 'Look for TODO and FIXME tags'
 task :todo do
   egrep(/#.*(FI[X]ME|TO[D]O|T[B]D)/) # use 'odd' brackets to not find myself (and not have Eclipse markers)
 end

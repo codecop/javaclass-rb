@@ -7,3 +7,6 @@ html/**
 
 syntax: glob
 pkg/**
+
+syntax: glob
+api/**
