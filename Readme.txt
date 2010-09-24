@@ -37,11 +37,21 @@ started adding methods to that end...)
   clazz.super_class                      # => java/lang/Object
   clazz.references.referenced_methods[0] # => java/lang/Object.<init>:()V
 
-== Requirements
+== Support
 
-JavaClass does not depend on any other installed libraries or gems.
+The bug tracker is available here:
 
-TODO http://rubyzip.sourceforge.net/
+* http://code.google.com/p/javaclass-rb/issues/list
+
+== Dependencies
+
+* Ruby 1.8.6
+* {rubyzip}[http://rubyzip.sourceforge.net/]
+
+== References
+
+* {JavaWorld: The Java class file lifestyle}[http://www.javaworld.com/javaworld/jw-07-1996/jw-07-classfile.html]
+* {VM Spec: The class File Format}[http://java.sun.com/docs/books/jvms/second_edition/html/ClassFile.doc.html]
 
 == License
 
@@ -52,8 +62,3 @@ TODO http://rubyzip.sourceforge.net/
 This software is provided "as is" and without any express or implied warranties, 
 including, without limitation, the implied warranties of merchantibility and 
 fitness for a particular purpose.
-
-== References
-
-* {JavaWorld: The Java class file lifestyle}[http://www.javaworld.com/javaworld/jw-07-1996/jw-07-classfile.html]
-* {VM Spec: The class File Format}[http://java.sun.com/docs/books/jvms/second_edition/html/ClassFile.doc.html]
