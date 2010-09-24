@@ -4,7 +4,7 @@ module JavaClass
   module ClassFile # :nodoc:
     module Constants # :nodoc:
       
-      # Superclass of constant values in the constant pool. Every constant has a +name+, a +tag+ and a +size+ in bytes.
+      # Superclass of all constant values in the constant pool. Every constant has a +name+, a +tag+ and a +size+ in bytes.
       # Author::   Peter Kofler
       class Base
         

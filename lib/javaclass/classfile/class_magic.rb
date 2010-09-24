@@ -1,7 +1,7 @@
 module JavaClass
   module ClassFile # :nodoc:
     
-    # The +CAFEBABE+ magic of a class file.
+    # The +CAFEBABE+ magic of a class file. This just checks if CAFEBABE is here.
     # Author::   Peter Kofler
     class ClassMagic
       
