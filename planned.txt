@@ -2,7 +2,6 @@
 
 * deployment
   * Migrate to rubygems
-  * find a method to add target parent to all hrefs with absolute URLs, so Links work as expected
   * automate deyployment
 
 * create a favicon for api and project (BCEL with R?)
