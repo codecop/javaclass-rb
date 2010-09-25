@@ -16,8 +16,6 @@ module JavaClass
       ACC_INNER = 0x1000 # TODO unknown access flag, find in spec
       ACC_OTHER = 0xffff ^ ACC_PUBLIC ^ ACC_FINAL ^ ACC_SUPER ^ ACC_INTERFACE ^ ACC_ABSTRACT ^ ACC_INNER
       
-      # TODO Java 1.0 - "private protected" fields.
-      
       def initialize(data, pos)
         @flags = data.u2(pos)
         raise "inconsistent flags #{@flags} (abstract and final)" if abstract? && final?
