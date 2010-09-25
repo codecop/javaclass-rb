@@ -3,7 +3,7 @@ require 'javaclass/classpath/jar_classpath'
 require 'javaclass/classpath/folder_classpath'
 
 module JavaClass
-  module Classpath # :nodoc:
+  module Classpath 
     
     # List of class path elements. 
     # Author::   Peter Kofler

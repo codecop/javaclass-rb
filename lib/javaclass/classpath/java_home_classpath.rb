@@ -1,7 +1,7 @@
 require 'javaclass/classpath/jar_classpath'
 
 module JavaClass
-  module Classpath # :nodoc:
+  module Classpath 
     
     # Abstraction of the Java boot CLASSPATH. May return additional classpath elements for endorsed libs. 
     # Author::   Peter Kofler

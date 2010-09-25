@@ -6,21 +6,19 @@
 
 * create a favicon for api and project (BCEL with R?)
 
-* continue to implement function for fields and methods (JVM spec)
-
 * implement
-  * dump to return the class same as javap
   * isAnnotation (checks version>=5 & superclass)
     * are Annotation extendable, if so how do they look? (javap)
   * isEnum (checks version>=5 & superclass)
     * are Enums extendable (yes), if so how do they look? (javap)
   * scanning of byte code for numbers, which methods loaded, which fields loaded 
+
 * analyse
   * how do Scala classes look like? sth special?
+
 * test
   * test with all classes of all JDKs against javap from this version "compileTheWorld"
-  * Java 1.0 - private protected fields.
-  * Java 1.0 - http://www.javaworld.com/javaworld/javaqa/1999-06/03-synchronized.html
+
 * think about
   * add zip gem to load classes directly from the classpath (i.e. the jars), add gem dependency
     * classpath abstraction, classpath contains list of JARs, folders, ZIPs

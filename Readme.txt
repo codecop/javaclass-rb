@@ -40,6 +40,7 @@ started adding methods to that end...)
 
 == Documentation
 
+Module +JavaClass+ is the entry point for most functions in the gem.
 The main class is JavaClass::ClassFile::JavaClassHeader which provides access to
 all information of a Java class file.
 

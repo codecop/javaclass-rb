@@ -1,8 +1,8 @@
 require 'javaclass/classfile/constants/single_reference'
 
 module JavaClass 
-  module ClassFile # :nodoc:
-    module Constants # :nodoc:
+  module ClassFile 
+    module Constants 
       
       # Superclass of double reference constants like +ConstantField+ (+FieldRef+) in the constant pool. 
       # Author::   Peter Kofler

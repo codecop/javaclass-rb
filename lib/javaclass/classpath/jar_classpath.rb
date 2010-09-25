@@ -1,7 +1,7 @@
 require 'zip/zipfilesystem'
 
 module JavaClass
-  module Classpath # :nodoc:
+  module Classpath 
     
     # Abstraction of a ZIP or JAR on the CLASSPATH. 
     # Author::   Peter Kofler

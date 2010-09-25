@@ -4,8 +4,6 @@ require 'javaclass/classpath/composite_classpath'
 
 # Parse and disassemble Java class files, similar to the +javap+ command.
 # Author::          Peter Kofler
-# See::             http://java.sun.com/docs/books/jvms/second_edition/html/ClassFile.doc.html
-# See::             http://en.wikipedia.org/wiki/Class_(file_format)
 module JavaClass
   
   # Read and disassemble the given class called _name_ (full file name).

@@ -4,7 +4,7 @@ require 'javaclass/classfile/constants/single_reference'
 require 'javaclass/classfile/constants/double_reference'
 
 module JavaClass
-  module ClassFile # :nodoc:
+  module ClassFile 
     
     # Container of the constant pool's constants.
     # Author::   Peter Kofler

@@ -9,7 +9,9 @@ module JavaClass
   module ClassFile # :nodoc:
     
     # Provide all information of a Java class file. This is just a container for all kind of
-    # specialised elements. 
+    # specialised elements. The constuctor parses and creates all contained elements. 
+    # See::             http://java.sun.com/docs/books/jvms/second_edition/html/ClassFile.doc.html
+    # See::             {en.wikipedia.org/wiki/Class}[http://en.wikipedia.org/wiki/Class_(file_format)]
     # Author::          Peter Kofler
     class JavaClassHeader
       
@@ -23,14 +25,15 @@ module JavaClass
       def initialize(data)
         
         #  ClassFile {
-        #    u4 magic;
-        #    u2 minor_version;
-        #    u2 major_version;
-        #    u2 constant_pool_count;
-        #    cp_info constant_pool[constant_pool_count-1];
-        #    u2 access_flags;
-        #    u2 this_class;
-        #    u2 super_class;
+        #    u4 magic; - ok
+        #    u2 minor_version; - ok
+        #    u2 major_version; - ok
+        #    u2 constant_pool_count; - ok
+        #    cp_info constant_pool[constant_pool_count-1]; - ok
+        #    u2 access_flags; - ok
+        #    u2 this_class; - ok
+        #    u2 super_class; - ok
+        # TODO implement function for fields and methods (JVM spec)
         #    u2 interfaces_count;
         #    u2 interfaces[interfaces_count];
         #    u2 fields_count;
@@ -82,6 +85,7 @@ module JavaClass
         # dump << "Compiled from \"#{@value}\""
         d += @version.dump 
         d += @constant_pool.dump
+        # TODO implement dump() to return output same as javap
         d
       end
       

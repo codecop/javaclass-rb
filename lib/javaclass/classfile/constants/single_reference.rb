@@ -1,8 +1,8 @@
 require 'javaclass/classfile/constants/base'
 
 module JavaClass 
-  module ClassFile # :nodoc:
-    module Constants # :nodoc:
+  module ClassFile 
+    module Constants 
       
       # Superclass of single reference constants like +ConstantClass+ (+Class+) in the constant pool. 
       # Author::   Peter Kofler
