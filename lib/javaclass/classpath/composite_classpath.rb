@@ -46,7 +46,6 @@ module JavaClass
       
       # Return the list of class names found in this classpath.
       def names
-        p @elements
         @elements.collect { |e| e.names }.flatten.uniq
       end
       
