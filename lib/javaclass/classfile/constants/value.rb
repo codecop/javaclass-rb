@@ -43,7 +43,7 @@ module JavaClass
         
       end
       
-      class ConstantInt < Value
+      class ConstantInt < Value # ZenTest SKIP
         def initialize(pool, data, start) 
           super()
           silence_unused_warning(pool)
@@ -55,7 +55,7 @@ module JavaClass
         end
       end
       
-      class ConstantFloat < Value
+      class ConstantFloat < Value # ZenTest SKIP
         def initialize(pool, data, start) 
           super()
           silence_unused_warning(pool)
@@ -69,7 +69,7 @@ module JavaClass
         end
       end
       
-      class ConstantLong < Value
+      class ConstantLong < Value # ZenTest SKIP
         def initialize(pool, data, start) 
           super()
           silence_unused_warning(pool)
@@ -80,7 +80,7 @@ module JavaClass
         end
       end
       
-      class ConstantDouble < Value
+      class ConstantDouble < Value # ZenTest SKIP
         def initialize(pool, data, start) 
           super()
           silence_unused_warning(pool)
@@ -94,7 +94,7 @@ module JavaClass
         end
       end
       
-      class ConstantAsciz < Value
+      class ConstantAsciz < Value # ZenTest SKIP
         alias string value
         def initialize(pool, data, start) 
           super('Asciz')

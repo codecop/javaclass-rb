@@ -3,7 +3,7 @@ module JavaClass
     
     # The +CAFEBABE+ magic of a class file. This just checks if CAFEBABE is here.
     # Author::   Peter Kofler
-    class ClassMagic
+    class ClassMagic # ZenTest SKIP
       
       CAFE_BABE = "\xCA\xFE\xBA\xBE"
       

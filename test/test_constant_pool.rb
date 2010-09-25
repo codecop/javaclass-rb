@@ -2,11 +2,12 @@ require File.dirname(__FILE__) + '/setup'
 require 'javaclass/classfile/constant_pool'
 
 module TestJavaClass
-  
-  class TestConstantPool < Test::Unit::TestCase
+  module TestClassFile
     
-    # 1.6.0_11 javap.exe output of test class, only tweaked the float value a bit...
-    JAVAP_OUTPUT = '  Constant pool:
+    class TestConstantPool < Test::Unit::TestCase
+      
+      # 1.6.0_11 javap.exe output of test class, only tweaked the float value a bit...
+      JAVAP_OUTPUT = '  Constant pool:
 const #1 = Method       #15.#33;        //  java/lang/Object."<init>":()V
 const #2 = String       #34;    //  String field
 const #3 = Field        #14.#35;        //  ConstantPoolTest.stringField:Ljava/lang/String;
@@ -48,49 +49,50 @@ const #40 = NameAndType #27:#28;//  doubleField:D
 const #41 = Asciz       ConstantPoolTest;
 const #42 = Asciz       java/lang/Object;
 const #43 = Asciz       java/lang/Runnable;'
-    
-    def setup
-      @cp = JavaClass::ClassFile::ConstantPool.new(load_class('constant_pool/ConstantPoolTest'))
-    end
-    
-    def test_index
-      assert_equal('Method', @cp[1].name)
-      assert_equal('Field', @cp[10].name)
-    end
-    
-    def test_size
-      assert_equal(331, @cp.size)
-    end
-    
-    def test_item_count
-      assert_equal(43, @cp.item_count)
-    end
-    
-    def test_dump
-      # puts @cp.dump.join("\n")
-      assert_equal(JAVAP_OUTPUT.gsub(/ +/,' ').gsub(/"</,'<').gsub(/>"/,'>'), @cp.dump.join("\n").gsub(/( |\t)+/,' '))
-    end
-    
-    def test_items
-      pool = @cp.items
-      assert_equal(41, pool.size) # 2 double
-      assert_equal('Method', pool[0].name)
-      assert_equal('stringField', pool[14].value)
-    end
-    
-    def test_find
-      found = @cp.find(JavaClass::ClassFile::ConstantPool::STRING_TAG)
-      assert_equal(1, found.size)
-      assert_equal('String', found[0].name)
-      assert_equal(34, found[0].string_index)
-    end
-    
-    def test_strings
-      found = @cp.strings
-      assert_equal(1, found.size)
-      assert_equal('String', found[0].name)
+      
+      def setup
+        @cp = JavaClass::ClassFile::ConstantPool.new(load_class('constant_pool/ConstantPoolTest'))
+      end
+      
+      def test_index
+        assert_equal('Method', @cp[1].name)
+        assert_equal('Field', @cp[10].name)
+      end
+      
+      def test_size
+        assert_equal(331, @cp.size)
+      end
+      
+      def test_item_count
+        assert_equal(43, @cp.item_count)
+      end
+      
+      def test_dump
+        # puts @cp.dump.join("\n")
+        assert_equal(JAVAP_OUTPUT.gsub(/ +/,' ').gsub(/"</,'<').gsub(/>"/,'>'), @cp.dump.join("\n").gsub(/( |\t)+/,' '))
+      end
+      
+      def test_items
+        pool = @cp.items
+        assert_equal(41, pool.size) # 2 double
+        assert_equal('Method', pool[0].name)
+        assert_equal('stringField', pool[14].value)
+      end
+      
+      def test_find
+        found = @cp.find(JavaClass::ClassFile::ConstantPool::STRING_TAG)
+        assert_equal(1, found.size)
+        assert_equal('String', found[0].name)
+        assert_equal(34, found[0].string_index)
+      end
+      
+      def test_strings
+        found = @cp.strings
+        assert_equal(1, found.size)
+        assert_equal('String', found[0].name)
+      end
+      
     end
     
   end
-  
 end

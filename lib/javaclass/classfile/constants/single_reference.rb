@@ -39,7 +39,7 @@ module JavaClass
         
       end
       
-      class ConstantClass < SingleReference
+      class ConstantClass < SingleReference # ZenTest SKIP
         alias name_index first_index
         def initialize(pool, data, start)
           super(pool, data, start, "class")
@@ -47,7 +47,7 @@ module JavaClass
         alias class_name first_value
       end
       
-      class ConstantString < SingleReference
+      class ConstantString < SingleReference # ZenTest SKIP
         alias string_index first_index
         def initialize(pool, data, start) 
           super(pool, data, start)

@@ -27,6 +27,7 @@ gemspec = Gem::Specification.new do |s|
   s.required_ruby_version = '>= 1.8.6' 
   s.platform = Gem::Platform::RUBY
   s.add_development_dependency('rake', '>= 0.8.4')
+  s.add_development_dependency('ZenTest', '>= 4.4.0')
   
   s.has_rdoc = true
   s.extra_rdoc_files = ['Readme.txt', 'history.txt']
@@ -55,6 +56,20 @@ end
 # :gem
 Rake::GemPackageTask.new(gemspec) do |pkg| 
   pkg.need_zip = true
+end
+
+desc 'Find missing test methods'
+task :zentest do
+ fl = gemspec.files.find_all { |f| f =~ /^(lib.*|test[\/\\]test_).*\.rb$/}
+ puts `ruby -Ilib -e "require 'rubygems'; load(Gem.bin_path('ZenTest', 'zentest'))" #{fl.join(' ')}`
+
+#    gemspec.files.find_all { |f| f =~ /^lib.*\.rb$/}.each do |libfile|
+#      testname = "test_#{libfile[/[^\/\\]+$/]}"
+#      testfile = gemspec.test_files.find { |f| f =~ /[\/\\]#{Regexp.escape(testname)}$/}
+#      testfile = '' unless testfile
+#      puts `ruby -I#{File.expand_path('lib')} -e "require 'rubygems'; load(Gem.bin_path('ZenTest', 'zentest'))" #{libfile} #{testfile}`
+#    end
+
 end
 
 # :package, :clobber_package, :repackage

@@ -1,4 +1,5 @@
 #! ruby
+require 'test/unit' if $0 == __FILE__
 require 'test/unit/testsuite'
 #require 'test/unit/ui/tk/testrunner'
 #require 'test/unit/ui/console/testrunner'
@@ -27,20 +28,20 @@ module TestJavaClass
       
       # Java class parser
       suite << TestString.suite
-      suite << TestClassVersion.suite
-      suite << TestBase.suite
-      suite << TestConstantPool.suite
-      suite << TestReferences.suite
-      suite << TestAccessFlags
-      suite << TestJavaClassHeader.suite
-
-      # classpath parser
-      suite << TestJarClasspath
-      suite << TestFolderClasspath
-      suite << TestJavaHomeClasspath
-      suite << TestCompositeClasspath
+      suite << TestClassFile::TestClassVersion.suite
+      suite << TestClassFile::TestConstants::TestBase.suite
+      suite << TestClassFile::TestConstantPool.suite
+      suite << TestClassFile::TestReferences.suite
+      suite << TestClassFile::TestAccessFlags.suite
+      suite << TestClassFile::TestJavaClassHeader.suite
       
-      suite << TestJavaClassName
+      # classpath parser
+      suite << TestClasspath::TestJarClasspath.suite
+      suite << TestClasspath::TestFolderClasspath.suite
+      suite << TestClasspath::TestJavaHomeClasspath.suite
+      suite << TestClasspath::TestCompositeClasspath.suite
+      
+      suite << TestJavaClassName.suite
       
       return suite
     end
