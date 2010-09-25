@@ -1,6 +1,5 @@
 * abrunden code der drinnen ist und rausziehen, etc.
 
-
 ---
 
 ? andere projects = packages, den jdk class list allgemein ohne merger, mit Methoden wie Kabutz sich w�nscht.
