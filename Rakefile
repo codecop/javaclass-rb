@@ -53,23 +53,20 @@ Rake::TestTask.new do |t|
   #t.verbose = false is default
 end
 
+desc 'Find missing test methods with ZenTest'
+task :zentest do
+  fl = gemspec.files.find_all { |f| f =~ /^(lib.*|test[\/\\]test_).*\.rb$/}
+  output = `ruby -I#{gemspec.require_path} -e "require 'rubygems'; load(Gem.bin_path('ZenTest', 'zentest'))" #{fl.join(' ')}`
+  # skip warnings I'm not interrested
+  output = output.gsub(/^# Couldn't find class for name \w+\n/, '')
+  # skip all ZenTest comments
+  output = output.gsub(/^#.*\n/, '')
+  puts output
+end
+
 # :gem
 Rake::GemPackageTask.new(gemspec) do |pkg| 
   pkg.need_zip = true
-end
-
-desc 'Find missing test methods'
-task :zentest do
- fl = gemspec.files.find_all { |f| f =~ /^(lib.*|test[\/\\]test_).*\.rb$/}
- puts `ruby -Ilib -e "require 'rubygems'; load(Gem.bin_path('ZenTest', 'zentest'))" #{fl.join(' ')}`
-
-#    gemspec.files.find_all { |f| f =~ /^lib.*\.rb$/}.each do |libfile|
-#      testname = "test_#{libfile[/[^\/\\]+$/]}"
-#      testfile = gemspec.test_files.find { |f| f =~ /[\/\\]#{Regexp.escape(testname)}$/}
-#      testfile = '' unless testfile
-#      puts `ruby -I#{File.expand_path('lib')} -e "require 'rubygems'; load(Gem.bin_path('ZenTest', 'zentest'))" #{libfile} #{testfile}`
-#    end
-
 end
 
 # :package, :clobber_package, :repackage
