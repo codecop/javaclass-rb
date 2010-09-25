@@ -52,8 +52,8 @@ module TestJavaClass
       assert(@cs.public?(JAR, PUBLIC_CLASS))
     end
 
-    class MockList
-      attr_reader :versions
+    class MockList # ZenTest SKIP
+      attr_reader :versions 
       attr_reader :modifiers
       attr_reader :entries
       def initialize
@@ -63,7 +63,7 @@ module TestJavaClass
         @entries = []
       end
 
-      def add_class(entry, is_public, version)
+      def add_class(entry, is_public, version) 
         @entries << entry
         @modifiers << is_public
         @versions << version

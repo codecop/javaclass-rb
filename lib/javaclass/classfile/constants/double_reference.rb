@@ -35,7 +35,7 @@ module JavaClass
         
       end
       
-      class ConstantField < DoubleReference
+      class ConstantField < DoubleReference # ZenTest SKIP
         alias class_index first_index 
         alias name_and_type_index second_index 
         def initialize(pool, data, start) 
@@ -45,7 +45,7 @@ module JavaClass
         alias signature second_value
       end
       
-      class ConstantMethod < DoubleReference
+      class ConstantMethod < DoubleReference # ZenTest SKIP
         alias class_index first_index 
         alias name_and_type_index second_index 
         def initialize(pool, data, start) 
@@ -55,7 +55,7 @@ module JavaClass
         alias signature second_value
       end
       
-      class ConstantInterfaceMethod < DoubleReference
+      class ConstantInterfaceMethod < DoubleReference # ZenTest SKIP
         alias class_index first_index 
         alias name_and_type_index second_index 
         def initialize(pool, data, start) 
@@ -65,7 +65,7 @@ module JavaClass
         alias signature second_value
       end
       
-      class ConstantNameAndType < DoubleReference
+      class ConstantNameAndType < DoubleReference # ZenTest SKIP
         alias name_index first_index 
         alias descriptor_index second_index 
         def initialize(pool, data, start)
