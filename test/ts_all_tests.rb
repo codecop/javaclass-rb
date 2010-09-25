@@ -1,8 +1,6 @@
 #! ruby
-require 'test/unit' if $0 == __FILE__
 require 'test/unit/testsuite'
-#require 'test/unit/ui/tk/testrunner'
-#require 'test/unit/ui/console/testrunner'
+require 'test/unit' if $0 == __FILE__
 
 require File.dirname(__FILE__) + '/test_string_ux'
 # require File.dirname(__FILE__) + '/test_class_magic'
@@ -48,6 +46,3 @@ module TestJavaClass
   end
   
 end
-
-#Test::Unit::UI::Tk::TestRunner.run(TestSuite_AllTests)
-#Test::Unit::UI::Console::TestRunner.run(TestSuite_AllTests)
