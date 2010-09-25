@@ -43,6 +43,7 @@ module JavaClass
         #    u2 attributes_count;
         #    attribute_info attributes[attributes_count];
         #  }
+        # TODO Java 1.0 - "private protected" fields.
         
         @magic = ClassMagic.new(data)
         @version = ClassVersion.new(data)
@@ -85,7 +86,7 @@ module JavaClass
         # dump << "Compiled from \"#{@value}\""
         d += @version.dump 
         d += @constant_pool.dump
-        # TODO implement dump() to return output same as javap
+        # TODO implement dump() to return same output as javap
         d
       end
       
