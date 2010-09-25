@@ -1,7 +1,7 @@
 require 'javaclass/classfile/constant_pool'
 
 module JavaClass
-  module ClassFile # :nodoc:
+  module ClassFile 
     
     # Container class for list of all classes, methods and fields referenced by this class.
     # This information is derived from the constant pool, no analysis.

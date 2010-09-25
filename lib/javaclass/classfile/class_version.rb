@@ -1,7 +1,7 @@
 require 'javaclass/string_ux'
 
 module JavaClass
-  module ClassFile # :nodoc:
+  module ClassFile 
     
     # Version of a class file.
     # Author::   Peter Kofler
