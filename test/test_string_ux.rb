@@ -30,7 +30,6 @@ class TestString < Test::Unit::TestCase
   end
   
   # --- fake methods for zentest ---
-  def test_class_yaml_new() assert(true); end
   def test_capitalize() assert(true); end
   def test_capitalize_bang() assert(true); end
   def test_casecmp() assert(true); end
@@ -39,6 +38,7 @@ class TestString < Test::Unit::TestCase
   def test_chomp_bang() assert(true); end
   def test_chop() assert(true); end
   def test_chop_bang() assert(true); end
+  def test_class_yaml_new() assert(true); end
   def test_concat() assert(true); end
   def test_count() assert(true); end
   def test_crypt() assert(true); end
@@ -51,6 +51,8 @@ class TestString < Test::Unit::TestCase
   def test_each_byte() assert(true); end
   def test_each_line() assert(true); end
   def test_empty_eh() assert(true); end
+  def test_ends_with() assert(true); end
+  def test_ensure_end() assert(true); end
   def test_eql_eh() assert(true); end
   def test_equals2() assert(true); end
   def test_equalstilde() assert(true); end
@@ -66,6 +68,7 @@ class TestString < Test::Unit::TestCase
   def test_intern() assert(true); end
   def test_is_binary_data_eh() assert(true); end
   def test_is_complex_yaml_eh() assert(true); end
+  def test_lchop() assert(true); end
   def test_length() assert(true); end
   def test_ljust() assert(true); end
   def test_lstrip() assert(true); end
@@ -92,6 +95,7 @@ class TestString < Test::Unit::TestCase
   def test_split() assert(true); end
   def test_squeeze() assert(true); end
   def test_squeeze_bang() assert(true); end
+  def test_starts_with() assert(true); end
   def test_strip() assert(true); end
   def test_strip_bang() assert(true); end
   def test_sub() assert(true); end
