@@ -3,8 +3,7 @@
 * deployment
   * Migrate to rubygems
   * automate deyployment
-
-* create a favicon for api and project (BCEL with R?)
+  * create a favicon for api and project (BCEL with R?)
 
 * implement
   * isAnnotation (checks version>=5 & superclass)
@@ -18,9 +17,3 @@
 
 * test
   * test with all classes of all JDKs against javap from this version "compileTheWorld"
-
-* think about
-  * add zip gem to load classes directly from the classpath (i.e. the jars), add gem dependency
-    * classpath abstraction, classpath contains list of JARs, folders, ZIPs
-    * WARs and EARs contain JARs and folders
-    * compare against my old Java implementation 
