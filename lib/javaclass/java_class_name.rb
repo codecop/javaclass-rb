@@ -4,36 +4,37 @@ module JavaClass
   # Author::          Peter Kofler
   class JavaClassName < String
 
-    # TODO Returnwerte aller Classnames diesen verwenden.
     # Return the package name of a classname or the superpackage of a package. Return an empty String if default package.
-    def package
-      matches = self.scan(/^(.+)\./)[0]
-      if matches
-        matches[0]
-      else
-        ''
-      end
-    end
+    attr_reader :package
 
     # Return the simple name of this class or package.
-    def simple_name
-      matches = self.scan(/\.([^.]+)$/)[0]
+    attr_reader :simple_name
+
+    def initialize(string)
+      super string
+      matches = self.scan(/^(.+)\.([A-Z][^.]*)$/)[0]
       if matches
-        matches[0]
+        @package, @simple_name = matches
+      elsif self =~ /^[A-Z][^.]*$/
+        @package = ''
+        @simple_name = self.to_s
       else
-        self
+        @package = self.to_s
+        @simple_name = ''
       end
     end
 
-    # Return true if this class is same or in a subpackage of the given Java _packages_ or
+    # TODO Returnwerte aller Classnames diesen verwenden.
+
+    # Return +true+ if this class is in same or in a subpackage of the given Java _packages_ or
     # if this package is same or a subpackage (with .).
-    def same_or_subpackage?(packages)
-      packages.find {|pkg| self == pkg || self =~ /^#{Regexp.escape(pkg)}\./ } != nil
+    def same_or_subpackage_of?(packages)
+      packages.find {|pkg| @package == pkg } != nil || subpackage_of?(packages)
     end
 
-    # Return true if this class is in a subpackage of the given Java _packages_ .
-    def subpackage?(packages)
-      packages.find {|pkg| self =~ /^#{Regexp.escape(pkg)}\./ } != nil
+    # Return +true+ if this class is in a subpackage of the given Java _packages_ .
+    def subpackage_of?(packages)
+      packages.find {|pkg| @package =~ /^#{Regexp.escape(pkg)}\./ } != nil
     end
 
     def to_classname
@@ -41,31 +42,33 @@ module JavaClass
     end
 
     def to_java_filename
-      self.gsub(/\./, '/') + ".java"
+      self.gsub(/\./, '/') + '.java'
     end
 
     def to_class_filename
-      self.gsub(/\./, '/') + ".class"
+      self.gsub(/\./, '/') + '.class'
     end
 
     # Split the simple name at the camel case boundary _pos_ and return two parts. _pos_ may
-    # may < 0 for counting backwards.
+    # be < 0 for counting backwards.
     def split_simple_name(pos)
-      sn = simple_name
-      parts = sn.scan(/([A-Z][^A-Z]+)/).flatten
+      parts = @simple_name.scan(/([A-Z][^A-Z]+)/).flatten
       pos = parts.size + pos +1 if pos < 0
-      return ['', sn] if pos <= 0
-      return [sn, ''] if pos >= parts.size
+      return ['', @simple_name] if pos <= 0
+      return [@simple_name, ''] if pos >= parts.size
       [parts[0...pos].join, parts[pos..-1].join]
     end
-  end
+end
 
 end
 
 class String
-  # Convert a Java classname or Java class filename to +JavaClassName+ instance.
+
+  # Convert a Java classname or Java class filename to +JavaClassName+ instance. 
+  # If it's a pathname then it must be relative to the classpath.
   def to_classname
-    class_name = self.gsub(/\/|\\/,'.').sub(/\.$|\.class$/,'')
+    class_name = self.gsub(/\/|\\/,'.').sub(/\.(class|java)?$/,'')
     JavaClass::JavaClassName.new(class_name)
   end
+
 end
