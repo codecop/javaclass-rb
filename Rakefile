@@ -55,10 +55,8 @@ end
 
 desc 'Find missing test methods with ZenTest'
 task :zentest do
-  fl = gemspec.files.find_all { |f| f =~ /^(lib.*|test[\/\\]test_).*\.rb$/}
+  fl = gemspec.files.find_all { |f| f =~ /^#{gemspec.require_path}.*\.rb$/} + gemspec.test_files
   output = `ruby -I#{gemspec.require_path} -e "require 'rubygems'; load(Gem.bin_path('ZenTest', 'zentest'))" #{fl.join(' ')}`
-  # skip warnings I'm not interrested
-  output = output.gsub(/^# Couldn't find class for name \w+\n/, '')
   # skip all ZenTest comments
   output = output.gsub(/^#.*\n/, '')
   puts output
@@ -136,7 +134,7 @@ def add_href_parent(file)
   end
 end
 
-desc 'Fix the rdoc hrefs in framesets'
+desc 'Fix the RDoc hrefs in framesets'
 task :fix_rdoc => [:rdoc] do 
   Dir['html/**/*.html'].each do |file| 
     next if file =~ /\.src/
