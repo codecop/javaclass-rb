@@ -1,3 +1,4 @@
+require 'test/unit' 
 require 'test/unit/testcase'
 
 # Base require of tests.
