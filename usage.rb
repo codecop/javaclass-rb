@@ -5,7 +5,7 @@ if __FILE__ == $0
   
   require 'javaclass'
   
-  clazz = JavaClass.parse('test/data/AccessFlagsTestPublic.class')
+  clazz = JavaClass.parse('test/data/access_flags/AccessFlagsTestPublic.class')
   puts clazz.version                          # => 50.0
   puts clazz.constant_pool.items[1]           # => packagename/AccessFlagsTestPublic
   puts clazz.access_flags.public?             # => true
