@@ -1,28 +1,28 @@
 # -*- ruby -*-
 
-# require 'autotest/autoupdate'
-# require 'autotest/camping'
+# require 'autotest/autoupdate'     # update after some time
+# require 'autotest/camping' 
 # require 'autotest/cctray'
 # require 'autotest/emacs'
 # require 'autotest/email_notify'
 # require 'autotest/fixtures'
-# require 'autotest/growl' # osx notify
+# require 'autotest/growl'          # osx notify (gem autotest-growl)
 # require 'autotest/heckle'
 # require 'autotest/html_report'
 # require 'autotest/jabber_notify'
-# require 'autotest/kdenotify' # kde notify
+# require 'autotest/kdenotify'      # kde notify (gem ?)
 # require 'autotest/menu'
 # require 'autotest/migrate'
 # require 'autotest/notify'
-# require 'autotest/once'
+# require 'autotest/once'           # run only once
 # require 'autotest/pretty'
-# require 'autotest/rcov'
-# require 'autotest/redgreen' # red or green color
-# require 'autotest/restart'
-# require 'autotest/screen'
+# require 'autotest/rcov'           # add rcov settings
+# require 'autotest/redgreen'       # red or green color (gem redgreen)
+# require 'autotest/restart'        # Autotest will restart itself as soon as a change in the .autotest file is detected.
+# require 'autotest/screen'         # Notify in GNU screen's status line (gem autotest_screen)
 # require 'autotest/shame'
-# require 'autotest/snarl' # win32 notify
-# require 'autotest/timestamp'
+# require 'autotest/snarl'          # win32 notify (gem ?)
+# require 'autotest/timestamp'      # print timestamps of files
 
 # Override autotest default magic deciding which test to run when
 # a file is changed : enable more flexible naming conventions
@@ -34,3 +34,12 @@
 #   end
 #
 # end
+
+# See:: http://ph7spot.com/musings/getting-started-with-autotest
+
+# ignore other content
+Autotest.add_hook :initialize do |autotest|
+  [/(?:\.hg|hosting)[\/\\].*$/, /\.(?:pdf|txt|bat|java)$/i ].each do |exception|
+    autotest.add_exception(exception)
+  end
+end
