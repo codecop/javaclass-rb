@@ -23,9 +23,10 @@ gemspec = Gem::Specification.new do |s|
   s.files = FileList['Readme.txt', '{lib,test}/**/*.*', 'history.txt', 'Rakefile']
   s.test_files = FileList['test/**/test_*.rb']
   s.require_path = 'lib'
-  s.add_dependency('rubyzip', '>= 0.9.1') 
+  s.add_dependency('rubyzip', '>= 0.9.1')
   s.required_ruby_version = '>= 1.8.6' 
   s.platform = Gem::Platform::RUBY
+  s.add_development_dependency('rake', '>= 0.8.4')
   
   s.has_rdoc = true
   s.extra_rdoc_files = ['Readme.txt', 'history.txt']
