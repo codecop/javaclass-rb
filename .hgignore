@@ -1,6 +1,9 @@
 
 syntax: glob
-hosting/**
+hosting/rubyforge.org/**
+
+syntax: glob
+hosting/googlecode.com/**
 
 syntax: glob
 html/**
