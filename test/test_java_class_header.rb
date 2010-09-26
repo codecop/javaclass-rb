@@ -19,23 +19,20 @@ module TestJavaClass
       end
       
       def test_this_class
-        assert_equal('packagename/AccessFlagsTestPublic', @public.this_class)
+        assert_equal('packagename.AccessFlagsTestPublic', @public.this_class)
       end
       
       def test_super_class
-        assert_equal('java/lang/Object', @public.super_class)
-      end
-      
-      def test_access_flags
-        # method only for autotest, tested in separate test case
-        assert(true)
+        assert_equal('java.lang.Object', @public.super_class)
       end
       
       def test_dump
-        # TODO raise NotImplementedError, 'Need to write test_dump'
+        expected = File.open("#{TEST_DATA_PATH}/access_flags/AccessFlagsTestPublic_javap.txt", 'r') {|io| io.read }
+        assert_equal(expected.gsub(/\s+/, ' ').gsub(/"</, '<').gsub(/>"/, '>'), @public.dump.join("\n").gsub(/\s+/, ' '))
       end
       
-      # --- fake methods for zentest ---
+      # --- fake methods for zentest, tested in separate test case ---
+      def test_access_flags; assert(true); end
       def test_constant_pool() assert(true); end
       def test_references() assert(true); end
       

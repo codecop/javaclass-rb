@@ -1,0 +1,29 @@
+public class packagename.AccessFlagsTestPublic extends java.lang.Object
+  minor version: 0
+  major version: 50
+  Constant pool:
+const #1 = Method       #3.#17; //  java/lang/Object."<init>":()V
+const #2 = class        #18;    //  packagename/AccessFlagsTestPublic
+const #3 = class        #19;    //  java/lang/Object
+const #4 = class        #20;    //  packagename/AccessFlagsTestPublic$InnerInterface
+const #5 = Asciz        InnerInterface;
+const #6 = Asciz        InnerClasses;
+const #7 = class        #21;    //  packagename/AccessFlagsTestPublic$StaticInner
+const #8 = Asciz        StaticInner;
+const #9 = class        #22;    //  packagename/AccessFlagsTestPublic$Inner
+const #10 = Asciz       Inner;
+const #11 = Asciz       <init>;
+const #12 = Asciz       ()V;
+const #13 = Asciz       Code;
+const #14 = Asciz       LineNumberTable;
+const #15 = Asciz       SourceFile;
+const #16 = Asciz       AccessFlagsTestPublic.java;
+const #17 = NameAndType #11:#12;//  "<init>":()V
+const #18 = Asciz       packagename/AccessFlagsTestPublic;
+const #19 = Asciz       java/lang/Object;
+const #20 = Asciz       packagename/AccessFlagsTestPublic$InnerInterface;
+const #21 = Asciz       packagename/AccessFlagsTestPublic$StaticInner;
+const #22 = Asciz       packagename/AccessFlagsTestPublic$Inner;
+
+{
+}

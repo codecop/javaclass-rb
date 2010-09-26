@@ -12,12 +12,16 @@ module JavaClass
 
     def initialize(string)
       super string
+
+      # TODO do not change original, just copy to normalized element and provide it in methods
+
       matches = self.scan(/^(.+)\.([A-Z][^.]*)$/)[0]
       if matches
-        @package, @simple_name = matches
+        @package = matches[0]
+        @simple_name = matches[1].to_classname
       elsif self =~ /^[A-Z][^.]*$/
         @package = ''
-        @simple_name = self.to_s
+        @simple_name = self
       else
         @package = self.to_s
         @simple_name = ''
@@ -39,6 +43,10 @@ module JavaClass
 
     def to_classname
       self
+    end
+
+    def to_jvmname
+      self.gsub(/\./, '/')
     end
 
     def to_java_filename

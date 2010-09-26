@@ -6,7 +6,7 @@ module JavaClass
       
       # Superclass of all constant values in the constant pool. Every constant has a +name+, a +tag+ and a +size+ in bytes.
       # Author::   Peter Kofler
-      class Base
+      class Base # ZenTest SKIP
         
         attr_reader :name
         attr_reader :tag

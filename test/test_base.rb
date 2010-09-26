@@ -19,22 +19,6 @@ module TestJavaClass
           assert_equal("Bubu", v.name)
         end
         
-        def test_dump
-          # TODO raise NotImplementedError, 'Need to write test_dump'
-        end
-        
-        def test_size
-          # TODO raise NotImplementedError, 'Need to write test_size'
-        end
-        
-        def test_slots
-          # TODO raise NotImplementedError, 'Need to write test_slots'
-        end
-        
-        def test_tag
-          # TODO raise NotImplementedError, 'Need to write test_tag'
-        end
-        
       end
       
     end
