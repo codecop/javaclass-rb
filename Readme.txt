@@ -14,17 +14,20 @@ of the classes passed to it together with a list of all outgoing references.
 
 == Motivation
 
-I am still doing Java most of the time. I used to be quite enthusiatic about
+I am still doing Java most of the time. I used to be quite enthusiastic about
 it, but after 11 years I can see the advantages of being a polyglot. So I use
 Ruby for all kind of stuff, just for fun. When I needed some Java class
 analysis I wrote it with Ruby. As I am a puritan, I did not
 want to call javap from my script, so I started disassembling the class files,
-which might be the the base for some serious static code analysis tools. (I
+which might be the base for some serious static code analysis tools. (I
 started adding methods to that end...)
 
 == Install
 
   sudo gem install javaclass
+
+* {Gem Hosting}[http://rubygems.org/gems/javaclass]
+* {Download of tarballs and gems}[http://code.google.com/p/javaclass-rb/downloads/list]
 
 == Usage
 
@@ -44,17 +47,11 @@ Module +JavaClass+ is the entry point for most functions in the gem.
 The main class is JavaClass::ClassFile::JavaClassHeader which provides access to
 all information of a Java class file.
 
-* {API (RDoc)}[http://api.javaclass-rb.googlecode.com/hg/index.html]
+* {API RDoc}[http://api.javaclass-rb.googlecode.com/hg/index.html]
 
 == Support
 
-The bug tracker is available here:
-
-* http://code.google.com/p/javaclass-rb/issues/list
-
-Download (tarballs and gems)
-
-* http://code.google.com/p/javaclass-rb/downloads/list
+The bug tracker is available at http://code.google.com/p/javaclass-rb/issues/list or just drop me an email.
 
 == Dependencies
 
@@ -65,6 +62,7 @@ Download (tarballs and gems)
 
 * {JavaWorld: The Java class file lifestyle}[http://www.javaworld.com/javaworld/jw-07-1996/jw-07-classfile.html]
 * {VM Spec: The class File Format}[http://java.sun.com/docs/books/jvms/second_edition/html/ClassFile.doc.html]
+* {Similar Project by unageanu}[http://github.com/unageanu/javaclass]
 
 == License
 
@@ -73,5 +71,5 @@ Download (tarballs and gems)
 == Disclaimer Note
 
 This software is provided "as is" and without any express or implied warranties,
-including, without limitation, the implied warranties of merchantibility and
+including, without limitation, the implied warranties of merchantability and
 fitness for a particular purpose.
