@@ -1,41 +1,44 @@
 Code:
-javaclass
+javaclass-rb
 
 Name:
-Java Class File Parser
+Java Class File Parser for Ruby
 
 Description:
-Parser and disassembler for Java class files, similar to the javap command. 
-It provides access to the package, protected, and public fields and methods 
+Parser and disassembler for Java class files, similar to the javap command.
+It provides access to the package, protected, and public fields and methods
 of the classes passed to it together with a list of all outgoing references.
+This might be the base for some serious static code analysis tools. (I
+started adding methods to that end...)
 
 Link:
-javaclass.rubyforge.org
+https://code.google.com/p/javaclass-rb/
 
 Features:
-* SCM (SVN)
-* Release
+* SCM (Hg)
+* Tracker
+* Release/Download
+* Tracker
 
-Development Status: 
-2 - Pre-Alpha 
+Labels:
+Analyser
+Class
+ClassFileFormat
+CodeAnalysis
+Console
+Disassembler
+English
+Gem
+Java
+OSIndependent
+Parser
+References
+Ruby
+SoftwareDevelopment
+StaticCodeAnalysis
 
-Environment: 
-Console (Text Based) 
-
-Intended Audience: 
-Developers 
-
-License: 
-Ruby License 
-
-Natural Language: 
-English 
-
-Operating System: 
-OS Independent 
-
-Programming Language: 
-Ruby 
-
-Topic: 
-Software Development
+Links:
+API RDoc - http://api.javaclass-rb.googlecode.com/hg/index.html
+Gem Hosting - http://rubygems.org/gems/javaclass
+Similar Project by unageanu - http://github.com/unageanu/javaclass
+Code Cop - http://blog.code-cop.org/
