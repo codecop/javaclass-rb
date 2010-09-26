@@ -2,29 +2,39 @@ require File.dirname(__FILE__) + '/setup'
 require 'javaclass/java_class_name'
 
 class TestString < Test::Unit::TestCase
-
+  
   def test_to_classname
-      assert_equal('Some', 'Some.class'.to_classname)
-      assert_equal('at.kugel.tool.Some', 'at/kugel/tool/Some.class'.to_classname)
-      assert_equal('at.kugel.tool.Some', "at\\kugel\\tool\\Some.java".to_classname)
-      assert_equal('at.kugel.tool.Some', 'at.kugel.tool.Some'.to_classname)
+    assert_equal('Some', 'Some.class'.to_javaname.to_classname)
+    assert_equal('at.kugel.tool.Some', 'at/kugel/tool/Some.class'.to_javaname.to_classname)
+    assert_equal('at.kugel.tool.Some', "at\\kugel\\tool\\Some.java".to_javaname.to_classname)
+    assert_equal('at.kugel.tool.Some', 'at.kugel.tool.Some'.to_javaname.to_classname)
   end
-
+  
 end
 
 module TestJavaClass
   class TestJavaClassName < Test::Unit::TestCase
     
     def setup
-      @c0 = JavaClass::JavaClassName.new('Some')
-      @cn = JavaClass::JavaClassName.new('at.kugel.tool.Some')
-      @cm = JavaClass::JavaClassName.new('at.kugel.tool.SomeClassWithMoreNames') 
+      @c0 = JavaClass::JavaClassName.new('dummy', 'Some')
+      @cn = JavaClass::JavaClassName.new('dummy', 'at.kugel.tool.Some')
+      @cm = JavaClass::JavaClassName.new('dummy', 'at.kugel.tool.SomeClassWithMoreNames') 
+    end
+
+    def test_to_classname
+      assert_equal('Some', @c0.to_classname)
+      assert_equal('at.kugel.tool.Some', @cn.to_classname)
+    end
+    
+    def test_to_javaname
+      assert(@cn == @cn.to_javaname)
+      assert(@cn === @cn.to_javaname)
     end
     
     def test_to_jvmname
       assert_equal('at/kugel/tool/Some', @cn.to_jvmname)
     end
-
+    
     def test_to_java_filename
       assert_equal('at/kugel/tool/Some.java', @cn.to_java_filename)
     end
@@ -56,11 +66,6 @@ module TestJavaClass
       assert(@cn.subpackage_of?(%w[ at.kugel ]))
       assert(!@cn.subpackage_of?(%w[ at.kugel.tool ]))
       assert(!@cn.subpackage_of?(%w[ at.kugel.tool.some ]))
-    end
-
-    def test_to_classname
-      assert(@cn == @cn.to_classname)
-      assert(@cn === @cn.to_classname)
     end
     
     def test_split_simple_name
