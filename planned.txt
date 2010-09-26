@@ -3,7 +3,6 @@
 * deployment
   * Migrate to rubygems
   * automate deyployment
-  * create a favicon for api and project (BCEL with R?)
 
 * implement
   * isAnnotation (checks version>=5 & superclass)
