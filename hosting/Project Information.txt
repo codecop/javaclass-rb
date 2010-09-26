@@ -1,0 +1,41 @@
+Code:
+javaclass
+
+Name:
+Java Class File Parser
+
+Description:
+Parser and disassembler for Java class files, similar to the javap command. 
+It provides access to the package, protected, and public fields and methods 
+of the classes passed to it together with a list of all outgoing references.
+
+Link:
+javaclass.rubyforge.org
+
+Features:
+* SCM (SVN)
+* Release
+
+Development Status: 
+2 - Pre-Alpha 
+
+Environment: 
+Console (Text Based) 
+
+Intended Audience: 
+Developers 
+
+License: 
+Ruby License 
+
+Natural Language: 
+English 
+
+Operating System: 
+OS Independent 
+
+Programming Language: 
+Ruby 
+
+Topic: 
+Software Development
