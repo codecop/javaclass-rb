@@ -69,7 +69,7 @@ const #43 = Asciz       java/lang/Runnable;'
       
       def test_dump
         # puts @cp.dump.join("\n")
-        assert_equal(JAVAP_OUTPUT.gsub(/ +/,' ').gsub(/"</,'<').gsub(/>"/,'>'), @cp.dump.join("\n").gsub(/( |\t)+/,' '))
+        assert_equal(JAVAP_OUTPUT.gsub(/ +/, ' ').gsub(/"</, '<').gsub(/>"/, '>'), @cp.dump.join("\n").gsub(/( |\t)+/,' '))
       end
       
       def test_items

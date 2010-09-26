@@ -21,6 +21,10 @@ module TestJavaClass
       @cm = JavaClass::JavaClassName.new('at.kugel.tool.SomeClassWithMoreNames') 
     end
     
+    def test_to_jvmname
+      assert_equal('at/kugel/tool/Some', @cn.to_jvmname)
+    end
+
     def test_to_java_filename
       assert_equal('at/kugel/tool/Some.java', @cn.to_java_filename)
     end
