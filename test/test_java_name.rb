@@ -51,6 +51,12 @@ module TestJavaClass
       assert_equal('at/kugel/tool/SomeClassWithMoreNames.class', @cm.to_class_file)
     end
 
+    def test_full_name
+      assert_equal('Some', @c0.full_name)
+      assert_equal('at.kugel.tool.Some', @cn.full_name)
+      assert_equal('at.kugel.tool.SomeClassWithMoreNames', @cm.full_name)
+    end
+        
     def test_package
       assert_equal('', @c0.package)
       assert_equal('at.kugel.tool', @cn.package)
