@@ -44,6 +44,10 @@ module JavaClass
         def initialize(pool, data, start)
           super(pool, data, start, "class")
         end
+        def first_value 
+          # is a classname
+          super.to_javaname
+        end
         alias class_name first_value
       end
       

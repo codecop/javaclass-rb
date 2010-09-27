@@ -4,7 +4,6 @@ require 'javaclass/classfile/class_version'
 require 'javaclass/classfile/constant_pool'
 require 'javaclass/classfile/references'
 require 'javaclass/classfile/access_flags'
-require 'javaclass/java_class_name'
 
 module JavaClass 
   module ClassFile # :nodoc:
@@ -68,13 +67,13 @@ module JavaClass
       
       # Return the name of this class.
       def this_class
-        @constant_pool[@this_class_idx].to_s.to_classname
+        @constant_pool[@this_class_idx].to_s.to_javaname
       end
       
       # Return the name of the superclass of this class or +nil+.
       def super_class
-        if @super_class_idx>0
-          @constant_pool[@super_class_idx].to_s.to_classname
+        if @super_class_idx > 0
+          @constant_pool[@super_class_idx].to_s.to_javaname
         else
           nil
         end
@@ -83,12 +82,9 @@ module JavaClass
       # Return a debug output of this class that looks similar to +javap+ output.
       def dump
         d = []
-        if @access_flags.public?
-          mod = 'public ' 
-        else
-          mod = ''
-        end
-        d << "#{mod}class #{this_class} extends #{super_class}"
+        mod = @access_flags.public? ? 'public ' : ''
+        ext = super_class ? "extends #{super_class.to_classname}" : ''
+        d << "#{mod}class #{this_class.to_classname} #{ext}" 
         # d << "  SourceFile: \"#{read from LineNumberTable?}\""
         d += @version.dump 
         d += @constant_pool.dump

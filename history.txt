@@ -1,11 +1,12 @@
 === trunk (0.0.3 not unreleased yet)
 
-* fix links in RDoc
-* split classes into submodules
-* migrated to Google Code and Mercurial
+* add JavaName to all class names that are returned
+* fix links in RDoc, update documentation
+* move classes into submodules for classpath, classfile, etc.
+* migrated to Google Code and Mercurial repository
 * added access flag $1000
 * added references to used classes
-* classpath abstraction
+* added classpath abstraction
 
 === 0.0.2 08/04/2009
 

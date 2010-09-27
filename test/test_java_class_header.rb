@@ -19,11 +19,11 @@ module TestJavaClass
       end
       
       def test_this_class
-        assert_equal('packagename.AccessFlagsTestPublic', @public.this_class)
+        assert_equal('packagename/AccessFlagsTestPublic', @public.this_class)
       end
       
       def test_super_class
-        assert_equal('java.lang.Object', @public.super_class)
+        assert_equal('java/lang/Object', @public.super_class)
       end
       
       def test_dump
