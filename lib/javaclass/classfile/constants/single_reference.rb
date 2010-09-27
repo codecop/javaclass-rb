@@ -1,4 +1,5 @@
 require 'javaclass/classfile/constants/base'
+require 'javaclass/java_name'
 
 module JavaClass 
   module ClassFile 

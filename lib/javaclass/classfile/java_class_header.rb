@@ -4,6 +4,7 @@ require 'javaclass/classfile/class_version'
 require 'javaclass/classfile/constant_pool'
 require 'javaclass/classfile/references'
 require 'javaclass/classfile/access_flags'
+require 'javaclass/java_name'
 
 module JavaClass 
   module ClassFile # :nodoc:
