@@ -41,6 +41,10 @@ module JavaClass
         def initialize(pool, data, start) 
           super(pool, data, start)
         end
+        def first_value 
+          # is a classname
+          super.to_javaname
+        end
         alias class_name first_value
         alias signature second_value
       end
@@ -51,6 +55,10 @@ module JavaClass
         def initialize(pool, data, start) 
           super(pool, data, start)
         end  
+        def first_value 
+          # is a classname
+          super.to_javaname
+        end
         alias class_name first_value
         alias signature second_value
       end
@@ -61,6 +69,10 @@ module JavaClass
         def initialize(pool, data, start) 
           super(pool, data, start)
         end  
+        def first_value 
+          # is a classname
+          super.to_javaname
+        end
         alias class_name first_value
         alias signature second_value
       end
