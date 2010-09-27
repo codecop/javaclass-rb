@@ -15,12 +15,10 @@ module TestJavaClass
       end
       
       def test_additional_classpath
-        # dummy
         assert_equal([], @cpe.additional_classpath)
       end
       
       def test_jar_eh
-        # dummy
         assert(!@cpe.jar?)
       end
       

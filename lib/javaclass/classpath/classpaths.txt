@@ -1,1 +1,1 @@
-* classpath abstraction - WARs and EARs contain JARs and folders
+* classpath abstraction - WARs and EARs contain JARs and a folder

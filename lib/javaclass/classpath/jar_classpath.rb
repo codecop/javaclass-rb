@@ -1,4 +1,5 @@
 require 'zip/zipfilesystem'
+require 'javaclass/java_name'
 
 module JavaClass
   module Classpath 
@@ -12,7 +13,7 @@ module JavaClass
         @jarfile = jarfile
         raise IOError, "jarfile #{@jarfile} not found" if !FileTest.exist? @jarfile
         raise "#{@jarfile} is no file" if !FileTest.file? @jarfile
-        @classes = list_classes
+        @classes = list_classes.collect { |cl| cl.to_javaname }
         @manifest =
         begin
           Zip::ZipFile.open(@jarfile) do |zipfile|
