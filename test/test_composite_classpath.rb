@@ -1,6 +1,5 @@
 require File.dirname(__FILE__) + '/setup'
-require 'javaclass'
-# require 'javaclass/classpath/composite_classpath'
+require 'javaclass/classpath/composite_classpath'
 
 module TestJavaClass
   module TestClasspath
@@ -12,34 +11,21 @@ module TestJavaClass
         @cpe.add_file_name "#{TEST_DATA_PATH}/jar_classpath/JarClasspathTestManifest.jar"
       end
       
-      def test_parse
-        # TODO move this test somewhere else
-        cp = JavaClass.classpath("#{TEST_DATA_PATH}/java_home_classpath/jre-ext", 
-                                 "#{TEST_DATA_PATH}/jar_classpath/JarClasspathTestManifest.jar#{File::PATH_SEPARATOR}#{TEST_DATA_PATH}/folder_classpath/JarClasspathTestFolder")
-        elem = cp.elements
-        assert_equal(5, elem.size)
-        assert_equal("#{TEST_DATA_PATH}/java_home_classpath/jre-ext/lib/rt.jar", elem[0].to_s)
-        assert_equal("#{TEST_DATA_PATH}/java_home_classpath/jre-ext/lib/ext/ext.jar", elem[1].to_s)
-        assert_equal("#{TEST_DATA_PATH}/jar_classpath/JarClasspathTestManifest.jar", elem[2].to_s)
-        assert_equal("#{TEST_DATA_PATH}/jar_classpath/JarClasspathTest.jar", elem[3].to_s)
-        assert_equal("#{TEST_DATA_PATH}/folder_classpath/JarClasspathTestFolder", elem[4].to_s)
-      end
-      
       def test_add_element
-        # TODO raise NotImplementedError, 'Need to write test_add_element'
+        assert(true)
+        # added in setup and add_file_name
       end
       
       def test_add_file_name
-        assert(true) # tested in setup
+        @cpe.add_file_name "#{TEST_DATA_PATH}/folder_classpath/JarClasspathTestFolder"
+        assert_equal(2+1+2, @cpe.count)
       end
       
       def test_additional_classpath
-        # dummy
         assert_equal([], @cpe.additional_classpath)
       end
       
       def test_jar_eh
-        # dummy
         assert(!@cpe.jar?)
       end
       
@@ -48,7 +34,8 @@ module TestJavaClass
       end
       
       def test_elements
-        # TODO raise NotImplementedError, 'Need to write test_elements'
+        assert_equal(2, @cpe.elements.size)
+        assert_equal("#{TEST_DATA_PATH}/jar_classpath/JarClasspathTest.jar", @cpe.elements[1].to_s)
       end
       
       def test_includes_eh

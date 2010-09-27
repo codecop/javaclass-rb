@@ -13,10 +13,10 @@ module JavaClass
   
   # Parse and scan the system classpath. 
   def self.system_classpath
-    parse(ENV['JAVA_HOME'], ENV['CLASSPATH'])
+    classpath(ENV['JAVA_HOME'], ENV['CLASSPATH'])
   end
   
-  # Parse the given path _classpath_ and return a chain of class path elements.
+  # Parse the given path _path_ and return a chain of class path elements.
   def self.classpath(javahome, path='')
     cp = Classpath::CompositeClasspath.new
     cp.add_element(Classpath::JavaHomeClasspath.new(javahome)) if javahome
@@ -26,6 +26,7 @@ module JavaClass
   
 end
 
+# TODO move this somewhere
 def process_class(name, already=[], intend=0)
   file_name = 'C:\JavaDev\classes\\' + name.gsub(/\./,'\\') + '.class'
   return if !FileTest.exist? file_name
@@ -66,7 +67,7 @@ end
 # # --- common
 # #process_package('at.spardat.krimicee.common', total) #
 # #process_package('at.spardat.krimiaps.common', total) # -> 79 ok
-# #process_package('at.spardat.common', total) # 146, in sich, könnte nach common
+# #process_package('at.spardat.common', total) # 146, in sich, kï¿½nnte nach common
 # #process_package('at.spardat.integrator', total) #
 # # DatabaseAwareComponent -> ganze DB
 # #process_package('at.spardat.krimicee.util', total)

@@ -9,7 +9,7 @@ module JavaClass
     # Author::   Peter Kofler
     class CompositeClasspath
       
-      # Return the list of classnames found in this _jarfile_ . 
+      # Return the list of classnames found in this path. 
       def initialize
         @elements = []
       end

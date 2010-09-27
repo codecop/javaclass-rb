@@ -1,3 +1,5 @@
+require 'javaclass/java_name'
+
 module JavaClass
   module Classpath # :nodoc:
     
@@ -10,7 +12,7 @@ module JavaClass
         @folder = folder
         raise IOError, "folder #{@folder} not found" if !FileTest.exist? @folder
         raise "#{@folder} is no folder" if !FileTest.directory? @folder
-        @classes = list_classes
+        @classes = list_classes.collect { |cl| cl.to_javaname }
       end
       
       # Return false.
