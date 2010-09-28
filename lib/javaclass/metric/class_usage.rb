@@ -1,6 +1,8 @@
 # add the lib to the load path
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
 
+# TODO cleanup this code fragment and make a proper class 
+
 require 'javaclass'
 include JavaClass
 
@@ -24,7 +26,7 @@ def imported_types(classes)
   imported.reject { |name| in_jdk?(name) } - own_classes
 end
 
-# TODO XML Spring auslesen und classes hinzufügen
+# TODO detect and read spring XML configs?
 
 classes = JavaClass::Classpath::FolderClasspath.new("./target/classes")
 own = classes.names.collect { |name| name.gsub('/', '.').sub(/\.class$/, '')}.sort
