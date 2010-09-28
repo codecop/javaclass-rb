@@ -13,10 +13,10 @@ module TestJavaClass
         
         def test_name
           v = ConstantClass.new
-          assert_equal("Class", v.name)
+          assert_equal('Class', v.name)
           
-          v = ConstantClass.new("Bubu")
-          assert_equal("Bubu", v.name)
+          v = ConstantClass.new('Bubu')
+          assert_equal('Bubu', v.name)
         end
         
       end
