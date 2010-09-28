@@ -12,8 +12,8 @@ module TestJavaClass
       end
       
       def test_add_element
+        # fake methods for zentest, tested in setup and add_file_name
         assert(true)
-        # added in setup and add_file_name
       end
       
       def test_add_file_name
