@@ -90,10 +90,10 @@ def hg(params)
   puts `hg #{params.join(' ')}`
 end
 
-desc 'Tag version in Hg and push to origin'
+desc 'Tag version in Hg'
 task :tag do
   hg ['tag', '-f', "-m \"Released gem version #{gemspec.version}\"", "#{full_gem_name}"]
-  hg ['push'] 
+  # TODO hg ['push'] 
 end
 
 # internal - desc 'Release the gem to Rubygems'
@@ -102,11 +102,29 @@ task :release_rubygems => :package do
   Gem::GemRunner.new.run ['push', "pkg/#{full_gem_name}.gem"]
 end
 
+def user_pass_from_hgrc(authname)
+  home = ENV['HOME'] ? ENV['HOME'] : ENV['USERPROFILE']
+  lines = IO.readlines(File.expand_path("#{home}/.hgrc"))
+  user = lines.find{ |l| l =~ /#{authname}.username/ }[/[^\s=]+$/] 
+  pass = lines.find{ |l| l =~ /#{authname}.password/ }[/[^\s=]+$/] 
+  [user, pass] 
+end
+
+# Helper method to execute array _params_ with Python.
+def python(params)
+  puts `python #{params.join(' ')}`
+end
+
 # internal - desc 'Release the gem to Google Code'
-task :release_googlecode => :package do
+# See:: http://raulraja.com/2009/07/11/script-from-google-code-svn-to-google-code-downloads/
+# See:: http://support.googlecode.com/svn/trunk/scripts/googlecode_upload.py
+#task :release_googlecode => :package do
+desc 'Test'
+task :release_googlecode do
   puts "Releasing #{full_gem_name} to GoogleCode"
-  # TODO is this automatable?
-  # TODO http://raulraja.com/2009/07/11/script-from-google-code-svn-to-google-code-downloads/
+  user, pass = user_pass_from_hgrc(gemspec.name)
+  python ['./hosting/googlecode_upload.py']
+  # TODO ./hosting/googlecode_upload.py -s "JavaClass #{gemspec.version} Gem|Zip" -p javaclass-rb -u #{user} -w #{pass} "pkg/#{full_gem_name}.gem|zip"
 end
 
 desc 'Package and upload gem to Rubygems and Google Code'
@@ -158,6 +176,8 @@ end
 
 desc 'Publish the RDoc files to Google Code and push to origin'
 task :publish_rdoc => [:clobber_rdoc, :rdoc, :fix_rdoc] do 
+  puts "Releasing #{full_gem_name} to API"
+
   remote_repo = 'api.javaclass-rb.googlecode.com/hg/'
   local_repo = 'api'
   local_dir = 'html'
@@ -176,7 +196,7 @@ task :publish_rdoc => [:clobber_rdoc, :rdoc, :fix_rdoc] do
   add_frameset_version(file, remote_dir)
   
   hg ['ci', "-m \"Released gem version #{gemspec.version}\"", "-R #{local_repo}"]
-  hg ['push', "-R #{local_repo}"]
+  # TODO hg ['push', "-R #{local_repo}"]
 end
 
 desc 'Remove package and rdoc products'
