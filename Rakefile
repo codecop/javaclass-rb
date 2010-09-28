@@ -20,7 +20,7 @@ gemspec = Gem::Specification.new do |s|
   s.author = 'Peter Kofler'
   s.email = 'peter dot kofler at code minus cop dot org'
   
-  s.files = FileList['Readme.txt', '{lib,test}/**/*.*', 'history.txt', 'Rakefile']
+  s.files = FileList['Readme.txt', '{lib,test,examples}/**/*.*', 'history.txt', 'Rakefile']
   s.test_files = FileList['test/**/test_*.rb']
   s.require_path = 'lib'
   s.add_dependency('rubyzip', '>= 0.9.1')
@@ -141,9 +141,6 @@ task :fix_rdoc => [:rdoc] do
     add_href_parent(file) 
   end
 end
-
-# TODO http://javaclass.rubyforge.org/ redirecten
-#  * api 0.0.3 uploaden
 
 # Helper method to add the gem version _dir_ into index _file_ to frameset links.
 def add_frameset_version(file, dir)
