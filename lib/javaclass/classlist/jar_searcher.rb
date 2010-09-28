@@ -2,12 +2,12 @@ require 'javaclass/classpath/composite_classpath'
 require 'javaclass/classfile/java_class_header'
 
 module JavaClass
-  module Analyse # :nodoc:
+  module ClassList # :nodoc:
     
     # Search in zip or jar files for Java class files, check for package access or inner classes and
     # call back a list of all these.
     # Author::          Peter Kofler
-    class ClassListJarSearcher
+    class JarSearcher
       
       attr_accessor :skip_inner_classes
       attr_accessor :skip_package_classes
