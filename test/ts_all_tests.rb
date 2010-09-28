@@ -14,7 +14,7 @@ require File.dirname(__FILE__) + '/test_jar_classpath'
 require File.dirname(__FILE__) + '/test_folder_classpath'
 require File.dirname(__FILE__) + '/test_java_home_classpath'
 require File.dirname(__FILE__) + '/test_composite_classpath'
-require File.dirname(__FILE__) + '/test_class_list_jar_searcher'
+require File.dirname(__FILE__) + '/test_jar_searcher'
 require File.dirname(__FILE__) + '/test_java_name.rb'
 require File.dirname(__FILE__) + '/test_javaclass.rb'
 
@@ -39,7 +39,7 @@ class TestSuite_AllTests
     suite << TestJavaClass::TestClasspath::TestCompositeClasspath.suite
     
     # analyse
-    suite << TestJavaClass::TestAnalyse::TestClassListJarSearcher.suite
+    suite << TestJavaClass::TestClassList::TestJarSearcher.suite
     
     # general
     suite << TestJavaClass::TestJavaName.suite
