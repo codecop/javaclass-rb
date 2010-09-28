@@ -1,5 +1,6 @@
 === trunk (0.0.3 not unreleased yet)
 
+* integrated ClassList from another project as first analyser
 * add JavaName to all class names that are returned
 * fix links in RDoc, update documentation
 * move classes into submodules for classpath, classfile, etc.
