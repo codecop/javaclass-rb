@@ -9,7 +9,8 @@ require 'javaclass/java_name'
 module JavaClass 
   module ClassFile # :nodoc:
     
-    # Provide all information of a Java class file. This is just a container for all kind of
+    # Parse and disassemble Java class files, similar to the +javap+ command.
+    # Provides all information of a Java class file. This is just a container for all kind of
     # specialised elements. The constuctor parses and creates all contained elements. 
     # See::             http://java.sun.com/docs/books/jvms/second_edition/html/ClassFile.doc.html
     # See::             {en.wikipedia.org/wiki/Class}[http://en.wikipedia.org/wiki/Class_(file_format)]
