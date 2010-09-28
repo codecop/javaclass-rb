@@ -55,6 +55,13 @@ module TestJavaClass
         assert_equal(['ClassVersionTest11.class', 'ClassVersionTest10.class', 'package/ClassVersionTest11.class'], @cpe.names)
       end
       
+      def test_find_jars
+        @cpe = JavaClass::Classpath::CompositeClasspath.new
+        @cpe.find_jars("#{TEST_DATA_PATH}/jar_classpath")
+        assert_equal(4, @cpe.elements.size)
+        assert_equal("#{TEST_DATA_PATH}/jar_classpath/JarClasspathTest.zip", @cpe.elements[1].to_s)
+      end
+      
     end
     
   end
