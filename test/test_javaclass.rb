@@ -3,7 +3,7 @@ require 'javaclass'
 
 module TestJavaClass
   
-  class TestSelf < Test::Unit::TestCase
+  class TestJavaClassFacade < Test::Unit::TestCase
     def test_parse
       cp = JavaClass.classpath("#{TEST_DATA_PATH}/java_home_classpath/jre-ext",
       "#{TEST_DATA_PATH}/jar_classpath/JarClasspathTestManifest.jar#{File::PATH_SEPARATOR}#{TEST_DATA_PATH}/folder_classpath/JarClasspathTestFolder")
