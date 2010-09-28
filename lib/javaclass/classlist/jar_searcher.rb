@@ -37,7 +37,12 @@ module JavaClass
       # Return true if the _classfile_ in the given _classpath_ is public. This is expensive because
       # the jarfile is opened and the _classfile_ is extracted and read.
       def public?(classpath, classfile)
-        header = ClassFile::JavaClassHeader.new(classpath.load_binary(classfile))  
+        begin
+          header = ClassFile::JavaClassHeader.new(classpath.load_binary(classfile))
+        rescue
+          puts "error #{$1} for class #{classfile} on #{classpath.to_s}"
+          raise
+        end
         raise "invalid java class #{classfile}" unless header.magic.valid?
         header.access_flags.accessible?
       end
