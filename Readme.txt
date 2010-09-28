@@ -33,12 +33,20 @@ started adding methods to that end...)
 
   require 'javaclass'
 
-  clazz = JavaClass.parse('packagename/Public.class')
+  # load the class directly from the file system
+  clazz = JavaClass.load_fs('packagename/Public.class')
+  
+  # better lookup the class from some classpath
+  classpath = JavaClass.classpath('some/path')
+  clazz = JavaClass.load_cp('packagename.Public', classpath)
+  
   clazz.version                          # => 50.0
   clazz.constant_pool.items[1]           # => packagename/Public
   clazz.access_flags.public?             # => true
   clazz.this_class                       # => packagename/Public
+  clazz.this_class.to_java_file          # => packagename/Public.java
   clazz.super_class                      # => java/lang/Object
+  clazz.super_class.to_classname         # => java.lang.Object
   clazz.references.referenced_methods[0] # => java/lang/Object.<init>:()V
 
 == Documentation
