@@ -29,7 +29,7 @@ module JavaClass
     # Skips classes that are in the filtered packages.
     def filter_classes(classes)
       classes.find_all do |name|
-        !(@skip_inner_classes and name =~ /\$/) && !(@package_filters.find { |filter| name =~ filter })
+        !(@skip_inner_classes && name =~ /\$/) && (@package_filters.find { |filter| name =~ filter } == nil)
       end
     end
 
@@ -49,7 +49,7 @@ module JavaClass
       cpe.find_jars(path)
       filter_classes(cpe.names).each do |entry|
         is_public = public?(cpe, entry)
-        next if @skip_package_classes and !is_public
+        next if @skip_package_classes && !is_public
         list.add_class(entry, is_public, version)
       end
 
