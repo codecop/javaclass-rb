@@ -16,7 +16,7 @@ require File.dirname(__FILE__) + '/test_java_home_classpath'
 require File.dirname(__FILE__) + '/test_composite_classpath'
 require File.dirname(__FILE__) + '/test_class_list_jar_searcher'
 require File.dirname(__FILE__) + '/test_java_name.rb'
-require File.dirname(__FILE__) + '/test_facade.rb'
+require File.dirname(__FILE__) + '/test_javaclass.rb'
 
 class TestSuite_AllTests
   def self.suite
@@ -43,7 +43,7 @@ class TestSuite_AllTests
     
     # general
     suite << TestJavaClass::TestJavaName.suite
-    suite << TestJavaClass::TestFacade.suite
+    suite << TestJavaClass::TestJavaClassFacade.suite
     
     return suite
   end
