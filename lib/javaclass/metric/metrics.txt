@@ -5,6 +5,8 @@
   * count outgoing references (usage) per method 
   * which signatures are called how often
   * maybe move current method there?
+  * CRSS Metric
+  * CCD
 
  * {Chidamber and Kemerer Java Metrics (ckjm)}[http://www.spinellis.gr/sw/ckjm/]
  * {The CRSS Metric for Package Design Quality}[http://crpit.com/confpapers/CRPITV62Melton2.pdf]
