@@ -2,28 +2,28 @@ require 'javaclass/classfile/java_class_header'
 require 'javaclass/classpath/java_home_classpath'
 require 'javaclass/classpath/composite_classpath'
 
-# Parse and disassemble Java class files, similar to the +javap+ command.
+# Main entry point for class file parsing.
 # Author::          Peter Kofler
 module JavaClass
-  
-  # Read and disassemble the given class called _name_ (full file name).
-  def self.parse(name)
-    ClassFile::JavaClassHeader.new(File.open(name, 'rb') {|io| io.read } )
-  end
-  
-  # Parse and scan the system classpath. 
-  def self.system_classpath
-    classpath(ENV['JAVA_HOME'], ENV['CLASSPATH'])
-  end
-  
-  # Parse the given path _path_ and return a chain of class path elements.
-  def self.classpath(javahome, path='')
-    cp = Classpath::CompositeClasspath.new
-    cp.add_element(Classpath::JavaHomeClasspath.new(javahome)) if javahome
-    path.split(File::PATH_SEPARATOR).each { |cpe| cp.add_file_name(cpe) } if path
-    cp
-  end
-  
+
+    # Read and disassemble the given class called _name_ (full file name).
+    def self.parse(name)
+      ClassFile::JavaClassHeader.new(File.open(name, 'rb') {|io| io.read } )
+    end
+    
+    # Parse and scan the system classpath. Needs +JAVA_HOME+ set. Uses environment +CLASSPATH+ if set.
+    def self.system_classpath
+      classpath(ENV['JAVA_HOME'], ENV['CLASSPATH'])
+    end
+    
+    # Parse the given path _path_ and return a chain of class path elements.
+    def self.classpath(javahome, path='')
+      cp = Classpath::CompositeClasspath.new
+      cp.add_element(Classpath::JavaHomeClasspath.new(javahome)) if javahome
+      path.split(File::PATH_SEPARATOR).each { |cpe| cp.add_file_name(cpe) } if path
+      cp
+    end
+
 end
 
 # TODO move this somewhere
