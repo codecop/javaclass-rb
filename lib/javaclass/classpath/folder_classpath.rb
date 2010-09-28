@@ -48,6 +48,10 @@ module JavaClass
         @folder
       end
 
+      def ==(other)
+        other.class == FolderClasspath && other.to_s == self.to_s
+      end
+
       private
 
       # Return the list of classnames (in fact file names) found in this folder.
