@@ -1,1 +1,2 @@
-* classpath abstraction - WARs and EARs contain JARs and a folder
+* Java 1.1 Home classpath with lib/classes.zip
+* other classpath abstractions: - WARs and EARs contain JARs and a folder
