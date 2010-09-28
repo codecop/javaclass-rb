@@ -106,7 +106,8 @@ def user_pass_from_hgrc(authname)
   home = ENV['HOME'] ? ENV['HOME'] : ENV['USERPROFILE']
   lines = IO.readlines(File.expand_path("#{home}/.hgrc"))
   user = lines.find{ |l| l =~ /#{authname}.username/ }[/[^\s=]+$/] 
-  pass = lines.find{ |l| l =~ /#{authname}.password/ }[/[^\s=]+$/] 
+  pass = lines.find{ |l| l =~ /#{authname}.password/ }[/[^\s=]+$/]
+  # TODO add error messages if not proper... 
   [user, pass] 
 end
 
@@ -123,6 +124,7 @@ desc 'Test'
 task :release_googlecode do
   puts "Releasing #{full_gem_name} to GoogleCode"
   user, pass = user_pass_from_hgrc(gemspec.name)
+  # TODO download script myself? wget just here? 
   python ['./hosting/googlecode_upload.py']
   # TODO ./hosting/googlecode_upload.py -s "JavaClass #{gemspec.version} Gem|Zip" -p javaclass-rb -u #{user} -w #{pass} "pkg/#{full_gem_name}.gem|zip"
 end
