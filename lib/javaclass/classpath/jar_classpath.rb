@@ -16,9 +16,7 @@ module JavaClass
         @classes = list_classes.collect { |cl| cl.to_javaname }
         @manifest =
         begin
-          Zip::ZipFile.open(@jarfile) do |zipfile|
-            zipfile.file.read("META-INF/MANIFEST.MF")
-          end
+          Zip::ZipFile.open(@jarfile) { |zipfile| zipfile.file.read("META-INF/MANIFEST.MF") }
         rescue
           nil
         end
