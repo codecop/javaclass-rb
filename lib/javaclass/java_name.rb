@@ -46,20 +46,24 @@ module JavaClass
       self
     end
 
+    # Return the full classname of this class, e.g. <code>java.lang.Object</code>.
     def to_classname
       @full_name.to_javaname
     end
     
+    # Return the VM name of this class, e.g. <code>java/lang/Object</code>.
     def to_jvmname
       (@full_name.gsub(/\./, '/')).to_javaname
     end
     
+    # Return the Java source file name of this class, e.g. <code>java/lang/Object.java</code>.
     def to_java_file
-      (@full_name.gsub(/\./, '/') + '.java').to_javaname
+      (to_jvmname + '.java').to_javaname
     end
     
+    # Return the Java class file name of this class, e.g. <code>java/lang/Object.class</code>.
     def to_class_file
-      (@full_name.gsub(/\./, '/') + '.class').to_javaname
+      (to_jvmname + '.class').to_javaname
     end
     
     # Split the simple name at the camel case boundary _pos_ and return two parts. _pos_ may
@@ -77,7 +81,7 @@ end
 
 class String
   
-  # Convert a Java classname or Java class filename to +JavaName+ instance. 
+  # Convert a Java classname or Java class filename to JavaClass::JavaName instance. 
   # If it's a pathname then it must be relative to the classpath.
   def to_javaname
     JavaClass::JavaName.new(self)

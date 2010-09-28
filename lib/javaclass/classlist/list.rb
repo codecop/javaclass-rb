@@ -86,7 +86,7 @@ module JavaClass
       
       # The access list is the raw list of all package access classes for one version. It was used to differ
       # normal classes from hidden classes and was saved in <code>doc/AccessLists/*_p.txt</code>.
-      # This works only if JarClassSearcher was used with +skip_package_classes+ set to false (default).
+      # This works only if JarSearcher was used with +skip_package_classes+ set to false (default).
       # If there are more versions loaded, then only the last version is printed. So we get consecutive lists 
       # of new package access classes with every JDK version.
       def old_access_list
@@ -98,7 +98,7 @@ module JavaClass
       
       # The class list is the raw list of all classes for one version without version or package access 
       # descriptors. It was used to find differences and was saved in <code>doc/ClassLists/*_classes.txt</code>.
-      # This usually was done with JarClassSearcher set +skip_package_classes+ to false.
+      # This usually was done with JarSearcher set +skip_package_classes+ to false.
       # If a block is given it is invoked with ClassEntry and should return if to add the class or not. 
       def plain_class_list
         packages.collect { |pkg|
@@ -112,7 +112,7 @@ module JavaClass
       
       # Create a full class list with version numbers and different versions to compare.
       # This was the base for classlists and was saved in <code>doc/fullClassList1x.txt</code>.
-      # This usually was done with JarClassSearcher set +skip_package_classes+ to false and
+      # This usually was done with JarSearcher set +skip_package_classes+ to false and
       # contained different classlists merged together.
       def full_class_list
         v = first_last_versions

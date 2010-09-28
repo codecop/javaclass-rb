@@ -116,6 +116,7 @@ module TestJavaClass
           @list.parse_line("javax.swing.HeaderParser [only 2p] - \n", 4)
           # occurs because 1-4 is already set in versions, so we cant set 2 again
         end
+        puts 'last warning "update class HeaderParser..." ^^^ is expected'
       end
       
     end

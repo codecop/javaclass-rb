@@ -1,4 +1,3 @@
-require 'zip/zipfilesystem'
 require 'javaclass/classpath/jar_classpath'
 require 'javaclass/classpath/folder_classpath'
 
