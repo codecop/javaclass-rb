@@ -70,6 +70,10 @@ module JavaClass
         @jarfile
       end
       
+      def ==(other)
+        other.class == JarClasspath && other.to_s == self.to_s
+      end
+      
       private 
       
       # Return the list of classnames (in fact file names) found in this jarfile. 

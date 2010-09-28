@@ -47,7 +47,7 @@ module JavaClass
 
       # Add the _elem_ classpath element to the list.
       def add_element(elem)
-        @elements << elem unless @elements.find { |cpe| cpe .to_s == elem.to_s }
+        @elements << elem unless @elements.find { |cpe| cpe == elem }
         elem.additional_classpath.each do |acpe|
           # referred classpath elements may be missing
           if FileTest.exist? acpe
