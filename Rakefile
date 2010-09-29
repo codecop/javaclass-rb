@@ -1,4 +1,5 @@
 #require 'FileUtils' # already required
+require 'net/http'
 require 'rubygems'
 require 'rubygems/gem_runner' # install and uninstall
 require 'rake'
@@ -55,11 +56,9 @@ end
 
 desc 'Find missing test methods with ZenTest'
 task :zentest do
-  fl = gemspec.files.find_all { |f| f =~ /^#{gemspec.require_path}.*\.rb$/} + gemspec.test_files
-  output = `ruby -I#{gemspec.require_path} -e "require 'rubygems'; load(Gem.bin_path('ZenTest', 'zentest'))" #{fl.join(' ')}`
-  # skip all ZenTest comments
-  output = output.gsub(/^#.*\n/, '')
-  puts output
+  files = gemspec.files.find_all { |f| f =~ /^#{gemspec.require_path}.*\.rb$/ } + gemspec.test_files
+  output = `ruby -I#{gemspec.require_path} -e "require 'rubygems'; load(Gem.bin_path('ZenTest', 'zentest'))" #{files.join(' ')}`
+  puts output.gsub(/^#.*\n/, '') # skip all ZenTest comments
 end
 
 # :gem
@@ -85,15 +84,17 @@ task :uninstall do
   Gem::GemRunner.new.run ['uninstall', gemspec.name]
 end
 
-# Helper method to execute array _params_ with Mercurial.
+# Helper method to execute Mercurial with the _params_ array.
 def hg(params)
   puts `hg #{params.join(' ')}`
 end
 
+# TODO test push code with a clone of the clone, so we do not propagate the push into master tree
+
 desc 'Tag version in Hg'
 task :tag do
   hg ['tag', '-f', "-m \"Released gem version #{gemspec.version}\"", "#{full_gem_name}"]
-  # TODO hg ['push'] 
+  hg ['push'] 
 end
 
 # internal - desc 'Release the gem to Rubygems'
@@ -103,15 +104,20 @@ task :release_rubygems => :package do
 end
 
 def user_pass_from_hgrc(authname)
-  home = ENV['HOME'] ? ENV['HOME'] : ENV['USERPROFILE']
-  lines = IO.readlines(File.expand_path("#{home}/.hgrc"))
+  lines = IO.readlines(File.expand_path("~/.hgrc"))
   user = lines.find{ |l| l =~ /#{authname}.username/ }[/[^\s=]+$/] 
   pass = lines.find{ |l| l =~ /#{authname}.password/ }[/[^\s=]+$/]
   # TODO add error messages if not proper... 
   [user, pass] 
 end
 
-# Helper method to execute array _params_ with Python.
+def download_googlecode_upload_py
+  Net::HTTP.start('support.googlecode.com', 80) do |http|
+    return http.get('/svn/trunk/scripts/googlecode_upload.py').body
+  end
+end
+
+# Helper method to execute Python with the _params_ array.
 def python(params)
   puts `python #{params.join(' ')}`
 end
@@ -124,8 +130,8 @@ desc 'Test'
 task :release_googlecode do
   puts "Releasing #{full_gem_name} to GoogleCode"
   user, pass = user_pass_from_hgrc(gemspec.name)
-  # TODO download script myself? wget just here? 
-  python ['./hosting/googlecode_upload.py']
+  p download_googlecode_upload_py
+  # python ['./hosting/googlecode_upload.py']
   # TODO ./hosting/googlecode_upload.py -s "JavaClass #{gemspec.version} Gem|Zip" -p javaclass-rb -u #{user} -w #{pass} "pkg/#{full_gem_name}.gem|zip"
 end
 
@@ -149,17 +155,12 @@ def add_href_parent(file)
       line
     end
   end
-  File.open(file, 'w') do |f|
-    f.print lines.join
-  end
+  File.open(file, 'w') { |f| f.print lines.join }
 end
 
 desc 'Fix the RDoc hrefs in framesets'
 task :fix_rdoc => [:rdoc] do 
-  Dir['html/**/*.html'].each do |file| 
-    next if file =~ /\.src/
-    add_href_parent(file) 
-  end
+  Dir['html/**/*.html'].each { |file| add_href_parent(file) } 
 end
 
 # Helper method to add the gem version _dir_ into index _file_ to frameset links.
@@ -171,9 +172,7 @@ def add_frameset_version(file, dir)
       line
     end
   end
-  File.open(file, 'w') do |f|
-    f.print lines.join
-  end
+  File.open(file, 'w') { |f| f.print lines.join }
 end
 
 desc 'Publish the RDoc files to Google Code and push to origin'
@@ -198,17 +197,18 @@ task :publish_rdoc => [:clobber_rdoc, :rdoc, :fix_rdoc] do
   add_frameset_version(file, remote_dir)
   
   hg ['ci', "-m \"Released gem version #{gemspec.version}\"", "-R #{local_repo}"]
-  # TODO hg ['push', "-R #{local_repo}"]
+  hg ['push', "-R #{local_repo}"]
 end
 
 desc 'Remove package and rdoc products'
 task :clobber => [:clobber_package, :clobber_rdoc] do
   FileUtils.rm_r 'api' rescue nil
+  FileUtils.rm_r 'tmp' rescue nil
 end
 
-# Helper method to grep the sources for some _pattern_ words.
+# Helper method to grep all the sources for some _pattern_ words.
 def egrep(pattern)
-  Dir['**/*'].find_all {|fn| FileTest.file? fn} .each do |fn|
+  Dir['**/*'].find_all { |fn| FileTest.file? fn }.each do |fn|
     line_count = 0
     open(fn) do |f|
       while line = f.gets
