@@ -27,7 +27,7 @@ module TestJavaClass
         assert(true)
       end
       
-      def test_test_to_package_shortcut_s
+      def test_to_package_shortcut_s
         pkg = JavaClass::ClassList::PackageEntry.new('packagename', 2)
         pkg.add_class('packagename.PublicClass', true, 2);
         pkg.add_class('packagename.PublicInterface', true, 2);
@@ -63,13 +63,13 @@ module TestJavaClass
         assert_equal("packagename [2] - \n" + "   PublicClass - \n" + "   PuckageClass [2p] - \n", pkg.to_package_shortcut_s(1,2))
       end
       
-      def test_spaceship
+      def test_spaceship 
         sorted = [
-        a=JavaClass::ClassList::PackageEntry.new('com.sun'),
-        b=JavaClass::ClassList::PackageEntry.new('java.beans'),
-        c=JavaClass::ClassList::PackageEntry.new('javax.ejb'),
-        d=JavaClass::ClassList::PackageEntry.new('java.lang'),
-        e=JavaClass::ClassList::PackageEntry.new('java.io')
+          a=JavaClass::ClassList::PackageEntry.new('com.sun'),
+          b=JavaClass::ClassList::PackageEntry.new('java.beans'),
+          c=JavaClass::ClassList::PackageEntry.new('javax.ejb'),
+          d=JavaClass::ClassList::PackageEntry.new('java.lang'),
+          e=JavaClass::ClassList::PackageEntry.new('java.io')
         ].sort
         
         assert_equal(-1, d<=>a)
