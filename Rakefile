@@ -61,6 +61,11 @@ task :zentest do
   puts output.gsub(/^#.*\n/, '') # skip all ZenTest comments
 end
 
+# TODO test and finish
+task :autotest do
+  ruby "-Ilib -w ./bin/autotest"
+end
+
 # :gem
 Rake::GemPackageTask.new(gemspec) do |pkg| 
   pkg.need_zip = true
@@ -85,16 +90,15 @@ task :uninstall do
 end
 
 # Helper method to execute Mercurial with the _params_ array.
+# The +hg+ executable must be in the path.
 def hg(params)
   puts `hg #{params.join(' ')}`
 end
 
-# TODO test push code with a clone of the clone, so we do not propagate the push into master tree
-
 desc 'Tag version in Hg'
 task :tag do
   hg ['tag', '-f', "-m \"Released gem version #{gemspec.version}\"", "#{full_gem_name}"]
-  hg ['push'] 
+  puts 'Tag created. Don\'t forget to push'
 end
 
 # internal - desc 'Release the gem to Rubygems'
@@ -103,14 +107,20 @@ task :release_rubygems => :package do
   Gem::GemRunner.new.run ['push', "pkg/#{full_gem_name}.gem"]
 end
 
+# Read username and password from the <code>~/.hgrc</code> for _authname_ prefix.
 def user_pass_from_hgrc(authname)
-  lines = IO.readlines(File.expand_path("~/.hgrc"))
+  lines = IO.readlines(File.expand_path('~/.hgrc'))
   user = lines.find{ |l| l =~ /#{authname}.username/ }[/[^\s=]+$/] 
+  raise "could not find key #{authname}.username in ~/.hgrc" unless user
   pass = lines.find{ |l| l =~ /#{authname}.password/ }[/[^\s=]+$/]
-  # TODO add error messages if not proper... 
+  raise "could not find key #{authname}.password in ~/.hgrc" unless pass
   [user, pass] 
 end
 
+# Download the <code>googlecode_upload.py</code> from Google Code repository.
+# See:: http://raulraja.com/2009/07/11/script-from-google-code-svn-to-google-code-downloads/
+# See:: http://code.google.com/p/support/wiki/ScriptedUploads
+# See:: http://support.googlecode.com/svn/trunk/scripts/googlecode_upload.py
 def download_googlecode_upload_py
   Net::HTTP.start('support.googlecode.com', 80) do |http|
     return http.get('/svn/trunk/scripts/googlecode_upload.py').body
@@ -118,15 +128,14 @@ def download_googlecode_upload_py
 end
 
 # Helper method to execute Python with the _params_ array.
+# The +python+ executable must be in the path.
 def python(params)
   puts `python #{params.join(' ')}`
 end
 
 # internal - desc 'Release the gem to Google Code'
-# See:: http://raulraja.com/2009/07/11/script-from-google-code-svn-to-google-code-downloads/
-# See:: http://support.googlecode.com/svn/trunk/scripts/googlecode_upload.py
 #task :release_googlecode => :package do
-desc 'Test'
+desc 'Testing'
 task :release_googlecode do
   puts "Releasing #{full_gem_name} to GoogleCode"
   user, pass = user_pass_from_hgrc(gemspec.name)
@@ -223,7 +232,7 @@ end
 
 desc 'Look for TODO and FIXME tags'
 task :todo do
-  egrep(/#.*(FI[X]ME|TO[D]O|T[B]D)/) # use 'odd' brackets to not find myself (and not have Eclipse markers)
+  egrep(/#.*(FI[X]ME|TO[D]O|T[B]D|H[A]CK)/i) # use 'odd' brackets to not find myself (and not have Eclipse markers)
 end
 
 task :default => :test
