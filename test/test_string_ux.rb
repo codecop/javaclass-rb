@@ -38,7 +38,7 @@ class TestString < Test::Unit::TestCase
   def test_chomp_bang() assert(true); end
   def test_chop() assert(true); end
   def test_chop_bang() assert(true); end
-  def test_class_yaml_new() assert(true); end
+  #def test_class_yaml_new() assert(true); end
   def test_concat() assert(true); end
   def test_count() assert(true); end
   def test_crypt() assert(true); end
@@ -66,8 +66,8 @@ class TestString < Test::Unit::TestCase
   def test_insert() assert(true); end
   def test_inspect() assert(true); end
   def test_intern() assert(true); end
-  def test_is_binary_data_eh() assert(true); end
-  def test_is_complex_yaml_eh() assert(true); end
+  #def test_is_binary_data_eh() assert(true); end
+  #def test_is_complex_yaml_eh() assert(true); end
   def test_lchop() assert(true); end
   def test_length() assert(true); end
   def test_ljust() assert(true); end
@@ -105,15 +105,15 @@ class TestString < Test::Unit::TestCase
   def test_sum() assert(true); end
   def test_swapcase() assert(true); end
   def test_swapcase_bang() assert(true); end
-  def test_taguri() assert(true); end
-  def test_taguri_equals() assert(true); end
+  #def test_taguri() assert(true); end
+  #def test_taguri_equals() assert(true); end
   def test_times() assert(true); end
   def test_to_f() assert(true); end
   def test_to_i() assert(true); end
   def test_to_s() assert(true); end
   def test_to_str() assert(true); end
   def test_to_sym() assert(true); end
-  def test_to_yaml() assert(true); end
+  #def test_to_yaml() assert(true); end
   def test_tr() assert(true); end
   def test_tr_bang() assert(true); end
   def test_tr_s() assert(true); end

@@ -6,7 +6,7 @@ module JavaClass
     # Version of a class file.
     # Author::   Peter Kofler
     # See::      http://java.sun.com/docs/books/jvms/second_edition/html/ClassFile.doc.html#75883
-    class ClassVersion
+    class ClassVersion # ZenTest FULL to find method to_s
       
       attr_reader :minor
       attr_reader :major

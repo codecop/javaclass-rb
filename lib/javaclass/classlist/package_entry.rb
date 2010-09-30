@@ -5,7 +5,7 @@ module JavaClass
     
     # A package in the List.
     # Author::          Peter Kofler
-    class PackageEntry
+    class PackageEntry # ZenTest FULL to find method <=>
       
       attr_reader :name
       # Return the list of versions this package exists. This is the sum of all versions of all classes in the package.

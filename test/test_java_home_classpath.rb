@@ -11,7 +11,7 @@ module TestJavaClass
         @cpe = JavaClass::Classpath::JavaHomeClasspath.new("#{@folder}/jre")
       end
       
-      def test_count
+      def test_integration_count
         assert_equal(1, @cpe.count)
 
         @cpe = JavaClass::Classpath::JavaHomeClasspath.new("#{@folder}/jdk")
@@ -25,22 +25,22 @@ module TestJavaClass
         assert_equal(["#{@folder}/jre-ext/lib/ext/ext.jar"], @cpe.additional_classpath)
       end
       
-      def test_jar_eh
+      def test_integration_jar_eh
         assert(@cpe.jar?)
       end
       
-      def test_includes_eh
+      def test_integration_includes_eh
         assert(@cpe.includes?('ClassVersionTest10.class'))
         assert(@cpe.includes?('ClassVersionTest10'))
         assert(!@cpe.includes?('ClassVersionTest11.class'))
         assert(!@cpe.includes?('ClassVersionTest11'))
       end
       
-      def test_load_binary
+      def test_integration_load_binary
         assert_equal(load_class('class_version/ClassVersionTest10'), @cpe.load_binary('ClassVersionTest10'))
       end
       
-      def test_names
+      def test_integration_names
         assert_equal(['ClassVersionTest10.class'], @cpe.names)
       end
       

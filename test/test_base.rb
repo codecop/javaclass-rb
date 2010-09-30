@@ -5,9 +5,9 @@ module TestJavaClass
   module TestClassFile
     module TestConstants
       
-      class TestConstantBase < Test::Unit::TestCase
+      class TestBase < Test::Unit::TestCase
         
-        class ConstantClass < JavaClass::ClassFile::Constants::Base; # ZenTest SKIP
+        class ConstantClass < JavaClass::ClassFile::Constants::Base; # ZenTest SKIP mock class
           def initialize(name=nil); super(name); end
         end
         

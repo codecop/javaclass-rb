@@ -48,7 +48,7 @@ module TestJavaClass
         assert(@cs.public?(@cpe, PUBLIC_CLASS))
       end
       
-      class MockList # ZenTest SKIP
+      class MockList # ZenTest SKIP mock class
         attr_reader :versions
         attr_reader :modifiers
         attr_reader :entries
