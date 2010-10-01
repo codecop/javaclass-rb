@@ -3,6 +3,7 @@ require 'net/http'
 require 'rubygems'
 require 'rubygems/gem_runner' # install and uninstall
 require 'rake'
+require 'rake/clean' # for clean/clobber
 require 'rake/testtask'
 require 'rake/gempackagetask'
 require 'rake/packagetask'
@@ -10,14 +11,19 @@ require 'rake/rdoctask'
 
 # Test, package and publish functions.
 # Author::          Peter Kofler
+# See: http://rake.rubyforge.org/files/doc/rakefile_rdoc.html
+GEM_NAME = 'javaclass'
+GOOGLE_PROJECT = "#{GEM_NAME}-rb"
+RDOC_DIR = 'html'
+RDOC_REPO = 'api'
 
 gemspec = Gem::Specification.new do |s|
   s.version = '0.0.3'
-  s.name = 'javaclass'
+  s.name = GEM_NAME
   s.rubyforge_project = 'javaclass' # old, just redirects
   s.summary = 'A parser and disassembler for Java class files'
   s.description = 'Provides access to the package, protected, and public fields and methods of the classes passed to it together with a list of all outgoing references.'
-  s.homepage = 'http://code.google.com/p/javaclass-rb/'
+  s.homepage = "http://code.google.com/p/#{GOOGLE_PROJECT}/"
   s.author = 'Peter Kofler'
   s.email = 'peter dot kofler at code minus cop dot org'
   
@@ -61,9 +67,9 @@ task :zentest do
   puts output.gsub(/^#.*\n/, '') # skip all ZenTest comments
 end
 
-# TODO test and finish
+desc 'Run Autotest'
 task :autotest do
-  ruby "-Ilib -w ./bin/autotest"
+  `ruby -e "require 'rubygems'; load(Gem.bin_path('ZenTest', 'autotest'))"`
 end
 
 # :gem
@@ -80,12 +86,12 @@ Rake::PackageTask.new(gemspec.name, gemspec.version) do |pkg|
 end
 
 desc 'Install the gem locally'
-task :install => :package do
+task :install_gem => :package do
   Gem::GemRunner.new.run ['install', "pkg/#{full_gem_name}"]
 end
 
 desc 'Uninstall the gem'
-task :uninstall do
+task :uninstall_gem do
   Gem::GemRunner.new.run ['uninstall', gemspec.name]
 end
 
@@ -95,7 +101,7 @@ def hg(params)
   puts `hg #{params.join(' ')}`
 end
 
-desc 'Tag version in Hg'
+desc 'Tag current version in Hg'
 task :tag do
   hg ['tag', '-f', "-m \"Released gem version #{gemspec.version}\"", "#{full_gem_name}"]
   puts 'Tag created. Don\'t forget to push'
@@ -108,6 +114,7 @@ task :release_rubygems => :package do
 end
 
 # Read username and password from the <code>~/.hgrc</code> for _authname_ prefix.
+# <code>HOME</code> environment must be set.
 def user_pass_from_hgrc(authname)
   lines = IO.readlines(File.expand_path('~/.hgrc'))
   user = lines.find{ |l| l =~ /#{authname}.username/ }[/[^\s=]+$/] 
@@ -117,20 +124,20 @@ def user_pass_from_hgrc(authname)
   [user, pass] 
 end
 
-# Download the <code>googlecode_upload.py</code> from Google Code repository.
-# See:: http://raulraja.com/2009/07/11/script-from-google-code-svn-to-google-code-downloads/
-# See:: http://code.google.com/p/support/wiki/ScriptedUploads
+# Download the <code>googlecode_upload.py</code> from Google Code repository and save it as _name_ .
 # See:: http://support.googlecode.com/svn/trunk/scripts/googlecode_upload.py
-def download_googlecode_upload_py
+def download_googlecode_upload_py(name)
   Net::HTTP.start('support.googlecode.com', 80) do |http|
-    return http.get('/svn/trunk/scripts/googlecode_upload.py').body
+    body = http.get("/svn/trunk/scripts/#{name}").body
+    File.open(name, 'w') { |f| f.print body }
   end
 end
 
 # Helper method to execute Python with the _params_ array.
 # The +python+ executable must be in the path.
 def python(params)
-  puts `python #{params.join(' ')}`
+  puts "python #{params.join(' ')}"
+  # TODO puts `python #{params.join(' ')}`
 end
 
 # internal - desc 'Release the gem to Google Code'
@@ -139,23 +146,26 @@ desc 'Testing'
 task :release_googlecode do
   puts "Releasing #{full_gem_name} to GoogleCode"
   user, pass = user_pass_from_hgrc(gemspec.name)
-  p download_googlecode_upload_py
-  # python ['./hosting/googlecode_upload.py']
-  # TODO ./hosting/googlecode_upload.py -s "JavaClass #{gemspec.version} Gem|Zip" -p javaclass-rb -u #{user} -w #{pass} "pkg/#{full_gem_name}.gem|zip"
+  # See:: http://code.google.com/p/support/wiki/ScriptedUploads
+  download_googlecode_upload_py 'googlecode_upload.py'
+  ['gem', 'zip'].each do |extension|
+    puts "uploading \"pkg/#{full_gem_name}.#{extension}\"..."
+    python ['googlecode_upload.py', "-s \"JavaClass #{gemspec.version} #{extension.capitalize}\"", "-p #{GOOGLE_PROJECT}", "-u #{user}", "-w #{pass}", "pkg/#{full_gem_name}.#{extension}"]
+  end
 end
 
 desc 'Package and upload gem to Rubygems and Google Code'
-task :publish_gem => [:clobber_package, :package, :release_rubygems, :release_googlecode] 
+task :publish_gem => [:clobber_package, :gem, :package, :release_rubygems, :release_googlecode] 
 
 # :rdoc, :clobber_rdoc, :rerdoc
 Rake::RDocTask.new do |rdoc|
-  # rdoc.rdoc_dir = 'html' is default
+  rdoc.rdoc_dir = RDOC_DIR # 'html' is default anyway
   rdoc.title = "#{full_gem_name} Documentation"
   rdoc.main = 'Readme.txt'
   rdoc.rdoc_files.include 'Readme.txt', 'lib/**/*.rb', 'history.txt'
 end
 
-# Helper method to add target="_parent" to _file_ html.
+# Helper method to add target="_parent" to all external links in _file_ html.
 def add_href_parent(file)
   lines = IO.readlines(file).collect do |line|
     if line =~ /(href=(?:'|")https?:\/\/)/
@@ -169,7 +179,7 @@ end
 
 desc 'Fix the RDoc hrefs in framesets'
 task :fix_rdoc => [:rdoc] do 
-  Dir['html/**/*.html'].each { |file| add_href_parent(file) } 
+  Dir["#{RDOC_DIR}/**/*.html"].each { |file| add_href_parent(file) } 
 end
 
 # Helper method to add the gem version _dir_ into index _file_ to frameset links.
@@ -188,32 +198,28 @@ desc 'Publish the RDoc files to Google Code and push to origin'
 task :publish_rdoc => [:clobber_rdoc, :rdoc, :fix_rdoc] do 
   puts "Releasing #{full_gem_name} to API"
 
-  remote_repo = 'api.javaclass-rb.googlecode.com/hg/'
-  local_repo = 'api'
-  local_dir = 'html'
+  remote_repo = "https://#{RDOC_REPO}.#{GOOGLE_PROJECT}.googlecode.com/hg/"
   remote_dir = "#{gemspec.version}"
   
-  FileUtils.rm_r local_repo rescue nil
-  hg ['clone', "https://#{remote_repo}", local_repo]
+  FileUtils.rm_r RDOC_REPO rescue nil
+  hg ['clone', remote_repo, RDOC_REPO]
   
-  FileUtils.rm_r "#{local_repo}/#{remote_dir}" rescue nil
-  FileUtils.cp_r local_dir, "#{local_repo}/#{remote_dir}"
-  hg ['addremove', "-R #{local_repo}"]
+  FileUtils.rm_r "#{RDOC_REPO}/#{remote_dir}" rescue nil
+  FileUtils.cp_r RDOC_DIR, "#{RDOC_REPO}/#{remote_dir}"
   
   # modify index, update redirect in frameset
-  file = "#{local_repo}/index.html"
-  FileUtils.cp "#{local_repo}/#{remote_dir}/index.html", file
+  file = "#{RDOC_REPO}/index.html"
+  FileUtils.cp "#{RDOC_REPO}/#{remote_dir}/index.html", file
   add_frameset_version(file, remote_dir)
   
-  hg ['ci', "-m \"Released gem version #{gemspec.version}\"", "-R #{local_repo}"]
-  hg ['push', "-R #{local_repo}"]
+  hg ['addremove', '-q', "-R #{RDOC_REPO}"]
+  hg ['ci', "-m \"Released gem version #{gemspec.version}\"", "-R #{RDOC_REPO}"]
+  hg ['tag', '-f', "-m \"Released gem version #{gemspec.version}\"", "-R #{RDOC_REPO}", "#{full_gem_name}"]
+  # hg ['push', "-R #{RDOC_REPO}"]
 end
 
-desc 'Remove package and rdoc products'
-task :clobber => [:clobber_package, :clobber_rdoc] do
-  FileUtils.rm_r 'api' rescue nil
-  FileUtils.rm_r 'tmp' rescue nil
-end
+# :clean :clobber 
+CLOBBER.include(RDOC_REPO, 'googlecode_upload.py')
 
 # Helper method to grep all the sources for some _pattern_ words.
 def egrep(pattern)
