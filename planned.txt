@@ -2,7 +2,6 @@
 
 * deployment
   * Migrate to rubygems
-  * automate deyployment
 
 * implement
   * isAnnotation (checks version>=5 & superclass)

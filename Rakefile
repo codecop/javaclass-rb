@@ -136,14 +136,11 @@ end
 # Helper method to execute Python with the _params_ array.
 # The +python+ executable must be in the path.
 def python(params)
-  puts "python #{params.join(' ')}"
-  # TODO puts `python #{params.join(' ')}`
+  puts `python #{params.join(' ')}`
 end
 
 # internal - desc 'Release the gem to Google Code'
-#task :release_googlecode => :package do
-desc 'Testing'
-task :release_googlecode do
+task :release_googlecode => :package do
   puts "Releasing #{full_gem_name} to GoogleCode"
   user, pass = user_pass_from_hgrc(gemspec.name)
   # See:: http://code.google.com/p/support/wiki/ScriptedUploads
@@ -155,7 +152,7 @@ task :release_googlecode do
 end
 
 desc 'Package and upload gem to Rubygems and Google Code'
-task :publish_gem => [:clobber_package, :gem, :package, :release_rubygems, :release_googlecode] 
+task :publish_gem => [:clobber_package, :package, :release_rubygems, :release_googlecode] 
 
 # :rdoc, :clobber_rdoc, :rerdoc
 Rake::RDocTask.new do |rdoc|
@@ -194,7 +191,7 @@ def add_frameset_version(file, dir)
   File.open(file, 'w') { |f| f.print lines.join }
 end
 
-desc 'Publish the RDoc files to Google Code and push to origin'
+desc 'Publish the RDoc files to Google Code'
 task :publish_rdoc => [:clobber_rdoc, :rdoc, :fix_rdoc] do 
   puts "Releasing #{full_gem_name} to API"
 
@@ -213,9 +210,9 @@ task :publish_rdoc => [:clobber_rdoc, :rdoc, :fix_rdoc] do
   add_frameset_version(file, remote_dir)
   
   hg ['addremove', '-q', "-R #{RDOC_REPO}"]
-  hg ['ci', "-m \"Released gem version #{gemspec.version}\"", "-R #{RDOC_REPO}"]
+  hg ['ci', "-m \"Update Rdoc for version #{gemspec.version}\"", "-R #{RDOC_REPO}"]
   hg ['tag', '-f', "-m \"Released gem version #{gemspec.version}\"", "-R #{RDOC_REPO}", "#{full_gem_name}"]
-  # hg ['push', "-R #{RDOC_REPO}"]
+  hg ['push', "-R #{RDOC_REPO}"]
 end
 
 # :clean :clobber 
