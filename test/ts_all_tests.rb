@@ -21,7 +21,7 @@ require File.dirname(__FILE__) + '/test_package_entry'
 require File.dirname(__FILE__) + '/test_java_name.rb'
 require File.dirname(__FILE__) + '/test_javaclass.rb'
 
-class TestSuite_AllTests
+class TsAllTests
   def self.suite
     suite = Test::Unit::TestSuite.new("Ruby Java Class")
     
@@ -42,10 +42,10 @@ class TestSuite_AllTests
     suite << TestJavaClass::TestClasspath::TestCompositeClasspath.suite
     
     # class list
+    suite << TestJavaClass::TestClassList::TestJarSearcher.suite
+    suite << TestJavaClass::TestClassList::TestList.suite
     suite << TestJavaClass::TestClassList::TestClassEntry.suite
     suite << TestJavaClass::TestClassList::TestPackageEntry.suite
-    suite << TestJavaClass::TestClassList::TestList.suite
-    suite << TestJavaClass::TestClassList::TestJarSearcher.suite
     
     # general
     suite << TestJavaClass::TestJavaName.suite
