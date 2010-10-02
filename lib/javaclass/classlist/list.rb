@@ -56,8 +56,7 @@ module JavaClass
           add_class(class_name, is_public, v) 
         end
       rescue
-        warn "#{$!} in line #{line.chomp}: class_name=#{class_name}, versions=#{versions}, first_vers=#{first_vers}, last_vers=#{last_vers}, is_public=#{is_public}"
-        raise
+        raise "#{$!} in line #{line.chomp}: class_name=#{class_name}, versions=#{versions}, first_vers=#{first_vers}, last_vers=#{last_vers}, is_public=#{is_public}"
       end
       
       def packages
