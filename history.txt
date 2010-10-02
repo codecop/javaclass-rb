@@ -1,4 +1,4 @@
-=== 0.0.3 not released yet
+=== 0.0.3 02/10/2010
 
 * integrated ClassList from another project as first analyser
 * add JavaName to all class names that are returned
