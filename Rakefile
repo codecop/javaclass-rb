@@ -67,11 +67,6 @@ task :zentest do
   puts output.gsub(/^#.*\n/, '') # skip all ZenTest comments
 end
 
-desc 'Run Autotest'
-task :autotest do
-  `ruby -e "require 'rubygems'; load(Gem.bin_path('ZenTest', 'autotest'))"`
-end
-
 # :gem
 Rake::GemPackageTask.new(gemspec) do |pkg| 
   pkg.need_zip = true
