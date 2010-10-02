@@ -53,7 +53,8 @@ started adding methods to that end...)
 
 Module +JavaClass+ is the entry point for most functions in the gem.
 The main class is JavaClass::ClassFile::JavaClassHeader which provides access to
-all information of a Java class file.
+all information of a Java class file. There are also some examples in the examples
+folder of the gem.
 
 * {API RDoc}[http://api.javaclass-rb.googlecode.com/hg/index.html]
 

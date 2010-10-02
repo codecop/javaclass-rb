@@ -1,8 +1,5 @@
 === Planned
 
-* deployment
-  * Migrate to rubygems
-
 * implement
   * isAnnotation (checks version>=5 & superclass)
     * are Annotation extendable, if so how do they look? (javap)
