@@ -2,7 +2,7 @@ javaclass-rb
 by {Peter 'Code Cop' Kofler}[http://www.code-cop.org/]
 
 * {Homepage (Google Code)}[http://code.google.com/p/javaclass-rb/]
-* {Rubyforge Project}[http://rubyforge.org/projects/javaclass]
+* {Rubyforge Project (old)}[http://rubyforge.org/projects/javaclass]
 * email peter dot kofler at code minus cop dot org
 
 == Description
