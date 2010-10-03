@@ -18,7 +18,7 @@ RDOC_DIR = 'html'
 RDOC_REPO = 'api'
 
 gemspec = Gem::Specification.new do |s|
-  s.version = '0.0.3'
+  s.version = '0.0.4'
   s.name = GEM_NAME
   s.rubyforge_project = 'javaclass' # old, just redirects
   s.summary = 'A parser and disassembler for Java class files'
