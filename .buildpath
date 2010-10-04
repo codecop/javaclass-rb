@@ -2,4 +2,7 @@
 <buildpath>
 	<buildpathentry kind="src" path=""/>
 	<buildpathentry kind="con" path="org.eclipse.dltk.launching.INTERPRETER_CONTAINER"/>
+	<buildpathentry kind="con" path="org.eclipse.dltk.USER_LIBRARY/rubyzip"/>
+    <buildpathentry kind="con" path="org.eclipse.dltk.USER_LIBRARY/rake"/>
+    <buildpathentry kind="con" path="org.eclipse.dltk.USER_LIBRARY/ZenTest"/>
 </buildpath>
