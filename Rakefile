@@ -11,7 +11,8 @@ require 'rake/rdoctask'
 
 # Test, package and publish functions.
 # Author::          Peter Kofler
-# See: http://rake.rubyforge.org/files/doc/rakefile_rdoc.html
+# See::             http://rake.rubyforge.org/files/doc/rakefile_rdoc.html
+# Acknowledgment::  Building this Rake file was funded as System One Research Day. Thank you System One for supporting Open Source :-) 
 GEM_NAME = 'javaclass'
 GOOGLE_PROJECT = "#{GEM_NAME}-rb"
 RDOC_DIR = 'html'
