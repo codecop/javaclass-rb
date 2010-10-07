@@ -10,9 +10,9 @@ require 'rake/packagetask'
 require 'rake/rdoctask'
 
 # Test, package and publish functions.
-# Author::          Peter Kofler
-# See::             http://rake.rubyforge.org/files/doc/rakefile_rdoc.html
-# Acknowledgment::  Building this Rake file was funded as System One Research Day. Thank you System One for supporting Open Source :-) 
+# Author::           Peter Kofler
+# See::              http://rake.rubyforge.org/files/doc/rakefile_rdoc.html
+# Acknowledgement::  Building this Rake file was supported as System One Research Day. Thank you System One for funding Open Source :-)
 GEM_NAME = 'javaclass'
 GOOGLE_PROJECT = "#{GEM_NAME}-rb"
 RDOC_DIR = 'html'
@@ -27,35 +27,35 @@ gemspec = Gem::Specification.new do |s|
   s.homepage = "http://code.google.com/p/#{GOOGLE_PROJECT}/"
   s.author = 'Peter Kofler'
   s.email = 'peter dot kofler at code minus cop dot org'
-  
+
   s.files = FileList['Readme.txt', '{lib,test,examples}/**/*.*', 'history.txt', 'Rakefile']
   s.test_files = FileList['test/**/test_*.rb']
   s.require_path = 'lib'
   s.add_dependency('rubyzip', '>= 0.9.1')
-  s.required_ruby_version = '>= 1.8.6' 
+  s.required_ruby_version = '>= 1.8.6'
   s.platform = Gem::Platform::RUBY
   s.add_development_dependency('rake', '>= 0.8.4')
   s.add_development_dependency('ZenTest', '>= 4.4.0')
-  
+
   s.has_rdoc = true
   s.extra_rdoc_files = ['Readme.txt', 'history.txt']
   s.rdoc_options << '--title' << "#{s.name}-#{s.version} Documentation" <<
-                    '--main' << 'Readme.txt' 
+                    '--main' << 'Readme.txt'
 end
 full_gem_name = "#{gemspec.name}-#{gemspec.version}"
 
 desc 'Validates the gemspec'
-task :validate_gem do 
+task :validate_gem do
   gemspec.validate
 end
 
 desc 'Displays the current version'
-task :version do 
+task :version do
   puts gemspec.version
 end
 
 # :test
-Rake::TestTask.new do |t| 
+Rake::TestTask.new do |t|
   t.test_files = gemspec.test_files
   t.warning = true
   #t.verbose = false is default
@@ -69,12 +69,12 @@ task :zentest do
 end
 
 # :gem
-Rake::GemPackageTask.new(gemspec) do |pkg| 
+Rake::GemPackageTask.new(gemspec) do |pkg|
   pkg.need_zip = true
 end
 
 # :package, :clobber_package, :repackage
-Rake::PackageTask.new(gemspec.name, gemspec.version) do |pkg| 
+Rake::PackageTask.new(gemspec.name, gemspec.version) do |pkg|
   #pkg.need_tar = true - no compress in tar on unxutils in Windows
   #pkg.need_tar_gz = true - no compress in tar on unxutils in Windows
   pkg.need_zip = true
@@ -113,11 +113,11 @@ end
 # <code>HOME</code> environment must be set.
 def user_pass_from_hgrc(authname)
   lines = IO.readlines(File.expand_path('~/.hgrc'))
-  user = lines.find{ |l| l =~ /#{authname}.username/ }[/[^\s=]+$/] 
+  user = lines.find{ |l| l =~ /#{authname}.username/ }[/[^\s=]+$/]
   raise "could not find key #{authname}.username in ~/.hgrc" unless user
   pass = lines.find{ |l| l =~ /#{authname}.password/ }[/[^\s=]+$/]
   raise "could not find key #{authname}.password in ~/.hgrc" unless pass
-  [user, pass] 
+  [user, pass]
 end
 
 # Download the <code>googlecode_upload.py</code> from Google Code repository and save it as _name_ .
@@ -148,7 +148,7 @@ task :release_googlecode => :package do
 end
 
 desc 'Package and upload gem to Rubygems and Google Code'
-task :publish_gem => [:clobber_package, :package, :release_rubygems, :release_googlecode] 
+task :publish_gem => [:clobber_package, :package, :release_rubygems, :release_googlecode]
 
 # :rdoc, :clobber_rdoc, :rerdoc
 Rake::RDocTask.new do |rdoc|
@@ -163,7 +163,7 @@ def add_href_parent(file)
   lines = IO.readlines(file).collect do |line|
     if line =~ /(href=(?:'|")https?:\/\/)/
       "#{$`}target=\"_parent\" #{$1}#{$'}"
-    else 
+    else
       line
     end
   end
@@ -171,8 +171,8 @@ def add_href_parent(file)
 end
 
 desc 'Fix the RDoc hrefs in framesets'
-task :fix_rdoc => [:rdoc] do 
-  Dir["#{RDOC_DIR}/**/*.html"].each { |file| add_href_parent(file) } 
+task :fix_rdoc => [:rdoc] do
+  Dir["#{RDOC_DIR}/**/*.html"].each { |file| add_href_parent(file) }
 end
 
 # Helper method to add the gem version _dir_ into index _file_ to frameset links.
@@ -180,7 +180,7 @@ def add_frameset_version(file, dir)
   lines = IO.readlines(file).collect do |line|
     if line =~ /(frame src=")/
       "#{$`}#{$1}#{dir}/#{$'}"
-    else 
+    else
       line
     end
   end
@@ -188,30 +188,30 @@ def add_frameset_version(file, dir)
 end
 
 desc 'Publish the RDoc files to Google Code'
-task :publish_rdoc => [:clobber_rdoc, :rdoc, :fix_rdoc] do 
+task :publish_rdoc => [:clobber_rdoc, :rdoc, :fix_rdoc] do
   puts "Releasing #{full_gem_name} to API"
 
   remote_repo = "https://#{RDOC_REPO}.#{GOOGLE_PROJECT}.googlecode.com/hg/"
   remote_dir = "#{gemspec.version}"
-  
+
   FileUtils.rm_r RDOC_REPO rescue nil
   hg ['clone', remote_repo, RDOC_REPO]
-  
+
   FileUtils.rm_r "#{RDOC_REPO}/#{remote_dir}" rescue nil
   FileUtils.cp_r RDOC_DIR, "#{RDOC_REPO}/#{remote_dir}"
-  
+
   # modify index, update redirect in frameset
   file = "#{RDOC_REPO}/index.html"
   FileUtils.cp "#{RDOC_REPO}/#{remote_dir}/index.html", file
   add_frameset_version(file, remote_dir)
-  
+
   hg ['addremove', '-q', "-R #{RDOC_REPO}"]
   hg ['ci', "-m \"Update Rdoc for version #{gemspec.version}\"", "-R #{RDOC_REPO}"]
   hg ['tag', '-f', "-m \"Released gem version #{gemspec.version}\"", "-R #{RDOC_REPO}", "#{full_gem_name}"]
   hg ['push', "-R #{RDOC_REPO}"]
 end
 
-# :clean :clobber 
+# :clean :clobber
 CLOBBER.include(RDOC_REPO, 'googlecode_upload.py')
 
 # Helper method to grep all the sources for some _pattern_ words.
