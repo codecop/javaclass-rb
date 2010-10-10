@@ -52,15 +52,25 @@ started adding methods to that end...)
 == Documentation
 
 Module +JavaClass+ is the entry point for most functions in the gem.
-The main class is JavaClass::ClassFile::JavaClassHeader which provides access to
-all information of a Java class file. There are also some examples in the examples
-folder of the gem.
+The main class is JavaClass::ClassFile::JavaClassHeader which provides access
+to all information of a Java class file. There are also some examples in the 
+examples folder of the gem.
 
 * {API RDoc}[http://api.javaclass-rb.googlecode.com/hg/index.html]
 
 == Support
 
-The bug tracker is available at http://code.google.com/p/javaclass-rb/issues/list or just drop me an email.
+The bug tracker is available at http://code.google.com/p/javaclass-rb/issues/list 
+or just drop me an email.
+
+== How to submit patches
+
+Read the {8 steps for fixing other people’s code}[http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code/] 
+and for section 8, use the {Issue Tracker here}[http://code.google.com/p/javaclass-rb/issues/list].
+
+The trunk repository is available with 
+
+  hg clone https://javaclass-rb.googlecode.com/hg/ javaclass-rb  
 
 == Dependencies
 

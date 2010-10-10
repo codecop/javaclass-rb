@@ -14,6 +14,15 @@ of the classes passed to it together with a list of all outgoing references.
 This might be the base for some serious static code analysis tools. (I
 started adding methods to that end...)
 
+== Motivation==
+I am still doing Java most of the time. I used to be quite enthusiastic about
+it, but after 11 years I can see the advantages of being a polyglot. So I use
+Ruby for all kind of stuff, just for fun. When I needed some Java class
+analysis I wrote it with Ruby. As I am a puritan, I did not
+want to call `javap` from my script, so I started disassembling the class files,
+which might be the base for some serious static code analysis tools. (I
+started adding methods to that end...)
+
 ==Goals==
  * searching and accessing class files
  * parsing meta data of class files
@@ -31,8 +40,19 @@ started adding methods to that end...)
  * executing byte code
 
 ==Documentation==
-Module `JavaClass` is the entry point for most functions in the gem. The main class is `JavaClass::ClassFile::JavaClassHeader` which provides access to all information of a Java class file. Read the [http://api.javaclass-rb.googlecode.com/hg/index.html API RDoc].
->>>
+Module `JavaClass` is the entry point for most functions in the gem.
+The main class is `JavaClass::ClassFile::JavaClassHeader` which provides access
+to all information of a Java class file. 
+Read the [http://api.javaclass-rb.googlecode.com/hg/index.html API RDoc].
+
+==How to submit patches==
+Read the [http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code/ 8 steps for fixing other people’s code] 
+and for section 8, use the [http://code.google.com/p/javaclass-rb/issues/list Issue Tracker here].
+
+The trunk repository is available with 
+
+ `hg clone https://javaclass-rb.googlecode.com/hg/ javaclass-rb`
+ >>>
 
 Link:
 https://code.google.com/p/javaclass-rb/
