@@ -1,5 +1,7 @@
 === 0.0.4 not released yet
 
+* split Gemspec from Rakefile
+
 === 0.0.3 02/10/2010
 
 * integrated ClassList from another project as first analyser
