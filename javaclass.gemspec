@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.author = 'Peter Kofler'
   s.email = 'peter dot kofler at code minus cop dot org'
 
-  s.files = ['Readme.txt'] + Dir.glob('{lib,test,examples}/**/*.*') + ['history.txt', 'Rakefile']
+  s.files = ['Readme.txt'] + Dir.glob('{lib,test,examples}/**/*.*') + ['history.txt', 'javaclass.gemspec', 'Rakefile']
   s.test_files = Dir.glob('test/**/test_*.rb')
   s.require_path = 'lib'
   s.add_dependency('rubyzip', '>= 0.9.1')
