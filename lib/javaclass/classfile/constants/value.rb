@@ -22,7 +22,7 @@ module JavaClass
         
         # Return part of debug output.
         def dump
-          super + "#{@value}"
+          super + "#{to_s}"
         end
         
         protected
@@ -62,7 +62,7 @@ module JavaClass
           @value = get_value(data, start, 5).single 
         end
         def to_s
-          super.upcase # sprintf('%E',@value)
+          sprintf('%.14E', @value).sub(/E(\+|-)0+/, 'E\\1')
         end
         def dump
           super + 'f;'
@@ -87,7 +87,7 @@ module JavaClass
           @value = get_value(data, start, 9, 2).double
         end
         def to_s
-          @value.to_s.upcase # sprintf('%E',@value)
+          sprintf('%.14E', @value).sub(/E(\+|-)0+/, 'E\\1')
         end
         def dump
           super + 'd;'
