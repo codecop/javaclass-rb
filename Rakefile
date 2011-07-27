@@ -2,10 +2,10 @@
 require 'net/http'
 require 'rubygems'
 require 'rubygems/gem_runner' # install and uninstall
+require 'rubygems/package_task'
 require 'rake'
 require 'rake/clean' # for clean/clobber
 require 'rake/testtask'
-require 'rake/gempackagetask'
 require 'rake/packagetask'
 require 'rake/rdoctask'
 
@@ -45,7 +45,7 @@ task :zentest do
 end
 
 # :gem
-Rake::GemPackageTask.new(gemspec) do |pkg|
+Gem::PackageTask.new(gemspec) do |pkg|
   pkg.need_zip = true
 end
 
