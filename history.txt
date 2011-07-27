@@ -1,5 +1,6 @@
 === 0.0.4 not released yet
 
+* replace leading 0 in exponent of float and double because Linux printf does not have them
 * split Gemspec from Rakefile
 
 === 0.0.3 02/10/2010
