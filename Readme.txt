@@ -35,11 +35,11 @@ started adding methods to that end...)
 
   # load the class directly from the file system
   clazz = JavaClass.load_fs('packagename/Public.class')
-  
+
   # better lookup the class from some classpath
   classpath = JavaClass.classpath('some/path')
   clazz = JavaClass.load_cp('packagename.Public', classpath)
-  
+
   clazz.version                          # => 50.0
   clazz.constant_pool.items[1]           # => packagename/Public
   clazz.access_flags.public?             # => true
@@ -53,24 +53,24 @@ started adding methods to that end...)
 
 Module +JavaClass+ is the entry point for most functions in the gem.
 The main class is JavaClass::ClassFile::JavaClassHeader which provides access
-to all information of a Java class file. There are also some examples in the 
+to all information of a Java class file. There are also some examples in the
 examples folder of the gem.
 
 * {API RDoc}[http://api.javaclass-rb.googlecode.com/hg/index.html]
 
 == Support
 
-The bug tracker is available at http://code.google.com/p/javaclass-rb/issues/list 
+The bug tracker is available at http://code.google.com/p/javaclass-rb/issues/list
 or just drop me an email.
 
 == How to submit patches
 
-Read the {8 steps for fixing other people’s code}[http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code/] 
+Read the {8 steps for fixing other people's code}[http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code/]
 and for section 8, use the {Issue Tracker here}[http://code.google.com/p/javaclass-rb/issues/list].
 
-The trunk repository is available with 
+The trunk repository is available with
 
-  hg clone https://javaclass-rb.googlecode.com/hg/ javaclass-rb  
+  hg clone https://javaclass-rb.googlecode.com/hg/ javaclass-rb
 
 == Dependencies
 
