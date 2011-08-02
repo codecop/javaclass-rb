@@ -1,4 +1,5 @@
 require 'javaclass/string_ux'
+require 'javaclass/string_hexdump'
 require 'javaclass/classfile/constants/value'
 require 'javaclass/classfile/constants/single_reference'
 require 'javaclass/classfile/constants/double_reference'
@@ -40,8 +41,9 @@ module JavaClass
           
           type = CONSTANT_TYPE_TAGS[data.u1(pos)]
           unless type
-            #puts dump.join("\n") 
-            raise "const ##{cnt} = unknown constant pool tag #{data[pos]} at pos #{pos} in class"
+            # puts dump.join("\n") 
+            puts data.hexdump
+            raise "const ##{cnt} = unknown constant pool tag #{data.u1(pos).to_i} at pos #{pos} in class"
           end
           
           constant = type.new(@pool, data, pos)
