@@ -3,6 +3,7 @@ require 'test/unit/testsuite'
 require 'test/unit' if $0 == __FILE__
 
 require File.dirname(__FILE__) + '/test_string_ux'
+require File.dirname(__FILE__) + '/test_string_hexdump'
 # require File.dirname(__FILE__) + '/test_class_magic'
 require File.dirname(__FILE__) + '/test_class_version'
 require File.dirname(__FILE__) + '/test_base'
@@ -26,6 +27,7 @@ class TsAllTests
     suite = Test::Unit::TestSuite.new("Ruby Java Class")
     
     suite << TestString.suite
+    suite << TestStringHexdump.suite
     
     # Java class parser
     suite << TestJavaClass::TestClassFile::TestClassVersion.suite
