@@ -7,6 +7,10 @@ class TestString < Test::Unit::TestCase
     assert_equal(49, "1".u1(0))
     assert_equal(49, "212".u1(1))
     assert_equal(50, "212".u1(2))
+
+    assert_equal(0, "\x00".u1(0))
+    assert_equal(7, "\x07".u1(0))
+    assert_equal(10, "\x0A".u1(0))
   end
   
   def test_u2
