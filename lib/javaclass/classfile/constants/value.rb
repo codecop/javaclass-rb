@@ -62,7 +62,7 @@ module JavaClass
           @value = get_value(data, start, 5).single 
         end
         def to_s
-          sprintf('%.14E', @value).sub(/E(\+|-)0+/, 'E\\1')
+          sprintf('%.14e', @value).sub(/e(\+|-)0+/, 'e\\1')
         end
         def dump
           super + 'f;'
@@ -87,7 +87,7 @@ module JavaClass
           @value = get_value(data, start, 9, 2).double
         end
         def to_s
-          sprintf('%.14E', @value).sub(/E(\+|-)0+/, 'E\\1')
+          sprintf('%.14e', @value).sub(/e(\+|-)0+/, 'e\\1')
         end
         def dump
           super + 'd;'
