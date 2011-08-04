@@ -1,5 +1,4 @@
 require 'javaclass/string_ux'
-require 'javaclass/string_hexdump'
 require 'javaclass/classfile/constants/value'
 require 'javaclass/classfile/constants/single_reference'
 require 'javaclass/classfile/constants/double_reference'
@@ -38,12 +37,10 @@ module JavaClass
         pos = start + 2
         cnt = 1
         while cnt <= @item_count-1
-          # puts "const ##{cnt} = unknown constant pool tag #{data.u1(pos).to_i} at pos #{pos} in class" if cnt == 1
           
           type = CONSTANT_TYPE_TAGS[data.u1(pos)]
           unless type
             # puts dump.join("\n") 
-            puts data[pos..-1].hexdump
             raise "const ##{cnt} = unknown constant pool tag #{data.u1(pos)} at pos #{pos} in class"
           end
           
