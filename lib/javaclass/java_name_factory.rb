@@ -38,6 +38,8 @@ module JavaClass
     #   TemporaryJavaNamePart.new('id')
     # end
 
+    # Private temporary result to continue collecting qualified name parts.
+    # Author::          Peter Kofler
     class TemporaryJavaNamePart
 
       RESERVED_WORDS = File.open(File.dirname(__FILE__) + '/reserved_words.yaml') { |yf| YAML::load(yf) } 
