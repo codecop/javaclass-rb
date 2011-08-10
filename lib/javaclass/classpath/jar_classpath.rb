@@ -104,14 +104,22 @@ module JavaClass
 
       # Set up the unpack cache for the _jarfile_ .
       def setup_cache
-        temporary_folder = File.join(ENV['TMP'],"temp_#{File.basename(@jarfile)}_#{Time.now.to_i.to_s}")
+        temporary_folder = File.join(find_temp_folder, "temp_#{File.basename(@jarfile)}_#{Time.now.to_i.to_s}")
         at_exit { FileUtils.rm_r(temporary_folder) }
         unpack_jar(temporary_folder)
         @delegate = FolderClasspath.new(temporary_folder)
       end
 
+      # Return the temp folder if set
+      def find_temp_folder
+        return ENV['TEMP'] if ENV['TEMP']
+        return ENV['TMP'] if ENV['TMP']
+        '/tmp'
+      end
+      
       # Unpack the jarfile temporarily into the temporary folder.
       def unpack_jar(temporary_folder)
+        # TODO use unzip first, fallback by hand
         Zip::ZipFile.open(@jarfile) do |zip_file|
           zip_file.each do |entry|
             name = entry.name
