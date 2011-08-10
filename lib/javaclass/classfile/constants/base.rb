@@ -26,6 +26,19 @@ module JavaClass
           "#{@name}\t" # #{@tag} 
         end
         
+        # Return false for sanity check if it's a class.
+        def const_class? 
+          false
+        end
+        # Return false for sanity check if it's a field.
+        def const_field? 
+          false
+        end
+        # Return false for sanity check if it's a method.
+        def const_method? 
+          false
+        end
+        
       end
       
     end

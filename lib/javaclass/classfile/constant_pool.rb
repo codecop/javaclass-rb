@@ -57,14 +57,15 @@ module JavaClass
       # Return the number of pool items. This number might be larger than +items+ available, 
       # because +long+ and +double+ constants take two slots.
       def item_count
-        @item_count-1
+        @item_count - 1
       end
       
       # Return the _index_'th pool item. _index_ is the real index in the pool which may skip numbers. 
       def[](index)
+        raise "index #{index} is out of bounds of constant pool" if index < 0 || index > item_count
         @pool[index]
       end
-      
+
       # Return an array of the ordered list of constants.
       def items
         @pool.keys.sort.collect { |k| self[k] }
@@ -84,7 +85,31 @@ module JavaClass
       def dump
         ["  Constant pool:"] + @pool.keys.sort.collect { |k| "const ##{k} = #{self[k].dump}"}
       end
-      
+
+      # Return the constant class from _index_'th pool item.  
+      def class_item(index)
+        if self[index] && !self[index].const_class?
+          raise "inconsistent constant pool entry #{index} for class, should be Constant Class"
+        end
+        self[index] 
+      end
+
+      # Return the constant field from _index_'th pool item.  
+      def field_item(index)
+        if self[index] && !self[index].const_field?
+          raise "inconsistent constant pool entry #{index} for field, should be Constant Field"
+        end
+        self[index] 
+      end
+
+      # Return the constant method from _index_'th pool item.  
+      def method_item(index)
+        if self[index] && !self[index].const_method?
+          raise "inconsistent constant pool entry #{index} for method, should be Constant Method"
+        end
+        self[index] 
+      end
+     
     end
     
   end

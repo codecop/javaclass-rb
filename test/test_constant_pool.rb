@@ -92,6 +92,21 @@ const #43 = Asciz       java/lang/Runnable;'
         assert_equal('String', found[0].name)
       end
       
+      def test_class_item
+        assert_equal('ConstantPoolTest', @cp.class_item(14).to_s)
+        assert_raise(RuntimeError) { @cp.class_item(13) }
+      end
+
+      def test_field_item
+        assert_equal('ConstantPoolTest', @cp.field_item(3).class_name)
+        assert_raise(RuntimeError) { @cp.field_item(4) }
+      end
+
+      def test_method_item
+        assert_equal('java/lang/Object', @cp.method_item(1).class_name)
+        assert_raise(RuntimeError) { @cp.method_item(3) }
+      end
+
     end
     
   end
