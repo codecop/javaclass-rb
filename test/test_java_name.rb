@@ -19,6 +19,7 @@ module TestJavaClass
       @cn = JavaClass::JavaName.new("at\\kugel\\tool\\Some.java")
       @cm = JavaClass::JavaName.new('at/kugel/tool/SomeClassWithMoreNames')
       @cs = JavaClass::JavaName.new('at/kugel/tool/Some.<init>')
+      @cc = JavaClass::JavaName.new('at/kugel/tool/Some.class')
     end
 
     def test_to_classname
@@ -26,6 +27,7 @@ module TestJavaClass
       assert_equal('at.kugel.tool.Some', @cn.to_classname)
       assert_equal('at.kugel.tool.SomeClassWithMoreNames', @cm.to_classname)
       assert_equal('at.kugel.tool.Some', @cs.to_classname)
+      assert_equal('at.kugel.tool.Some', @cc.to_classname)
     end
 
     def test_to_javaname
@@ -49,12 +51,14 @@ module TestJavaClass
       assert_equal('Some.class', @c0.to_class_file)
       assert_equal('at/kugel/tool/Some.class', @cn.to_class_file)
       assert_equal('at/kugel/tool/SomeClassWithMoreNames.class', @cm.to_class_file)
+      assert_equal('at/kugel/tool/Some.class', @cc.to_class_file)
     end
 
     def test_full_name
       assert_equal('Some', @c0.full_name)
       assert_equal('at.kugel.tool.Some', @cn.full_name)
       assert_equal('at.kugel.tool.SomeClassWithMoreNames', @cm.full_name)
+      assert_equal('at.kugel.tool.Some', @cc.full_name)
     end
         
     def test_package
