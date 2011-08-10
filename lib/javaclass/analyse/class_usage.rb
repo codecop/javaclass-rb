@@ -6,6 +6,7 @@ $:.unshift File.join(File.dirname(__FILE__), 'lib')
 require 'javaclass'
 include JavaClass
 
+# TODO move this list to its own file (yaml?)
 JDK_PACKAGES = %w| java javax.accessibility javax.activity javax.crypto javax.imageio javax.jnlp javax.management 
                    javax.naming javax.net javax.print javax.rmi javax.script javax.security.auth javax.security.cert
                    javax.security.sasl javax.sound.midi javax.sound.sampled javax.sql javax.swing javax.transaction
