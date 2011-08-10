@@ -1,6 +1,7 @@
 === 0.0.4 not released yet
 
-* implement implemented interfaces
+* create DSL "shortcuts" for java.* and javax.* pacjage and class names.
+* implement interfaces implemented by the class
 * fix String ux problem in Ruby 1.9
 * replace leading 0 in exponent of float and double because Linux printf does not have them
 * split Gemspec from Rakefile as proposed by Yeguda Katz 

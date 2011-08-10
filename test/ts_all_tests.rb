@@ -20,6 +20,7 @@ require File.dirname(__FILE__) + '/test_list'
 require File.dirname(__FILE__) + '/test_class_entry'
 require File.dirname(__FILE__) + '/test_package_entry'
 require File.dirname(__FILE__) + '/test_java_name.rb'
+require File.dirname(__FILE__) + '/test_java_name_factory.rb'
 require File.dirname(__FILE__) + '/test_javaclass.rb'
 
 class TsAllTests
@@ -51,6 +52,7 @@ class TsAllTests
     
     # general
     suite << TestJavaClass::TestJavaName.suite
+    suite << TestJavaClass::TestJavaNameFactory.suite
     suite << TestJavaClass::TestJavaClassFacade.suite
     
     return suite
