@@ -8,6 +8,7 @@ module TestJavaClass
       
       def setup
         @public = JavaClass::ClassFile::JavaClassHeader.new(load_class('access_flags/AccessFlagsTestPublic'))
+        @package = JavaClass::ClassFile::JavaClassHeader.new(load_class('access_flags/AccessFlagsTestPackage'))
       end
       
       def test_magic
@@ -25,7 +26,16 @@ module TestJavaClass
       def test_super_class
         assert_equal('java/lang/Object', @public.super_class)
       end
-      
+
+      def test_interfaces
+        interfaces = @public.interfaces
+        assert_equal(0, interfaces.size) 
+
+        interfaces = @package.interfaces
+        assert_equal(1, interfaces.size) 
+        assert_equal('packagename/AccessFlagsTestInterface', interfaces[0].class_name)
+      end
+
       def test_dump
         expected = File.open("#{TEST_DATA_PATH}/access_flags/AccessFlagsTestPublic_javap.txt", 'r') {|io| io.read }
         assert_equal(expected.gsub(/\s+/, ' ').gsub(/"</, '<').gsub(/>"/, '>'), @public.dump.join("\n").gsub(/\s+/, ' '))

@@ -16,6 +16,8 @@ class TestString < Test::Unit::TestCase
   def test_u2
     assert_equal(49*256+50, "12".u2(0))
     assert_equal(49*256+50, "312".u2(1))
+
+    assert_equal([49*256+50, 49*256+51], "1213".u2rep(2))
   end
   
   def test_u4
