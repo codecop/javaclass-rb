@@ -1,4 +1,5 @@
 require 'javaclass/classfile/java_class_header'
+require 'javaclass/classpath/jar_classpath' # for unpack flag
 require 'javaclass/classpath/java_home_classpath'
 require 'javaclass/classpath/composite_classpath'
 require 'javaclass/java_name_factory'
@@ -44,5 +45,5 @@ module JavaClass
       path.split(File::PATH_SEPARATOR).each { |cpe| cp.add_file_name(cpe) } if path
       cp
     end
-
+            
 end
