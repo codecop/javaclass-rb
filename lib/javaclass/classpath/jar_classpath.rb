@@ -48,14 +48,14 @@ module JavaClass
       
       # Return if _classname_ is included in this jar.
       def includes?(classname)
-        @classes.include?(normalize(classname))
+        @classes.include?(classname.to_javaname.to_class_file)
       end
       
       # Load the binary data of the file name or class name _classname_ from this jar.
       def load_binary(classname)
         raise "class #{classname} not found in #{@jarfile}" unless includes?(classname)
         Zip::ZipFile.open(@jarfile) do |zipfile|
-          zipfile.file.read(normalize(classname))
+          zipfile.file.read(classname.to_javaname.to_class_file)
         end
       end
       
@@ -83,15 +83,6 @@ module JavaClass
           list << name 
         end
         list.sort
-      end
-      
-      # Normalize the file name or class name _classname_ to be a file name in the jar.
-      def normalize(classname)
-        if classname !~ /\.class$/
-          classname.gsub(/\./,'/') + '.class'
-        else
-          classname
-        end
       end
       
     end

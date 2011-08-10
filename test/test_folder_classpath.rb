@@ -29,6 +29,7 @@ module TestJavaClass
         assert(!@cpe.includes?('ClassVersionTest11'))
         assert(@cpe.includes?('package/ClassVersionTest11.class'))
         assert(@cpe.includes?('package/ClassVersionTest11'))
+        assert(@cpe.includes?('package.ClassVersionTest11'))
       end
       
       def test_load_binary
