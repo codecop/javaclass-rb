@@ -1,5 +1,6 @@
 === 0.0.4 not released yet
 
+* implement implemented interfaces
 * fix String ux problem in Ruby 1.9
 * replace leading 0 in exponent of float and double because Linux printf does not have them
 * split Gemspec from Rakefile as proposed by Yeguda Katz 
