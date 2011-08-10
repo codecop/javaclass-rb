@@ -6,7 +6,7 @@ module JavaClass
   # Author::          Peter Kofler
   module JavaNameFactory
 
-    ISO_COUNTRIES = YAML.load(File.dirname(__FILE__) + '/iso_3166_countries.yaml')
+    ISO_COUNTRIES = File.open(File.dirname(__FILE__) + '/iso_3166_countries.yaml') { |yf| YAML::load(yf) } 
     US_DOMAINS = %w|com net biz org|
 
     # Convert the beginning of a full qualified Java classname to JavaClass::JavaName instance.
@@ -40,7 +40,8 @@ module JavaClass
 
     class TemporaryJavaNamePart
 
-      RESERVED_WORDS = YAML.load(File.dirname(__FILE__) + '/reserved_words.yaml')
+      RESERVED_WORDS = File.open(File.dirname(__FILE__) + '/reserved_words.yaml') { |yf| YAML::load(yf) } 
+      
       def initialize(history)
         @history = history
       end

@@ -13,7 +13,7 @@ class TestJavaNameFactory < Test::Unit::TestCase
   end
 
   def test_javax
-    assert_raise(NoMethodError) { java.long.Class }
+    assert_equal('javax.xml.Document', javax.xml.Document)
   end
 
   def test_method_missing
