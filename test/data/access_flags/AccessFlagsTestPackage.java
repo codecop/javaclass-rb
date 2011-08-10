@@ -1,3 +1,3 @@
 package packagename;
 
-class AccessFlagsTestPackage { }
+class AccessFlagsTestPackage implements AccessFlagsTestInterface { }

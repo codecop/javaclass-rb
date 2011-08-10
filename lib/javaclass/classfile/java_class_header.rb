@@ -22,6 +22,7 @@ module JavaClass
       attr_reader :constant_pool
       attr_reader :access_flags
       attr_reader :references
+      attr_reader :interfaces
       
       # Create a header with the binary _data_ from the class file.
       def initialize(data)
@@ -35,15 +36,15 @@ module JavaClass
         #    u2 access_flags; - ok
         #    u2 this_class; - ok
         #    u2 super_class; - ok
-        # TODO implement function for fields and methods (JVM spec)
         #    u2 interfaces_count;
         #    u2 interfaces[interfaces_count];
+        # TODO implement function for fields and methods (JVM spec)
         #    u2 fields_count;
         #    field_info fields[fields_count];
         #    u2 methods_count;
         #    method_info methods[methods_count];
         #    u2 attributes_count;
-        #    attribute_info attributes[attributes_count];
+        #    attribute_info  attributes[attributes_count];
         #  }
         # TODO Java 1.0 - "private protected" fields.
         
@@ -65,17 +66,29 @@ module JavaClass
         idx = data.u2(pos)
         pos += 2
         @super_class_idx = idx
+
+        count = data.u2(pos)
+        @interfaces = data.u2rep(count, pos + 2).collect { |i| @constant_pool.class_item(i) }
+        pos += 2 + count*2 
+
+#        count = data.u2(pos)
+#        @fields = data.u2rep(count, pos + 2).collect { |i| @constant_pool.field_item(i) }
+#        pos += 2 + count*2 
+
+#        count = data.u2(pos)
+#        @methods = data.u2rep(count, pos + 2).collect { |i| @constant_pool.method_item(i) }
+#        pos += 2 + count*2 
       end
       
       # Return the name of this class.
       def this_class
-        @constant_pool[@this_class_idx].to_s.to_javaname
+        @constant_pool.class_item(@this_class_idx).to_s.to_javaname
       end
-      
+
       # Return the name of the superclass of this class or +nil+.
       def super_class
         if @super_class_idx > 0
-          @constant_pool[@super_class_idx].to_s.to_javaname
+          @constant_pool.class_item(@super_class_idx).to_s.to_javaname
         else
           nil
         end
@@ -96,6 +109,11 @@ module JavaClass
         d
       end
       
+      # Return the qualified Java class name. (shortcut method).      
+      def name
+        this_class.full_name
+      end
+
     end
     
   end

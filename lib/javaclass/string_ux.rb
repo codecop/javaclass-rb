@@ -13,6 +13,11 @@ class String
     self[index..index+1].unpack('n')[0]
     # same as self[index]*256 + self[index+1] 
   end
+
+  # Return the _index_'th and the next element as unsigned word, continue for _count_ words.
+  def u2rep(count=1, index=0)
+    self[index...index+count*2].unpack('n'*count)
+  end
   
   # Return the _index_'th and the next 3 elements as unsigned dword.
   def u4(index=0)
