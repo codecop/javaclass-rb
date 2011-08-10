@@ -5,7 +5,7 @@ require 'javaclass/java_name'
 module JavaClass
   
   # Activate temporary unpacking of all JAR classpath elements. This speeds up loading of classes.
-  def self.unpack_jars!(flag)
+  def self.unpack_jars!(flag=true)
     @@unpack_jars = flag
   end
 
@@ -104,7 +104,7 @@ module JavaClass
 
       # Set up the unpack cache for the _jarfile_ .
       def setup_cache
-        temporary_folder = File.join(ENV['TEMP'],"temp-#{File.basename(@jarfile)}-#{Time.now.to_i.to_s}")
+        temporary_folder = File.join(ENV['TEMP'],"temp_#{File.basename(@jarfile)}_#{Time.now.to_i.to_s}")
         at_exit { FileUtils.rm_r(temporary_folder) }
         unpack_jar(temporary_folder)
         @delegate = FolderClasspath.new(temporary_folder)
