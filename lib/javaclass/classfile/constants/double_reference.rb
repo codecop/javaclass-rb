@@ -48,6 +48,9 @@ module JavaClass
         end
         alias class_name first_value
         alias signature second_value
+        def const_field?  
+          true
+        end
       end
       
       class ConstantMethod < DoubleReference # ZenTest SKIP
@@ -62,6 +65,9 @@ module JavaClass
         end
         alias class_name first_value
         alias signature second_value
+        def const_method?  
+          true
+        end
       end
       
       class ConstantInterfaceMethod < DoubleReference # ZenTest SKIP

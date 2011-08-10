@@ -50,6 +50,9 @@ module JavaClass
           super.to_javaname
         end
         alias class_name first_value
+        def const_class?
+          true 
+        end
       end
       
       class ConstantString < SingleReference # ZenTest SKIP
