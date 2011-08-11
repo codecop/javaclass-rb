@@ -46,16 +46,20 @@ module JavaClass
           '1.0'
         elsif v > 45.3 && v <= 45.65535 # 1.1.X can support class file formats of versions in the range 45.0 through 45.65535 inclusive
           '1.1'
-        elsif v == 46.0 # JDK 1.2=46
+        elsif v == 46.0 
           '1.2'
-        elsif v == 47.0 # JDK 1.3=47
+        elsif v == 47.0 
           '1.3'
-        elsif v == 48.0 # JDK 1.4=48
+        elsif v == 48.0 
           '1.4'
-        elsif v == 49.0 # J2SE 5.0=49
+        elsif v == 49.0 
           '1.5'
-        elsif v == 50.0 # J2SE 6.0=50
+        elsif v == 50.0 
           '1.6'
+        elsif v == 51.0 # untested
+          '1.7'
+        elsif v == 52.0 # untested 
+          '1.8'
         else
           'unknown'
         end

@@ -46,8 +46,7 @@ module JavaClass
           super(pool, data, start, "class")
         end
         def first_value 
-          # is a classname
-          super.to_javaname
+          super.to_javaname # this is a classname
         end
         alias class_name first_value
         def const_class?

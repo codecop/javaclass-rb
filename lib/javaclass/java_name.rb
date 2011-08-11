@@ -1,6 +1,6 @@
 module JavaClass
   
-  # Special string with methods to work with Java class or package names.
+  # Special String with methods to work with Java class or package names.
   # Author::          Peter Kofler
   class JavaName < String
     

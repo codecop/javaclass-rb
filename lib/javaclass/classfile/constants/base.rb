@@ -2,6 +2,9 @@ require 'javaclass/string_ux'
 
 module JavaClass 
   module ClassFile 
+
+    # The module Constants is for separating namespaces. It contains the 
+    # logic to parse constant pool constants.
     module Constants # :nodoc:
       
       # Superclass of all constant values in the constant pool. Every constant has a +name+, a +tag+ and a +size+ in bytes.
@@ -26,15 +29,17 @@ module JavaClass
           "#{@name}\t" # #{@tag} 
         end
         
-        # Return false for sanity check if it's a class.
+        # Return false for sanity check if it's a class. Subclasses should overwrite.
         def const_class? 
           false
         end
-        # Return false for sanity check if it's a field.
+        
+        # Return false for sanity check if it's a field. Subclasses should overwrite.
         def const_field? 
           false
         end
-        # Return false for sanity check if it's a method.
+        
+        # Return false for sanity check if it's a method. Subclasses should overwrite.
         def const_method? 
           false
         end
