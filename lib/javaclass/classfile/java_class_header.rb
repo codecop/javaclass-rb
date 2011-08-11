@@ -7,6 +7,10 @@ require 'javaclass/classfile/access_flags'
 require 'javaclass/java_name'
 
 module JavaClass 
+  
+  # The module ClassFile is for separating namespaces. It contains the 
+  # logic to parse a Java class file. This logic is tied to the JVM specification
+  # of class files, very low-level and has no usage/DSL features.
   module ClassFile # :nodoc:
     
     # Parse and disassemble Java class files, similar to the +javap+ command.
@@ -38,7 +42,7 @@ module JavaClass
         #    u2 super_class; - ok
         #    u2 interfaces_count;
         #    u2 interfaces[interfaces_count];
-        # TODO implement function for fields and methods (JVM spec)
+        # TODO implement fields and methods (see JVM spec)
         #    u2 fields_count;
         #    field_info fields[fields_count];
         #    u2 methods_count;
@@ -46,7 +50,6 @@ module JavaClass
         #    u2 attributes_count;
         #    attribute_info  attributes[attributes_count];
         #  }
-        # TODO Java 1.0 - "private protected" fields.
         
         @magic = ClassMagic.new(data)
         @version = ClassVersion.new(data)
@@ -98,8 +101,9 @@ module JavaClass
       def dump
         d = []
         mod = @access_flags.public? ? 'public ' : ''
-        ext = super_class ? "extends #{super_class.to_classname}" : ''
-        d << "#{mod}class #{this_class.to_classname} #{ext}" 
+        ext = super_class ? " extends #{super_class.to_classname}" : ''
+        int = !@interfaces.empty? ? " implements #{@interfaces.join(',')}" : ''
+        d << "#{mod}class #{this_class.to_classname}#{ext}#{int}" 
         # d << "  SourceFile: \"#{read from LineNumberTable?}\""
         d += @version.dump 
         d += @constant_pool.dump
@@ -109,7 +113,7 @@ module JavaClass
         d
       end
       
-      # Return the qualified Java class name. (shortcut method).      
+      # Return the qualified Java class name. This is a shortcut method and just delegates.      
       def name
         this_class.full_name
       end
