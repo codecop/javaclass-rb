@@ -6,12 +6,13 @@ if __FILE__ == $0
   require 'javaclass'
 
   # load a class directly from the file system
-  clazz = JavaClass.load_fs('test/data/access_flags/AccessFlagsTestPublic.class')
+  clazz = JavaClass.load_fs('./test/data/access_flags/AccessFlagsTestPublic.class')
   
   # or look up the class from some classpath by its Java qualified name
-  cp = JavaClass.classpath('test/data/access_flags')
+  cp = JavaClass.classpath('./test/data/access_flags')
   clazz = JavaClass.load_cp('AccessFlagsTestPublic', cp)
   
+  # retrieve low level information about a class
   puts clazz.version                          # => 50.0
   puts clazz.constant_pool.items[1]           # => packagename/AccessFlagsTestPublic
   puts clazz.access_flags.public?             # => true
@@ -20,11 +21,16 @@ if __FILE__ == $0
   puts clazz.super_class                      # => java/lang/Object
   puts clazz.super_class.to_classname         # => java.lang.Object
   puts clazz.references.referenced_methods[0] # => java/lang/Object.<init>:()V
+
+  # work with all class names
+  puts clazz.this_class.full_name             # => packagename.AccessFlagsTestPublic
+  puts clazz.this_class.package               # => packagename
+  puts clazz.this_class.simple_name           # => AccessFlagsTestPublic
   
   # or get a class from the system classpath
   cp = JavaClass.environment_classpath        # needs JAVA_HOME to be set
   puts cp.includes?('java.lang.String')       # => true
-  data = cp.load_binary('java.lang.String')
+  data = cp.load_binary(java.lang.String)
   clazz = JavaClass.disassemble(data)
   puts clazz.name                             # => "java.lang.String"
   puts clazz.access_flags.final?              # => true

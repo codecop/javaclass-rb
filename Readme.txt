@@ -33,21 +33,36 @@ started adding methods to that end...)
 
   require 'javaclass'
 
-  # load the class directly from the file system
-  clazz = JavaClass.load_fs('packagename/Public.class')
-
-  # better lookup the class from some classpath
-  classpath = JavaClass.classpath('some/path')
-  clazz = JavaClass.load_cp('packagename.Public', classpath)
-
+  # load a class directly from the file system
+  clazz = JavaClass.load_fs('./test/data/access_flags/AccessFlagsTestPublic.class')
+  
+  # or look up the class from some classpath by its Java qualified name
+  cp = JavaClass.classpath('./test/data/access_flags')
+  clazz = JavaClass.load_cp('AccessFlagsTestPublic', cp)
+  
+  # retrieve low level information about a class
   clazz.version                          # => 50.0
-  clazz.constant_pool.items[1]           # => packagename/Public
+  clazz.constant_pool.items[1]           # => packagename/AccessFlagsTestPublic
   clazz.access_flags.public?             # => true
-  clazz.this_class                       # => packagename/Public
-  clazz.this_class.to_java_file          # => packagename/Public.java
+  clazz.this_class                       # => packagename/AccessFlagsTestPublic
+  clazz.this_class.to_java_file          # => packagename/AccessFlagsTestPublic.java
   clazz.super_class                      # => java/lang/Object
   clazz.super_class.to_classname         # => java.lang.Object
   clazz.references.referenced_methods[0] # => java/lang/Object.<init>:()V
+
+  # work with all class names
+  clazz.this_class.full_name             # => packagename.AccessFlagsTestPublic
+  clazz.this_class.package               # => packagename
+  clazz.this_class.simple_name           # => AccessFlagsTestPublic
+  
+  # or get a class from the system classpath
+  cp = JavaClass.environment_classpath   # needs JAVA_HOME to be set
+  cp.includes?('java.lang.String')       # => true
+  data = cp.load_binary(java.lang.String)
+  clazz = JavaClass.disassemble(data)
+  clazz.name                             # => "java.lang.String"
+  clazz.access_flags.final?              # => true
+  clazz.interfaces                       # => ["java/io/Serializable", "java/lang/Comparable", "java/lang/CharSequence"]
 
 == Documentation
 
