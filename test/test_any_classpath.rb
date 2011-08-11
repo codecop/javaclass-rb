@@ -3,9 +3,9 @@ require 'javaclass/classpath/any_classpath'
 
 module TestJavaClass
   module TestClasspath
-    
+
     class TestAnyClasspath < Test::Unit::TestCase
-    
+
       def setup
         @cpe = JavaClass::Classpath::AnyClasspath.new(TEST_DATA_PATH)
       end
