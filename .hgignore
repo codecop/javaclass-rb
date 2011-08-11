@@ -1,15 +1,8 @@
 
 syntax: glob
 hosting/rubyforge.org/**
-
-syntax: glob
 hosting/googlecode.com/**
-
-syntax: glob
+hosting/cloudbees.com/**
 html/**
-
-syntax: glob
 pkg/**
-
-syntax: glob
 api/**
