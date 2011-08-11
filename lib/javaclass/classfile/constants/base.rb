@@ -5,6 +5,7 @@ module JavaClass
 
     # The module Constants is for separating namespaces. It contains the 
     # logic to parse constant pool constants.
+    # Author::          Peter Kofler
     module Constants # :nodoc:
       
       # Superclass of all constant values in the constant pool. Every constant has a +name+, a +tag+ and a +size+ in bytes.

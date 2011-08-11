@@ -11,6 +11,7 @@ module JavaClass
   # The module ClassFile is for separating namespaces. It contains the 
   # logic to parse a Java class file. This logic is tied to the JVM specification
   # of class files, very low-level and has no usage/DSL features.
+  # Author::          Peter Kofler
   module ClassFile # :nodoc:
     
     # Parse and disassemble Java class files, similar to the +javap+ command.

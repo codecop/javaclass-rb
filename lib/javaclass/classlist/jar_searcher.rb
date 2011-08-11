@@ -2,7 +2,7 @@ require 'javaclass/classpath/composite_classpath'
 require 'javaclass/classfile/java_class_header'
 
 module JavaClass
-  module ClassList # :nodoc:
+  module ClassList 
     
     # Search in zip or jar files for Java class files, check for package access or inner classes and
     # call back a list of all these.
