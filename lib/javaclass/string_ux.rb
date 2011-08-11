@@ -1,5 +1,5 @@
 
-# Add some +unpack+ helper methods for HI-LO byte order (network byte order) contained in this string.
+# Add some +unpack+ helper methods for HI-LO byte order (network byte order) contained in this String.
 # Author::          Peter Kofler
 class String
   
@@ -14,7 +14,8 @@ class String
     # same as self[index]*256 + self[index+1] 
   end
 
-  # Return the _index_'th and the next element as unsigned word, continue for _count_ words.
+  # Return the _index_'th and the next element as unsigned word, repeat it for _count_ 
+  # words in total and return an array of these words. 
   def u2rep(count=1, index=0)
     self[index...index+count*2].unpack('n'*count)
   end
