@@ -2,10 +2,15 @@ require 'javaclass/classpath/jar_classpath'
 require 'javaclass/classpath/folder_classpath'
 
 module JavaClass
-  module Classpath
-    # List of class path elements.
+
+  # The module Classpath is for separating namespaces. It contains the abstraction of classpath to load binary class file data from.
+  # Author::          Peter Kofler
+  module Classpath # :nodoc:
+
+    # List of class path elements constructed from a full CLASSPATH variable.
     # Author::   Peter Kofler
     class CompositeClasspath
+
       # Return the list of classnames found in this path.
       def initialize
         @elements = []
@@ -50,8 +55,8 @@ module JavaClass
         elem.additional_classpath.each do |acpe|
           # referred classpath elements may be missing
           if FileTest.exist? acpe
-            add_element(JarClasspath.new(acpe)) 
-          end 
+            add_element(JarClasspath.new(acpe))
+          end
         end
       end
 

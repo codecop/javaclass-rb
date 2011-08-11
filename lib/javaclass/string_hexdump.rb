@@ -1,4 +1,3 @@
-
 # Add some +hexdump+ helper method to dump the data contained in this String.
 # Author::          Peter Kofler
 class String
@@ -7,7 +6,7 @@ class String
   NIBBLE_SIZE = 2
   NIBBLE_FORMAT_STR = "%#{NIBBLE_SIZE}.#{NIBBLE_SIZE}X "
   NIBBLE_WHITE_SPACE = ' ' * (NIBBLE_SIZE + 1)
-  
+
   # Return the hex dump of this String with _columns_ columns of hexadecimal numbers per line.
   def hexdump(columns=16)
     return "#{format_address(0)}: #{NIBBLE_WHITE_SPACE*columns}; \n" if size == 0

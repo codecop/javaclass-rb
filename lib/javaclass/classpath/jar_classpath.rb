@@ -3,22 +3,23 @@ require 'zip/zipfilesystem'
 require 'javaclass/java_name'
 
 module JavaClass
-  
-  # Activate temporary unpacking of all JAR classpath elements. This speeds up loading of classes.
+
+  # Activate temporary unpacking of all JARs. This speeds up loading of classes later.
   def self.unpack_jars!(flag=true)
     @@unpack_jars = flag
   end
 
+  # Return +true+ if JARs should be temporarily unpacked
   def self.unpack_jars?
     defined?(@@unpack_jars) && @@unpack_jars
   end
-    
+
   module Classpath
 
-    # Abstraction of a ZIP or JAR on the CLASSPATH.
+    # Abstraction of a ZIP or JAR on the CLASSPATH. May return additional classpath elements for referenced libs.
     # Author::   Peter Kofler
     class JarClasspath
-    
+
       # Return the list of classnames found in this _jarfile_ .
       def initialize(jarfile)
         @jarfile = jarfile
@@ -102,10 +103,12 @@ module JavaClass
         list.sort
       end
 
-      # Set up the unpack cache for the _jarfile_ .
+      # Set up the temporary unpacking. This sets the delegate field.
       def setup_cache
         temporary_folder = File.join(find_temp_folder, "temp_#{File.basename(@jarfile)}_#{Time.now.to_i.to_s}")
-        at_exit { FileUtils.rm_r(temporary_folder) }
+        at_exit do
+          FileUtils.rm_r(temporary_folder)
+        end
         unpack_jar(temporary_folder)
         @delegate = FolderClasspath.new(temporary_folder)
       end
@@ -116,7 +119,7 @@ module JavaClass
         return ENV['TMP'] if ENV['TMP']
         '/tmp'
       end
-      
+
       # Unpack the jarfile temporarily into the temporary folder.
       def unpack_jar(temporary_folder)
         # TODO use unzip first, fallback by hand

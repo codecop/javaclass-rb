@@ -1,6 +1,6 @@
 module JavaClass
   module ClassFile
-  
+
     # Access flags as defined by JVM spec.
     # Author::   Peter Kofler
     module AccessFlagsConstants
@@ -15,7 +15,7 @@ module JavaClass
       ACC_ENUM = 0x4000
       # TODO Java 1.0 - "private protected" fields?
 
-      # Bitmask for unknown/not supported flags.      
+      # Bitmask for unknown/not supported flags.
       ACC_OTHER = 0xffff ^ ACC_PUBLIC ^ ACC_FINAL ^ ACC_SUPER ^ ACC_INTERFACE ^ ACC_ABSTRACT ^ ACC_INNER ^ ACC_ENUM ^ ACC_ANNOTATION
 
     end
