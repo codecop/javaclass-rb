@@ -14,7 +14,9 @@ module JavaClass
       ACC_INTERFACE = 0x0200    
       ACC_ABSTRACT = 0x0400
       ACC_INNER = 0x1000 # TODO unknown access flag, find in spec
-      ACC_OTHER = 0xffff ^ ACC_PUBLIC ^ ACC_FINAL ^ ACC_SUPER ^ ACC_INTERFACE ^ ACC_ABSTRACT ^ ACC_INNER
+      ACC_ANNOTATION = 0x2000 
+      ACC_ENUM = 0x4000
+      ACC_OTHER = 0xffff ^ ACC_PUBLIC ^ ACC_FINAL ^ ACC_SUPER ^ ACC_INTERFACE ^ ACC_ABSTRACT ^ ACC_INNER ^ ACC_ENUM ^ ACC_ANNOTATION
       
       def initialize(data, pos)
         @flags = data.u2(pos)
@@ -25,6 +27,7 @@ module JavaClass
         end
         raise "inconsistent flags #{@flags} (interface not abstract)" if interface? && !abstract?
         raise "inconsistent flags #{@flags} (interface is final)" if interface? && final?
+        raise "inconsistent flags #{@flags} (annotation not interface)" if annotation? && !interface?
         raise "inconsistent flags #{@flags} (other value #{@flags & ACC_OTHER})" if (@flags & ACC_OTHER) != 0
       end
       
@@ -44,6 +47,14 @@ module JavaClass
       
       def interface?
        (@flags & ACC_INTERFACE) != 0
+      end
+      
+      def enum?
+       (@flags & ACC_ENUM) != 0
+      end
+      
+      def annotation?
+       (@flags & ACC_ANNOTATION) != 0
       end
       
     end
