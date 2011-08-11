@@ -4,63 +4,63 @@ require 'javaclass/classfile/constants/single_reference'
 require 'javaclass/classfile/constants/double_reference'
 
 module JavaClass
-  module ClassFile 
-    
+  module ClassFile
+
     # Container of the constant pool's constants.
     # Author::   Peter Kofler
     class ConstantPool
-      
+
       # Types of constants by their +tag+.
       CONSTANT_TYPE_TAGS = {
-        CLASS_TAG     = 7 => Constants::ConstantClass, 
-        FIELD_TAG     = 9 => Constants::ConstantField, 
-        METHOD_TAG    = 10 => Constants::ConstantMethod, 
-        INTERFACE_METHOD_TAG = 11 => Constants::ConstantInterfaceMethod, 
-        STRING_TAG    = 8 => Constants::ConstantString, 
-        INT_TAG       = 3 => Constants::ConstantInt, 
-        FLOAT_TAG     = 4 => Constants::ConstantFloat, 
-        LONG_TAG      = 5 => Constants::ConstantLong, 
-        DOUBLE_TAG    = 6 => Constants::ConstantDouble, 
-        NAME_AND_TYPE_TAG = 12 => Constants::ConstantNameAndType, 
+        CLASS_TAG     = 7 => Constants::ConstantClass,
+        FIELD_TAG     = 9 => Constants::ConstantField,
+        METHOD_TAG    = 10 => Constants::ConstantMethod,
+        INTERFACE_METHOD_TAG = 11 => Constants::ConstantInterfaceMethod,
+        STRING_TAG    = 8 => Constants::ConstantString,
+        INT_TAG       = 3 => Constants::ConstantInt,
+        FLOAT_TAG     = 4 => Constants::ConstantFloat,
+        LONG_TAG      = 5 => Constants::ConstantLong,
+        DOUBLE_TAG    = 6 => Constants::ConstantDouble,
+        NAME_AND_TYPE_TAG = 12 => Constants::ConstantNameAndType,
         ASCIZ_TAG     = 1 => Constants::ConstantAsciz,
       }
-      
+
       # Size of the whole constant pool in bytes.
       attr_reader :size
-      
+
       # Parse the constant pool from the bytes _data_ beginning at position _start_ (which is usually 8).
       def initialize(data, start=8)
         @pool = {} # cnt (fixnum) => constant
-        
+
         # parsing
         @item_count = data.u2(start)
         pos = start + 2
         cnt = 1
         while cnt <= @item_count-1
-          
+
           type = CONSTANT_TYPE_TAGS[data.u1(pos)]
           unless type
-            # puts dump.join("\n") 
+            # puts dump.join("\n")
             raise "const ##{cnt} = unknown constant pool tag #{data.u1(pos)} at pos #{pos} in class"
           end
-          
+
           constant = type.new(@pool, data, pos)
           @pool[cnt] = constant
           pos += constant.size
           cnt += constant.slots
-          
+
         end
-        
+
         @size = pos - start
       end
-      
-      # Return the number of pool items. This number might be larger than +items+ available, 
+
+      # Return the number of pool items. This number might be larger than +items+ available,
       # because +long+ and +double+ constants take two slots.
       def item_count
         @item_count - 1
       end
-      
-      # Return the _index_'th pool item. _index_ is the real index in the pool which may skip numbers. 
+
+      # Return the _index_'th pool item. _index_ is the real index in the pool which may skip numbers.
       def[](index)
         raise "index #{index} is out of bounds of constant pool" if index < 0 || index > item_count
         @pool[index]
@@ -70,47 +70,47 @@ module JavaClass
       def items
         @pool.keys.sort.collect { |k| self[k] }
       end
-      
+
       # Return an array of all constants of the given _tags_ types.
       def find(*tags)
         items.find_all { |item| tags.include? item.tag }
       end
-      
+
       # Return all string constants.
       def strings
         find(STRING_TAG)
       end
-      
+
       # Return a debug output of the whole pool.
       def dump
         ["  Constant pool:"] + @pool.keys.sort.collect { |k| "const ##{k} = #{self[k].dump}"}
       end
 
-      # Return the constant class from _index_'th pool item.  
+      # Return the constant class from _index_'th pool item.
       def class_item(index)
         if self[index] && !self[index].const_class?
           raise "inconsistent constant pool entry #{index} for class, should be Constant Class"
         end
-        self[index] 
+        self[index]
       end
 
-      # Return the constant field from _index_'th pool item.  
+      # Return the constant field from _index_'th pool item.
       def field_item(index)
         if self[index] && !self[index].const_field?
           raise "inconsistent constant pool entry #{index} for field, should be Constant Field"
         end
-        self[index] 
+        self[index]
       end
 
-      # Return the constant method from _index_'th pool item.  
+      # Return the constant method from _index_'th pool item.
       def method_item(index)
         if self[index] && !self[index].const_method?
           raise "inconsistent constant pool entry #{index} for method, should be Constant Method"
         end
-        self[index] 
+        self[index]
       end
-     
+
     end
-    
+
   end
 end

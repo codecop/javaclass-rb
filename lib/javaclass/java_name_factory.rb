@@ -2,6 +2,7 @@ require 'yaml'
 require 'javaclass/java_name'
 
 module JavaClass
+
   # Module to mixin a mini DSL to recognize full qualified Java classnames in Ruby code.
   # Author::          Peter Kofler
   module JavaNameFactory
@@ -35,7 +36,7 @@ module JavaClass
         __old_method_missing(method_id, args)
       end
     end
-    
+
     # # Overwrite the _id_ method. It's deprecated anyway.
     # def id
     #   TemporaryJavaNamePart.new('id')
@@ -46,8 +47,8 @@ module JavaClass
     class TemporaryJavaNamePart # :nodoc:
 
       # Java reserved words are not allowed as package names.
-      RESERVED_WORDS = File.open(File.dirname(__FILE__) + '/reserved_words.yaml') { |yf| YAML::load(yf) } 
-      
+      RESERVED_WORDS = File.open(File.dirname(__FILE__) + '/reserved_words.yaml') { |yf| YAML::load(yf) }
+
       def initialize(history)
         @history = history
       end

@@ -1,12 +1,12 @@
 require 'javaclass/java_name'
 
 module JavaClass
-  module Classpath # :nodoc:
-    
+  module Classpath
+
     # Abstraction of a folder on the CLASSPATH.
     # Author::   Peter Kofler
     class FolderClasspath
-    
+
       # Return the list of classnames found in this _folder_ .
       def initialize(folder)
         @folder = folder
