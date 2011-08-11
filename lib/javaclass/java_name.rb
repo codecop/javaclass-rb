@@ -80,7 +80,7 @@ end
 
 class String
 
-  # Convert a Java classname or Java class filename to JavaClass::JavaName instance.
+  # Convert a Java classname or Java class filename to JavaName instance.
   # If it's a pathname then it must be relative to the classpath.
   def to_javaname
     JavaClass::JavaName.new(self)

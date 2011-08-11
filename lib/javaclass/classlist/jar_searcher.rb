@@ -49,7 +49,7 @@ module JavaClass
       # and adds them to the given _list_ of found classes. _version_ is a number >= 0, e.g. 2 for JDK 1.2.
       # _list_ must provide a <code>add_class(entry, is_public, version)</code> method.
       def compile_list(version, path, list)
-        cpe = JavaClass::Classpath::CompositeClasspath.new
+        cpe = Classpath::CompositeClasspath.new
         cpe.find_jars(path)
         filter_classes(cpe.names).each do |entry|
           is_public = public?(cpe, entry)
