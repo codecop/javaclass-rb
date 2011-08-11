@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/setup'
 require 'javaclass/java_name_factory'
 
 class TestJavaNameFactory < Test::Unit::TestCase
- 
+
   def test_java
     assert_equal('java.lang.String', java.lang.String)
     assert_equal('java.lang.String', java.lang.String.full_name)
@@ -21,5 +21,5 @@ class TestJavaNameFactory < Test::Unit::TestCase
     assert_raise(NoMethodError) { com.sun.Signal! }
     assert_raise(NameError) { xx.cmp.Signal }
   end
-  
+
 end

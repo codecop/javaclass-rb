@@ -3,18 +3,18 @@ require 'javaclass/classfile/java_class_header'
 
 module TestJavaClass
   module TestClassFile
-    
+
     class TestAccessFlags < Test::Unit::TestCase
-      
+
       def setup
         @cls = {}
         %w[Public Package Abstract Interface Final Public$Inner Public$StaticInner Public$InnerInterface].each do |t|
           binary_data = load_class("access_flags/AccessFlagsTest#{t}")
           clazz = JavaClass::ClassFile::JavaClassHeader.new(binary_data)
-          eval("@#{t.sub(/Public\$/, '').downcase} = clazz.access_flags") 
+          eval("@#{t.sub(/Public\$/, '').downcase} = clazz.access_flags")
         end
       end
-      
+
       def test_accessible_eh
         assert(@public.accessible?)
         assert(!@package.accessible?)
@@ -22,11 +22,11 @@ module TestJavaClass
         assert(@interface.accessible?)
         assert(@final.accessible?)
       end
-      
+
       def test_public_eh
         assert(@public.public?)
-      end    
-      
+      end
+
       def test_interface_eh
         assert(!@public.interface?)
         assert(!@package.interface?)
@@ -35,7 +35,7 @@ module TestJavaClass
         assert(!@final.interface?)
         assert(@innerinterface.interface?)
       end
-      
+
       def test_abstract_eh
         assert(!@public.abstract?)
         assert(!@package.abstract?)
@@ -44,7 +44,7 @@ module TestJavaClass
         assert(!@final.abstract?)
         assert(@innerinterface.abstract?)
       end
-      
+
       def test_final_eh
         assert(!@public.final?)
         assert(!@package.final?)
@@ -52,7 +52,7 @@ module TestJavaClass
         assert(!@interface.final?)
         assert(@final.final?)
       end
-      
+
       #    def test_inner_eh
       #      assert(!@public.inner?)
       #      assert(!@package.inner?)
@@ -63,8 +63,8 @@ module TestJavaClass
       #      assert(@staticinner.inner?)
       #      assert(@innerinterface.inner?)
       #    end
-      
+
     end
-    
+
   end
 end

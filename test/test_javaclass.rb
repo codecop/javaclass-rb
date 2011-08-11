@@ -2,9 +2,9 @@ require File.dirname(__FILE__) + '/setup'
 require 'javaclass'
 
 module TestJavaClass
-  
+
   class TestJavaClassFacade < Test::Unit::TestCase # ZenTest SKIP
-    
+
     def test_class_full_classpath
       cp = JavaClass.full_classpath("#{TEST_DATA_PATH}/java_home_classpath/jre-ext",
       "#{TEST_DATA_PATH}/jar_classpath/JarClasspathTestManifest.jar#{File::PATH_SEPARATOR}#{TEST_DATA_PATH}/folder_classpath/JarClasspathTestFolder")

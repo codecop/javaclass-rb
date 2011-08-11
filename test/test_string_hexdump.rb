@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/setup'
 require 'javaclass/string_hexdump'
 
 class TestStringHexdump < Test::Unit::TestCase
-  
+
   def test_hexdump_line
     assert_equal("00000000h: #{'   '*16}; \n", ''.hexdump)
     assert_equal("00000000h: 61 #{'   '*15}; a\n", 'a'.hexdump)

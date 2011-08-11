@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/setup'
 require 'javaclass/java_name'
 
 class TestString < Test::Unit::TestCase
+
   def test_to_javaname
     assert_equal(JavaClass::JavaName, 'at/kugel/tool/Some.class'.to_javaname.class)
     assert_equal('Some', 'Some'.to_javaname)
@@ -13,7 +14,9 @@ class TestString < Test::Unit::TestCase
 end
 
 module TestJavaClass
+
   class TestJavaName < Test::Unit::TestCase
+
     def setup
       @c0 = JavaClass::JavaName.new('Some')
       @cn = JavaClass::JavaName.new("at\\kugel\\tool\\Some.java")
@@ -60,7 +63,7 @@ module TestJavaClass
       assert_equal('at.kugel.tool.SomeClassWithMoreNames', @cm.full_name)
       assert_equal('at.kugel.tool.Some', @cc.full_name)
     end
-        
+
     def test_package
       assert_equal('', @c0.package)
       assert_equal('at.kugel.tool', @cn.package)
@@ -71,7 +74,7 @@ module TestJavaClass
       assert_equal('Some', @c0.simple_name)
       assert_equal('Some', @cn.simple_name)
       assert_equal('SomeClassWithMoreNames', @cm.simple_name)
-      
+
       # simple name is a classname itself
       assert_equal('Some.class', @cn.simple_name.to_class_file)
     end

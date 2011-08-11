@@ -7,6 +7,7 @@ module JavaClass
 
     class FolderClasspath
       alias :__old_load_binary :load_binary
+
       def load_binary(classname)
         @cache_hit = true
         __old_load_binary(classname)
@@ -15,6 +16,7 @@ module JavaClass
     end
 
     class JarClasspath
+
       # Helper method to assert it the cache was called.
       def cache_hit?
         @delegate.cache_hit
@@ -26,8 +28,9 @@ end
 
 module TestJavaClass
   module TestClasspath
+
     class TestCachedJarClasspath < Test::Unit::TestCase
-      
+
       def setup
         JavaClass.unpack_jars!(true)
         @cpe = JavaClass::Classpath::JarClasspath.new("#{TEST_DATA_PATH}/jar_classpath/JarClasspathTest.jar")
