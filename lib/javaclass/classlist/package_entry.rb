@@ -1,7 +1,7 @@
 require 'javaclass/classlist/class_entry'
 
 module JavaClass
-  module ClassList # :nodoc:
+  module ClassList 
     
     # A package in the List.
     # Author::          Peter Kofler

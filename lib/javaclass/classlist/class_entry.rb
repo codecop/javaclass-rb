@@ -1,7 +1,7 @@
 require 'javaclass/java_name'
 
 module JavaClass
-  module ClassList # :nodoc:
+  module ClassList 
     
     # An entry in the list. A ClassEntry belongs to a PackageEntry and has a list ov versions it exists in.
     # Author::          Peter Kofler
