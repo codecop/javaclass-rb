@@ -1,17 +1,19 @@
 === 0.0.4 not released yet
 
-* create DSL "shortcuts" for java.* and javax.* pacjage and class names.
-* implement interfaces implemented by the class
-* fix String ux problem in Ruby 1.9
-* replace leading 0 in exponent of float and double because Linux printf does not have them
+* added option to unpack JARs for faster access later, uses system unzip if available
+* added support for Enum and Annotations
+* added DSL like shortcuts for java.* and javax.* package and class names.
+* added interfaces implemented by the class
+* fixed String ux problem in Ruby 1.9
+* replaced leading 0 in exponent of float and double because Linux printf does not have them
 * split Gemspec from Rakefile as proposed by Yeguda Katz 
 
 === 0.0.3 02/10/2010
 
 * integrated ClassList from another project as first analyser
-* add JavaName to all class names that are returned
-* fix links in RDoc, update documentation
-* move classes into submodules for classpath, classfile, etc.
+* added JavaName to all class names that are returned
+* fixed links in RDoc, update documentation
+* moved classes into submodules for classpath, classfile, etc.
 * migrated to Google Code and Mercurial repository
 * added access flag $1000
 * added references to used classes
@@ -22,10 +24,10 @@
 * refactored code to smaller objects for version and constant pool
 * fixed float and double constant pool items
 * added tests
-* continued implementation with class names and references
+* added implementation with class name and references of a class file 
 
 === 0.0.1 01/03/2009
 	
-* initial version extracted from ClassList project
+* extracted initial version of javaclass-rb from ClassList project
 * reads the class version and package/public flag of a class
-* understands the constant pool but does not use it
+* understands the constant pool of class file but does not use it
