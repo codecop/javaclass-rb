@@ -23,6 +23,7 @@ module TestJavaClass
       @cm = JavaClass::JavaName.new('at/kugel/tool/SomeClassWithMoreNames')
       @cs = JavaClass::JavaName.new('at/kugel/tool/Some.<init>')
       @cc = JavaClass::JavaName.new('at/kugel/tool/Some.class')
+      @cj = JavaClass::JavaName.new('java/lang/String.class')
     end
 
     def test_to_classname
@@ -112,6 +113,10 @@ module TestJavaClass
       assert_equal(['', 'SomeClassWithMoreNames'], @cm.split_simple_name(-7))
     end
 
+    def test_in_jdk_eh
+      assert(!@cn.in_jdk?)
+      assert(@cj.in_jdk?)
+    end
   end
 
 end

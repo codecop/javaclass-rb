@@ -1,4 +1,4 @@
-require 'yaml'
+require 'javaclass/java_language'
 require 'javaclass/java_name'
 
 module JavaClass
@@ -7,20 +7,9 @@ module JavaClass
   # Author::          Peter Kofler
   module JavaNameFactory
 
-    # List of ISO 3166 two letter country names. Used to recognize valid domain suffix/Java package names.
-    # See::            http://www.iso.org/iso/list-en1-semic-3.txt
-    ISO_COUNTRIES = File.open(File.dirname(__FILE__) + '/iso_3166_countries.yaml') { |yf| YAML::load(yf) }
-    # List of non  ISO 3166 U.S. domain suffix.
-    US_DOMAINS = %w|com net biz org|
-
     # Convert the beginning of a full qualified Java classname starting with 'java' to JavaName instance.
     def java
       TemporaryJavaNamePart.new('java')
-    end
-
-    # Convert the beginning of a full qualified Java classname starting with 'javax' to JavaName instance.
-    def javax
-      TemporaryJavaNamePart.new('javax')
     end
 
     alias :__old_method_missing :method_missing
@@ -28,9 +17,7 @@ module JavaClass
     # Convert the beginning of a full qualified Java classname to a JavaName instance.
     def method_missing(method_id, *args)
       str = method_id.id2name
-      if US_DOMAINS.include?(str)
-        TemporaryJavaNamePart.new(str)
-      elsif ISO_COUNTRIES.include?(str)
+      if ALLOWED_PACKAGE_PREFIX.include?(str)
         TemporaryJavaNamePart.new(str)
       else
         __old_method_missing(method_id, args)
@@ -46,9 +33,6 @@ module JavaClass
     # Author::          Peter Kofler
     class TemporaryJavaNamePart # :nodoc:
 
-      # Java reserved words are not allowed as package names.
-      RESERVED_WORDS = File.open(File.dirname(__FILE__) + '/reserved_words.yaml') { |yf| YAML::load(yf) }
-
       def initialize(history)
         @history = history
       end
@@ -59,11 +43,11 @@ module JavaClass
         str = method_id.id2name
         if RESERVED_WORDS.include?(str)
           __old_method_missing(method_id, args)
-        elsif str =~ /^[A-Z][a-zA-Z0-9_$]*$/
+        elsif str =~ TYPE_REGEX
           JavaName.new("#{@history}.#{str}") #  a class
         elsif str == '*'
           JavaName.new("#{@history}") #  a package
-        elsif str =~ /^[a-z][a-zA-Z0-9_$]*$/
+        elsif str =~ MEMBER_REGEX
           TemporaryJavaNamePart.new("#{@history}.#{str}")
         else
           __old_method_missing(method_id, args)

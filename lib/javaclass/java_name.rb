@@ -1,3 +1,5 @@
+require 'javaclass/java_language'
+
 module JavaClass
 
   # Special String with methods to work with Java class or package names.
@@ -53,17 +55,17 @@ module JavaClass
 
     # Return the VM name of this class, e.g. <code>java/lang/Object</code>.
     def to_jvmname
-      (@full_name.gsub(/\./, '/')).to_javaname
+      @full_name.dot_to_slash.to_javaname
     end
 
     # Return the Java source file name of this class, e.g. <code>java/lang/Object.java</code>.
     def to_java_file
-      (to_jvmname + '.java').to_javaname
+      (to_jvmname + SOURCE).to_javaname
     end
 
     # Return the Java class file name of this class, e.g. <code>java/lang/Object.class</code>.
     def to_class_file
-      (to_jvmname + '.class').to_javaname
+      (to_jvmname + CLASS).to_javaname
     end
 
     # Split the simple name at the camel case boundary _pos_ and return two parts. _pos_ may be < 0 for counting backwards.
@@ -74,6 +76,12 @@ module JavaClass
       return [@simple_name, ''] if pos >= parts.size
       [parts[0...pos].join, parts[pos..-1].join]
     end
+
+    # Is this package or class in the JDK?
+    def in_jdk?
+      JDK_PACKAGES_REGEX.find { |package| @full_name =~ package } != nil
+    end
+
   end
 
 end
@@ -84,6 +92,16 @@ class String
   # If it's a pathname then it must be relative to the classpath.
   def to_javaname
     JavaClass::JavaName.new(self)
+  end
+
+  # Replace all dots in this String with slashes.
+  def dot_to_slash
+    gsub('.', '/')
+  end
+
+  # Replace all slashes in this String with dots.
+  def slash_to_dot
+    gsub('/', '.')
   end
 
 end

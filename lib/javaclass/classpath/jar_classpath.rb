@@ -1,6 +1,7 @@
 require 'fileutils'
 require 'zip/zipfilesystem'
 require 'javaclass/classpath/temporary_unpacker'
+require 'javaclass/java_language'
 require 'javaclass/java_name'
 
 module JavaClass
@@ -98,7 +99,7 @@ module JavaClass
         list = []
         Zip::ZipFile.foreach(@jarfile) do |entry|
           name = entry.name
-          next unless entry.file? and name =~ /\.class$/ # class file
+          next unless entry.file? and name =~ CLASS_REGEX # class file
           list << name
         end
         list.sort
