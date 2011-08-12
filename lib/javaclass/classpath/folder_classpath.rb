@@ -1,3 +1,4 @@
+require 'javaclass/java_language'
 require 'javaclass/java_name'
 
 module JavaClass
@@ -62,7 +63,7 @@ module JavaClass
         begin
           Dir.chdir @folder
 
-          list = Dir['**/*.class']
+          list = Dir["**/*#{CLASS}"]
 
         ensure
           Dir.chdir current

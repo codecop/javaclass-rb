@@ -1,5 +1,6 @@
 require 'fileutils'
 require 'zip/zipfilesystem'
+require 'javaclass/java_language'
 
 module JavaClass
   module Classpath
@@ -66,11 +67,7 @@ module JavaClass
       private
 
       def escape_folder(folder)
-        if folder =~ / /
-          "\"#{folder}}\""
-        else
-          folder
-        end
+        if folder =~ / / then "\"#{folder}}\"" else folder end
       end
 
       # Unpack using external executeable using the _command_ string. Return +true+ for success.
@@ -84,7 +81,7 @@ module JavaClass
         Zip::ZipFile.open(@jarfile) do |zip_file|
           zip_file.each do |entry|
             name = entry.name
-            next unless entry.file? and name =~ /\.class$/ # class file
+            next unless entry.file? and name =~ CLASS_REGEX # class file
 
             f_path = File.join(@folder, entry.name)
             FileUtils.mkdir_p(File.dirname(f_path))
