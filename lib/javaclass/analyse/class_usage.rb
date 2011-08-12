@@ -4,12 +4,12 @@ $:.unshift File.dirname(File.dirname(File.dirname(__FILE__)))
 require 'javaclass'
 include JavaClass
 
-# Determine the imported types from all classes of a _classpath_ .
-def imported_types(classpath)
-  own_classes = classpath.names.collect { |c| c.full_name }.sort
+# Determine the imported types from all classes of a _cp_ .
+def imported_types(cp)
+  own_classes = cp.names.collect { |c| c.full_name }.sort
 
-  imported = classpath.names.collect do |name|
-    clazz = load_cp(name, classpath)
+  imported = cp.names.collect do |name|
+    clazz = load_cp(name, cp)
     clazz.references.used_classes.collect { |c| c.full_name }
   end.flatten.uniq.sort
 

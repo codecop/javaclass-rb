@@ -12,7 +12,7 @@ if __FILE__ == $0
     exit
   end
 
-  cp = JavaClass.classpath(ARGV[0])
+  cp = classpath(ARGV[0])
   puts cp.names.collect { |name| load_cp(name, cp) }.find_all { |clazz| clazz.access_flags.interface? && !clazz.access_flags.annotation? }
   # TODO check all interfaces how they arenamed,
 end
