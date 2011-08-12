@@ -1,42 +1,41 @@
-# add the lib to the load path
-$:.unshift File.join(File.dirname(__FILE__), 'lib')
-
-# TODO cleanup this code fragment and make a proper class 
+# add the lib of this gem to the load path
+$:.unshift File.dirname(File.dirname(File.dirname(__FILE__)))
 
 require 'javaclass'
 include JavaClass
 
-# TODO move this list to its own file (yaml?)
-JDK_PACKAGES = %w| java javax.accessibility javax.activity javax.crypto javax.imageio javax.jnlp javax.management 
-                   javax.naming javax.net javax.print javax.rmi javax.script javax.security.auth javax.security.cert
-                   javax.security.sasl javax.sound.midi javax.sound.sampled javax.sql javax.swing javax.transaction
-                   javax.xml org.ietf.jgss org.w3c.dom org.xml.sax|.collect { |pkg| /^#{pkg}\./ }
-                     
-def in_jdk?(name)
-  JDK_PACKAGES.find { |regex| name =~ regex } != nil
-end                     
+# Determine the imported types from all classes of a _classpath_ .
+def imported_types(classpath)
+  own_classes = classpath.names.collect { |c| c.full_name }.sort
 
-def imported_types(classes)
-  own_classes = classes.names.collect { |name| name.gsub('/', '.').sub(/\.class$/, '')}.sort 
-  
-  imported = classes.names.collect do |name|
-    clazz = JavaClassHeader.new(classes.load_binary(name))
-    clazz.references.used_classes.collect { |c| c.to_s.gsub('/', '.') }  
+  imported = classpath.names.collect do |name|
+    clazz = load_cp(name, classpath)
+    clazz.references.used_classes.collect { |c| c.full_name }
   end.flatten.uniq.sort
-  
+
   imported.reject { |name| in_jdk?(name) } - own_classes
 end
 
-# TODO detect and read spring XML configs?
+if __FILE__ == $0
 
-classes = JavaClass::Classpath::FolderClasspath.new("./target/classes")
-own = classes.names.collect { |name| name.gsub('/', '.').sub(/\.class$/, '')}.sort
-used = imported_types(classes)
-puts "---------- used types" 
-puts used
+  if ARGV.size < 2
+    puts "#{__FILE__} <base folder> <test folder>"
+    exit
+  end
 
-test_classes = JavaClass::Classpath::FolderClasspath.new("./target/test-classes")
-test = imported_types(test_classes) - own - used 
-puts "---------- for tests" 
-puts test
+  cp = classpath("./target/classes")
+  own = cp.names.collect { |c| c.full_name }.sort
 
+  puts "---------- used types"
+  used = imported_types(cp)
+  puts used
+
+  test_cp = classpath("./target/test-classes")
+
+  puts "---------- for tests"
+  test = imported_types(test_cp) - own - used
+  puts test
+
+  # TODO detect and read spring XML configs?
+
+end
