@@ -7,15 +7,17 @@ module JavaClass
     # Author::   Peter Kofler
     class JavaHomeClasspath < JarClasspath
 
+      RT_JAR = 'rt.jar'
+      
       # Return the list of classnames found in this _javahome_ directory.
       def initialize(javahome)
-        if FileTest.exist?(rtjar=File.join(javahome, 'lib', 'rt.jar'))
+        if FileTest.exist?(rtjar=File.join(javahome, 'lib', RT_JAR))
           super(rtjar)
-        elsif FileTest.exist?(rtjar=File.join(javahome, 'jre', 'lib', 'rt.jar'))
+        elsif FileTest.exist?(rtjar=File.join(javahome, 'jre', 'lib', RT_JAR))
           super(rtjar)
         elsif FileTest.exist?(rtjar=File.join(javahome, 'lib', 'classes.zip')) # Java 1.1 home with lib/classes.zip
           super(rtjar)
-        elsif FileTest.exist?(rtjar=File.join(javahome, 'jre', 'lib', 'rt.jar'))
+        elsif FileTest.exist?(rtjar=File.join(javahome, 'jre', 'lib', RT_JAR))
         else
           raise IOError, "rt.jar not found in java home #{javahome}"
         end
