@@ -29,8 +29,10 @@ class TsAllTests
   def self.suite
     suite = Test::Unit::TestSuite.new("Ruby Java Class")
 
+    # common
     suite << TestString.suite
     suite << TestStringHexdump.suite
+    suite << TestJavaClass::TestJavaName.suite
 
     # Java class parser
     suite << TestJavaClass::TestClassFile::TestClassVersion.suite
@@ -55,8 +57,7 @@ class TsAllTests
     suite << TestJavaClass::TestClassList::TestPackageEntry.suite
 
     # general
-    suite << TestJavaClass::TestJavaName.suite
-    suite << TestJavaClass::TestJavaNameFactory.suite
+    suite << TestJavaClass::TestDsl::TestJavaNameFactory.suite
     suite << TestJavaClass::TestJavaClassFacade.suite
 
     return suite
