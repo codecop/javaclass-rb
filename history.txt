@@ -1,6 +1,8 @@
 === 0.0.4 not released yet
 
-* added option to unpack JARs for faster access later, uses system unzip if available
+* added cached classpath
+* added usage of system 7za/unzip (if available) which unpack much faster
+* added option to unpack JARs for faster access later
 * added support for Enum and Annotations
 * added DSL like shortcuts for java.* and javax.* package and class names.
 * added interfaces implemented by the class
