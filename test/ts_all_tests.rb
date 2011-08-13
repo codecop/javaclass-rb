@@ -16,6 +16,7 @@ require File.dirname(__FILE__) + '/test_folder_classpath'
 require File.dirname(__FILE__) + '/test_java_home_classpath'
 require File.dirname(__FILE__) + '/test_composite_classpath'
 require File.dirname(__FILE__) + '/test_any_classpath'
+require File.dirname(__FILE__) + '/test_caching_classpath'
 require File.dirname(__FILE__) + '/test_jar_searcher'
 require File.dirname(__FILE__) + '/test_list'
 require File.dirname(__FILE__) + '/test_class_entry'
@@ -30,7 +31,7 @@ class TsAllTests
     suite = Test::Unit::TestSuite.new("Ruby Java Class")
 
     # common
-    suite << TestString.suite
+    suite << TestStringUx.suite
     suite << TestStringHexdump.suite
     suite << TestJavaClass::TestJavaName.suite
 
@@ -49,6 +50,7 @@ class TsAllTests
     suite << TestJavaClass::TestClasspath::TestJavaHomeClasspath.suite
     suite << TestJavaClass::TestClasspath::TestCompositeClasspath.suite
     suite << TestJavaClass::TestClasspath::TestAnyClasspath.suite
+    suite << TestJavaClass::TestClasspath::TestCachingClasspath.suite
 
     # class list
     suite << TestJavaClass::TestClassList::TestJarSearcher.suite
