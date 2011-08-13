@@ -13,6 +13,11 @@ module TestJavaClass
         assert_equal('a', d.sub(/./, 'a'))
       end
 
+      # TODO create cache with folder
+      # load once, was_called is true, reset it
+      # load again, now it's still false
+      
+      # TODO else execute all tests that folderclasspath is supposed to 
     end
 
   end
