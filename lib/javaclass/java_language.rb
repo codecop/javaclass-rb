@@ -1,6 +1,6 @@
 module JavaClass
 
-  # All kind of information related to Java and the Java language.
+  # All kind of constant information related to Java and the Java language.
   # Author::   Peter Kofler
   module JavaLanguage
 
