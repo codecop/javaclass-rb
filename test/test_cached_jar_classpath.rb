@@ -9,17 +9,19 @@ module JavaClass
       alias :__old_load_binary :load_binary
 
       def load_binary(classname)
-        @cache_hit = true
+        @was_called = true
         __old_load_binary(classname)
       end
-      attr_reader :cache_hit
+      attr_accessor :was_called
     end
 
     class JarClasspath
 
       # Helper method to assert it the cache was called.
-      def cache_hit?
-        @delegate.cache_hit
+      def used_folder?
+        result = @delegate.was_called
+        @delegate.was_called = false # reset flag
+        result
       end
     end
 
@@ -42,7 +44,7 @@ module TestJavaClass
 
       def test_load_binary
         assert_equal(load_class('class_version/ClassVersionTest10'), @cpe.load_binary('ClassVersionTest10'))
-        assert(@cpe.cache_hit?)
+        assert(@cpe.used_folder?)
       end
 
     end
