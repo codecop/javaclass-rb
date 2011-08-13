@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/setup'
+require File.dirname(__FILE__) + '/logging_folder_classpath'
 require 'javaclass/classpath/caching_classpath'
 
 module TestJavaClass
