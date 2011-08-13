@@ -11,7 +11,7 @@ require File.dirname(__FILE__) + '/test_references'
 require File.dirname(__FILE__) + '/test_access_flags'
 require File.dirname(__FILE__) + '/test_java_class_header'
 require File.dirname(__FILE__) + '/test_jar_classpath'
-require File.dirname(__FILE__) + '/test_cached_jar_classpath'
+require File.dirname(__FILE__) + '/test_unpacking_jar_classpath'
 require File.dirname(__FILE__) + '/test_folder_classpath'
 require File.dirname(__FILE__) + '/test_java_home_classpath'
 require File.dirname(__FILE__) + '/test_composite_classpath'
@@ -44,11 +44,11 @@ class TsAllTests
     suite << TestJavaClass::TestClassFile::TestJavaClassHeader.suite
 
     # classpath parser
-    suite << TestJavaClass::TestClasspath::TestJarClasspath.suite
-    suite << TestJavaClass::TestClasspath::TestCachedJarClasspath.suite
     suite << TestJavaClass::TestClasspath::TestFolderClasspath.suite
-    suite << TestJavaClass::TestClasspath::TestJavaHomeClasspath.suite
+    suite << TestJavaClass::TestClasspath::TestJarClasspath.suite
+    suite << TestJavaClass::TestClasspath::TestUnpackingJarClasspath.suite
     suite << TestJavaClass::TestClasspath::TestCompositeClasspath.suite
+    suite << TestJavaClass::TestClasspath::TestJavaHomeClasspath.suite
     suite << TestJavaClass::TestClasspath::TestAnyClasspath.suite
     suite << TestJavaClass::TestClasspath::TestCachingClasspath.suite
 

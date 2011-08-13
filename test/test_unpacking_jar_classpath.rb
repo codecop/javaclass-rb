@@ -1,24 +1,14 @@
-require File.dirname(__FILE__) + '/setup'
-require 'javaclass/classpath/folder_classpath'
+require File.dirname(__FILE__) + '/logging_folder_classpath'
 require 'javaclass/classpath/jar_classpath'
 
 module JavaClass
   module Classpath
 
-    class FolderClasspath
-      alias :__old_load_binary :load_binary
-
-      def load_binary(classname)
-        @was_called = true
-        __old_load_binary(classname)
-      end
-      attr_accessor :was_called
-    end
-
+    # Add a method +used_unpacked_folder?+ to see if the load_binary of the unpacked folder was called.
     class JarClasspath
 
       # Helper method to assert it the cache was called.
-      def used_folder?
+      def used_unpacked_folder?
         result = @delegate.was_called
         @delegate.was_called = false # reset flag
         result
@@ -31,7 +21,7 @@ end
 module TestJavaClass
   module TestClasspath
 
-    class TestCachedJarClasspath < Test::Unit::TestCase
+    class TestUnpackingJarClasspath < Test::Unit::TestCase
 
       def setup
         JavaClass.unpack_jars!(true)
@@ -44,7 +34,7 @@ module TestJavaClass
 
       def test_load_binary
         assert_equal(load_class('class_version/ClassVersionTest10'), @cpe.load_binary('ClassVersionTest10'))
-        assert(@cpe.used_folder?)
+        assert(@cpe.used_unpacked_folder?)
       end
 
     end
