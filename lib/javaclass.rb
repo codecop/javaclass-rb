@@ -1,7 +1,6 @@
 require 'javaclass/classfile/java_class_header'
 require 'javaclass/classpath/java_home_classpath'
 require 'javaclass/classpath/composite_classpath'
-require 'javaclass/java_name_factory'
 
 # Main entry point for class file parsing.
 # Author::          Peter Kofler
