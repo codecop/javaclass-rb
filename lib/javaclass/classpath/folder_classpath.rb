@@ -8,7 +8,7 @@ module JavaClass
     # Author::   Peter Kofler
     class FolderClasspath
 
-      # Return the list of classnames found in this _folder_ .
+      # Create a classpath with this _folder_ .
       def initialize(folder)
         @folder = folder
         raise IOError, "folder #{@folder} not found" if !FileTest.exist? @folder
@@ -16,7 +16,7 @@ module JavaClass
         @classes = list_classes.collect { |cl| cl.to_javaname }
       end
 
-      # Return false.
+      # Return +false+ as this is no jar.
       def jar?
         false
       end
@@ -36,7 +36,7 @@ module JavaClass
         @classes.include?(classname.to_javaname.to_class_file)
       end
 
-      # Load the binary data of the file name or class name _classname_ from this jar.
+      # Load the binary data of the file name or class name _classname_ from this folder.
       def load_binary(classname)
         raise "class #{classname} not found in #{@folder}" unless includes?(classname)
         File.open(File.join(@folder, classname.to_javaname.to_class_file), 'rb') {|io| io.read }

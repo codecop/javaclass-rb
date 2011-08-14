@@ -9,6 +9,7 @@ module JavaClass
     # Author::   Peter Kofler
     class TemporaryUnpacker
 
+      # Command templates for external too like 7zip or zip.
       COMMANDS = [
         # 7zip 9.20
         '7za x -bd -o<folder> -y <jar> 2>&1',
@@ -18,10 +19,10 @@ module JavaClass
         'WinZip32.exe -min -e -o <jar> <folder>',
       ]
 
-      # Temporary folder. This folder will be deleted after Ruby shutdown.
+      # The temporary folder. This folder will be deleted after Ruby shuts down.
       attr_reader :folder
 
-      # Unpack the given _jarfile_ .
+      # Set the given _jarfile_ to unpack.
       def initialize(jarfile)
         @jarfile = jarfile
 
@@ -39,7 +40,7 @@ module JavaClass
         @folder = folder
       end
 
-      # Unpack!
+      # Unpack the given jar file.
       def unpack!
         raise 'no temporary folder created' unless defined?(@folder) && @folder
 
@@ -51,7 +52,7 @@ module JavaClass
         end
       end
 
-      # Return the temp folder if a variable is set, else returm tmp.
+      # Return the temp folder if a variable is set, else returm /tmp.
       def find_temp_folder
         escape_folder(
         if ENV['TEMP']
@@ -66,6 +67,7 @@ module JavaClass
 
       private
 
+      # Escape _folder_ if it contains blanks.
       def escape_folder(folder)
         if folder =~ / / then "\"#{folder}}\"" else folder end
       end
@@ -76,7 +78,7 @@ module JavaClass
         $?.to_i == 0
       end
 
-      # Unpack using Ruby's zip gem. This is very slow. Return +true+ for success.
+      # Unpack using Ruby's Rubyzip gem. This is very slow. Return +true+ for success.
       def unpack_ruby
         Zip::ZipFile.open(@jarfile) do |zip_file|
           zip_file.each do |entry|

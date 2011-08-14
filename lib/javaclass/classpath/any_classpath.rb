@@ -7,7 +7,7 @@ module JavaClass
     # Author::   Peter Kofler
     class AnyClasspath < CompositeClasspath
 
-      # Return the list of classnames found under this _folder_ wherever they are.
+      # Create a classpath with all classes found under this _folder_ wherever they are.
       def initialize(folder)
         super()
         find_jars(folder)
