@@ -22,7 +22,7 @@ module JavaClass
     # Author::   Peter Kofler
     class JarClasspath
 
-      # Return the list of classnames found in this _jarfile_ .
+      # Create a classpath with this _jarfile_ .
       def initialize(jarfile)
         @jarfile = jarfile
         raise IOError, "jarfile #{@jarfile} not found" if !FileTest.exist? @jarfile
@@ -38,7 +38,7 @@ module JavaClass
         setup_cache if JavaClass.unpack_jars?
       end
 
-      # Return if the given classpath element is a jar.
+      # Return +true+ as this classpath element is a jar.
       def jar?
         @manifest != nil
       end

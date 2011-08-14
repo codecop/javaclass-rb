@@ -9,7 +9,7 @@ module JavaClass
 
       RT_JAR = 'rt.jar'
       
-      # Return the list of classnames found in this _javahome_ directory.
+      # Create a classpath from this _javahome_ directory.
       def initialize(javahome)
         if FileTest.exist?(rtjar=File.join(javahome, 'lib', RT_JAR))
           super(rtjar)

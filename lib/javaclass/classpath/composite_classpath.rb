@@ -11,17 +11,17 @@ module JavaClass
     # Author::   Peter Kofler
     class CompositeClasspath
 
-      # Return the list of classnames found in this path.
+      # Create an empty classpath composite root.
       def initialize
         @elements = []
       end
 
-      # Return the classpath elements of this path.
+      # Return the classpath elements (the children) of this path.
       def elements
         @elements.dup
       end
 
-      # Search the given _path_ recursievely for zips or jars. Add all found jars to this classpath.
+      # Search the given _path_ recursively for zips or jars. Add all found jars to this classpath.
       def find_jars(path)
         current = Dir.getwd
         begin
@@ -40,7 +40,7 @@ module JavaClass
         end
       end
 
-      # Add the _name_ class path file/folder name to the list.
+      # Add the _name_ class path which may be a file or a folder to this classpath.
       def add_file_name(name)
         if FileTest.directory? name
           add_element(FolderClasspath.new(name))
@@ -89,7 +89,7 @@ module JavaClass
         raise "class #{classname} not found in classpath #{to_s}"
       end
 
-      # Return the number of classes in this jar.
+      # Return the number of classes in this classpath.
       def count
         @elements.inject(0) { |s,e| s + e.count }
       end
