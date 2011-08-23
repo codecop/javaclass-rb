@@ -6,3 +6,4 @@ hosting/cloudbees.com/**
 html/**
 pkg/**
 api/**
+gems/*.gem
