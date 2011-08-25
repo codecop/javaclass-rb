@@ -166,8 +166,7 @@ end
 desc 'Publish the RDoc files to Google Code'
 task :publish_rdoc => [:clobber_rdoc, :rdoc, :fix_rdoc] do
   puts "Releasing #{full_gem_name} to API"
-
-  remote_repo = "https://#{RDOC_REPO}.#{GOOGLE_PROJECT}.googlecode.com/hg/"
+  remote_repo = "https://code.google.com/p/#{GOOGLE_PROJECT}.#{RDOC_REPO}"
   remote_dir = "#{gemspec.version}"
 
   FileUtils.rm_r RDOC_REPO rescue nil
