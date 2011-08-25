@@ -2,7 +2,17 @@ require 'javaclass/classpath/composite_classpath'
 require 'javaclass/classfile/java_class_header'
 
 module JavaClass
-  module ClassList
+
+  # The module ClassList is for separating namespaces. It contains the logic 
+  # to create a list of all classes of all JDK versions. The main logic is
+  # performed in +JarSearcher+, which creates the +List+. It uses a 
+  # +CompositeClasspath+ to find all classes and +JavaClassHeader+ to read the
+  # class information from. The generated list contains packages and these
+  # packages contain the names of classes, their accessibility and the 
+  # versions they were added (or removed) from JDK. ClassList is an 
+  # "application" using the JavaClass intrastructure.
+  # Author::          Peter Kofler
+  module ClassList 
 
     # Search in zip or jar files for Java class files, check for package access or inner classes and call back a list of all these.
     # Author::          Peter Kofler

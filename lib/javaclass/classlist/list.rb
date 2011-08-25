@@ -2,12 +2,10 @@ require 'javaclass/java_name'
 require 'javaclass/classlist/package_entry'
 
 module JavaClass
+  module ClassList
 
-  # The module ClassList is for separating namespaces. It contains the logic to create a list of all classes of all JDK versions.
-  # Author::          Peter Kofler
-  module ClassList # :nodoc:
-
-    # Classes to form a list of JDK classes to find classes which have been added in new releases. This is the list containing packages.
+    # Classes to form a list of JDK classes to find classes which have been 
+    # added in new releases. This is the list containing packages (+PackageEntry+).
     # Author::          Peter Kofler
     class List
 
