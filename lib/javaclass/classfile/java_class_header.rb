@@ -8,11 +8,13 @@ require 'javaclass/java_name'
 
 module JavaClass
 
-  # The module ClassFile is for separating namespaces. It contains the
-  # logic to parse a Java class file. This logic is tied to the JVM specification
+  # The module ClassFile is for separating namespaces. It contains the logic 
+  # to parse a Java class file. This logic is tied to the JVM specification
   # of class files, very low-level and has no usage/DSL features.
+  # The main entry point is +JavaClassHeader+. It's the only "public" class
+  # of the module, so the only class to require from outside.
   # Author::          Peter Kofler
-  module ClassFile # :nodoc:
+  module ClassFile
 
     # Parse and disassemble Java class files, similar to the +javap+ command.
     # Provides all information of a Java class file. This is just a container for all kind of
@@ -49,7 +51,10 @@ module JavaClass
         #    u2 methods_count;
         #    method_info methods[methods_count];
         #    u2 attributes_count;
-        #    attribute_info  attributes[attributes_count];
+        #    attribute_info attributes[attributes_count];
+        #  }
+        #  Body {
+        # TODO add the byte code sequences to the methods so it can be analysed later
         #  }
 
         @magic = ClassMagic.new(data)
