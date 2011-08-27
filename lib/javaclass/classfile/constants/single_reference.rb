@@ -24,7 +24,9 @@ module JavaClass
         def first_value
           get(@first_index)
         end
-        alias to_s first_value
+        def to_s
+          first_value
+        end
 
         # Return part of debug output.
         def dump

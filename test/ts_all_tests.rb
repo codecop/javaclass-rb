@@ -21,9 +21,10 @@ require File.dirname(__FILE__) + '/test_jar_searcher'
 require File.dirname(__FILE__) + '/test_list'
 require File.dirname(__FILE__) + '/test_class_entry'
 require File.dirname(__FILE__) + '/test_package_entry'
-require File.dirname(__FILE__) + '/test_java_name.rb'
-require File.dirname(__FILE__) + '/test_java_name_factory.rb'
-require File.dirname(__FILE__) + '/test_javaclass.rb'
+require File.dirname(__FILE__) + '/test_java_name'
+require File.dirname(__FILE__) + '/test_javaclass'
+require File.dirname(__FILE__) + '/test_java_name_factory'
+require File.dirname(__FILE__) + '/test_imported_types'
 
 class TsAllTests
 
@@ -58,10 +59,13 @@ class TsAllTests
     suite << TestJavaClass::TestClassList::TestClassEntry.suite
     suite << TestJavaClass::TestClassList::TestPackageEntry.suite
 
+    # scanner
+    suite << TestJavaClass::TestClassScanner::TestImportedTypes.suite
+    
     # general
     suite << TestJavaClass::TestDsl::TestJavaNameFactory.suite
     suite << TestJavaClass::TestJavaClassFacade.suite
-
+   
     return suite
   end
 
