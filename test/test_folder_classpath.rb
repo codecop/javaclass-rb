@@ -39,7 +39,7 @@ module TestJavaClass
         assert_equal(['ClassVersionTest10.class', 'package/ClassVersionTest11.class'], @cpe.names)
       end
 
-    end
-
+    end unless defined? TestFolderClasspath
+    
   end
 end
