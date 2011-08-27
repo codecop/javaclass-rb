@@ -10,10 +10,10 @@ def imported_types(cp)
 
   imported = cp.names.collect do |name|
     clazz = load_cp(name, cp)
-    clazz.references.used_classes.collect { |c| c.full_name }
+    clazz.references.used_classes.collect { |c| c.full_name }.reject { |name| in_jdk?(name) }
   end.flatten.uniq.sort
 
-  imported.reject { |name| in_jdk?(name) } - own_classes
+  imported - own_classes
 end
 
 if __FILE__ == $0
