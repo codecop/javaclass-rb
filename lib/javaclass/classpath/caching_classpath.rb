@@ -1,14 +1,20 @@
+require 'delegate'
+
 module JavaClass
   module Classpath
 
-    # A delegator that caches returned class files.
+    # A delegator classpath that caches returned class files.
     # Author::          Peter Kofler
-    class CachingClasspath
+    class CachingClasspath < SimpleDelegator
 
       # Create a cached instance of the _classpath_ .
       def initialize(classpath)
+        unless classpath.respond_to? :load_binary 
+          raise "wrong type of delegatee #{classpath.class}"
+        end
         @classpath = classpath
         @cache = {}
+        super(classpath)
       end
 
       # Ask the cache for the _classname_ and return it. Else delegate loading.
@@ -20,13 +26,13 @@ module JavaClass
         @cache[key]
       end
 
-      alias :__old_method_missing :method_missing
+      # alias :__old_method_missing :method_missing
 
-      # Delegate all other messages. This might not work for methods defined in +Object+ because they are
-      # overwritten in this delegator.
-      def method_missing(method_id, *args)
-        @classpath.send(method_id, *args)
-      end
+      # # Delegate all other messages. This might not work for methods defined
+      # # in +Object+ because they are overwritten in this delegator.
+      # def method_missing(method_id, *args)
+      #    @classpath.send(method_id, *args)
+      # end
 
     end
 

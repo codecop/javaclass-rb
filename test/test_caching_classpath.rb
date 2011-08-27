@@ -1,6 +1,7 @@
+require File.dirname(__FILE__) + '/setup'
+require 'javaclass/classpath/caching_classpath'
 require File.dirname(__FILE__) + '/logging_folder_classpath'
 require File.dirname(__FILE__) + '/test_folder_classpath'
-require 'javaclass/classpath/caching_classpath'
 
 module TestJavaClass
   module TestClasspath
@@ -8,11 +9,10 @@ module TestJavaClass
     class TestCachingClasspath < TestFolderClasspath
       # extend TestFolderClasspath to execute all tests again
 
-      def test_delegating
-        d = JavaClass::Classpath::CachingClasspath.new(String.new('3'))
-        assert_equal(3, d.to_i)
-        assert_equal('33', d * 2)
-        assert_equal('a', d.sub(/./, 'a'))
+      def test_new_wrong_type
+        assert_raise(RuntimeError){ 
+          JavaClass::Classpath::CachingClasspath.new('3') 
+        }
       end
 
       def setup
