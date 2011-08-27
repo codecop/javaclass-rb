@@ -1,7 +1,7 @@
 require 'javaclass/classfile/java_class_header'
 require 'javaclass/classpath/java_home_classpath'
 require 'javaclass/classpath/composite_classpath'
-# TODO require 'javaclass/classscanner'
+require 'javaclass/classscanner/imported_types'
 
 # Main entry point for class file parsing.
 # Author::          Peter Kofler
@@ -22,11 +22,16 @@ module JavaClass
     disassemble(classpath.load_binary(classname))
   end
 
-  # Read and disassemble the given class inside _data_ (byte data).
+  # Read and disassemble the given class inside _data_ (byte data). 
   def self.disassemble(data)
-    # TODO ClassScanner.decorate(
-      ClassFile::JavaClassHeader.new(data)
-    # )
+    ClassFile::JavaClassHeader.new(data)
+  end
+  
+  # Scan parsed _header_ for (selected) _features_ .
+  def self.analyse(header, features=:all)
+    # TODO implement feature selection
+    # have an argument to determine delegators, :none, :some, :all
+    ClassScanner::ImportedTypes.new(header)
   end
 
   # Parse the given path variable _path_ and return a chain of class path elements.

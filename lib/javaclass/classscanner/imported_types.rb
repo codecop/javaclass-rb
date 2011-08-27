@@ -9,24 +9,29 @@ module JavaClass
   # Author::          Peter Kofler
   module ClassScanner
 
-    # TODO implement from Analysis
+    # Add analysis for imported types to +JavaClassHeader+.
     # Author::          Peter Kofler
     class ImportedTypes < DelegateClass(JavaClass::ClassFile::JavaClassHeader)
 
       # Decorate JavaClassHeader _header_ .
       def initialize(header)
         super(header)
+        @imported_types = nil
       end
 
-      # Determine the imported types of this class.
+      # Determine the imported types of this class and return their names.
       def imported_types
-        references.used_classes.collect { |c| c.full_name }.reject { |name| in_jdk?(name) }
+        @imported_types = @imported_types ||
+          references.used_classes.collect { |c| c.to_s.full_name }.sort
+        @imported_types
       end
 
+      # Determine the imported types of this class which are not from the JDK.
+      def imported_3rd_party_types
+        imported_types.reject { |name| in_jdk?(name) }
+      end
+      
     end
-    # TODO add test
-    # TODO create top level file which binds together all decorators.
-    # have an argument to determine delegators, :none, :some, :all
-    
+
   end
 end

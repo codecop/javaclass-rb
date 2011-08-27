@@ -5,12 +5,12 @@ require 'javaclass'
 include JavaClass
 
 # Determine the imported types from all classes of a _cp_ .
-def imported_types(cp)
+def all_imported_types(cp)
   own_classes = cp.names.collect { |c| c.full_name }.sort
 
   imported = cp.names.collect do |name|
-    clazz = load_cp(name, cp)
-    clazz.references.used_classes.collect { |c| c.full_name }.reject { |name| in_jdk?(name) }
+    clazz = analyse(load_cp(name, cp))
+    clazz.imported_3rd_party_types
   end.flatten.uniq.sort
 
   imported - own_classes
@@ -27,13 +27,13 @@ if __FILE__ == $0
   own = cp.names.collect { |c| c.full_name }.sort
 
   puts "---------- used types"
-  used = imported_types(cp)
+  used = all_imported_types(cp)
   puts used
 
   test_cp = classpath("./target/test-classes")
 
   puts "---------- for tests"
-  test = imported_types(test_cp) - own - used
+  test = all_imported_types(test_cp) - own - used
   puts test
 
   # TODO detect and read spring XML configs?
