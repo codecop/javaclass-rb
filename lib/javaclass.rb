@@ -22,7 +22,8 @@ module JavaClass
     disassemble(classpath.load_binary(classname))
   end
 
-  # Read and disassemble the given class inside _data_ (byte data). 
+  # Read and disassemble the given class inside _data_ (byte data).
+  # This creates a JavaClassHeader.
   def self.disassemble(data)
     ClassFile::JavaClassHeader.new(data)
   end
@@ -45,11 +46,22 @@ module JavaClass
   end
 
   # Parse the given path variable _path_ and return a chain of class path elements together with _javahome_ if any.
+  # This creates a CompositeClasspath.
   def self.full_classpath(javahome, path='')
     cp = Classpath::CompositeClasspath.new
     cp.add_element(Classpath::JavaHomeClasspath.new(javahome)) if javahome
     path.split(File::PATH_SEPARATOR).each { |cpe| cp.add_file_name(cpe) } if path
+    class << cp
+      # Load all classes and return the list of them.
+      def values
+        if defined?(@values) && @values
+          @values
+        else
+          @values = names.collect { |name| JavaClass::load_cp(name, self) }.dup
+        end
+      end
+    end
     cp
   end
-
+  
 end
