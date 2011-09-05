@@ -1,7 +1,7 @@
 require 'zip/zipfilesystem'
 
 module JavaClass
-  module Gems
+  module Gems # :nodoc:
 
     # Abstraction of a Zip archive.
     # Author::   Peter Kofler
