@@ -1,5 +1,5 @@
 require 'fileutils'
-require 'zip/zipfilesystem'
+require 'javaclass/gems/zip_file'
 require 'javaclass/java_language'
 
 module JavaClass
@@ -74,20 +74,25 @@ module JavaClass
 
       # Unpack using external executeable using the _command_ string. Return +true+ for success.
       def unpack_shell(command)
-        `#{command.gsub(/<folder>/, escape_folder(@folder)).gsub(/<jar>/, escape_folder(@jarfile))}`
-        $?.to_i == 0
+        begin
+          `#{command.gsub(/<folder>/, escape_folder(@folder)).gsub(/<jar>/, escape_folder(@jarfile))}`
+          $?.to_i == 0
+        rescue
+          false
+        end
       end
 
       # Unpack using Ruby's Rubyzip gem. This is very slow. Return +true+ for success.
       def unpack_ruby
-        Zip::ZipFile.open(@jarfile) do |zip_file|
-          zip_file.each do |entry|
-            name = entry.name
-            next unless entry.file? and name =~ CLASS_REGEX # class file
+        zip_file = JavaClass::Gems::ZipFile.new(@jarfile)
+        zip_file.entries do |entry|
+          name = entry.name
+          next unless entry.file? and name =~ CLASS_REGEX # class file
 
-            f_path = File.join(@folder, entry.name)
-            FileUtils.mkdir_p(File.dirname(f_path))
-            zip_file.extract(entry, f_path) unless File.exist?(f_path)
+          f_path = File.join(@folder, entry.name)
+          FileUtils.mkdir_p(File.dirname(f_path))
+          unless File.exist?(f_path)
+            File.open(f_path, 'wb') { |file| file.write(zip_file.read(name)) } 
           end
         end
         true
