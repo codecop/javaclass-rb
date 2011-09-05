@@ -4,6 +4,7 @@ require 'javaclass/classpath/folder_classpath'
 module JavaClass
 
   # The module Classpath is for separating namespaces. It contains the abstraction of classpath to load binary class file data from.
+  # It does not contain references to JavaClassHeader. It is low-level.
   # Author::          Peter Kofler
   module Classpath # :nodoc:
 
