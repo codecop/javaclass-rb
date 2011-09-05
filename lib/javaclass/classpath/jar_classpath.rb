@@ -1,5 +1,5 @@
 require 'fileutils'
-require 'zip/zipfilesystem'
+require 'javaclass/gems/zip_file'
 require 'javaclass/classpath/temporary_unpacker'
 require 'javaclass/java_language'
 require 'javaclass/java_name'
@@ -28,12 +28,7 @@ module JavaClass
         raise IOError, "jarfile #{@jarfile} not found" if !FileTest.exist? @jarfile
         raise "#{@jarfile} is no file" if !FileTest.file? @jarfile
         @classes = list_classes.collect { |cl| cl.to_javaname }
-        @manifest =
-        begin
-          Zip::ZipFile.open(@jarfile) { |zipfile| zipfile.file.read("META-INF/MANIFEST.MF") }
-        rescue
-          nil
-        end
+        @manifest = JavaClass::Gems::ZipFile.new(@jarfile).read('META-INF/MANIFEST.MF')
 
         setup_cache if JavaClass.unpack_jars?
       end
@@ -73,9 +68,7 @@ module JavaClass
           @delegate.load_binary(classname)
         else
           raise "class #{classname} not found in #{@jarfile}" unless includes?(classname)
-          Zip::ZipFile.open(@jarfile) do |zipfile|
-            zipfile.file.read(classname.to_javaname.to_class_file)
-          end
+          JavaClass::Gems::ZipFile.new(@jarfile).read(classname.to_javaname.to_class_file)
         end
       end
 
@@ -97,7 +90,7 @@ module JavaClass
       # Return the list of classnames (in fact file names) found in this jarfile.
       def list_classes
         list = []
-        Zip::ZipFile.foreach(@jarfile) do |entry|
+        JavaClass::Gems::ZipFile.new(@jarfile).entries do |entry|
           name = entry.name
           next unless entry.file? and name =~ CLASS_REGEX # class file
           list << name
