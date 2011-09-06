@@ -12,8 +12,8 @@ if __FILE__ == $0
   end
 
   cp = classpath(ARGV[0])
-  
-  cp.values.find_all { |clazz| clazz.access_flags.interface? && !clazz.access_flags.annotation? }.collect { |clazz| clazz.name }
-  # TODO check all interfaces how they arenamed,
+  names = cp.values.find_all { |clazz| clazz.access_flags.interface? && !clazz.access_flags.annotation? }.collect { |clazz| clazz.name.simple_name } 
+  puts names.sort
+  # TODO check all interfaces how they are named
 
 end
