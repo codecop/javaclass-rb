@@ -8,9 +8,22 @@ module JavaClass
   # Author::          Peter Kofler
   module Dsl
 
-    # Delegate JavaClass.
+    # Delegate to JavaClass to create the classpath for _path_ and add option to get all values.
     def classpath(path)
-      JavaClass::classpath(path)
+      cp = JavaClass::classpath(path)
+
+      class << cp
+        # Load all classes and return the list of them.
+        def values
+          if defined?(@values) && @values
+            @values
+          else
+            @values = names.collect { |name| JavaClass::analyse(JavaClass::load_cp(name, self)) }.dup
+          end
+        end
+      end
+
+      cp      
     end
     
   end
