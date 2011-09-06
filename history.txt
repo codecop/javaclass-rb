@@ -1,5 +1,6 @@
 === 0.0.4 not released yet
 
+* added abstraction over rubyzip gem
 * added class scanning "framework" and imported types scanner
 * added cached classpath
 * added usage of system 7za/unzip (if available) which unpack much faster
