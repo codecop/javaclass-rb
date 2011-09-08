@@ -1,1 +1,5 @@
-TODO other classpath abstractions: WARs and EARs contain JARs and a folder
+TODO other classpath abstractions: 
+* Single Project Classpath <project name>/[bin oder classes oder target/classes oder target/test-classes]
+* Eclipse Workspace Classpath = workspace/ und Liste von Single Project Classpath 
+
+* WARs and EARs contain JARs and a folder
