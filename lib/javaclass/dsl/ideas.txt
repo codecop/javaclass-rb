@@ -1,5 +1,0 @@
-should be able to include and just write Classpath
-
-  def classpath(path)
-    JavaClass::full_classpath(nil, path)
-  end
