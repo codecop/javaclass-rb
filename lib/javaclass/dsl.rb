@@ -15,12 +15,13 @@ module JavaClass
       class << cp
         # Load all classes and return the list of them.
         def values
-          if defined?(@values) && @values
-            @values
-          else
-            @values = names.collect { |name| JavaClass::analyse(JavaClass::load_cp(name, self)) }.dup
+          if !defined?(@values) 
+            @values = names.collect { |name| JavaClass::analyse(JavaClass::load_cp(name, self)) }
           end
+          @values.dup
         end
+        # TODO create a second decorator which adds analyse to all loaded classes
+        # then wrap the cache around it and add the @values method in the end
       end
 
       cp      
