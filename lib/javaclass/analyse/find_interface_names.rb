@@ -1,13 +1,9 @@
 # add the lib of this gem to the load path
 $:.unshift File.dirname(File.dirname(File.dirname(__FILE__)))
 
-require 'javaclass'
 require 'javaclass/dsl'
 
 if __FILE__ == $0
-
-  include JavaClass
-  include JavaClass::Dsl
 
   if ARGV.empty?
     puts "#{File.basename(__FILE__)} <base folder>"
@@ -15,9 +11,9 @@ if __FILE__ == $0
     exit
   end
 
-  cp = JavaClass::classpath(ARGV[0])
-  
-  cp.values.find_all { |clazz| clazz.access_flags.interface? && !clazz.access_flags.annotation? }.collect { |clazz| clazz.name }
-  # TODO check all interfaces how they arenamed,
+  cp = classpath(ARGV[0])
+  names = cp.values.find_all { |clazz| clazz.access_flags.interface? && !clazz.access_flags.annotation? }.collect { |clazz| clazz.name.simple_name } 
+  puts names.sort
+  # TODO check all interfaces how they are named
 
 end

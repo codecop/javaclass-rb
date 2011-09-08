@@ -3,7 +3,7 @@ require 'javaclass/classpath/java_home_classpath'
 require 'javaclass/classpath/composite_classpath'
 require 'javaclass/classscanner/imported_types'
 
-# Main entry point for class file parsing.
+# Main entry point for class file parsing. This module ties together the ClassFile and Classpath modules.
 # Author::          Peter Kofler
 module JavaClass
 
@@ -51,16 +51,6 @@ module JavaClass
     cp = Classpath::CompositeClasspath.new
     cp.add_element(Classpath::JavaHomeClasspath.new(javahome)) if javahome
     path.split(File::PATH_SEPARATOR).each { |cpe| cp.add_file_name(cpe) } if path
-    class << cp
-      # Load all classes and return the list of them.
-      def values
-        if defined?(@values) && @values
-          @values
-        else
-          @values = names.collect { |name| JavaClass::load_cp(name, self) }.dup
-        end
-      end
-    end
     cp
   end
   

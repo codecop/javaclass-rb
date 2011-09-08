@@ -2,33 +2,46 @@ require 'javaclass/java_language'
 
 module JavaClass
 
+  # TODO implement for inner classes: CollectionUtils$IChecker
+  
   # Special String with methods to work with Java class or package names.
   # Author::          Peter Kofler
   class JavaName < String
 
-    # Return the package name of a classname or the superpackage of a package. Return an empty String if default package.
-    attr_reader :package
+    # Return the package name of a classname or the name of the package. Return an empty String if default package.
+    def package
+      @package.to_javaname
+    end
 
     # Return the simple name of this class or package.
-    attr_reader :simple_name
+    def simple_name
+      @simple_name.to_javaname
+    end
+
     # Full normalized class name of this class.
-    attr_reader :full_name
+    def full_name
+      @full_name.to_javaname
+    end
 
     def initialize(string)
       super string
-      @full_name = string.gsub(/\/|\\/,'.').sub(/\.(class|java|".*|<.*)?$/, '')
-
-      matches = @full_name.scan(/^(.+)\.([A-Z][^.]*)$/)[0]
+      plain_name = string.sub(/\.(class|java|".*|<.*)?$/, '')
+      @is_mixed = plain_name =~ /\..*\/|\/.*\./ # mixed style
+      @full_name = plain_name
+      @full_name = @full_name.gsub(/\/|\\/,'.') if !@is_mixed
+      @full_name = self if @full_name == string # save some bytes
+      
+      matches = @full_name.scan(/^(.+)(?:\.|\/)([A-Z][^.\/]*)$/)[0]
       if matches
-        @package = matches[0].to_javaname
-        @simple_name = matches[1].to_javaname
-      elsif @full_name =~ /^[A-Z][^.]*$/
+        @package = matches[0].gsub(/\/|\\/,'.')
+        @simple_name = matches[1].gsub(/\/|\\/,'.')
+      elsif @full_name =~ /^[A-Z][^.\/]*$/
         # simple name
         @package = ''
-        @simple_name = self
+        @simple_name = self.gsub(/\/|\\/,'.')
       else
         # only package
-        @package = self
+        @package = self.gsub(/\/|\\/,'.')
         @simple_name = ''
       end
     end
@@ -50,12 +63,20 @@ module JavaClass
 
     # Return the full classname of this class, e.g. <code>java.lang.Object</code>.
     def to_classname
-      @full_name.to_javaname
+      if @full_name == self
+        self
+      else
+        @full_name.to_javaname
+      end
     end
 
     # Return the VM name of this class, e.g. <code>java/lang/Object</code>.
     def to_jvmname
-      @full_name.dot_to_slash.to_javaname
+      if @is_mixed
+        @full_name
+      else
+        @full_name.dot_to_slash
+      end.to_javaname
     end
 
     # Return the Java source file name of this class, e.g. <code>java/lang/Object.java</code>.
@@ -101,7 +122,7 @@ class String
 
   # Replace all slashes in this String with dots.
   def slash_to_dot
-    gsub('/', '.')
+    gsub(/\/|\\/, '.')
   end
 
 end
