@@ -64,6 +64,12 @@ started adding methods to that end...)
   clazz.access_flags.final?              # => true
   clazz.interfaces                       # => ["java/io/Serializable", "java/lang/Comparable", "java/lang/CharSequence"]
 
+== DSL Usage
+
+  require 'javaclass/dsl'
+
+  ...
+
 == Documentation
 
 Module +JavaClass+ is the entry point for most functions in the gem.
