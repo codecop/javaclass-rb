@@ -3,7 +3,7 @@ require 'delegate'
 module JavaClass
   module Classpath
 
-    # A delegator classpath that caches returned class files.
+    # A delegator classpath that caches returned class files in a map by full qualified class names.
     # Author::          Peter Kofler
     class CachingClasspath < SimpleDelegator
 

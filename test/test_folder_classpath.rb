@@ -39,6 +39,11 @@ module TestJavaClass
         assert_equal(['ClassVersionTest10.class', 'package/ClassVersionTest11.class'], @cpe.names)
       end
 
+      def test_elements
+        assert_equal(1, @cpe.elements.size)
+        assert_equal(@cpe, @cpe.elements[0])
+      end
+
     end unless defined? TestFolderClasspath
     
   end
