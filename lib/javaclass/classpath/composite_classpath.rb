@@ -43,6 +43,7 @@ module JavaClass
 
       # Add the _name_ class path which may be a file or a folder to this classpath.
       def add_file_name(name)
+        return unless FileTest.exist? name
         if FileTest.directory? name
           add_element(FolderClasspath.new(name))
         else
