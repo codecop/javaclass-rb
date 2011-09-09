@@ -55,6 +55,10 @@ module JavaClass
         other.class == FolderClasspath && other.to_s == self.to_s
       end
 
+      def elements
+        [self]
+      end
+      
       private
 
       # Return the list of classnames (in fact file names) found in this folder.
