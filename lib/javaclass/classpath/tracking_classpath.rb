@@ -23,7 +23,7 @@ module JavaClass
         @classpath.load_binary(classname)
       end
 
-      # Mark the _classname_ as accessed.
+      # Mark the _classname_ as accessed. Return the number of accesses so far.
       def mark_accessed(classname)
         key = classname.to_javaname.full_name
         @accessed[key] = @accessed[key] + 1
