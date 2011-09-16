@@ -96,6 +96,10 @@ module JavaClass
         @elements.inject(0) { |s,e| s + e.count }
       end
 
+      def ==(other)
+        other.class == self.class && other.to_s == self.to_s
+      end
+      
       def to_s
         @elements.collect { |e| e.to_s }.join(',')
       end

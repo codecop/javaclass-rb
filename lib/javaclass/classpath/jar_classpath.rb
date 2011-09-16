@@ -91,7 +91,7 @@ module JavaClass
       end
 
       def ==(other)
-        other.class == JarClasspath && other.to_s == self.to_s
+        other.class == self.class && other.to_s == self.to_s
       end
 
       def elements
