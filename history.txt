@@ -1,5 +1,6 @@
 === 0.0.4 not released yet
 
+* added Eclipse project aware classpath
 * added Maven aware classpath
 * added abstraction over rubyzip gem
 * added class scanning "framework" and imported types scanner
