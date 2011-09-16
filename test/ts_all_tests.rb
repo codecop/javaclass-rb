@@ -20,12 +20,12 @@ require File.dirname(__FILE__) + '/test_maven_classpath'
 require File.dirname(__FILE__) + '/test_eclipse_classpath'
 require File.dirname(__FILE__) + '/test_caching_classpath'
 require File.dirname(__FILE__) + '/test_tracking_classpath'
+require File.dirname(__FILE__) + '/test_factory'
 require File.dirname(__FILE__) + '/test_jar_searcher'
 require File.dirname(__FILE__) + '/test_list'
 require File.dirname(__FILE__) + '/test_class_entry'
 require File.dirname(__FILE__) + '/test_package_entry'
 require File.dirname(__FILE__) + '/test_java_name'
-require File.dirname(__FILE__) + '/test_javaclass'
 require File.dirname(__FILE__) + '/test_java_name_factory'
 require File.dirname(__FILE__) + '/test_imported_types'
 
@@ -58,6 +58,7 @@ class TsAllTests
     suite << TestJavaClass::TestClasspath::TestEclipseClasspath.suite
     suite << TestJavaClass::TestClasspath::TestCachingClasspath.suite
     suite << TestJavaClass::TestClasspath::TestTrackingClasspath.suite
+    suite << TestJavaClass::TestClasspath::TestFactory.suite
 
     # class list
     suite << TestJavaClass::TestClassList::TestJarSearcher.suite
@@ -70,7 +71,6 @@ class TsAllTests
     
     # general
     suite << TestJavaClass::TestDsl::TestJavaNameFactory.suite
-    suite << TestJavaClass::TestJavaClassFacade.suite
    
     return suite
   end
