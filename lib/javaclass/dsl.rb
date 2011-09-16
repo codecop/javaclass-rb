@@ -1,4 +1,5 @@
 require 'javaclass'
+require 'javaclass/classpath/factory'
 require 'javaclass/dsl/java_name_factory'
 
 module JavaClass
@@ -32,8 +33,7 @@ module JavaClass
 end
 
 class Object # :nodoc:
-  include JavaClass
+  include JavaClass::Dsl::JavaNameFactory
   include JavaClass::Classpath::Factory
   include JavaClass::Dsl
-  include JavaClass::Dsl::JavaNameFactory
 end
