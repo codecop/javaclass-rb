@@ -16,6 +16,7 @@ require File.dirname(__FILE__) + '/test_folder_classpath'
 require File.dirname(__FILE__) + '/test_java_home_classpath'
 require File.dirname(__FILE__) + '/test_composite_classpath'
 require File.dirname(__FILE__) + '/test_any_classpath'
+require File.dirname(__FILE__) + '/test_maven_classpath'
 require File.dirname(__FILE__) + '/test_caching_classpath'
 require File.dirname(__FILE__) + '/test_tracking_classpath'
 require File.dirname(__FILE__) + '/test_jar_searcher'
@@ -52,6 +53,7 @@ class TsAllTests
     suite << TestJavaClass::TestClasspath::TestCompositeClasspath.suite
     suite << TestJavaClass::TestClasspath::TestJavaHomeClasspath.suite
     suite << TestJavaClass::TestClasspath::TestAnyClasspath.suite
+    suite << TestJavaClass::TestClasspath::TestMavenClasspath.suite
     suite << TestJavaClass::TestClasspath::TestCachingClasspath.suite
     suite << TestJavaClass::TestClasspath::TestTrackingClasspath.suite
 
