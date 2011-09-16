@@ -10,7 +10,7 @@ module JavaClass
       ACC_SUPER = 0x0020 # old invokespecial instruction semantics
       ACC_INTERFACE = 0x0200
       ACC_ABSTRACT = 0x0400
-      ACC_INNER = 0x1000 # TODO INNER is an unknown access flag, find in spec
+      ACC_INNER = 0x1000 
       ACC_ANNOTATION = 0x2000
       ACC_ENUM = 0x4000
       # TODO Java 1.0 - "private protected" fields?
