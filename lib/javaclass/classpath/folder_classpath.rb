@@ -26,9 +26,13 @@ module JavaClass
         []
       end
 
-      # Return the list of class names found in this folder.
-      def names
-        @classes.dup
+      # Return the list of class names found in this folder. An additional block is used as _filter_ on class names.
+      def names(&filter)
+        if block_given?
+          @classes.find_all { |n| filter.call(n) }
+        else
+          @classes.dup
+        end
       end
 
       # Return if _classname_ is included in this folder.
