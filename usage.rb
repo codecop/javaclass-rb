@@ -3,7 +3,7 @@ $:.unshift File.join(File.dirname(__FILE__), 'lib')
 
 if __FILE__ == $0
   
-  require 'javaclass'
+  require 'javaclass/dsl'
 
   # load a class directly from the file system
   clazz = JavaClass.load_fs('./test/data/access_flags/AccessFlagsTestPublic.class')
