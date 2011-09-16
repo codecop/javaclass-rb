@@ -37,6 +37,7 @@ module TestJavaClass
 
       def test_names
         assert_equal(['ClassVersionTest10.class', 'package/ClassVersionTest11.class'], @cpe.names)
+        assert_equal(['ClassVersionTest10.class'], @cpe.names { |n| n=~ /10/ })
       end
 
       def test_elements

@@ -72,9 +72,9 @@ module JavaClass
         []
       end
 
-      # Return the list of class names found in this classpath.
-      def names
-        @elements.collect { |e| e.names }.flatten.uniq
+      # Return the list of class names found in this classpath. An additional block is used as _filter_ on class names.
+      def names(&filter)
+        @elements.collect { |e| e.names(&filter) }.flatten.uniq
       end
 
       # Return if _classname_ is included in this classpath.

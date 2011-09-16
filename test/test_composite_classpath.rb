@@ -53,6 +53,7 @@ module TestJavaClass
 
       def test_names
         assert_equal(['ClassVersionTest11.class', 'ClassVersionTest10.class', 'package/ClassVersionTest11.class'], @cpe.names)
+        assert_equal(['ClassVersionTest11.class', 'package/ClassVersionTest11.class'], @cpe.names { |n| n=~ /11/ })
       end
 
       def test_find_jars
