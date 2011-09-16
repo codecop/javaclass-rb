@@ -8,11 +8,15 @@ module JavaClass
     # Author::   Peter Kofler
     class FolderClasspath
 
+      # Check if the _file_ is a valid location for a folder classpath.
+      def self.valid_location(file)
+        FileTest.exist?(file) && FileTest.directory?(file) 
+      end
+      
       # Create a classpath with this _folder_ .
       def initialize(folder)
+        raise IOError, "folder #{folder} not found/no folder" if !FolderClasspath::valid_location(folder)
         @folder = folder
-        raise IOError, "folder #{@folder} not found" if !FileTest.exist? @folder
-        raise "#{@folder} is no folder" if !FileTest.directory? @folder
         @classes = list_classes.collect { |cl| cl.to_javaname }
       end
 
