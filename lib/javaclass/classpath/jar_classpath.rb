@@ -22,11 +22,16 @@ module JavaClass
     # Author::   Peter Kofler
     class JarClasspath
 
+      # Check if the _file_ is a valid location for a jar classpath.
+      def self.valid_location(file)
+        FileTest.exist?(file) && FileTest.file?(file) && FileTest.size(file) > 0
+      end
+      
       # Create a classpath with this _jarfile_ .
       def initialize(jarfile)
+        raise IOError, "jarfile #{jarfile} not found/no file" if !JarClasspath::valid_location(jarfile)
         @jarfile = jarfile
-        raise IOError, "jarfile #{@jarfile} not found" if !FileTest.exist? @jarfile
-        raise "#{@jarfile} is no file" if !FileTest.file? @jarfile
+        
         @classes = list_classes.collect { |cl| cl.to_javaname }
         @manifest = JavaClass::Gems::ZipFile.new(@jarfile).read('META-INF/MANIFEST.MF')
 
