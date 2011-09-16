@@ -11,11 +11,11 @@ module JavaClass
       
       # Create a classpath from this _javahome_ directory.
       def initialize(javahome)
-        if FileTest.exist?(rtjar=File.join(javahome, 'lib', RT_JAR))
+        if exist?(rtjar=File.join(javahome, 'lib', RT_JAR))
           super(rtjar)
-        elsif FileTest.exist?(rtjar=File.join(javahome, 'jre', 'lib', RT_JAR))
+        elsif exist?(rtjar=File.join(javahome, 'jre', 'lib', RT_JAR))
           super(rtjar)
-        elsif FileTest.exist?(rtjar=File.join(javahome, 'lib', 'classes.zip')) # Java 1.1 home with lib/classes.zip
+        elsif exist?(rtjar=File.join(javahome, 'lib', 'classes.zip')) # Java 1.1 home with lib/classes.zip
           super(rtjar)
         else
           raise IOError, "#{RT_JAR} not found in java home #{javahome}"
@@ -38,6 +38,12 @@ module JavaClass
         list
       end
 
+      private
+      
+      def exist?(file)
+        FileTest.exist?(file) && FileTest.file?(file)
+      end
+      
     end
 
   end
