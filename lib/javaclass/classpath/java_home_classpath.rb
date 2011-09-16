@@ -17,9 +17,8 @@ module JavaClass
           super(rtjar)
         elsif FileTest.exist?(rtjar=File.join(javahome, 'lib', 'classes.zip')) # Java 1.1 home with lib/classes.zip
           super(rtjar)
-        elsif FileTest.exist?(rtjar=File.join(javahome, 'jre', 'lib', RT_JAR))
         else
-          raise IOError, "rt.jar not found in java home #{javahome}"
+          raise IOError, "#{RT_JAR} not found in java home #{javahome}"
         end
         @lib = File.dirname(rtjar)
       end
