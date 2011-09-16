@@ -6,7 +6,8 @@ module JavaClass
     # A Maven folder structure aware classpath. Maven submodules are supported.
     # Author::   Peter Kofler
     class MavenClasspath < CompositeClasspath
-      # Check if the _file_ is a valid location for a folder classpath.
+     
+      # Check if the _file_ is a valid location for a Maven classpath.
       def self.valid_location(file)
         FileTest.exist?(file) && FileTest.directory?(file) && FileTest.exist?(File.join(file, 'pom.xml'))
       end
