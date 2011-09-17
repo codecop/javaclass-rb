@@ -17,7 +17,7 @@ of the classes passed to it together with a list of all outgoing references.
 I am still doing Java most of the time. I used to be quite enthusiastic about
 it, but after 11 years I can see the advantages of being a polyglot. So I use
 Ruby for all kind of stuff, just for fun. When I needed some Java class
-analysis I wrote it with Ruby. As I am a puritan, I did not
+analysis I wrote it in Ruby. As I am a puritan, I did not
 want to call javap from my script, so I started disassembling the class files,
 which might be the base for some serious static code analysis tools. (I
 started adding methods to that end...)
