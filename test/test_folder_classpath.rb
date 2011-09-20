@@ -7,7 +7,7 @@ module TestJavaClass
     class TestFolderClasspath < Test::Unit::TestCase
 
       def setup
-        @cpe = JavaClass::Classpath::FolderClasspath.new("#{TEST_DATA_PATH}/folder_classpath/JarClasspathTestFolder")
+        @cpe = JavaClass::Classpath::FolderClasspath.new("#{TEST_DATA_PATH}/folder_classpath/classes")
       end
 
       def test_count

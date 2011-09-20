@@ -17,7 +17,7 @@ module TestJavaClass
       end
 
       def test_add_file_name
-        @cpe.add_file_name "#{TEST_DATA_PATH}/folder_classpath/JarClasspathTestFolder"
+        @cpe.add_file_name "#{TEST_DATA_PATH}/folder_classpath/classes"
         assert_equal(2+1+2, @cpe.count)
       end
 
