@@ -32,7 +32,7 @@ module JavaClass
       end
 
       def to_s
-        @root
+        File.join(@root, '.classpath').to_s
       end
 
     end
