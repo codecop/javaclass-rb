@@ -19,11 +19,11 @@ module TestJavaClass
         assert_equal("#{TEST_DATA_PATH}/folder_classpath/classes", elem[4].to_s)
       end
 
-#      def test_workspace
-#        cp = workspace("#{TEST_DATA_PATH}")
-#        elem = cp.elements
-#        assert_equal(3, elem.size) # 2 Maven, 1 Eclipse
-#      end
+      def test_workspace
+        cp = workspace("#{TEST_DATA_PATH}")
+        elem = cp.elements.reject{ |e| e.jar? }
+        assert_equal(4, elem.size) # 1 Eclipse, 2+1 Maven (later 1 plain)
+      end
       
     end
 
