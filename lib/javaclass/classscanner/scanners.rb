@@ -14,7 +14,7 @@ module JavaClass
   
       # Scan parsed _header_ for (selected) _features_ . This ties together all scanners.
       def analyse(header, features=:all)
-        # TODO implement feature selection - have an argument to determine delegators, :none, :some, :all
+        # later add feature selection if needed, argument determines delegators, :none, :some, :all
         ImportedTypes.new(
           header
         )

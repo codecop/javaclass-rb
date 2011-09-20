@@ -6,7 +6,7 @@ require 'javaclass/java_name'
 
 module JavaClass
 
-  # Activate temporary unpacking of all JARs. This speeds up loading of classes later.
+  # Activate temporary unpacking of all JARs. This speeds up loading of classes later. 
   def self.unpack_jars!(flag=true)
     @@unpack_jars = flag
   end
@@ -18,13 +18,14 @@ module JavaClass
 
   module Classpath
 
-    # Abstraction of a ZIP or JAR on the CLASSPATH. May return additional classpath elements for referenced libs.
+    # Abstraction of a ZIP or JAR on the CLASSPATH. May return additional classpath 
+    # elements for referenced libs. This is a leaf in the classpath tree.
     # Author::   Peter Kofler
     class JarClasspath
 
       # Check if the _file_ is a valid location for a jar classpath.
       def self.valid_location(file)
-        FileTest.exist?(file) && FileTest.file?(file) && FileTest.size(file) > 0
+        FileTest.exist?(file) && FileTest.file?(file) && FileTest.size(file) > 0 && file =~ /\.jar$|\.zip$/
       end
       
       # Create a classpath with this _jarfile_ .

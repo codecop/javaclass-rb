@@ -3,7 +3,8 @@ require 'javaclass/classpath/jar_classpath'
 module JavaClass
   module Classpath
 
-    # Abstraction of the Java boot CLASSPATH. May return additional classpath elements for endorsed libs.
+    # Abstraction of the Java boot CLASSPATH. May return additional classpath 
+    # elements for endorsed libs. This is a leaf in the classpath tree.
     # Author::   Peter Kofler
     class JavaHomeClasspath < JarClasspath
 
