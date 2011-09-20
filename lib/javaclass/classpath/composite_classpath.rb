@@ -17,9 +17,10 @@ module JavaClass
         @elements = []
       end
 
-      # Return the classpath elements (the children) of this path.
+      # Return all the classpath elements (the children) of this path and all child paths.
       def elements
-        @elements.dup
+        # [self] + */ 
+        @elements.map { |cp| cp.elements }.flatten
       end
 
       # Search the given _path_ recursively for zips or jars. Add all found jars to this classpath.
@@ -43,11 +44,12 @@ module JavaClass
 
       # Add the _name_ class path which may be a file or a folder to this classpath.
       def add_file_name(name)
-        return unless FileTest.exist? name
-        if FileTest.directory? name
+        if FolderClasspath.valid_location(name)
           add_element(FolderClasspath.new(name))
-        else
+        elsif JarClasspath.valid_location(name)
           add_element(JarClasspath.new(name))
+        else
+          # warn("tried to add invalid classpath location #{name}")
         end
       end
 
@@ -56,7 +58,7 @@ module JavaClass
         @elements << elem unless elem.count == 0 || @elements.find { |cpe| cpe == elem } 
         elem.additional_classpath.each do |acpe|
           # referred classpath elements may be missing
-          if FileTest.exist? acpe
+          if JarClasspath.valid_location(acpe)
             add_element(JarClasspath.new(acpe))
           end
         end

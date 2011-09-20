@@ -6,14 +6,16 @@ require 'javaclass/dsl'
 if __FILE__ == $0
 
   if ARGV.empty?
-    puts "#{File.basename(__FILE__)} <base folder>"
+    puts "#{File.basename(__FILE__)} <project base folder>"
     puts "scan all Java cass files recursively and find interface names."
     exit
   end
 
-  cp = classpath(ARGV[0])
-  names = cp.values.find_all { |clazz| clazz.access_flags.interface? && !clazz.access_flags.annotation? }.collect { |clazz| clazz.name.simple_name } 
+  cp = workspace(ARGV[0])
+  names = cp.values { |clazz| clazz.package =~ /^com\.ibm\.arc\.sdm/  }.
+             find_all { |clazz| clazz.access_flags.interface? && !clazz.access_flags.annotation? }.
+             collect { |clazz| clazz.name.simple_name } 
   puts names.sort
-  # TODO check all interfaces how they are named
+  # TODO CONTINUE 9 check all interfaces how they are named, upgrade DSL to have this as simple as possible
 
 end
