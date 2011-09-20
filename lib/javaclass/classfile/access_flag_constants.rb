@@ -13,7 +13,7 @@ module JavaClass
       ACC_INNER = 0x1000 
       ACC_ANNOTATION = 0x2000
       ACC_ENUM = 0x4000
-      # TODO Java 1.0 - "private protected" fields?
+      # TODO Java 1.0 - "private protected" fields? (see JVM spec)
 
       # Bitmask for unknown/not supported flags.
       ACC_OTHER = 0xffff ^ ACC_PUBLIC ^ ACC_FINAL ^ ACC_SUPER ^ ACC_INTERFACE ^ ACC_ABSTRACT ^ ACC_INNER ^ ACC_ENUM ^ ACC_ANNOTATION

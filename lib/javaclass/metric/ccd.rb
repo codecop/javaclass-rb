@@ -4,7 +4,7 @@ $:.unshift File.dirname(File.dirname(File.dirname(__FILE__)))
 require 'javaclass'
 include JavaClass
 
-# TODO cleanup this code fragment and make a proper class
+# TODO CONTINUE 5 use DSL, cleanup this code fragment and make a proper class
 
 def process_class(name, already=[], intend=0)
   file_name = 'C:\JavaDev\classes\\' + name.dot_to_slash + CLASS

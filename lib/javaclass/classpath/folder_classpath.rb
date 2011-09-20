@@ -4,7 +4,7 @@ require 'javaclass/java_name'
 module JavaClass
   module Classpath
 
-    # Abstraction of a folder on the CLASSPATH.
+    # Abstraction of a folder on the CLASSPATH. This is a leaf in the classpath tree.
     # Author::   Peter Kofler
     class FolderClasspath
 

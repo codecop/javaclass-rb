@@ -1,8 +1,7 @@
 # add the lib of this gem to the load path
 $:.unshift File.dirname(File.dirname(File.dirname(__FILE__)))
 
-require 'javaclass'
-include JavaClass
+require 'javaclass/dsl'
 
 # Determine the imported types from all classes of a _cp_ .
 def all_imported_types(cp)
@@ -36,6 +35,7 @@ if __FILE__ == $0
   test = all_imported_types(test_cp) - own - used
   puts test
 
-  # TODO detect and read spring XML configs?
+  # TODO CONTINUE 7 use DSL, make this simple
+  # TODO CONTINUE 6 detect and read spring XML configs?
 
 end
