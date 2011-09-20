@@ -3,10 +3,6 @@ require 'javaclass/classfile/java_class_header'
 
 module JavaClass
 
-  # The module ClassScanner is for separating namespaces. It contains various
-  # decotrators that scan and analyse single class files and provide additional
-  # information about the class, e.g. Cyclomatic Complexity.
-  # Author::          Peter Kofler
   module ClassScanner
 
     # Add analysis for imported types to +JavaClassHeader+.
