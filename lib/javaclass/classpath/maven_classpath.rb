@@ -29,7 +29,7 @@ module JavaClass
       end
 
       def to_s
-        @root
+        File.join(@root, 'pom.xml').to_s
       end
 
       private
