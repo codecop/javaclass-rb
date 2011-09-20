@@ -21,8 +21,8 @@ module JavaClass
       # Parse the given path variable _path_ and return a chain of class path elements together with _javahome_ if any.
       # This creates a CompositeClasspath.
       def full_classpath(javahome, path='')
-        cp = Classpath::CompositeClasspath.new
-        cp.add_element(Classpath::JavaHomeClasspath.new(javahome)) if javahome
+        cp = CompositeClasspath.new
+        cp.add_element(JavaHomeClasspath.new(javahome)) if javahome
         path.split(File::PATH_SEPARATOR).each { |cpe| cp.add_file_name(cpe) } if path
         cp
       end

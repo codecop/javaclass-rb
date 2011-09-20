@@ -1,11 +1,12 @@
 require 'javaclass/classfile/java_class_header'
 require 'javaclass/classpath/factory'
-require 'javaclass/classscanner/imported_types'
+require 'javaclass/classscanner/scanners'
 
-# Main entry point for class file parsing. This module ties together the ClassFile and Classpath modules.
+# Main entry point for class file parsing. This module ties together all ClassFile and Classpath modules.
 # Author::          Peter Kofler
 module JavaClass
-  extend JavaClass::Classpath::Factory
+  extend Classpath::Factory
+  extend ClassScanner::Scanners
 
   # Read and disassemble the given class from _filename_ (full file name).
   def self.load_fs(filename)
@@ -23,17 +24,9 @@ module JavaClass
   end
 
   # Read and disassemble the given class inside _data_ (byte data).
-  # This creates a JavaClassHeader.
+  # This creates a +JavaClassHeader+ .
   def self.disassemble(data)
     ClassFile::JavaClassHeader.new(data)
-  end
-  
-  # Scan parsed _header_ . 
-  def self.analyse(header)
-    # TODO move logic similar to Factory into a Scanners module.
-    ClassScanner::ImportedTypes.new(
-      header
-    )
   end
     
 end
