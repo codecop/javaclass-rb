@@ -19,7 +19,6 @@ require File.dirname(__FILE__) + '/test_any_classpath'
 require File.dirname(__FILE__) + '/test_maven_classpath'
 require File.dirname(__FILE__) + '/test_eclipse_classpath'
 require File.dirname(__FILE__) + '/test_convention_classpath'
-require File.dirname(__FILE__) + '/test_caching_classpath'
 require File.dirname(__FILE__) + '/test_tracking_classpath'
 require File.dirname(__FILE__) + '/test_factory'
 require File.dirname(__FILE__) + '/test_jar_searcher'
@@ -29,6 +28,7 @@ require File.dirname(__FILE__) + '/test_package_entry'
 require File.dirname(__FILE__) + '/test_java_name'
 require File.dirname(__FILE__) + '/test_java_name_factory'
 require File.dirname(__FILE__) + '/test_load_directive'
+require File.dirname(__FILE__) + '/test_caching_classpath'
 require File.dirname(__FILE__) + '/test_imported_types'
 require File.dirname(__FILE__) + '/test_javaclass_api'
 
@@ -60,7 +60,6 @@ class TsAllTests
     suite << TestJavaClass::TestClasspath::TestMavenClasspath.suite
     suite << TestJavaClass::TestClasspath::TestEclipseClasspath.suite
     suite << TestJavaClass::TestClasspath::TestConventionClasspath.suite
-    suite << TestJavaClass::TestClasspath::TestCachingClasspath.suite
     suite << TestJavaClass::TestClasspath::TestTrackingClasspath.suite
     suite << TestJavaClass::TestClasspath::TestFactory.suite
 
@@ -76,6 +75,7 @@ class TsAllTests
     # DSL
     suite << TestJavaClass::TestDsl::TestJavaNameFactory.suite
     suite << TestJavaClass::TestDsl::TestLoadDirective.suite
+    suite << TestJavaClass::TestDsl::TestCachingClasspath.suite
    
     suite << TestJavaClass::TestJavaClassAPI.suite
     return suite
