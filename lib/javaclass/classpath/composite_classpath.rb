@@ -1,5 +1,6 @@
 require 'javaclass/classpath/jar_classpath'
 require 'javaclass/classpath/folder_classpath'
+require 'javaclass/classpath/file_classpath'
 
 module JavaClass
 
@@ -10,10 +11,12 @@ module JavaClass
 
     # List of class path elements constructed from a full CLASSPATH variable.
     # Author::   Peter Kofler
-    class CompositeClasspath
+    class CompositeClasspath < FileClasspath
 
-      # Create an empty classpath composite root.
-      def initialize
+      # Create an empty classpath composite root. The optional _file_ is for
+      # identifying subclasses.
+      def initialize(root='.')
+        super(root)
         @elements = []
       end
 
@@ -64,16 +67,6 @@ module JavaClass
         end
       end
 
-      # Return false.
-      def jar?
-        false
-      end
-
-      # Return an empty array.
-      def additional_classpath
-        []
-      end
-
       # Return the list of class names found in this classpath. An additional block is used as _filter_ on class names.
       def names(&filter)
         @elements.collect { |e| e.names(&filter) }.flatten.uniq
@@ -98,10 +91,6 @@ module JavaClass
         @elements.inject(0) { |s,e| s + e.count }
       end
 
-      def ==(other)
-        other.class == self.class && other.to_s == self.to_s
-      end
-      
       def to_s
         @elements.collect { |e| e.to_s }.join(',')
       end
