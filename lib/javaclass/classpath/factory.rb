@@ -35,14 +35,15 @@ module JavaClass
       # Create a classpath from a workspace _basepath_ which contains Eclipse or Maven projects. 
       def workspace(basepath, cp=CompositeClasspath.new)
         Dir.entries(basepath).each do |entry|
+          next if entry == '.' || entry == '..'
           file = File.join(basepath, entry)
           
           [EclipseClasspath, MavenClasspath, ConventionClasspath].each do |classpath_type|
-            if classpath_type.valid_location(file)
+            if classpath_type.valid_location?(file)
               cp.add_element(classpath_type.new(file))
+              break
             end
           end
-          
         end
         cp
       end

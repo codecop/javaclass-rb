@@ -10,14 +10,14 @@ module TestJavaClass
         @cpe = JavaClass::Classpath::MavenClasspath.new("#{TEST_DATA_PATH}/maven_classpath")
       end
 
-      def test_class_valid_location
-        assert(JavaClass::Classpath::MavenClasspath.valid_location("#{TEST_DATA_PATH}/maven_classpath"))
-        assert(JavaClass::Classpath::MavenClasspath.valid_location("#{TEST_DATA_PATH}/maven_classpath/module"))
+      def test_class_valid_location_eh
+        assert(JavaClass::Classpath::MavenClasspath.valid_location?("#{TEST_DATA_PATH}/maven_classpath"))
+        assert(JavaClass::Classpath::MavenClasspath.valid_location?("#{TEST_DATA_PATH}/maven_classpath/module"))
       end
 
-      def test_class_valid_location_no_pom
-        assert(!JavaClass::Classpath::MavenClasspath.valid_location("#{TEST_DATA_PATH}/folder_classpath"))
-        assert(!JavaClass::Classpath::MavenClasspath.valid_location("#{TEST_DATA_PATH}/not_existing_folder"))
+      def test_class_valid_location_eh_no_pom
+        assert(!JavaClass::Classpath::MavenClasspath.valid_location?("#{TEST_DATA_PATH}/folder_classpath"))
+        assert(!JavaClass::Classpath::MavenClasspath.valid_location?("#{TEST_DATA_PATH}/not_existing_folder"))
       end
       
       def test_count

@@ -24,13 +24,13 @@ module JavaClass
     class JarClasspath
 
       # Check if the _file_ is a valid location for a jar classpath.
-      def self.valid_location(file)
+      def self.valid_location?(file)
         FileTest.exist?(file) && FileTest.file?(file) && FileTest.size(file) > 0 && file =~ /\.jar$|\.zip$/
       end
       
       # Create a classpath with this _jarfile_ .
       def initialize(jarfile)
-        raise IOError, "jarfile #{jarfile} not found/no file" if !JarClasspath::valid_location(jarfile)
+        raise IOError, "jarfile #{jarfile} not found/no file" if !JarClasspath::valid_location?(jarfile)
         @jarfile = jarfile
         
         @classes = list_classes.collect { |cl| cl.to_javaname }

@@ -44,9 +44,9 @@ module JavaClass
 
       # Add the _name_ class path which may be a file or a folder to this classpath.
       def add_file_name(name)
-        if FolderClasspath.valid_location(name)
+        if FolderClasspath.valid_location?(name)
           add_element(FolderClasspath.new(name))
-        elsif JarClasspath.valid_location(name)
+        elsif JarClasspath.valid_location?(name)
           add_element(JarClasspath.new(name))
         else
           # warn("tried to add invalid classpath location #{name}")
@@ -58,7 +58,7 @@ module JavaClass
         @elements << elem unless elem.count == 0 || @elements.find { |cpe| cpe == elem } 
         elem.additional_classpath.each do |acpe|
           # referred classpath elements may be missing
-          if JarClasspath.valid_location(acpe)
+          if JarClasspath.valid_location?(acpe)
             add_element(JarClasspath.new(acpe))
           end
         end

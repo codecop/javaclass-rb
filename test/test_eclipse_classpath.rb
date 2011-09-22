@@ -10,13 +10,13 @@ module TestJavaClass
         @cpe = JavaClass::Classpath::EclipseClasspath.new("#{TEST_DATA_PATH}/eclipse_classpath")
       end
 
-      def test_class_valid_location
-        assert(JavaClass::Classpath::EclipseClasspath.valid_location("#{TEST_DATA_PATH}/eclipse_classpath"))
+      def test_class_valid_location_eh
+        assert(JavaClass::Classpath::EclipseClasspath.valid_location?("#{TEST_DATA_PATH}/eclipse_classpath"))
       end
 
-      def test_class_valid_location_invalid
-        assert(!JavaClass::Classpath::EclipseClasspath.valid_location("#{TEST_DATA_PATH}/folder_classpath"))
-        assert(!JavaClass::Classpath::EclipseClasspath.valid_location("#{TEST_DATA_PATH}/not_existing_folder"))
+      def test_class_valid_location_eh_invalid
+        assert(!JavaClass::Classpath::EclipseClasspath.valid_location?("#{TEST_DATA_PATH}/folder_classpath"))
+        assert(!JavaClass::Classpath::EclipseClasspath.valid_location?("#{TEST_DATA_PATH}/not_existing_folder"))
       end
             
       def test_count
