@@ -1,5 +1,8 @@
 require 'javaclass/classpath/java_home_classpath'
 require 'javaclass/classpath/composite_classpath'
+require 'javaclass/classpath/maven_classpath'
+require 'javaclass/classpath/eclipse_classpath'
+require 'javaclass/classpath/convention_classpath'
 
 module JavaClass
   module Classpath
@@ -34,8 +37,7 @@ module JavaClass
         Dir.entries(basepath).each do |entry|
           file = File.join(basepath, entry)
           
-          [EclipseClasspath, MavenClasspath, JarClasspath].each do |classpath_type|
-            # TODO CONTINUE 10 - add a naming conventions classpath with ./classes ./lib ./bin
+          [EclipseClasspath, MavenClasspath, ConventionClasspath].each do |classpath_type|
             if classpath_type.valid_location(file)
               cp.add_element(classpath_type.new(file))
             end
