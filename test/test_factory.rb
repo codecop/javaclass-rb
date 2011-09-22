@@ -22,7 +22,7 @@ module TestJavaClass
       def test_workspace
         cp = workspace("#{TEST_DATA_PATH}")
         elem = cp.elements.reject{ |e| e.jar? }
-        assert_equal(4, elem.size) # 1 Eclipse, 2+1 Maven (later 1 plain)
+        assert_equal(6, elem.size) # 1 Eclipse, 2+1 Maven, 1+1 plain
       end
       
     end
