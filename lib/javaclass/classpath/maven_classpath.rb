@@ -7,9 +7,11 @@ module JavaClass
     # Author::   Peter Kofler
     class MavenClasspath < CompositeClasspath
      
+      POM_XML = 'pom.xml'
+      
       # Check if the _file_ is a valid location for a Maven classpath.
       def self.valid_location(file)
-        FileTest.exist?(file) && FileTest.directory?(file) && FileTest.exist?(File.join(file, 'pom.xml'))
+        FileTest.exist?(file) && FileTest.directory?(file) && FileTest.exist?(File.join(file, POM_XML))
       end
 
       # Create a classpath for a Maven base project _folder_ 
@@ -29,7 +31,7 @@ module JavaClass
       end
 
       def to_s
-        File.join(@root, 'pom.xml').to_s
+        File.join(@root, POM_XML).to_s
       end
 
       private
