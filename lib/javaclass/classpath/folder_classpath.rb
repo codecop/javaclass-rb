@@ -1,3 +1,4 @@
+require 'javaclass/classpath/file_classpath'
 require 'javaclass/java_language'
 require 'javaclass/java_name'
 
@@ -6,7 +7,7 @@ module JavaClass
 
     # Abstraction of a folder on the CLASSPATH. This is a leaf in the classpath tree.
     # Author::   Peter Kofler
-    class FolderClasspath
+    class FolderClasspath < FileClasspath
 
       # Check if the _file_ is a valid location for a folder classpath.
       def self.valid_location?(file)
@@ -15,19 +16,10 @@ module JavaClass
       
       # Create a classpath with this _folder_ .
       def initialize(folder)
+        super(folder)
         raise IOError, "folder #{folder} not found/no folder" if !FolderClasspath::valid_location?(folder)
         @folder = folder
         @classes = list_classes.collect { |cl| cl.to_javaname }
-      end
-
-      # Return +false+ as this is no jar.
-      def jar?
-        false
-      end
-
-      # Return an empty array.
-      def additional_classpath
-        []
       end
 
       # Return the list of class names found in this folder. An additional block is used as _filter_ on class names.
@@ -55,18 +47,6 @@ module JavaClass
         @classes.size
       end
 
-      def to_s
-        @folder
-      end
-
-      def ==(other)
-        other.class == self.class && other.to_s == self.to_s
-      end
-
-      def elements
-        [self]
-      end
-      
       private
 
       # Return the list of classnames (in fact file names) found in this folder.

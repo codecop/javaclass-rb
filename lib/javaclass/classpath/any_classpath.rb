@@ -9,7 +9,7 @@ module JavaClass
 
       # Create a classpath with all classes found under this _folder_ wherever they are.
       def initialize(folder)
-        super()
+        super(File.join(folder, '*'))
         find_jars(folder)
         add_file_name(folder)
       end

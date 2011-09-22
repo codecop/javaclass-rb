@@ -23,19 +23,19 @@ module JavaClass
       # Create a classpath for an Eclipse base project in _folder_ where the .classpath is.
       def initialize(folder)
         raise IOError, "folder #{folder} not an Eclipse project" if !EclipseClasspath::valid_location?(folder)
-        super()
-        @root = folder
-        # kind="output" path="classes"/>
-        classpath = IO.readlines(File.join(@root, DOT_CLASSPATH))
+        dot_classpath = File.join(folder, DOT_CLASSPATH)
+        super(dot_classpath)
+        classpath = IO.readlines(dot_classpath)
+        
         classpath.find_all { |line| line =~ /kind\s*=\s*"output"/ }.each do |line|
           if line =~ /path\s*=\s*"([^"]+)"/
-            add_file_name(File.join(@root, $1))
+            add_file_name(File.join(folder, $1))
           end
         end
 
         classpath.find_all { |line| line =~ /kind\s*=\s*"lib"/ }.each do |line|
           if line =~ /path\s*=\s*"([^"]+)"/
-            add_file_name(File.join(@root, $1))
+            add_file_name(File.join(folder, $1))
           end
         end
         
@@ -46,10 +46,6 @@ module JavaClass
             add_file_name(File.join(path, $2)) if path
           end
         end
-      end
-
-      def to_s
-        File.join(@root, DOT_CLASSPATH).to_s
       end
 
     end

@@ -1,6 +1,7 @@
 require 'fileutils'
 require 'javaclass/gems/zip_file'
 require 'javaclass/classpath/temporary_unpacker'
+require 'javaclass/classpath/file_classpath'
 require 'javaclass/java_language'
 require 'javaclass/java_name'
 
@@ -21,7 +22,7 @@ module JavaClass
     # Abstraction of a ZIP or JAR on the CLASSPATH. May return additional classpath 
     # elements for referenced libs. This is a leaf in the classpath tree.
     # Author::   Peter Kofler
-    class JarClasspath
+    class JarClasspath < FileClasspath
 
       # Check if the _file_ is a valid location for a jar classpath.
       def self.valid_location?(file)
@@ -30,6 +31,7 @@ module JavaClass
       
       # Create a classpath with this _jarfile_ .
       def initialize(jarfile)
+        super(jarfile)
         raise IOError, "jarfile #{jarfile} not found/no file" if !JarClasspath::valid_location?(jarfile)
         @jarfile = jarfile
         
@@ -87,18 +89,6 @@ module JavaClass
         @classes.size
       end
 
-      def to_s
-        @jarfile
-      end
-
-      def ==(other)
-        other.class == self.class && other.to_s == self.to_s
-      end
-
-      def elements
-        [self]
-      end
-      
       private
 
       # Return the list of classnames (in fact file names) found in this jarfile.
