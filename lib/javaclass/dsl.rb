@@ -22,10 +22,7 @@ module JavaClass
       class << cp
         # Load all classes and return the list of them.
         def values
-          if !defined?(@values) 
-            @values = names.collect { |name| analyse(JavaClass::load_cp(name, self)) }
-          end
-          @values.dup
+          @values ||= names.collect { |name| analyse(JavaClass::load_cp(name, self)) }
         end
         # TODO CONTINUE 8 - finish first version of DSL, mix in JavaClass somehow
         # create a second decorator which adds analyse to all loaded classes
@@ -34,6 +31,13 @@ module JavaClass
 
       cp      
     end
+    # TODO 10 delegate all methods from the factory and wrap it in a new cp decorator 
+    # that supports values
+    # 1st create a decorator that supports values method
+    # 2nd create an attribute like "alias" that applies the wrapper to the method
+    # (does the alias and creates delegate), see Delegate Ruby code
+    # 3rd put new attribite here for the methods of factory
+    
     
   end
 
