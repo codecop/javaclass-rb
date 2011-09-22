@@ -1,27 +1,32 @@
 # add the lib of this gem to the load path
 $:.unshift File.dirname(File.dirname(File.dirname(__FILE__)))
 
-require 'javaclass/dsl'
+require 'javaclass/dsl/dsl'
 
 if __FILE__ == $0
 
   if ARGV.empty?
     puts "#{File.basename(__FILE__)} <project base folder>"
     puts "scan all Java cass files in the workspace and find interface names."
-    # exit
+    exit
   end
-  
-  # add an Eclipse classpath variable
-  JavaClass::Classpath::EclipseClasspath::add_variable('KOR_HOME', 'E:\Develop\Java')
 
-  cp = workspace('E:\Develop\Java') # ARGV[0])
-  puts "classpaths found in the workspace:\n#{cp.elements.join("\n")}"
+  matcher = /^com\.ibm\.arc\.sdm/
+    
+  # add an Eclipse classpath variable
+  # JavaClass::Classpath::EclipseClasspath::add_variable('KOR_HOME', 'E:\Develop\Java')
+
+  cp = workspace(ARGV[0])
+  puts "#{cp.elements.size} classpaths found in the workspace:\n  #{cp.elements.join("\n  ")}"
+  puts "#{cp.count} classes found in classpath"
+  puts "#{cp.names { |clazz| clazz.package =~ matcher }.size} classes matched #{matcher}"
   
-  names = cp.values { |clazz| clazz.package =~ /^at\.kugel\./ }.# /^com\.ibm\.arc\.sdm/  }.
+  names = cp.values { |clazz| clazz.package =~ matcher  }.
              find_all { |clazz| clazz.access_flags.interface? && !clazz.access_flags.annotation? }.
              collect { |clazz| clazz.name.simple_name } 
-  
-  puts names.sort
-  # TODO CONTINUE 9 check all interfaces how they are named, upgrade DSL to have this as simple as possible
+  puts "#{names.size} interfaces found:\n  #{names.sort.join("\n  ")}"
 
+  inames = names.find_all { |name| name =~ /^I[A-Z]/ }
+  puts "#{inames.size} interfaces start with I:\n  #{inames.join("\n  ")}"
+  
 end

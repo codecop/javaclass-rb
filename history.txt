@@ -1,5 +1,6 @@
 === 0.0.4 not released yet
 
+* finish first version of DSL with loading/values
 * added Eclipse project aware classpath
 * added Maven aware classpath
 * added abstraction over rubyzip gem

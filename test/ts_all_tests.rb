@@ -28,6 +28,7 @@ require File.dirname(__FILE__) + '/test_class_entry'
 require File.dirname(__FILE__) + '/test_package_entry'
 require File.dirname(__FILE__) + '/test_java_name'
 require File.dirname(__FILE__) + '/test_java_name_factory'
+require File.dirname(__FILE__) + '/test_load_directive'
 require File.dirname(__FILE__) + '/test_imported_types'
 require File.dirname(__FILE__) + '/test_javaclass_api'
 
@@ -72,8 +73,9 @@ class TsAllTests
     # scanner
     suite << TestJavaClass::TestClassScanner::TestImportedTypes.suite
     
-    # general
+    # DSL
     suite << TestJavaClass::TestDsl::TestJavaNameFactory.suite
+    suite << TestJavaClass::TestDsl::TestLoadDirective.suite
    
     suite << TestJavaClass::TestJavaClassAPI.suite
     return suite

@@ -92,7 +92,12 @@ module JavaClass
       end
 
       def to_s
-        @elements.collect { |e| e.to_s }.join(',')
+        str = super.to_s
+        if str=='.'
+          @elements.collect { |e| e.to_s }.join(',')
+        else
+          str
+        end
       end
 
     end
