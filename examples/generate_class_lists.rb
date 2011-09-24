@@ -13,7 +13,7 @@ require 'javaclass/classlist/list'
 # Struct to keep configuration what kind of JDK classes should be searched and added.
 JDK_CONFIG = Struct.new(:version, :label, :paths)
 
-# Windows 7 configuration, 32 bit JVMs
+# Windows 7 configuration for 32bit Sun/Oracle JVMs
 PROGRAMS = 'C:\Program Files (x86)\Java'
 JDKS = [
   JDK_CONFIG.new(0, '1.0.2',    ['E:\Develop\Java\Compiler\jdk1.0.2\lib']),

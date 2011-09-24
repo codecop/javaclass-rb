@@ -3,8 +3,9 @@ require 'javaclass/classscanner/imported_types'
 module JavaClass
   
   # The module ClassScanner is for separating namespaces. It contains various
-  # decotrators that scan and analyse single class files and provide additional
-  # information about the class, e.g. Cyclomatic Complexity.
+  # decorators that scan and analyse single class files and provide additional
+  # information about the class, e.g. Cyclomatic Complexity. For analysis across
+  # whole code bases ("classpaths") see module Analyse. 
   # Author::          Peter Kofler
   module ClassScanner
     
