@@ -7,7 +7,7 @@ module JavaClass
   # The module Classpath is for separating namespaces. It contains the abstraction of classpath to load binary class file data from.
   # It does not contain references to JavaClassHeader. It is low-level.
   # Author::          Peter Kofler
-  module Classpath # :nodoc:
+  module Classpath 
 
     # List of class path elements constructed from a full CLASSPATH variable.
     # Author::   Peter Kofler
