@@ -25,6 +25,7 @@ module TestJavaClass
       @class_file = JavaClass::JavaName.new('at/kugel/tool/Some.class')
       @jdk_class_file = JavaClass::JavaName.new('java/lang/String.class')
       @mixed_class_file = JavaClass::JavaName.new('folder.version/some/String.class')
+      @jvm_array_name = JavaClass::JavaName.new('[Ljava.lang.String;')
     end
 
     def test_to_classname
@@ -34,6 +35,7 @@ module TestJavaClass
       assert_equal('at.kugel.tool.Some', @jvm_method_name.to_classname)
       assert_equal('at.kugel.tool.Some', @class_file.to_classname)
       assert_equal('folder.version/some/String', @mixed_class_file.to_classname)
+      assert_equal('java.lang.String', @jvm_array_name.to_classname)
     end
 
     def test_to_javaname
