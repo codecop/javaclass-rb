@@ -44,7 +44,7 @@ module JavaClass
               break
             end
           end
-        end
+        end if FileTest.directory? basepath
         cp
       end
       
