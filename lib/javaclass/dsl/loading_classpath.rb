@@ -1,5 +1,6 @@
 require 'delegate'
 require 'javaclass/classscanner/scanners'
+require 'javaclass/analyse/dependencies'
 require 'javaclass/dsl/loader'
 
 module JavaClass
@@ -8,7 +9,8 @@ module JavaClass
     # A delegator classpath that loads and parses classes.
     # Author::          Peter Kofler
     class LoadingClasspath < SimpleDelegator
-
+      include Analyse::Dependencies
+      
       # Create a lading instance of the _classpath_ .
       def initialize(classpath)
         unless classpath.respond_to? :load_binary 
