@@ -4,7 +4,7 @@
 
 # add the lib of this gem to the load path
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
-require 'javaclass/dsl/dsl'
+require 'javaclass/dsl/mixin'
 
 # Return all types in this classpath _cp_
 def own_types(cp)

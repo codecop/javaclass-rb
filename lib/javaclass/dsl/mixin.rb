@@ -6,14 +6,16 @@ require 'javaclass/dsl/loading_classpath'
 
 module JavaClass
 
-  # The module DSL contains shortcuits to make loading and analysing classes
+  # The module DSL contains shortcuts to make loading and analysing classes
   # easier. This is the high-level API with usage/DSL features.
   # Author::          Peter Kofler
   module Dsl
 
     # Methods to be mixed into Object.
     # Author::          Peter Kofler
-    module ObjectMethods
+    module Mixin
+      # add the Java language constants
+      include JavaLanguage
       # add classpath factory methods
       include Classpath::Factory
       # add class header loading
@@ -35,5 +37,5 @@ module JavaClass
 end
 
 class Object # :nodoc:
-  include JavaClass::Dsl::ObjectMethods
+  include JavaClass::Dsl::Mixin
 end
