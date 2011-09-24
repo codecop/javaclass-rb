@@ -1,0 +1,7 @@
+javax.activation
+javax.annotation
+javax.jws
+javax.lang.model
+javax.script
+javax.smartcardio
+javax.tools

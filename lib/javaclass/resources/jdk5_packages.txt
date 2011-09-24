@@ -1,0 +1,5 @@
+javax.activity
+javax.jnlp
+javax.management
+javax.security.sasl
+javax.xml
