@@ -96,7 +96,7 @@ module JavaClass
         list = []
         JavaClass::Gems::ZipFile.new(@jarfile).entries do |entry|
           name = entry.name
-          next unless entry.file? and name =~ CLASS_REGEX # class file
+          next unless entry.file? and name =~ JavaLanguage::CLASS_REGEX # class file
           list << name
         end
         list.sort

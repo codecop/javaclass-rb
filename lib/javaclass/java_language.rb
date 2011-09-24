@@ -34,7 +34,3 @@ module JavaClass
   end
 
 end
-
-class Object # :nodoc:
-  include JavaClass::JavaLanguage
-end

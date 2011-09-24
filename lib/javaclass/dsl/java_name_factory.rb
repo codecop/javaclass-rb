@@ -18,7 +18,7 @@ module JavaClass
       # Convert the beginning of a full qualified Java classname to a JavaName instance.
       def method_missing(method_id, *args)
         str = method_id.id2name
-        if ALLOWED_PACKAGE_PREFIX.include?(str)
+        if JavaLanguage::ALLOWED_PACKAGE_PREFIX.include?(str)
           TemporaryJavaNamePart.new(str)
         else
           __old_method_missing(method_id, args)
@@ -42,13 +42,13 @@ module JavaClass
 
         def method_missing(method_id, *args)
           str = method_id.id2name
-          if RESERVED_WORDS.include?(str)
+          if JavaLanguage::RESERVED_WORDS.include?(str)
             __old_method_missing(method_id, args)
-          elsif str =~ TYPE_REGEX
+          elsif str =~ JavaLanguage::TYPE_REGEX
             JavaName.new("#{@history}.#{str}") #  a class
           elsif str == '*'
             JavaName.new("#{@history}") #  a package
-          elsif str =~ MEMBER_REGEX
+          elsif str =~ JavaLanguage::MEMBER_REGEX
             TemporaryJavaNamePart.new("#{@history}.#{str}")
           else
             __old_method_missing(method_id, args)

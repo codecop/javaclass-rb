@@ -81,12 +81,12 @@ module JavaClass
 
     # Return the Java source file name of this class, e.g. <code>java/lang/Object.java</code>.
     def to_java_file
-      (to_jvmname + SOURCE).to_javaname
+      (to_jvmname + JavaLanguage::SOURCE).to_javaname
     end
 
     # Return the Java class file name of this class, e.g. <code>java/lang/Object.class</code>.
     def to_class_file
-      (to_jvmname + CLASS).to_javaname
+      (to_jvmname + JavaLanguage::CLASS).to_javaname
     end
 
     # Split the simple name at the camel case boundary _pos_ and return two parts. _pos_ may be < 0 for counting backwards.
@@ -100,7 +100,7 @@ module JavaClass
 
     # Is this package or class in the JDK?
     def in_jdk?
-      JDK_PACKAGES_REGEX.find { |package| @full_name =~ package } != nil
+      JavaLanguage::JDK_PACKAGES_REGEX.find { |package| @full_name =~ package } != nil
     end
 
   end
