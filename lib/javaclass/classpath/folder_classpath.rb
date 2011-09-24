@@ -55,7 +55,7 @@ module JavaClass
         begin
           Dir.chdir @folder
 
-          list = Dir["**/*#{CLASS}"]
+          list = Dir["**/*#{JavaLanguage::CLASS}"]
 
         ensure
           Dir.chdir current
