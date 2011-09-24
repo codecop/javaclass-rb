@@ -25,7 +25,9 @@ module JavaClass
 
     def initialize(string)
       super string
-      plain_name = string.sub(/\.(class|java|".*|<.*)?$/, '')
+      
+      plain_name = string.sub(/(\.class|\.java|".*|\.<.*|;)?$/, '')
+      plain_name = plain_name.sub(/^\[L/, '')
       @is_mixed = plain_name =~ /\..*\/|\/.*\./ # mixed style
       @full_name = plain_name
       @full_name = @full_name.gsub(/\/|\\/,'.') if !@is_mixed

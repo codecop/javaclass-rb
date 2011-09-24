@@ -26,8 +26,7 @@ module JavaClass
       def imported_3rd_party_types
         imported_types.reject { |name| name.in_jdk? }
       end
-      # TODO bug: [Ljava.lang.Class; -> does not work with arrays
-      
+
     end
 
   end
