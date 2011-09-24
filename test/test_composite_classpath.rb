@@ -63,6 +63,13 @@ module TestJavaClass
         assert_equal(File.expand_path("#{TEST_DATA_PATH}/jar_classpath/JarClasspathTest.zip"), @cpe.elements[1].to_s)
       end
 
+      def test_find_jars_single
+        @cpe = JavaClass::Classpath::CompositeClasspath.new
+        @cpe.find_jars("#{TEST_DATA_PATH}/jar_classpath/JarClasspathTest.zip")
+        assert_equal(1, @cpe.elements.size)
+        assert_equal(File.expand_path("#{TEST_DATA_PATH}/jar_classpath/JarClasspathTest.zip"), @cpe.elements[0].to_s)
+      end
+      
     end
 
   end
