@@ -8,7 +8,7 @@ module JavaClass
     # Unpack a JAR (ZIP) into a temporary folder.
     # Author::   Peter Kofler
     class TemporaryUnpacker
-
+      
       # Command templates for external too like 7zip or zip.
       COMMANDS = [
         # 7zip 9.20
@@ -28,7 +28,8 @@ module JavaClass
 
         if !defined?(@@unpack_strategies)
           # use unzip first, fallback by hand
-          @@unpack_strategies = COMMANDS.map{ |c| Proc.new{ unpack_shell(c) } } + [ Proc.new{ unpack_ruby } ]
+          @@unpack_strategies = COMMANDS.map{ |c| Proc.new{ |jar, folder| TemporaryUnpacker::unpack_shell(c, jar, folder) } } + 
+                                [ Proc.new{ |jar, folder| TemporaryUnpacker::unpack_ruby(jar, folder) } ]
         end
       end
 
@@ -45,7 +46,8 @@ module JavaClass
         raise 'no temporary folder created' unless defined?(@folder) && @folder
 
         # Find the first working strategy and keep it
-        if ! @@unpack_strategies.first.call
+        if ! @@unpack_strategies.first.call(@jarfile, @folder)
+          warn("Dropping unpacker for #{@jarfile}. Install 7zip or unzip!")
           @@unpack_strategies.delete_at(0)
           raise 'no suitable unpack strategy found' if @@unpack_strategies.empty?
           unpack!
@@ -54,7 +56,7 @@ module JavaClass
 
       # Return the temp folder if a variable is set, else returm /tmp.
       def find_temp_folder
-        escape_folder(
+        TemporaryUnpacker::escape_folder(
         if ENV['TEMP']
           ENV['TEMP'] # Windows
         elsif ENV['TMP']
@@ -68,28 +70,29 @@ module JavaClass
       private
 
       # Escape _folder_ if it contains blanks.
-      def escape_folder(folder)
-        if folder =~ / / then "\"#{folder}}\"" else folder end
+      def self.escape_folder(folder)
+        if folder =~ / / then "\"#{folder}\"" else folder end
       end
 
-      # Unpack using external executeable using the _command_ string. Return +true+ for success.
-      def unpack_shell(command)
+      # Unpack _jarfile_ into _folder_ using external executeable using the _command_ string. Return +true+ for success.
+      def self.unpack_shell(command, jarfile, folder)
         begin
-          `#{command.gsub(/<folder>/, escape_folder(@folder)).gsub(/<jar>/, escape_folder(@jarfile))}`
+          `#{command.gsub(/<folder>/, escape_folder(folder)).gsub(/<jar>/, escape_folder(jarfile))}`
           $?.to_i == 0
         rescue
           false
         end
       end
 
-      # Unpack using Ruby's Rubyzip gem. This is very slow. Return +true+ for success.
-      def unpack_ruby
-        zip_file = JavaClass::Gems::ZipFile.new(@jarfile)
+      # Unpack _jarfile_ into _folder_ using Ruby's Rubyzip gem. This is very slow. Return +true+ for success.
+      def self.unpack_ruby(jarfile, folder)
+        # warn('unpacking with slow ruby unpacker')
+        zip_file = JavaClass::Gems::ZipFile.new(jarfile)
         zip_file.entries do |entry|
           name = entry.name
           next unless entry.file? and name =~ CLASS_REGEX # class file
 
-          f_path = File.join(@folder, entry.name)
+          f_path = File.join(folder, entry.name)
           FileUtils.mkdir_p(File.dirname(f_path))
           unless File.exist?(f_path)
             File.open(f_path, 'wb') { |file| file.write(zip_file.read(name)) } 
