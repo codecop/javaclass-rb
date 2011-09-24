@@ -48,7 +48,8 @@ module JavaClass
         begin
           header = ClassFile::JavaClassHeader.new(classpath.load_binary(classfile))
         rescue
-          puts "error #{$1} for class #{classfile} on #{classpath.to_s}"
+          puts "error for class #{classfile} on #{classpath.to_s}"
+          puts $!
           raise
         end
         raise "invalid java class #{classfile}" unless header.magic.valid?
