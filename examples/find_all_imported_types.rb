@@ -3,7 +3,7 @@
 # Author::          Peter Kofler
 
 # add the lib of this gem to the load path
-$:.unshift File.join(File.dirname(__FILE__), '..', '..', '..', 'lib')
+$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'javaclass/dsl/dsl'
 
 # Return all types in this classpath _cp_
