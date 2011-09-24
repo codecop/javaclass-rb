@@ -2,7 +2,7 @@
 # Author::          Peter Kofler
 
 # add the lib of this gem to the load path
-$:.unshift File.join(File.dirname(__FILE__), 'lib')
+$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'javaclass'
 
 # 1) load a class directly from the file system
