@@ -60,6 +60,7 @@ JDKS.each do |conf|
   basename = "./ClassLists/jdk#{conf.label.gsub(/\./, '')}"
   File.open("#{basename}_new_package_classes.txt", "w") { |f| f.print list.old_access_list.collect{|m| m.sub(/\s.*$/, '')} }
   File.open("#{basename}_all_classes.txt", "w") { |f| f.print list.plain_class_list }
+  File.open("#{basename}_all_packages.txt", "w") { |f| f.print list.to_s }
   File.open("#{basename}_all_public_classes.txt", "w") { |f| f.print list.plain_class_list { |c| c.public? } }
   File.open("#{basename}_new_public_classes.txt", "w") { |f| f.print list.plain_class_list { |c| c.public? and c.version.first == conf.version } }
 
