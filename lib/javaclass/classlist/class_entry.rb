@@ -40,7 +40,7 @@ module JavaClass
           @is_public = is_public
           @version = [version] # skip older versions
         elsif is_public && ! @is_public
-          info "#{@full_name} changed from package to public in version #{version}"
+          puts "#{@full_name} changed from package to public in version #{version}"
           @is_public = is_public
           @version = [version] # skip older versions
         end
