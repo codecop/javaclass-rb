@@ -28,6 +28,11 @@ module JavaClass
 
       # Search the given _path_ recursively for zips or jars. Add all found jars to this classpath.
       def find_jars(path)
+        if FileTest.file?(path) && path =~ /\.jar$|\.zip$/
+          add_file_name File.expand_path(path)
+          return
+        end
+        
         current = Dir.getwd
         begin
           Dir.chdir File.expand_path(path)
