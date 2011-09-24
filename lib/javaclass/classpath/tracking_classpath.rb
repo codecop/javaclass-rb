@@ -9,11 +9,11 @@ module JavaClass
 
       # Create a tracked instance of the _classpath_ .
       def initialize(classpath)
-        unless classpath.respond_to? :load_binary 
+        unless classpath.respond_to?(:load_binary) || classpath.respond_to?(:load)  
           raise "wrong type of delegatee #{classpath.class}"
         end
         @classpath = classpath
-        @accessed = Hash.new(0)
+        @accessed = {}
         super(classpath)
       end
 
@@ -23,18 +23,25 @@ module JavaClass
         @classpath.load_binary(classname)
       end
 
+      # Read and disassemble the given class _classname_ and mark as accessed.
+      def load(classname)
+        mark_accessed(classname)
+        @classpath.load(classname)
+      end
+      
       # Mark the _classname_ as accessed. Return the number of accesses so far.
       def mark_accessed(classname)
         key = classname.to_javaname.full_name
-        @accessed[key] = @accessed[key] + 1
+        @accessed[key] = (@accessed[key] || 0) + 1
       end
       
-      # Was the _classname_ accessed? If _classname_ is nil then check if any class was accessed.
+      # Was the _classname_ accessed then return the count? If _classname_ is nil then check if any class was accessed.
       def accessed?(classname=nil)
         if classname
-          @accessed[classname.to_javaname.full_name] != 0
+          @accessed[classname.to_javaname.full_name] 
         else
-          !@accessed.empty?
+          total = @accessed.values.inject(0) {|s,e| s + e }
+          if total > 0 then total else nil end
         end
       end
       
