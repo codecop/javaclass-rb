@@ -24,8 +24,9 @@ module JavaClass
 
       # Determine the imported types of this class which are not from the JDK.
       def imported_3rd_party_types
-        imported_types.reject { |name| in_jdk?(name) }
+        imported_types.reject { |name| name.in_jdk? }
       end
+      # TODO bug: [Ljava.lang.Class; -> does not work with arrays
       
     end
 
