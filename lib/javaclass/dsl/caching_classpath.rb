@@ -26,6 +26,12 @@ module JavaClass
         @cache[key]
       end
 
+      # Load _listed_ or all classes. Duplicate method to use the cache of decorator.
+      def values(listed=nil, &filter)
+        listed ||= names(&filter)
+        listed.collect { |name| load(name) }
+      end
+      
     end
 
   end
