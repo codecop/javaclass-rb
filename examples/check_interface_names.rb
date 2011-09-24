@@ -3,7 +3,7 @@
 # Author::          Peter Kofler
 
 # add the lib of this gem to the load path
-$:.unshift File.dirname(File.dirname(File.dirname(__FILE__)))
+$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'javaclass/dsl/dsl'
 
 workspace_location = 'C:\RPC3\workspace'
