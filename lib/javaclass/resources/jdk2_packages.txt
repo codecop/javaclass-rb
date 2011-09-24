@@ -1,0 +1,4 @@
+javax.accessibility
+javax.swing
+org.omg.CORBA
+org.omg.CosNaming

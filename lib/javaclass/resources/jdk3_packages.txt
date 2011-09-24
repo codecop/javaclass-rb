@@ -1,0 +1,6 @@
+javax.naming
+javax.rmi
+javax.sound
+javax.transaction
+org.omg.CORBA_2_3
+org.omg.SendingContext
