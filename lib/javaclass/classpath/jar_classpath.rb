@@ -71,7 +71,7 @@ module JavaClass
 
       # Return if _classname_ is included in this jar.
       def includes?(classname)
-        @classes.include?(classname.to_javaname.to_class_file)
+        if @classes.include?(classname.to_javaname.to_class_file) then 1 else nil end
       end
 
       # Load the binary data of the file name or class name _classname_ from this jar.
