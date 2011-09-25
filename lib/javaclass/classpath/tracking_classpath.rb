@@ -52,5 +52,14 @@ module JavaClass
       
     end
 
+    class CompositeClasspath
+
+      # Reset all prior marked access in elements.
+      def reset_access
+        @elements.each { |e| e.reset_access }
+      end
+      
+    end
+    
   end
 end
