@@ -13,6 +13,13 @@ module TestJavaClass
         @cpe = JavaClass::Classpath::TrackingClasspath.new(@cpe)
       end
 
+      def test_reset_access
+        @cpe.mark_accessed('ClassVersionTest10')
+        assert(@cpe.accessed?('ClassVersionTest10'))
+        @cpe.reset_access
+        assert(!@cpe.accessed?('ClassVersionTest10'))
+      end
+      
       def test_mark_accessed
         assert(!@cpe.accessed?)
         assert(!@cpe.accessed?('ClassVersionTest10'))

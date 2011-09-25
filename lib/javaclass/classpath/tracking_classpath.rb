@@ -13,10 +13,15 @@ module JavaClass
           raise "wrong type of delegatee #{classpath.class}"
         end
         @classpath = classpath
-        @accessed = {}
+        reset_access
         super(classpath)
       end
 
+      # Reset all prior marked access.
+      def reset_access
+        @accessed = {}
+      end
+      
       # Load the binary and mark the _classname_ as accessed.
       def load_binary(classname)
         mark_accessed(classname)
