@@ -10,6 +10,7 @@ require File.dirname(__FILE__) + '/test_constant_pool'
 require File.dirname(__FILE__) + '/test_references'
 require File.dirname(__FILE__) + '/test_access_flags'
 require File.dirname(__FILE__) + '/test_java_class_header'
+require File.dirname(__FILE__) + '/test_java_class_header_as_java_name'
 require File.dirname(__FILE__) + '/test_jar_classpath'
 require File.dirname(__FILE__) + '/test_unpacking_jar_classpath'
 require File.dirname(__FILE__) + '/test_folder_classpath'
@@ -49,6 +50,7 @@ class TsAllTests
     suite << TestJavaClass::TestClassFile::TestReferences.suite
     suite << TestJavaClass::TestClassFile::TestAccessFlags.suite
     suite << TestJavaClass::TestClassFile::TestJavaClassHeader.suite
+    suite << TestJavaClass::TestClassFile::TestJavaClassHeaderAsJavaName.suite
 
     # classpath parser
     suite << TestJavaClass::TestClasspath::TestFolderClasspath.suite
