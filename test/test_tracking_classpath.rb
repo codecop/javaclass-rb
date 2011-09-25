@@ -34,6 +34,13 @@ module TestJavaClass
         @cpe.load_binary('ClassVersionTest10')
         assert(@cpe.accessed?('ClassVersionTest10'))
       end
+      
+      def test_all_accessed
+        @cpe.mark_accessed('ClassVersionTest11')
+        @cpe.mark_accessed('ClassVersionTest10')
+        assert_equal(['ClassVersionTest10', 'ClassVersionTest11'], @cpe.all_accessed)
+      end
+      
     end
 
   end

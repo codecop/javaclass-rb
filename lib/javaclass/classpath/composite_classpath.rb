@@ -86,10 +86,11 @@ module JavaClass
       # Load the binary data of the file name or class name _classname_ from this classpath.
       def load_binary(classname)
         found = @elements.find { |e| e.includes?(classname) }
-        if (found)
-          return found.load_binary(classname)
+        if found then 
+          found.load_binary(classname) 
+        else
+          raise "class #{classname} not found in classpath #{to_s}"
         end
-        raise "class #{classname} not found in classpath #{to_s}"
       end
 
       # Return the number of classes in this classpath.

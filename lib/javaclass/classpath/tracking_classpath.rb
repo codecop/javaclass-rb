@@ -49,16 +49,32 @@ module JavaClass
           if total > 0 then total else nil end
         end
       end
+
+      # Return the classnames of all accessed classes.      
+      def all_accessed
+        @accessed.keys.sort
+      end
       
     end
 
     class CompositeClasspath
 
-      # Reset all prior marked access in elements.
+      # Mark the _classname_ as accessed. Return the number of accesses so far.
+      def mark_accessed(classname)
+        found = @elements.find { |e| e.includes?(classname) }
+        if found then found.mark_accessed(classname) else nil end
+      end
+      
+      # Reset all prior marked access in child elements.
       def reset_access
         @elements.each { |e| e.reset_access }
       end
-      
+
+      # Return the classnames of all accessed classes in child elements.    
+      def all_accessed
+        @elements.map { |cp| cp.all_accessed }.flatten.uniq.sort
+      end
+
     end
     
   end
