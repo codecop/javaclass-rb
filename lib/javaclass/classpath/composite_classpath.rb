@@ -77,9 +77,10 @@ module JavaClass
         @elements.collect { |e| e.names(&filter) }.flatten.uniq
       end
 
-      # Return if _classname_ is included in this classpath.
+      # Return if _classname_ is included in this classpath. If yes, return the count (usually 1).
       def includes?(classname)
-        @elements.find { |e| e.includes?(classname) } != nil
+        count = @elements.find_all { |e| e.includes?(classname) }.size 
+        if count > 0 then count else nil end
       end
 
       # Load the binary data of the file name or class name _classname_ from this classpath.
