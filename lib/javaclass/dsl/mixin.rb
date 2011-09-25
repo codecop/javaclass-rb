@@ -11,6 +11,12 @@ module JavaClass
   # Author::          Peter Kofler
   module Dsl
 
+    class EclipseClasspathDelegator # :nodoc:
+      def add_variable(name, value)
+        Classpath::EclipseClasspath::add_variable(name, value)
+      end
+    end
+    
     # Methods to be mixed into Object.
     # Author::          Peter Kofler
     module Mixin
@@ -21,7 +27,7 @@ module JavaClass
       # add class header loading
       include Loader
       # decorate classpath with loading
-      extend JavaClass::Dsl::LoadDirective
+      extend LoadDirective
       wrap_classpath :classpath
       wrap_classpath :environment_classpath
       wrap_classpath :full_classpath
@@ -31,6 +37,9 @@ module JavaClass
       # support native Java classnames
       include JavaNameFactory
 
+      # Delegate shortcut to Classpath::EclipseClasspath
+      Eclipse = EclipseClasspathDelegator.new
+      
     end
 
   end
