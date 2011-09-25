@@ -3,7 +3,6 @@ require 'javaclass/classfile/java_class_header'
 require 'javaclass/classscanner/imported_types'
 
 module TestJavaClass
-
   module TestClassScanner
 
     class TestImportedTypes < Test::Unit::TestCase
@@ -20,9 +19,15 @@ module TestJavaClass
         'packagename.AccessFlagsTestPublic$InnerInterface', 
         'packagename.AccessFlagsTestPublic$StaticInner', ]
         assert_equal(types, @public.imported_types)
-        assert_equal(types, @public.imported_types)
       end
 
+      def test_imported_3rd_party_types
+        types = ['packagename.AccessFlagsTestPublic$Inner', 
+        'packagename.AccessFlagsTestPublic$InnerInterface', 
+        'packagename.AccessFlagsTestPublic$StaticInner', ]
+        assert_equal(types, @public.imported_3rd_party_types)
+      end
+       
     end
 
   end
