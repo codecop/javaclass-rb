@@ -1,4 +1,5 @@
 require 'delegate'
+require 'javaclass/classpath/composite_classpath'
 
 module JavaClass
   module Classpath
@@ -57,8 +58,21 @@ module JavaClass
       
     end
 
-    class CompositeClasspath
+    class CompositeClasspath 
 
+      alias __old__add_file_name__ add_file_name # :nodoc:
+      
+      # Add the _name_ class path which may be a file or a folder to this classpath.
+      def add_file_name(name)
+        if FolderClasspath.valid_location?(name)
+          add_element(TrackingClasspath.new(FolderClasspath.new(name)))
+        elsif JarClasspath.valid_location?(name)
+          add_element(TrackingClasspath.new(JarClasspath.new(name)))
+        else
+          # warn("tried to add invalid classpath location #{name}")
+        end
+      end
+      
       # Mark the _classname_ as accessed. Return the number of accesses so far.
       def mark_accessed(classname)
         found = @elements.find { |e| e.includes?(classname) }
