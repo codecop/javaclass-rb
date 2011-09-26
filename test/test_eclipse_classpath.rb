@@ -33,6 +33,14 @@ module TestJavaClass
         assert(@cpe.includes?('ClassVersionTest12.class'))
       end
 
+      def test_class_skip_lib
+        JavaClass::Classpath::EclipseClasspath.skip_lib
+        cpe = JavaClass::Classpath::EclipseClasspath.new("#{TEST_DATA_PATH}/eclipse_classpath")
+        JavaClass::Classpath::EclipseClasspath.skip_lib(false)
+        assert(!cpe.includes?('ClassVersionTest10.class'))
+        assert(cpe.includes?('ClassVersionTest12.class'))
+      end
+
     end
 
   end

@@ -19,7 +19,12 @@ module JavaClass
         @@variables ||= Hash.new
         @@variables[name] = value
       end
-      
+
+      # Skip the lib containers if .classpath.
+      def self.skip_lib(flag=true)
+        @@skip_lib = flag
+      end
+
       # Create a classpath for an Eclipse base project in _folder_ where the .classpath is.
       def initialize(folder)
         raise IOError, "folder #{folder} not an Eclipse project" if !EclipseClasspath::valid_location?(folder)
@@ -33,19 +38,25 @@ module JavaClass
           end
         end
 
-        classpath.find_all { |line| line =~ /kind\s*=\s*"lib"/ }.each do |line|
-          if line =~ /path\s*=\s*"([^"]+)"/
-            add_file_name(File.join(folder, $1))
-          end
-        end
+        @@skip_lib ||= false
+        unless @@skip_lib
         
-        @@variables ||= Hash.new
-        classpath.find_all { |line| line =~ /kind\s*=\s*"var"/ }.each do |line|
-          if line =~ /path\s*=\s*"([^\/]+)\/([^"]+)"/
-            path = @@variables[$1]
-            add_file_name(File.join(path, $2)) if path
+          classpath.find_all { |line| line =~ /kind\s*=\s*"lib"/ }.each do |line|
+            if line =~ /path\s*=\s*"([^"]+)"/
+              add_file_name(File.join(folder, $1))
+            end
+          end 
+          
+          @@variables ||= Hash.new
+          classpath.find_all { |line| line =~ /kind\s*=\s*"var"/ }.each do |line|
+            if line =~ /path\s*=\s*"([^\/]+)\/([^"]+)"/
+              path = @@variables[$1]
+              add_file_name(File.join(path, $2)) if path
+            end
           end
+          
         end
+      
       end
 
     end

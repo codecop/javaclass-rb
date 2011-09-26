@@ -15,6 +15,9 @@ module JavaClass
       def add_variable(name, value)
         Classpath::EclipseClasspath::add_variable(name, value)
       end
+      def skip_lib
+        Classpath::EclipseClasspath::skip_lib
+      end
     end
     
     # Methods to be mixed into Object.
