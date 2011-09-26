@@ -8,7 +8,7 @@ $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'javaclass/dsl/mixin'
 
 workspace_location = 'E:\Develop\Java'
-package = 'at.kugel' # com.ibm.arc.sdm
+package = at.kugel.* # com.ibm.arc.sdm.*
 
 # add an Eclipse classpath variable
 Eclipse.add_variable('KOR_HOME', 'E:\Develop\Java')
