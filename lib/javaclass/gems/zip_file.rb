@@ -7,13 +7,13 @@ module JavaClass
     # Author::   Peter Kofler
     class ZipFile
       def initialize(file)
-        @archieve = file
+        @archive = file
       end
 
       # Read the _file_ from archive.
       def read(file)
         begin
-          Zip::ZipFile.open(@archieve) { |zipfile| zipfile.file.read(file) }
+          Zip::ZipFile.open(@archive) { |zipfile| zipfile.file.read(file) }
         rescue
           nil
         end
@@ -21,8 +21,13 @@ module JavaClass
 
       # List the entries of this zip for the block given.
       def entries(&block)
-        Zip::ZipFile.foreach(@archieve) do |entry|
-          block.call(ZipEntry.new(entry))
+        begin
+          Zip::ZipFile.foreach(@archive) do |entry|
+            block.call(ZipEntry.new(entry))
+          end
+        rescue
+          # skip bug in zip for certain JARs
+          warn("could not open archive #{name}: #{$!}")
         end
       end
 
