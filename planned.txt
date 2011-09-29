@@ -3,9 +3,6 @@
 * implement
   * scanning of byte code for numbers, which methods loaded, which fields loaded 
 
-* analyse
-  * how do Scala classes look like? sth special?
-
 * test
   * test with all classes of all JDKs against javap from this version "compileTheWorld"
   * use the Quality Corpus

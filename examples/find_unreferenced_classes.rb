@@ -36,3 +36,6 @@ unused = cp.names(&filter).
 puts "#{unused.size} unused classes found"
      
 puts unused
+
+# TODO CONTINUE 6 - improve loading performance, why does it take so long to load 10.000 headers?
+# use -r profile
