@@ -17,7 +17,8 @@ cp_prod = classpath(File.join(base_path, 'target/classes'))
 own_prod = cp_prod.types
 # 3) collect their external dependencies
 used_prod = cp_prod.external_types
-# TODO detect and read spring XML configs to find used third party types?
+# TODO CONTINUE 9 - add hardcoded class name finder as in Java, use for Spring, plugin.xml
+# detect and read spring XML configs to find used third party types?
 puts used_prod
 
 

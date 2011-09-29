@@ -45,7 +45,7 @@ module JavaClass
         #    u2 super_class; - ok
         #    u2 interfaces_count;
         #    u2 interfaces[interfaces_count];
-        # TODO implement fields and methods (see JVM spec)
+        # TODO Class: implement fields and methods (see JVM spec)
         #    u2 fields_count;
         #    field_info fields[fields_count];
         #    u2 methods_count;
@@ -54,7 +54,7 @@ module JavaClass
         #    attribute_info attributes[attributes_count];
         #  }
         #  Body {
-        # TODO add the byte code sequences to the methods so it can be analysed later (see JVM spec)
+        # TODO Class: add the byte code sequences to the methods so it can be analysed later (see JVM spec)
         #  }
 
         @magic = ClassMagic.new(data)

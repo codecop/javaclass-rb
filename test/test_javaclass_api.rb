@@ -38,10 +38,6 @@ module TestJavaClass
       assert_equal('java/lang/Object.<init>:()V', clazz.references.referenced_methods[0].to_s)
     end
 
-    def test_usage_004
-      # TODO implement on release
-    end
-
   end
 
 end

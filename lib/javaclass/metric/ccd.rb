@@ -4,7 +4,11 @@ $:.unshift File.dirname(File.dirname(File.dirname(__FILE__)))
 require 'javaclass'
 include JavaClass
 
-# TODO CONTINUE 5 use DSL, cleanup this code fragment and make a proper class
+# TODO CONTINUE 7 - use DSL, cleanup this code fragment and make a proper class
+# most likely this is a "analyse"
+# * CCD für eine Klasse, lazy init, classpath sits inside the analyser and works recursively through all elements
+# stores all elements in map and keeps it also, then returns only the size of it 
+# do a proper description
 
 def process_class(name, already=[], intend=0)
   file_name = 'C:\JavaDev\classes\\' + name.dot_to_slash + CLASS

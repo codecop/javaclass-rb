@@ -1,4 +1,4 @@
-=== Metrics
+=== Metrics/Analysis across a whole classpath
  
  * "metric" if all referencing classes of a class is another package, propose moving it there.
  * "Greed Detector"

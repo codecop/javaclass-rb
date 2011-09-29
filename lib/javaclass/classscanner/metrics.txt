@@ -1,3 +1,0 @@
-=== Analysis = Counts
- 
- * count outgoing references (usage) per method 

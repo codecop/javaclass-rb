@@ -33,3 +33,7 @@ puts clazz.this_class.to_java_file          # => packagename/AccessFlagsTestPubl
 puts clazz.this_class.full_name             # => packagename.AccessFlagsTestPublic
 puts clazz.this_class.package               # => packagename
 puts clazz.this_class.simple_name           # => AccessFlagsTestPublic
+
+# TODO CONTINUE 5 - create a script that creates the *.txt for the good examples from rb and includes them in rdoc 
+# (this is in fact a rake task)
+# add the links to them to readme.txt
