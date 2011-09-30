@@ -90,7 +90,7 @@ module JavaClass
         zip_file = JavaClass::Gems::ZipFile.new(jarfile)
         zip_file.entries do |entry|
           name = entry.name
-          next unless entry.file? and name =~ CLASS_REGEX # class file
+          next unless entry.file? and name =~ JavaLanguage::CLASS_REGEX # class file
 
           f_path = File.join(folder, entry.name)
           FileUtils.mkdir_p(File.dirname(f_path))
