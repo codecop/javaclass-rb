@@ -1,5 +1,5 @@
 # Example usage of classpath and class files: Scan all classes of an Eclipse
-# "workspace". A workspace is a folder containing several Eclipse projects. 
+# "workspace". (A workspace is a folder containing several Eclipse projects.) 
 # Find all interfaces, print their names and find all which are prefixed with I.
 # Author::          Peter Kofler
 
@@ -12,6 +12,7 @@ workspace_location = 'C:\RTC3.0\workspaces\Costing_Dev'
 package1 = com.ibm.arc.sdm.*
 package2 = 'pricingTool'
 
+# speed up loading by skipping non source file classpaths
 Eclipse.skip_lib
 
 # 1) create the CompositeClasspath of the given workspace
@@ -20,9 +21,11 @@ puts "#{cp.elements.size} classpaths found under the workspace #{workspace_locat
 
 filter = Proc.new { |clazz| clazz.same_or_subpackage_of?(package1) || clazz.same_or_subpackage_of?(package2) }
 
-# 2) load all my classes and mark all their referenced types as accessed
+# 2) load all classes in the given packages 
 classes = cp.values(&filter)
 puts "#{classes.size} classes loaded from classpaths"
+# TODO CONTINUE 6 - improve loading performance, why does it take so long to load 10.000 headers?
+# use -r profile
 
 # 3) mark all their referenced types as accessed
 classes.map { |clazz| clazz.imported_types }.flatten.
@@ -30,12 +33,7 @@ classes.map { |clazz| clazz.imported_types }.flatten.
    each { |clazz| cp.mark_accessed(clazz) }
 puts 'all classes mapped'
 
-# 4) find non accessed ones
+# 4) in the end find non accessed classes
 unused = cp.names(&filter).
    find_all { |clazz| !cp.accessed?(clazz) }
-puts "#{unused.size} unused classes found"
-     
-puts unused
-
-# TODO CONTINUE 6 - improve loading performance, why does it take so long to load 10.000 headers?
-# use -r profile
+puts "#{unused.size} unused classes found:\n  #{unused.join("\n  ")}"
