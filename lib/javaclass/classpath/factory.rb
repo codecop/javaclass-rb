@@ -47,7 +47,7 @@ module JavaClass
         end if FileTest.directory? basepath
         cp
       end
-      
+      # TODO check first if in local directory is a project, if not try subfolders
     end
     
   end
