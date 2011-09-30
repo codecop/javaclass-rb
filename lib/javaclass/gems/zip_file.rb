@@ -27,7 +27,7 @@ module JavaClass
           end
         rescue
           # skip bug in zip for certain JARs
-          warn("could not open archive #{name}: #{$!}")
+          warn("could not open archive #{@archive}: #{$!}")
         end
       end
 
