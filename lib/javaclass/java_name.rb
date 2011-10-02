@@ -20,6 +20,8 @@ module JavaClass
 
     # Full normalized class name of this class.
     def full_name
+      # TODO fix error for [B?
+      p "********************", self, @full_name unless @full_name
       @full_name.to_javaname
     end
 
@@ -28,6 +30,7 @@ module JavaClass
       
       plain_name = string.sub(/(\.class|\.java|".*|\.<.*|;)?$/, '')
       plain_name = plain_name.sub(/^\[L/, '')
+      plain_name = 'Byte' if plain_name == '[B' # byte array
       @is_mixed = plain_name =~ /\..*\/|\/.*\./ # mixed style
       @full_name = plain_name
       @full_name = @full_name.gsub(/\/|\\/,'.') if !@is_mixed
