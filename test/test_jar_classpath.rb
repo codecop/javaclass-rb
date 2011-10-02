@@ -54,7 +54,7 @@ module TestJavaClass
 
       def test_elements
         assert_equal(1, @cpe.elements.size)
-        assert_equal(@cpe, @cpe.elements[0])
+        assert_equal(@cpe.to_s, @cpe.elements[0].to_s)
       end
       
     end
