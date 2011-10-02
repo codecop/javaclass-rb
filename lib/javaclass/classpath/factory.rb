@@ -40,7 +40,7 @@ module JavaClass
         Classpath_types.each do |classpath_type|
           if classpath_type.valid_location?(basepath)
             cp.add_element(classpath_type.new(basepath))
-            return
+            return cp
           end
         end
 
