@@ -77,6 +77,10 @@ module TestJavaClass
       assert_equal('at.kugel.tool.Some', @jvm_method_name.full_name)
       assert_equal('at.kugel.tool.Some', @class_file.full_name)
       assert_equal('folder.version/some/String', @mixed_class_file.full_name)
+      
+      au = 'au.com.bytecode.opencsv.CSVReader'.to_javaname
+      assert_same(au.full_name, au)
+      assert_equal(au.full_name, au)
     end
 
     def test_package

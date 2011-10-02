@@ -29,12 +29,15 @@ module JavaClass
       super string
       
       plain_name = string.sub(/(\.class|\.java|".*|\.<.*|;)?$/, '')
-      plain_name = plain_name.sub(/^\[L/, '')
-      plain_name = 'Byte' if plain_name == '[B' # byte array
+      plain_name = plain_name.sub(/^\[+L/, '')
+      # TODO check this JVM codes
+      plain_name = 'java.lang.Byte' if plain_name =~ /^\[+B$/ # byte array
+      plain_name = 'java.lang.Integer' if plain_name =~ /^\[+I$/  
       @is_mixed = plain_name =~ /\..*\/|\/.*\./ # mixed style
       @full_name = plain_name
       @full_name = @full_name.gsub(/\/|\\/,'.') if !@is_mixed
       @full_name = self if @full_name == string # save some bytes
+      raise 'internal error, full_name is empty' unless @full_name
       
       matches = @full_name.scan(/^(.+)(?:\.|\/)([A-Z][^.\/]*)$/)[0]
       if matches
