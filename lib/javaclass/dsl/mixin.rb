@@ -1,7 +1,6 @@
 require 'javaclass/classpath/factory'
 require 'javaclass/classscanner/scanners'
 require 'javaclass/dsl/loader'
-require 'javaclass/dsl/java_name_factory'
 require 'javaclass/dsl/loading_classpath'
 
 module JavaClass
@@ -37,8 +36,6 @@ module JavaClass
       wrap_classpath :workspace
       # add scanner factory methods
       include ClassScanner::Scanners
-      # support native Java classnames
-      include JavaNameFactory
 
       # Delegate shortcut to Classpath::EclipseClasspath
       Eclipse = EclipseClasspathDelegator.new
