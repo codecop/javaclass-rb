@@ -20,6 +20,8 @@ module JavaClass
         raise IOError, "folder #{folder} not found/no folder" if !FolderClasspath::valid_location?(folder)
         @folder = folder
         @classes = list_classes.collect { |cl| cl.to_javaname }
+        pairs = @classes.map { |name| [name, 1] }.flatten
+        @class_lookup = Hash[ *pairs ]
       end
 
       # Return the list of class names found in this folder. An additional block is used as _filter_ on class names.
@@ -33,7 +35,7 @@ module JavaClass
 
       # Return if _classname_ is included in this folder.
       def includes?(classname)
-        if @classes.include?(classname.to_javaname.to_class_file) then 1 else nil end
+        @class_lookup[classname.to_javaname.to_class_file]
       end
 
       # Load the binary data of the file name or class name _classname_ from this folder.
