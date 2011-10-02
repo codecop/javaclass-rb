@@ -10,11 +10,11 @@ clazz = JavaClass.load_fs('./test/data/access_flags/AccessFlagsTestPublic.class'
 
 # or get a class from the system classpath which needs JAVA_HOME to be set
 cp = JavaClass.environment_classpath        
-puts cp.includes?('java/lang/String.class') # => true
+puts cp.includes?('java/lang/String.class') # => 1 (true)
 
 # or look up the class from some classpath by its Java qualified name
 cp = JavaClass.classpath('./test/data/access_flags')
-puts cp.includes?('AccessFlagsTestPublic')  # => true
+puts cp.includes?('AccessFlagsTestPublic')  # => 1 (true)
 clazz = JavaClass.load_cp('AccessFlagsTestPublic', cp)
   
 # 2) retrieve low level information about a class
