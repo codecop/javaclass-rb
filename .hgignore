@@ -7,3 +7,5 @@ html/**
 pkg/**
 api/**
 gems/*.gem
+ClassLists
+fullClassList*.txt
