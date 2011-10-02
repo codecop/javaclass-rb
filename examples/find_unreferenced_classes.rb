@@ -9,7 +9,7 @@ require 'javaclass/classpath/tracking_classpath'
 require 'javaclass/dsl/mixin'
 
 workspace_location = 'C:\RTC3.0\workspaces\Costing_Dev'
-package1 = com.ibm.arc.sdm.*
+package1 = 'com.ibm.arc.sdm'
 package2 = 'pricingTool'
 
 # speed up loading by skipping non source file classpaths
