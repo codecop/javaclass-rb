@@ -18,9 +18,18 @@ module JavaClass
         super(classpath)
       end
 
+      # Must return the wrapped classpath elements of this decorated classpath.
+      def elements
+        if [FolderClasspath, JarClasspath].include?(@classpath.class)
+          [self]
+        else
+          @classpath.elements
+        end
+      end
+      
       # Reset all prior marked access.
       def reset_access
-        @accessed = {}
+        @accessed = Hash.new(0)
       end
       
       # Load the binary and mark the _classname_ as accessed.
@@ -38,17 +47,17 @@ module JavaClass
       # Mark the _classname_ as accessed. Return the number of accesses so far.
       def mark_accessed(classname)
         key = classname.to_javaname.full_name
-        @accessed[key] = (@accessed[key] || 0) + 1
+        @accessed[key] += 1
       end
       
       # Was the _classname_ accessed then return the count? If _classname_ is nil then check if any class was accessed.
       def accessed?(classname=nil)
         if classname
-          @accessed[classname.to_javaname.full_name] 
+          total = @accessed[classname.to_javaname.full_name] 
         else
           total = @accessed.values.inject(0) {|s,e| s + e }
-          if total > 0 then total else nil end
         end
+        if total > 0 then total else nil end
       end
 
       # Return the classnames of all accessed classes.      
@@ -60,33 +69,43 @@ module JavaClass
 
     class CompositeClasspath 
 
-      alias __old__add_file_name__ add_file_name # :nodoc:
+      alias __old__add_element__ add_element # :nodoc:
       
-      # Add the _name_ class path which may be a file or a folder to this classpath.
-      def add_file_name(name)
-        if FolderClasspath.valid_location?(name)
-          add_element(TrackingClasspath.new(FolderClasspath.new(name)))
-        elsif JarClasspath.valid_location?(name)
-          add_element(TrackingClasspath.new(JarClasspath.new(name)))
-        else
-          # warn("tried to add invalid classpath location #{name}")
-        end
+      # Wrap the _elem_ classpath with TrackingClasspath and add it to the list.
+      def add_element(elem)
+        __old__add_element__(TrackingClasspath.new(elem)) unless @elements.find { |cpe| cpe == elem }
       end
-      
-      # Mark the _classname_ as accessed. Return the number of accesses so far.
-      def mark_accessed(classname)
-        found = @elements.find { |e| e.includes?(classname) }
-        if found then found.mark_accessed(classname) else nil end
-      end
-      
+
       # Reset all prior marked access in child elements.
       def reset_access
         @elements.each { |e| e.reset_access }
       end
+            
+      # Mark the _classname_ as accessed. Return the number of accesses so far.
+      def mark_accessed(classname)
+        key = classname.to_javaname.full_name
+        found = @elements.find { |e| e.includes?(key) }
+        if found then found.mark_accessed(key) else nil end
+      end
+
+      # Was the _classname_ accessed then return the count? If _classname_ is nil then check if any class was accessed.
+      def accessed?(classname=nil)
+        if classname
+          key = classname.to_javaname.full_name
+          found = @elements.find { |e| e.includes?(key) }
+          if found then found.accessed?(key) else nil end 
+        else
+          total = @elements.inject(0) do |s,e| 
+            accessed = e.accessed?
+            if accessed then s + accessed else s end
+          end
+          if total > 0 then total else nil end
+        end
+      end
 
       # Return the classnames of all accessed classes in child elements.    
       def all_accessed
-        @elements.map { |cp| cp.all_accessed }.flatten.uniq.sort
+        @elements.map { |cp| cp.all_accessed }.flatten.sort
       end
 
     end
