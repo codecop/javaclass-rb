@@ -20,17 +20,18 @@ module TestJavaClass
       end
             
       def test_count
-        assert_equal(3, @cpe.count)
+        assert_equal(4, @cpe.count)
       end
 
       def test_elements
-        assert_equal(2, @cpe.elements.size)
+        assert_equal(3, @cpe.elements.size)
       end
 
       def test_includes_eh
         assert(@cpe.includes?('ClassVersionTest10.class'))
         assert(@cpe.includes?('package/ClassVersionTest11.class'))
         assert(@cpe.includes?('ClassVersionTest12.class'))
+        assert(@cpe.includes?('ClassVersionTest13.class'))
       end
 
       def test_class_skip_lib
