@@ -62,7 +62,8 @@ class TsAllTests
     suite << TestJavaClass::TestClasspath::TestMavenClasspath.suite
     suite << TestJavaClass::TestClasspath::TestEclipseClasspath.suite
     suite << TestJavaClass::TestClasspath::TestConventionClasspath.suite
-    suite << TestJavaClass::TestClasspath::TestTrackingClasspath.suite
+    suite << TestJavaClass::TestClasspath::TestTrackingFolderClasspath.suite
+    suite << TestJavaClass::TestClasspath::TestTrackingCompositeClasspath.suite
     suite << TestJavaClass::TestClasspath::TestFactory.suite
 
     # class list
