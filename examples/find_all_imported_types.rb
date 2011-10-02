@@ -6,9 +6,7 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'javaclass/dsl/mixin'
 
-
 base_path = 'E:\InArbeit\Kopie_Dropbox_NichtAendern\xbean\xbean-finder'
-
 
 puts '---------- used 3rd party types in production'
 # 1) create a classpath
@@ -20,7 +18,6 @@ used_prod = cp_prod.external_types
 # TODO CONTINUE 9 - add hardcoded class name finder as in Java, use for Spring, plugin.xml
 # detect and read spring XML configs to find used third party types?
 puts used_prod
-
 
 puts '---------- used 3rd party types in tests (only)'
 cp_test = classpath(File.join(base_path, 'target/test-classes'))
