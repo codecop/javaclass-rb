@@ -22,7 +22,7 @@ module TestJavaClass
       def test_workspace
         cp = workspace("#{TEST_DATA_PATH}")
         elem = cp.elements 
-        assert_equal(6, elem.size) # folder/jar Eclipse, 2+1 folder Maven, folder plain
+        assert_equal(7, elem.size) # 2 folder + 1 jar Eclipse, 2+1 folder Maven, folder plain
       end
       
     end

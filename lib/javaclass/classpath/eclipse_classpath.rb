@@ -38,6 +38,12 @@ module JavaClass
           end
         end
 
+        classpath.find_all { |line| line =~ /output\s*=\s*"/ }.each do |line|
+          if line =~ /output\s*=\s*"([^"]+)"/
+            add_file_name(File.join(folder, $1))
+          end
+        end
+        
         @@skip_lib ||= false
         unless @@skip_lib
         
