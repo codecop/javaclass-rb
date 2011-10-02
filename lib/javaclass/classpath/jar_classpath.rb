@@ -36,6 +36,8 @@ module JavaClass
         @jarfile = jarfile
         
         @classes = list_classes.collect { |cl| cl.to_javaname }
+        pairs = @classes.map { |name| [name, 1] }.flatten
+        @class_lookup = Hash[ *pairs ]
         @manifest = JavaClass::Gems::ZipFile.new(@jarfile).read('META-INF/MANIFEST.MF')
 
         setup_cache if JavaClass.unpack_jars?
@@ -71,7 +73,7 @@ module JavaClass
 
       # Return if _classname_ is included in this jar.
       def includes?(classname)
-        if @classes.include?(classname.to_javaname.to_class_file) then 1 else nil end
+        @class_lookup[classname.to_javaname.to_class_file]
       end
 
       # Load the binary data of the file name or class name _classname_ from this jar.
