@@ -35,6 +35,7 @@ module TestJavaClass
 
       def test_elements
         assert_equal(2, @cpe.elements.size)
+        assert_equal("#{TEST_DATA_PATH}/jar_classpath/JarClasspathTestManifest.jar", @cpe.elements[0].to_s)
         assert_equal("#{TEST_DATA_PATH}/jar_classpath/JarClasspathTest.jar", @cpe.elements[1].to_s)
       end
 
@@ -46,9 +47,11 @@ module TestJavaClass
       end
 
       def test_load_binary
+        # JarClasspathTestManifest.jar
+        assert_equal(load_class('class_version/ClassVersionTest11'), @cpe.load_binary('package/ClassVersionTest11.class'))
+        # JarClasspathTest.jar
         assert_equal(load_class('class_version/ClassVersionTest11'), @cpe.load_binary('ClassVersionTest11'))
         assert_equal(load_class('class_version/ClassVersionTest10'), @cpe.load_binary('ClassVersionTest10'))
-        assert_equal(load_class('class_version/ClassVersionTest11'), @cpe.load_binary('package/ClassVersionTest11.class'))
       end
 
       def test_names
@@ -70,7 +73,7 @@ module TestJavaClass
         assert_equal(File.expand_path("#{TEST_DATA_PATH}/jar_classpath/JarClasspathTest.zip"), @cpe.elements[0].to_s)
       end
       
-    end
+    end unless defined? TestCompositeClasspath
 
   end
 end
