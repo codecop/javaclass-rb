@@ -92,20 +92,21 @@ module JavaClass
   class JavaName < String
 
     # Return the package name of a classname or the name of the package. Return an empty String if default package.
+    # This returns just the plain String.
     def package
-      @package.to_javaname
+      @package
     end
 
     # Return the simple name of this class or package.
+    # This returns just the plain String.
     def simple_name
-      @simple_name.to_javaname
+      @simple_name
     end
 
     # Full normalized class name of this class.
+    # This returns just the plain String.
     def full_name
-      # TODO fix error for [B?
-      p "********************", self, @full_name unless @full_name
-      @full_name.to_javaname
+      @full_name
     end
 
     def initialize(string)
@@ -196,6 +197,15 @@ module JavaClass
 
   end
 
+  # A class name from the JVM. That is a/b/C
+  class JavaJVMName < String
+    def initialize(string)
+      super string
+      raise unless string =~ /^[a-zA-Z0-9_\$\/]+$/ 
+    end
+    
+  end
+  
 end
 
 class String
