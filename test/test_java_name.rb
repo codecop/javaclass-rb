@@ -18,9 +18,9 @@ module TestJavaClass
   class TestJavaName < Test::Unit::TestCase
 
     def setup
-      @simple_name = JavaClass::JavaName.new('Some')
+      @simple_name = JavaClass::JavaQualifiedName.new('Some')
       @source_file = JavaClass::JavaName.new("at\\kugel\\tool\\Some.java")
-      @jvm_path = JavaClass::JavaName.new('at/kugel/tool/SomeClassWithMoreNames')
+      @jvm_path = JavaClass::JavaVMName.new('at/kugel/tool/SomeClassWithMoreNames')
       @jvm_method_name = JavaClass::JavaName.new('at/kugel/tool/Some.<init>')
       @class_file = JavaClass::JavaName.new('at/kugel/tool/Some.class')
       @jdk_class_file = JavaClass::JavaName.new('java/lang/String.class')
