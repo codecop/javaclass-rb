@@ -77,19 +77,12 @@ module TestJavaClass
       assert_equal('at.kugel.tool.Some', @jvm_method_name.full_name)
       assert_equal('at.kugel.tool.Some', @class_file.full_name)
       assert_equal('folder.version/some/String', @mixed_class_file.full_name)
-      
-      au = 'au.com.bytecode.opencsv.CSVReader'.to_javaname
-      assert_same(au.full_name, au)
-      assert_equal(au.full_name, au)
     end
 
     def test_package
       assert_equal('', @simple_name.package)
       assert_equal('at.kugel.tool', @source_file.package)
       assert_equal('at.kugel.tool', @jvm_path.package)
-
-      # package name is a classname itself
-      assert_equal('at.kugel.tool', @source_file.package.package)
     end
 
     def test_simple_name
@@ -97,9 +90,6 @@ module TestJavaClass
       assert_equal('Some', @source_file.simple_name)
       assert_equal('SomeClassWithMoreNames', @jvm_path.simple_name)
       assert_equal('String', @mixed_class_file.simple_name)
-
-      # simple name is a classname itself
-      assert_equal('Some.class', @source_file.simple_name.to_class_file)
     end
 
     def test_same_or_subpackage_of_eh

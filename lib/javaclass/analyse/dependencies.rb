@@ -11,7 +11,7 @@ module JavaClass
 
       # Return all types in this classpath. An additional block is used as _filter_ on class names.
       def types(&filter)
-        names(&filter).collect { |c| c.full_name }.sort
+        names(&filter).collect { |c| c.to_classname }.sort
       end
 
       # Determine all imported types from all classes in this classpath together with count of imports.
