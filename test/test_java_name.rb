@@ -24,7 +24,6 @@ module TestJavaClass
       @jvm_method_name = JavaClass::JavaName.new('at/kugel/tool/Some.<init>')
       @class_file = JavaClass::JavaName.new('at/kugel/tool/Some.class')
       @jdk_class_file = JavaClass::JavaName.new('java/lang/String.class')
-      @mixed_class_file = JavaClass::JavaName.new('folder.version/some/String.class')
       @jvm_array_name = JavaClass::JavaName.new('[Ljava.lang.String;')
     end
 
@@ -34,7 +33,6 @@ module TestJavaClass
       assert_equal('at.kugel.tool.SomeClassWithMoreNames', @jvm_path.to_classname)
       assert_equal('at.kugel.tool.Some', @jvm_method_name.to_classname)
       assert_equal('at.kugel.tool.Some', @class_file.to_classname)
-      assert_equal('folder.version/some/String', @mixed_class_file.to_classname)
       assert_equal('java.lang.String', @jvm_array_name.to_classname)
     end
 
@@ -49,7 +47,6 @@ module TestJavaClass
       assert_equal('at/kugel/tool/SomeClassWithMoreNames', @jvm_path.to_jvmname)
       assert_equal('at/kugel/tool/Some', @jvm_method_name.to_jvmname)
       assert_equal('at/kugel/tool/Some', @class_file.to_jvmname)
-      assert_equal('folder.version/some/String', @mixed_class_file.to_jvmname)
     end
 
     def test_to_java_file
@@ -58,7 +55,6 @@ module TestJavaClass
       assert_equal('at/kugel/tool/SomeClassWithMoreNames.java', @jvm_path.to_java_file)
       assert_equal('at/kugel/tool/Some.java', @jvm_method_name.to_java_file)
       assert_equal('at/kugel/tool/Some.java', @class_file.to_java_file)
-      assert_equal('folder.version/some/String.java', @mixed_class_file.to_java_file)
     end
 
     def test_to_class_file
@@ -67,7 +63,6 @@ module TestJavaClass
       assert_equal('at/kugel/tool/SomeClassWithMoreNames.class', @jvm_path.to_class_file)
       assert_equal('at/kugel/tool/Some.class', @jvm_method_name.to_class_file)
       assert_equal('at/kugel/tool/Some.class', @class_file.to_class_file)
-      assert_equal('folder.version/some/String.class', @mixed_class_file.to_class_file)
     end
 
     def test_full_name
@@ -76,7 +71,6 @@ module TestJavaClass
       assert_equal('at.kugel.tool.SomeClassWithMoreNames', @jvm_path.full_name)
       assert_equal('at.kugel.tool.Some', @jvm_method_name.full_name)
       assert_equal('at.kugel.tool.Some', @class_file.full_name)
-      assert_equal('folder.version/some/String', @mixed_class_file.full_name)
     end
 
     def test_package
@@ -89,7 +83,6 @@ module TestJavaClass
       assert_equal('Some', @simple_name.simple_name)
       assert_equal('Some', @source_file.simple_name)
       assert_equal('SomeClassWithMoreNames', @jvm_path.simple_name)
-      assert_equal('String', @mixed_class_file.simple_name)
     end
 
     def test_same_or_subpackage_of_eh

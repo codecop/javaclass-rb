@@ -1,4 +1,5 @@
 require 'javaclass/java_language'
+require 'javaclass/delegate_directive'
 
 module JavaClass
 
@@ -72,19 +73,6 @@ module JavaClass
     end
     
   end
-  class JavaClassName < JavaQualifiedName
-    def initialize(package, simplename)
-      super 
-      
-    end
-    
-  end
-  class JavaSourceName < String
-    def initialize(string)
-      super string
-    end
-    
-  end
   # TODO implement for inner classes: CollectionUtils$IChecker
   
   # Special String with methods to work with Java class or package names.
@@ -117,9 +105,8 @@ module JavaClass
       # TODO check this JVM codes
       plain_name = 'java.lang.Byte' if plain_name =~ /^\[+B$/ # byte array
       plain_name = 'java.lang.Integer' if plain_name =~ /^\[+I$/  
-      @is_mixed = plain_name =~ /\..*\/|\/.*\./ # mixed style
       @full_name = plain_name
-      @full_name = @full_name.gsub(/\/|\\/,'.') if !@is_mixed
+      @full_name = @full_name.gsub(/\/|\\/,'.') 
       @full_name = self if @full_name == string # save some bytes
       raise 'internal error, full_name is empty' unless @full_name
       
@@ -164,21 +151,17 @@ module JavaClass
 
     # Return the VM name of this class, e.g. <code>java/lang/Object</code>.
     def to_jvmname
-      if @is_mixed
-        @full_name
-      else
-        @full_name.dot_to_slash
-      end.to_javaname
+      @full_name.dot_to_slash
     end
 
     # Return the Java source file name of this class, e.g. <code>java/lang/Object.java</code>.
     def to_java_file
-      (to_jvmname + JavaLanguage::SOURCE).to_javaname
+      to_jvmname + JavaLanguage::SOURCE
     end
 
     # Return the Java class file name of this class, e.g. <code>java/lang/Object.class</code>.
     def to_class_file
-      (to_jvmname + JavaLanguage::CLASS).to_javaname
+      to_jvmname + JavaLanguage::CLASS
     end
 
     # Split the simple name at the camel case boundary _pos_ and return two parts. _pos_ may be < 0 for counting backwards.
@@ -198,12 +181,30 @@ module JavaClass
   end
 
   # A class name from the JVM. That is a/b/C
-  class JavaJVMName < String
+  class JavaVMName < String
+    extend DelegateDirective
+    VALID_REGEX = /^(#{JavaLanguage::IDENTIFIER_REGEX}+\/)*#{JavaLanguage::IDENTIFIER_REGEX}+$/
     def initialize(string)
+      raise "#{string} is no valid JVM name" unless string =~ VALID_REGEX   
       super string
-      raise unless string =~ /^[a-zA-Z0-9_\$\/]+$/ 
+      @qualified_name = JavaName.new(string.gsub(/\//, '.'))
     end
-    
+    def to_jvmname
+      self
+    end
+    def to_classname
+      @qualified_name
+    end
+    delegate :package, :to_classname
+    delegate :simple_name, :to_classname
+    delegate :full_name, :to_classname
+    delegate :same_or_subpackage_of?, :to_classname
+    delegate :subpackage_of?, :to_classname
+    delegate :to_java_file, :to_classname
+    delegate :to_class_file, :to_classname
+    delegate :split_simple_name, :to_classname
+    delegate :in_jdk?, :to_classname
+    delegate :to_javaname, :to_classname
   end
   
 end
