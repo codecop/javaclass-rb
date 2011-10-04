@@ -1,14 +1,12 @@
+require 'javaclass/delegate_directive'
+
 module JavaClass
   module ClassFile
 
     # Extend JavaClassHeader to behave like a JavaName in delegating to _this_class_ method.
     # Author::          Peter Kofler
     class JavaClassHeader
-
-      # Directive to create a simple delegating method to _delegate_ with _method_name_ .
-      def self.delegate(method_name, delegate)
-        self.module_eval("def #{method_name}(*obj) #{delegate}.#{method_name}(*obj) end")
-      end
+      extend DelegateDirective
 
       def to_javaname
         self
