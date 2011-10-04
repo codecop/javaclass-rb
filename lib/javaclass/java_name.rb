@@ -2,6 +2,89 @@ require 'javaclass/java_language'
 
 module JavaClass
 
+  class JavaQualifiedName < String
+    def package
+      if defined? @cached_package 
+        @cached_package
+      elsif @package
+        @cached_package = JavaPackageName.new(@package, @simple_name)
+      else 
+        @cached_package = nil
+      end
+    end
+    def simple_name
+      if defined? @cached_simple 
+        @cached_simple
+      elsif @simple_name
+        @cached_simple = JavaSimpleName.new(@package, @simple_name)
+      else 
+        @cached_simple = nil
+      end
+    end
+    def full_name
+      self
+    end
+    def initialize(package, simplename)
+      super(if package then package + '.' + simplename else simplename end)
+      @package = package
+      @simple_name = simplename
+    end
+    def to_javaname
+      self
+    end
+    def to_classname
+      self
+    end
+  end
+  
+  class JavaSimpleName < String
+    def package
+      if defined? @cached_package 
+        @cached_package
+      elsif @package
+        @cached_package = JavaPackageName.new(@package, @simple_name)
+      else 
+        @cached_package = nil
+      end
+    end
+    def simple_name
+      self
+    end
+    def full_name
+      JavaQualifiedName.new(@package, @simple_name)
+    end
+    def initialize(package, simplename)
+      super(simplename)
+      @package = package
+      @simple_name = simplename
+    end
+    def to_javaname
+      self
+    end
+    def to_classname
+      self
+    end
+    
+  end
+  class JavaPackageName < String
+    def initialize(string)
+      super string
+    end
+    
+  end
+  class JavaClassName < JavaQualifiedName
+    def initialize(package, simplename)
+      super 
+      
+    end
+    
+  end
+  class JavaSourceName < String
+    def initialize(string)
+      super string
+    end
+    
+  end
   # TODO implement for inner classes: CollectionUtils$IChecker
   
   # Special String with methods to work with Java class or package names.
