@@ -9,13 +9,13 @@ module JavaClass
     CLASS_REGEX = /#{Regexp.escape(CLASS)}$/
 
     # A general Java identifier.
-    IDENTIFIER_REGEX = /[a-zA-Z_\$][a-zA-Z_\$0-9]*/
+    IDENTIFIER_REGEX = /[a-zA-Z_$][a-zA-Z_$0-9]*/
     
     # A proper type (class) name.
-    TYPE_REGEX = /^[A-Z][a-zA-Z0-9_\$]*$/
+    TYPE_REGEX = /^[A-Z][a-zA-Z0-9_$]*$/
 
     # A proper member (field or method) name.
-    MEMBER_REGEX = /^[a-z][a-zA-Z0-9_\$]*$/
+    MEMBER_REGEX = /^[a-z][a-zA-Z0-9_$]*$/
 
     RESOURCE_FOLDER = File.join(File.dirname(__FILE__), 'resources')
 
