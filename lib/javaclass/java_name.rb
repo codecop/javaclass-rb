@@ -63,17 +63,17 @@ module JavaClass
 
     # Return the VM name of this class, e.g. <code>java/lang/Object</code>.
     def to_jvmname
-      @full_name.dot_to_slash
+      JavaVMName.new(@full_name.dot_to_slash) # TODO lazy field
     end
 
     # Return the Java source file name of this class, e.g. <code>java/lang/Object.java</code>.
     def to_java_file
-      to_jvmname + JavaLanguage::SOURCE
+      (to_jvmname + JavaLanguage::SOURCE).to_javaname # TODO lazy field
     end
 
     # Return the Java class file name of this class, e.g. <code>java/lang/Object.class</code>.
     def to_class_file
-      to_jvmname + JavaLanguage::CLASS
+      (to_jvmname + JavaLanguage::CLASS).to_javaname # TODO lazy field
     end
 
     # Split the simple name at the camel case boundary _pos_ and return two parts. _pos_ may be < 0 for counting backwards.
@@ -162,23 +162,23 @@ module JavaClass
       if @full_name == self
         self
       else
-        @full_name.to_javaname
+        JavaQualifiedName.new(@full_name) # TODO init lazy?
       end
     end
 
     # Return the VM name of this class, e.g. <code>java/lang/Object</code>.
     def to_jvmname
-      @full_name.dot_to_slash
+      JavaVMName.new(@full_name.dot_to_slash)
     end
 
     # Return the Java source file name of this class, e.g. <code>java/lang/Object.java</code>.
     def to_java_file
-      to_jvmname + JavaLanguage::SOURCE
+      (to_jvmname + JavaLanguage::SOURCE).to_javaname # TODO needs to be transitive
     end
 
     # Return the Java class file name of this class, e.g. <code>java/lang/Object.class</code>.
     def to_class_file
-      to_jvmname + JavaLanguage::CLASS
+      (to_jvmname + JavaLanguage::CLASS).to_javaname # TODO needs to be transitive
     end
 
     # Split the simple name at the camel case boundary _pos_ and return two parts. _pos_ may be < 0 for counting backwards.
@@ -197,7 +197,7 @@ module JavaClass
 
   end
 
-  # A class name from the JVM. That is a/b/C
+  # A class name from the JVM. That is a/b/C. These names are read from the constant pool.
   class JavaVMName < String
     extend DelegateDirective
 
@@ -210,7 +210,6 @@ module JavaClass
     def initialize(string)
       super string
       if string =~ VALID_REGEX
-        @qualified_name = JavaQualifiedName.new(string.gsub(SEPARATOR, JavaQualifiedName::SEPARATOR))
         @jvm_name = string
       else
         raise "#{string} is no valid JVM name"
@@ -218,11 +217,11 @@ module JavaClass
     end
 
     def to_jvmname
-      @jvm_name
+      self
     end
 
     def to_classname
-      @qualified_name
+      @qualified_name = JavaQualifiedName.new(@jvm_name.gsub(SEPARATOR, JavaQualifiedName::SEPARATOR)) # TODO lazy init
     end
 
     delegate :package, :to_classname
