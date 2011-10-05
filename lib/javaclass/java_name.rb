@@ -3,19 +3,59 @@ require 'javaclass/delegate_directive'
 
 module JavaClass
   
-  class JavaQualifiedName < String
-  
+  # Mixin with logic for a field @package to work with Java package names.
+  # Author::          Peter Kofler
+  module PackageLogic
+
     # Return the package name of a classname or the name of the package. Return an empty String if default package.
     # This returns just the plain String.
     def package
       @package
     end
 
+    # Return +true+ if this class is in same or in a subpackage of the given Java _packages_ or
+    # if this package is same or a subpackage (with .).
+    def same_or_subpackage_of?(packages)
+      packages.find {|pkg| @package == pkg } != nil || subpackage_of?(packages)
+    end
+
+    # Return +true+ if this class is in a subpackage of the given Java _packages_ .
+    def subpackage_of?(packages)
+      packages.find {|pkg| @package =~ /^#{Regexp.escape(pkg)}\./ } != nil
+    end
+
+    # Is this package or class in the JDK? Return the first JDK package this is inside or nil.
+    def in_jdk?
+      package_dot = @package + '.'
+      JavaLanguage::JDK_PACKAGES_REGEX.find { |package| package_dot =~ package }
+    end
+
+  end
+
+  # Mixin with logic for a name @simple_name to work with Java simple names.
+  # Author::          Peter Kofler
+  module SimpleNameLogic
+
     # Return the simple name of this class or package.
     # This returns just the plain String.
     def simple_name
       @simple_name
     end
+
+    # Split the simple name at the camel case boundary _pos_ and return two parts. _pos_ may be < 0 for counting backwards.
+    def split_simple_name(pos)
+      parts = @simple_name.scan(/([A-Z][^A-Z]+)/).flatten
+      pos = parts.size + pos +1 if pos < 0
+      return ['', @simple_name] if pos <= 0
+      return [@simple_name, ''] if pos >= parts.size
+      [parts[0...pos].join, parts[pos..-1].join]
+    end
+    
+  end
+    
+  class JavaQualifiedName < String
+    include PackageLogic
+    include SimpleNameLogic
 
     # Full normalized class name of this class.
     # This returns just the plain String.
@@ -41,17 +81,6 @@ module JavaClass
       end
     end
 
-    # Return +true+ if this class is in same or in a subpackage of the given Java _packages_ or
-    # if this package is same or a subpackage (with .).
-    def same_or_subpackage_of?(packages)
-      packages.find {|pkg| @package == pkg } != nil || subpackage_of?(packages)
-    end
-
-    # Return +true+ if this class is in a subpackage of the given Java _packages_ .
-    def subpackage_of?(packages)
-      packages.find {|pkg| @package =~ /^#{Regexp.escape(pkg)}\./ } != nil
-    end
-
     def to_javaname
       self
     end
@@ -63,12 +92,13 @@ module JavaClass
 
     # Return the VM name of this class, e.g. <code>java/lang/Object</code>.
     def to_jvmname
-      JavaVMName.new(@full_name.dot_to_slash) # TODO lazy field
+      JavaVMName.new(@full_name.gsub(SEPARATOR, JavaVMName::SEPARATOR), self) # TODO lazy field
     end
 
     # Return the Java source file name of this class, e.g. <code>java/lang/Object.java</code>.
     def to_java_file
       (to_jvmname + JavaLanguage::SOURCE).to_javaname # TODO lazy field
+     # TODO NEXT CONTINUE 99 - create source and class file classes
     end
 
     # Return the Java class file name of this class, e.g. <code>java/lang/Object.class</code>.
@@ -76,19 +106,6 @@ module JavaClass
       (to_jvmname + JavaLanguage::CLASS).to_javaname # TODO lazy field
     end
 
-    # Split the simple name at the camel case boundary _pos_ and return two parts. _pos_ may be < 0 for counting backwards.
-    def split_simple_name(pos)
-      parts = @simple_name.scan(/([A-Z][^A-Z]+)/).flatten
-      pos = parts.size + pos +1 if pos < 0
-      return ['', @simple_name] if pos <= 0
-      return [@simple_name, ''] if pos >= parts.size
-      [parts[0...pos].join, parts[pos..-1].join]
-    end
-
-    # Is this package or class in the JDK?
-    def in_jdk?
-      JavaLanguage::JDK_PACKAGES_REGEX.find { |package| @full_name =~ package } != nil
-    end
   end
 
   # TODO implement for inner classes: CollectionUtils$IChecker
@@ -96,17 +113,8 @@ module JavaClass
   # Special String with methods to work with Java class or package names.
   # Author::          Peter Kofler
   class JavaName < String
-    # Return the package name of a classname or the name of the package. Return an empty String if default package.
-    # This returns just the plain String.
-    def package
-      @package
-    end
-
-    # Return the simple name of this class or package.
-    # This returns just the plain String.
-    def simple_name
-      @simple_name
-    end
+    include PackageLogic
+    include SimpleNameLogic
 
     # Full normalized class name of this class.
     # This returns just the plain String.
@@ -142,17 +150,6 @@ module JavaClass
       end
     end
 
-    # Return +true+ if this class is in same or in a subpackage of the given Java _packages_ or
-    # if this package is same or a subpackage (with .).
-    def same_or_subpackage_of?(packages)
-      packages.find {|pkg| @package == pkg } != nil || subpackage_of?(packages)
-    end
-
-    # Return +true+ if this class is in a subpackage of the given Java _packages_ .
-    def subpackage_of?(packages)
-      packages.find {|pkg| @package =~ /^#{Regexp.escape(pkg)}\./ } != nil
-    end
-
     def to_javaname
       self
     end
@@ -168,7 +165,7 @@ module JavaClass
 
     # Return the VM name of this class, e.g. <code>java/lang/Object</code>.
     def to_jvmname
-      JavaVMName.new(@full_name.dot_to_slash)
+      JavaVMName.new(@full_name.dot_to_slash, self)
     end
 
     # Return the Java source file name of this class, e.g. <code>java/lang/Object.java</code>.
@@ -179,20 +176,6 @@ module JavaClass
     # Return the Java class file name of this class, e.g. <code>java/lang/Object.class</code>.
     def to_class_file
       (to_jvmname + JavaLanguage::CLASS).to_javaname # TODO needs to be transitive
-    end
-
-    # Split the simple name at the camel case boundary _pos_ and return two parts. _pos_ may be < 0 for counting backwards.
-    def split_simple_name(pos)
-      parts = @simple_name.scan(/([A-Z][^A-Z]+)/).flatten
-      pos = parts.size + pos +1 if pos < 0
-      return ['', @simple_name] if pos <= 0
-      return [@simple_name, ''] if pos >= parts.size
-      [parts[0...pos].join, parts[pos..-1].join]
-    end
-
-    # Is this package or class in the JDK?
-    def in_jdk?
-      JavaLanguage::JDK_PACKAGES_REGEX.find { |package| @full_name =~ package } != nil
     end
 
   end
@@ -207,10 +190,11 @@ module JavaClass
                     #{JavaLanguage::IDENTIFIER_REGEX}
                    $/x
     
-    def initialize(string)
+    def initialize(string, qualified=nil)
       super string
       if string =~ VALID_REGEX
         @jvm_name = string
+        @qualified_name = qualified
       else
         raise "#{string} is no valid JVM name"
       end 
@@ -221,7 +205,7 @@ module JavaClass
     end
 
     def to_classname
-      @qualified_name = JavaQualifiedName.new(@jvm_name.gsub(SEPARATOR, JavaQualifiedName::SEPARATOR)) # TODO lazy init
+      @qualified_name ||= JavaQualifiedName.new(@jvm_name.gsub(SEPARATOR, JavaQualifiedName::SEPARATOR)) 
     end
 
     delegate :package, :to_classname
