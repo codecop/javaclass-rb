@@ -23,14 +23,18 @@ module JavaClass
       @full_name
     end
 
-    VALID_REGEX = /^((?:#{JavaLanguage::IDENTIFIER_REGEX}+\.)*)(#{JavaLanguage::IDENTIFIER_REGEX}+)$/
+    SEPARATOR = '.'
+    VALID_REGEX = /^
+                    ((?:#{JavaLanguage::IDENTIFIER_REGEX}#{Regexp.escape(SEPARATOR)})*)
+                    (#{JavaLanguage::IDENTIFIER_REGEX})
+                   $/x
 
     def initialize(string)
       super string
       if string =~ VALID_REGEX
         @package = $1
         @simple_name = $2
-        @package = @package[0..-2] if @package =~ /\.$/
+        @package = @package[0..-2] if @package.size > 0 && @package[-1..-1] == SEPARATOR
         @full_name = string
       else
         raise "#{string} is no valid qualified name"
@@ -197,12 +201,16 @@ module JavaClass
   class JavaVMName < String
     extend DelegateDirective
 
-    VALID_REGEX = /^(?:#{JavaLanguage::IDENTIFIER_REGEX}+\/)*#{JavaLanguage::IDENTIFIER_REGEX}+$/
+    SEPARATOR = '/'
+    VALID_REGEX = /^
+                    (?:#{JavaLanguage::IDENTIFIER_REGEX}#{Regexp::escape(SEPARATOR)})*
+                    #{JavaLanguage::IDENTIFIER_REGEX}
+                   $/x
     
     def initialize(string)
       super string
       if string =~ VALID_REGEX
-        @qualified_name = JavaQualifiedName.new(string.slash_to_dot)
+        @qualified_name = JavaQualifiedName.new(string.gsub(SEPARATOR, JavaQualifiedName::SEPARATOR))
         @jvm_name = string
       else
         raise "#{string} is no valid JVM name"
