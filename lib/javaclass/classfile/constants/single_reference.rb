@@ -50,7 +50,7 @@ module JavaClass
         end
 
         def first_value
-          super.to_javaname # this is a classname
+          JavaVMName.new(super) # this is a classname
         end
         alias class_name first_value
 
