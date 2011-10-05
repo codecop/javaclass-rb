@@ -35,7 +35,7 @@ module JavaClass
         raise IOError, "jarfile #{jarfile} not found/no file" if !JarClasspath::valid_location?(jarfile)
         @jarfile = jarfile
         
-        @classes = list_classes.collect { |cl| cl.to_javaname }
+        @classes = list_classes.collect { |cl| cl.to_javaname } # TODO use new ClassFile
         pairs = @classes.map { |name| [name, 1] }.flatten
         @class_lookup = Hash[ *pairs ]
         @manifest = JavaClass::Gems::ZipFile.new(@jarfile).read('META-INF/MANIFEST.MF')
@@ -78,11 +78,12 @@ module JavaClass
 
       # Load the binary data of the file name or class name _classname_ from this jar.
       def load_binary(classname)
+        key = classname.to_javaname.to_class_file
         if JavaClass.unpack_jars?
-          @delegate.load_binary(classname)
+          @delegate.load_binary(key)
         else
-          raise "class #{classname} not found in #{@jarfile}" unless includes?(classname)
-          JavaClass::Gems::ZipFile.new(@jarfile).read(classname.to_javaname.to_class_file)
+          raise "class #{key} not found in #{@jarfile}" unless includes?(key)
+          JavaClass::Gems::ZipFile.new(@jarfile).read(key)
         end
       end
 
