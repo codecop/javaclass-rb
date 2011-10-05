@@ -10,6 +10,7 @@ module JavaClass
     module Dependencies
 
       # Return all types in this classpath. An additional block is used as _filter_ on class names.
+      # Returns a list of JavaQualifiedName.
       def types(&filter)
         names(&filter).collect { |c| c.to_classname }.sort
       end
