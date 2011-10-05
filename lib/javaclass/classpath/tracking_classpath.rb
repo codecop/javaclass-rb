@@ -83,7 +83,7 @@ module JavaClass
             
       # Mark the _classname_ as accessed. Return the number of accesses so far.
       def mark_accessed(classname)
-        key = classname.to_javaname.full_name
+        key = classname.to_javaname.to_classname
         found = @elements.find { |e| e.includes?(key) }
         if found then found.mark_accessed(key) else nil end
       end
@@ -91,7 +91,7 @@ module JavaClass
       # Was the _classname_ accessed then return the count? If _classname_ is nil then check if any class was accessed.
       def accessed?(classname=nil)
         if classname
-          key = classname.to_javaname.full_name
+          key = classname.to_javaname.to_classname
           found = @elements.find { |e| e.includes?(key) }
           if found then found.accessed?(key) else nil end 
         else
