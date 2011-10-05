@@ -30,10 +30,12 @@ module JavaClass
         end
       end
 
-      # Return the list of all constants containing class names of all used classes.
+      # Return the list of all constant pool constantss containing class names of all used classes.
+      # Returns a list of ConstantClass. 
       def used_classes
+        my_class_name = @constant_pool[@class_idx].class_name
         @constant_pool.find(ConstantPool::CLASS_TAG).find_all do |cl|
-          cl.class_name != @constant_pool[@class_idx].to_s
+          cl.class_name != my_class_name 
         end
       end
 

@@ -89,15 +89,17 @@ module JavaClass
         #        pos += 2 + count*2
       end
 
-      # Return the name of this class.
+      # Return the name of this class. Returns a JavaVMName.
       def this_class
-        @constant_pool.class_item(@this_class_idx).to_s.to_javaname
+        # This is a ConstantClass entry in the constant pool.
+        @constant_pool.class_item(@this_class_idx).class_name 
       end
 
-      # Return the name of the superclass of this class or +nil+.
+      # Return the name of the superclass of this class or +nil+. Returns a JavaVMName.
       def super_class
         if @super_class_idx > 0
-          @constant_pool.class_item(@super_class_idx).to_s.to_javaname
+          # This is a ConstantClass entry in the constant pool.
+          @constant_pool.class_item(@super_class_idx).class_name
         else
           nil
         end
@@ -117,11 +119,6 @@ module JavaClass
         d << '{'
         d << '}'
         d
-      end
-
-      # Return the qualified Java class name. This is a shortcut method and just delegates.
-      def name
-        this_class.full_name
       end
 
     end
