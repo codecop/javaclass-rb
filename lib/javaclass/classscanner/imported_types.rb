@@ -15,9 +15,7 @@ module JavaClass
 
       # Determine the imported types of this class and return their names. This does not contain the name if this class itself.
       def imported_types
-        @imported_types = @imported_types ||
-          references.used_classes.collect { |c| c.class_name.to_classname }.sort
-        @imported_types
+        @imported_types ||= references.used_classes.collect { |c| c.class_name.to_classname }.sort
       end
 
       # Determine the imported types of this class which are not from the JDK. This are all imported_types - all jdk types.
