@@ -35,7 +35,7 @@ module JavaClass
         raise IOError, "jarfile #{jarfile} not found/no file" if !JarClasspath::valid_location?(jarfile)
         @jarfile = jarfile
         
-        @classes = list_classes.collect { |cl| cl.to_javaname } # TODO use new ClassFile
+        @classes = list_classes.collect { |cl| JavaClassFileName.new(cl) } 
         pairs = @classes.map { |name| [name, 1] }.flatten
         @class_lookup = Hash[ *pairs ]
         @manifest = JavaClass::Gems::ZipFile.new(@jarfile).read('META-INF/MANIFEST.MF')
