@@ -8,14 +8,17 @@ module JavaClass
     CLASS = '.class'
     CLASS_REGEX = /#{Regexp.escape(CLASS)}$/
 
-    # A general Java identifier.
+    # A general Java identifier from Java spec.
     IDENTIFIER_REGEX = /[a-zA-Z_$][a-zA-Z_$0-9]*/
-    
-    # A proper type (class) name.
-    TYPE_REGEX = /^[A-Z][a-zA-Z0-9_$]*$/
 
-    # A proper member (field or method) name.
-    MEMBER_REGEX = /^[a-z][a-zA-Z0-9_$]*$/
+    # A proper package name part. This is more strict than IDENTIFIER_REGEX because it's all lowercase letters.
+    PACKAGE_REGEX = /^[a-z][a-z_$0-9]*$/
+        
+    # A proper type (class) name. This is more strict than IDENTIFIER_REGEX because it starts with uppercase letters.
+    TYPE_REGEX = /^[A-Z][a-zA-Z_$0-9]*$/
+
+    # A proper member (field or method) name. This is more strict than IDENTIFIER_REGEX because it starts with lowercase letters.
+    MEMBER_REGEX = /^[a-z][a-zA-Z_$0-9]*$/
 
     RESOURCE_FOLDER = File.join(File.dirname(__FILE__), 'resources')
 

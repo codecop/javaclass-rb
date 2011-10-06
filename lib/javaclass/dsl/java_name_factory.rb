@@ -5,23 +5,24 @@ module JavaClass
   module Dsl 
 
     # Module to mixin a mini DSL to recognize full qualified Java classnames in Ruby code.
+    # Packages have to be suffixed with ".*" to be recognized.
     # Author::          Peter Kofler
     module JavaNameFactory
 
-      # Convert the beginning of a full qualified Java classname starting with 'java' to JavaName instance.
+      alias :__top_level_method_missing__ :method_missing # :nodoc:
+      
+      # Convert the beginning of a full qualified Java classname starting with 'java' to a JavaQualifiedName instance.
       def java
-        TemporaryJavaNamePart.new('java')
+        TemporaryJavaNamePart.new('java') { __top_level_method_missing__(:java) }
       end
-
-      alias :__old_method_missing :method_missing
 
       # Convert the beginning of a full qualified Java classname to a JavaName instance.
       def method_missing(method_id, *args)
         str = method_id.id2name
         if JavaLanguage::ALLOWED_PACKAGE_PREFIX.include?(str)
-          TemporaryJavaNamePart.new(str)
+          TemporaryJavaNamePart.new(str) { __top_level_method_missing__(method_id, args) }
         else
-          __old_method_missing(method_id, args)
+          __top_level_method_missing__(method_id, args)
         end
       end
 
@@ -34,24 +35,30 @@ module JavaClass
       # Author::          Peter Kofler
       class TemporaryJavaNamePart # :nodoc:
 
-        def initialize(history)
+        # Create a part with _history_ package name so far that started in _context_ instance.
+        def initialize(history, &fail)
           @history = history
+          @context = fail
         end
 
-        alias :__old_method_missing :method_missing
+        alias :__unused_method_missing__ :method_missing
 
         def method_missing(method_id, *args)
           str = method_id.id2name
           if JavaLanguage::RESERVED_WORDS.include?(str)
-            __old_method_missing(method_id, args)
+            p "fail"
+            @context.call
           elsif str =~ JavaLanguage::TYPE_REGEX
-            JavaName.new("#{@history}.#{str}") #  a class
+            # starts with an uppercase letter, this is a class
+            JavaQualifiedName.new("#{@history}#{JavaQualifiedName::SEPARATOR}#{str}", &@context) 
           elsif str == '*'
-            JavaName.new("#{@history}") #  a package
-          elsif str =~ JavaLanguage::MEMBER_REGEX
-            TemporaryJavaNamePart.new("#{@history}.#{str}")
+            # special syntax, ending with *, this is a package
+            JavaPackageName.new("#{@history}") 
+          elsif str =~ JavaLanguage::PACKAGE_REGEX
+            # starts with a lowercase letter, this is a package
+            TemporaryJavaNamePart.new("#{@history}#{JavaQualifiedName::SEPARATOR}#{str}", &@context)
           else
-            __old_method_missing(method_id, args)
+            @context.call
           end
         end
 
