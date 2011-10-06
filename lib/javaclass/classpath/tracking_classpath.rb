@@ -34,26 +34,29 @@ module JavaClass
       
       # Load the binary and mark the _classname_ as accessed.
       def load_binary(classname)
-        mark_accessed(classname)
-        @classpath.load_binary(classname)
+        key = key(classname)
+        mark_accessed(key)
+        @classpath.load_binary(key)
       end
 
       # Read and disassemble the given class _classname_ and mark as accessed.
       def load(classname)
-        mark_accessed(classname)
-        @classpath.load(classname)
+        key = key(classname)
+        mark_accessed(key)
+        @classpath.load(key)
       end
       
       # Mark the _classname_ as accessed. Return the number of accesses so far.
       def mark_accessed(classname)
-        key = classname.to_javaname.full_name
+        key = key(classname)
         @accessed[key] += 1
       end
       
       # Was the _classname_ accessed then return the count? If _classname_ is nil then check if any class was accessed.
       def accessed?(classname=nil)
         if classname
-          total = @accessed[classname.to_javaname.full_name] 
+          key = key(classname)
+          total = @accessed[key] 
         else
           total = @accessed.values.inject(0) {|s,e| s + e }
         end
@@ -63,6 +66,12 @@ module JavaClass
       # Return the classnames of all accessed classes.      
       def all_accessed
         @accessed.keys.sort
+      end
+      
+      private
+      
+      def key(classname)
+        classname.to_javaname.to_class_file
       end
       
     end
@@ -83,7 +92,7 @@ module JavaClass
             
       # Mark the _classname_ as accessed. Return the number of accesses so far.
       def mark_accessed(classname)
-        key = classname.to_javaname.to_classname
+        key = key(classname)
         found = @elements.find { |e| e.includes?(key) }
         if found then found.mark_accessed(key) else nil end
       end
@@ -91,7 +100,7 @@ module JavaClass
       # Was the _classname_ accessed then return the count? If _classname_ is nil then check if any class was accessed.
       def accessed?(classname=nil)
         if classname
-          key = classname.to_javaname.to_classname
+          key = key(classname)
           found = @elements.find { |e| e.includes?(key) }
           if found then found.accessed?(key) else nil end 
         else
@@ -108,6 +117,12 @@ module JavaClass
         @elements.map { |cp| cp.all_accessed }.flatten.sort
       end
 
+      private
+      
+      def key(classname)
+        classname.to_javaname.to_class_file
+      end
+      
     end
     
   end
