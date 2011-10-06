@@ -22,8 +22,8 @@ module TestJavaClass
       @source_file = JavaClass::JavaName.new("at\\kugel\\tool\\Some.java")
       @jvm_path = JavaClass::JavaVMName.new('at/kugel/tool/SomeClassWithMoreNames')
       @jvm_method_name = JavaClass::JavaName.new('at/kugel/tool/Some.<init>')
-      @class_file = JavaClass::JavaName.new('at/kugel/tool/Some.class')
-      @jdk_class_file = JavaClass::JavaName.new('java/lang/String.class')
+      @class_file = JavaClass::JavaClassFileName.new('at/kugel/tool/Some.class')
+      @jdk_class_file = JavaClass::JavaClassFileName.new('java/lang/String.class')
       @jvm_array_name = JavaClass::JavaName.new('[Ljava.lang.String;')
     end
 

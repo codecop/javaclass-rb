@@ -19,7 +19,7 @@ module JavaClass
         super(folder)
         raise IOError, "folder #{folder} not found/no folder" if !FolderClasspath::valid_location?(folder)
         @folder = folder
-        @classes = list_classes.collect { |cl| cl.to_javaname } # TODO use new ClassFile
+        @classes = list_classes.collect { |cl| JavaClassFileName.new(cl) } 
         pairs = @classes.map { |name| [name, 1] }.flatten
         @class_lookup = Hash[ *pairs ]
       end

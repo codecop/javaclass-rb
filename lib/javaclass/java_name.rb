@@ -65,8 +65,8 @@ module JavaClass
     include PackageLogic
   
     VALID_REGEX = /^
-                    (?:#{JavaLanguage::IDENTIFIER_REGEX}#{SEPARATOR_REGEX})*
-                     #{JavaLanguage::IDENTIFIER_REGEX}#{SEPARATOR_REGEX}?
+                    (?:   #{JavaLanguage::IDENTIFIER_REGEX}#{SEPARATOR_REGEX}   )*
+                    #{JavaLanguage::IDENTIFIER_REGEX}#{SEPARATOR_REGEX}?
                    $/x
   
     def initialize(string)
@@ -80,7 +80,7 @@ module JavaClass
     end
   
     def to_javaname
-      self
+      self 
     end
   
   end
@@ -96,8 +96,12 @@ module JavaClass
     end
 
     VALID_REGEX = /^
-                    ((?:#{JavaLanguage::IDENTIFIER_REGEX}#{SEPARATOR_REGEX})*)
-                    (#{JavaLanguage::IDENTIFIER_REGEX})
+                    (
+                      (?:  #{JavaLanguage::IDENTIFIER_REGEX}#{SEPARATOR_REGEX}   )*
+                    )
+                    (
+                      #{JavaLanguage::IDENTIFIER_REGEX}
+                    )
                    $/x
 
     def initialize(string)
@@ -113,7 +117,7 @@ module JavaClass
     end
 
     def to_javaname
-      self
+      self 
     end
 
     # Return the full classname of this class, e.g. <code>java.lang.Object</code>.
@@ -129,16 +133,17 @@ module JavaClass
     # Return the Java source file name of this class, e.g. <code>java/lang/Object.java</code>.
     def to_java_file
       (to_jvmname + JavaLanguage::SOURCE).to_javaname # TODO lazy field
-     # TODO NEXT CONTINUE 99 - create source and class file classes
+     # TODO NEXT CONTINUE 99 - create source file name
     end
 
     # Return the Java class file name of this class, e.g. <code>java/lang/Object.class</code>.
     def to_class_file
-      (to_jvmname + JavaLanguage::CLASS).to_javaname # TODO lazy field
+      JavaClassFileName.new(@full_name.gsub(SEPARATOR, JavaClassFileName::SEPARATOR) + JavaLanguage::CLASS, self)
+      # TODO lazy field
     end
 
   end
-
+  
   # TODO implement for inner classes: CollectionUtils$IChecker
 
   # Special String with methods to work with Java class or package names.
@@ -182,9 +187,7 @@ module JavaClass
       package_remove_trailing_dot!
     end
 
-    def to_javaname
-      self
-    end
+    def to_javaname; self end
 
     # Return the full classname of this class, e.g. <code>java.lang.Object</code>.
     def to_classname
@@ -207,18 +210,40 @@ module JavaClass
 
     # Return the Java class file name of this class, e.g. <code>java/lang/Object.class</code>.
     def to_class_file
-      (to_jvmname + JavaLanguage::CLASS).to_javaname # TODO needs to be transitive
+      JavaClassFileName.new(@full_name.gsub(SEPARATOR, JavaClassFileName::SEPARATOR) + JavaLanguage::CLASS, self)
+      # TODO lazy field
     end
 
   end
 
-  # A class name from the JVM. That is a/b/C. These names are read from the constant pool.
-  class JavaVMName < String
+  module JavaQualifiedNameDelegation
     extend DelegateDirective
 
+    def to_javaname
+      self 
+    end
+
+    delegate :to_jvmname, :to_classname
+    delegate :to_java_file, :to_classname
+    delegate :to_class_file, :to_classname
+    
+    delegate :package, :to_classname
+    delegate :simple_name, :to_classname
+    delegate :full_name, :to_classname
+    delegate :same_or_subpackage_of?, :to_classname
+    delegate :subpackage_of?, :to_classname
+    delegate :split_simple_name, :to_classname
+    delegate :in_jdk?, :to_classname
+  end 
+  
+  # A class name from the JVM. That is a/b/C. These names are read from the constant pool.
+  class JavaVMName < String
+    include JavaQualifiedNameDelegation
+
     SEPARATOR = '/'
+    SEPARATOR_REGEX = Regexp::escape(SEPARATOR)
     VALID_REGEX = /^
-                    (?:#{JavaLanguage::IDENTIFIER_REGEX}#{Regexp::escape(SEPARATOR)})*
+                    (?:   #{JavaLanguage::IDENTIFIER_REGEX}#{SEPARATOR_REGEX}   )*
                     #{JavaLanguage::IDENTIFIER_REGEX}
                    $/x
     
@@ -232,26 +257,52 @@ module JavaClass
       end 
     end
 
-    def to_jvmname
-      self
-    end
-
     def to_classname
       @qualified_name ||= JavaQualifiedName.new(@jvm_name.gsub(SEPARATOR, JavaQualifiedName::SEPARATOR)) 
     end
 
-    delegate :package, :to_classname
-    delegate :simple_name, :to_classname
-    delegate :full_name, :to_classname
-    delegate :same_or_subpackage_of?, :to_classname
-    delegate :subpackage_of?, :to_classname
-    delegate :to_java_file, :to_classname
-    delegate :to_class_file, :to_classname
-    delegate :split_simple_name, :to_classname
-    delegate :in_jdk?, :to_classname
-    delegate :to_javaname, :to_classname
+    def to_jvmname
+      # TODO test if this method is called, not the delegated
+      self 
+    end 
   end
 
+  # A class file name from the file system. That is a/b/C.class. These names are read from the FolderClasspath.
+  class JavaClassFileName < String
+    include JavaQualifiedNameDelegation
+  
+    SEPARATOR = '/'
+    SEPARATOR_REGEX = /\/|\\/
+    VALID_REGEX = /^
+                    (?:   #{JavaLanguage::IDENTIFIER_REGEX}#{SEPARATOR_REGEX}   )*
+                    #{JavaLanguage::IDENTIFIER_REGEX}
+                    #{JavaLanguage::CLASS_REGEX}
+                   /x
+    
+    def initialize(string, qualified=nil)
+      super string
+      if string =~ VALID_REGEX
+        @file_name = string
+        @qualified_name = qualified
+      else
+        raise "#{string} is no valid class file name"
+      end 
+    end
+
+    def to_classname
+      @qualified_name ||= 
+        JavaQualifiedName.new(
+          @file_name.gsub(SEPARATOR_REGEX, JavaQualifiedName::SEPARATOR).
+                     sub(JavaLanguage::CLASS_REGEX, '')
+        ) 
+    end
+
+    def to_class_file
+      # TODO test if this method is called, not the delegated
+      self 
+    end
+  end
+  
 end
 
 class String
