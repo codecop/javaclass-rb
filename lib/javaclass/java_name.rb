@@ -6,6 +6,8 @@ module JavaClass
   # Mixin with logic for a field @package to work with Java package names.
   # Author::          Peter Kofler
   module PackageLogic
+    SEPARATOR = '.'
+    SEPARATOR_REGEX = Regexp.escape(SEPARATOR)
 
     # Return the package name of a classname or the name of the package. Return an empty String if default package.
     # This returns just the plain String.
@@ -21,7 +23,7 @@ module JavaClass
 
     # Return +true+ if this class is in a subpackage of the given Java _packages_ .
     def subpackage_of?(packages)
-      packages.find {|pkg| @package =~ /^#{Regexp.escape(pkg)}\./ } != nil
+      packages.find {|pkg| @package =~ /^#{Regexp.escape(pkg)}#{SEPARATOR_REGEX}/ } != nil
     end
 
     # Is this package or class in the JDK? Return the first JDK package this is inside or nil.
@@ -30,6 +32,12 @@ module JavaClass
       JavaLanguage::JDK_PACKAGES_REGEX.find { |package| package_dot =~ package }
     end
 
+    private
+    
+    def package_remove_trailing_dot!
+      @package = @package[0..-2] if @package.size > 0 && @package[-1..-1] == SEPARATOR
+    end
+    
   end
 
   # Mixin with logic for a name @simple_name to work with Java simple names.
@@ -52,7 +60,31 @@ module JavaClass
     end
     
   end
-    
+
+  class JavaPackageName < String
+    include PackageLogic
+  
+    VALID_REGEX = /^
+                    (?:#{JavaLanguage::IDENTIFIER_REGEX}#{SEPARATOR_REGEX})*
+                     #{JavaLanguage::IDENTIFIER_REGEX}#{SEPARATOR_REGEX}?
+                   $/x
+  
+    def initialize(string)
+      super string
+      if string =~ VALID_REGEX
+        @package = string
+      else
+        raise "#{string} is no valid qualified package name"
+      end
+      package_remove_trailing_dot!
+    end
+  
+    def to_javaname
+      self
+    end
+  
+  end
+      
   class JavaQualifiedName < String
     include PackageLogic
     include SimpleNameLogic
@@ -63,9 +95,8 @@ module JavaClass
       @full_name
     end
 
-    SEPARATOR = '.'
     VALID_REGEX = /^
-                    ((?:#{JavaLanguage::IDENTIFIER_REGEX}#{Regexp.escape(SEPARATOR)})*)
+                    ((?:#{JavaLanguage::IDENTIFIER_REGEX}#{SEPARATOR_REGEX})*)
                     (#{JavaLanguage::IDENTIFIER_REGEX})
                    $/x
 
@@ -74,11 +105,11 @@ module JavaClass
       if string =~ VALID_REGEX
         @package = $1
         @simple_name = $2
-        @package = @package[0..-2] if @package.size > 0 && @package[-1..-1] == SEPARATOR
         @full_name = string
       else
         raise "#{string} is no valid qualified name"
       end
+      package_remove_trailing_dot!
     end
 
     def to_javaname
@@ -148,6 +179,7 @@ module JavaClass
         @package = self.gsub(/\/|\\/,'.')
         @simple_name = ''
       end
+      package_remove_trailing_dot!
     end
 
     def to_javaname

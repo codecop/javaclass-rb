@@ -8,13 +8,19 @@ module TestJavaClass
 
       include JavaClass::Dsl::JavaNameFactory
 
-      def test_java
+      def test_java_class
         assert_equal('java.lang.String', java.lang.String)
-        assert_equal('java.lang.String', java.lang.String.full_name)
+      end
+      
+      def test_java_package
         assert_equal('java.lang', java.lang.*)
-        assert_equal('java.lang', java.lang.*.package)
       end
 
+      def test_java_result_is_javaname
+        assert_equal('java.lang.String', java.lang.String.full_name)
+        assert_equal('java.lang', java.lang.*.package)
+      end
+      
       def test_java_reserved_word
         assert_raise(NoMethodError) { java.long.Class }
       end
@@ -27,15 +33,19 @@ module TestJavaClass
         assert_equal('org.codecop.kata.PrimeFactors', org.codecop.kata.PrimeFactors)
       end
 
-      def test_method_missing_no_java_identifier
+      def test_method_missing_no_java_identifier_character
         assert_raise(NoMethodError) { java.lang.Signal! }
         assert_raise(NoMethodError) { com.sun.Signal! }
       end
 
-      def test_method_missing_no_iso_code
+      def test_method_missing_no_country_iso_code
         assert_raise(NameError) { xx.cmp.Signal }
       end
 
+      def test_method_missing_no_valid_subpackage
+        assert_raise(NoMethodError) { org.somePackage.Signal }
+      end
+      
     end
 
   end
