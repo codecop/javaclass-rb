@@ -39,7 +39,7 @@ module TestJavaClass
       def test_all_accessed
         @cpe.mark_accessed('ClassVersionTest11')
         @cpe.mark_accessed('ClassVersionTest10')
-        assert_equal(['ClassVersionTest10', 'ClassVersionTest11'], @cpe.all_accessed)
+        assert_equal(['ClassVersionTest10.class', 'ClassVersionTest11.class'], @cpe.all_accessed)
       end
 
     end
@@ -75,7 +75,7 @@ module TestJavaClass
       def test_all_accessed
         @cpe.mark_accessed('ClassVersionTest11')
         @cpe.mark_accessed('ClassVersionTest10')
-        assert_equal(['ClassVersionTest10', 'ClassVersionTest11'], @cpe.all_accessed)
+        assert_equal(['ClassVersionTest10.class', 'ClassVersionTest11.class'], @cpe.all_accessed)
       end
 
     end
