@@ -3,7 +3,7 @@ require 'javaclass/delegate_directive'
 
 module JavaClass
   
-  # Mixin with logic for a field @package to work with Java package names.
+  # Mixin with logic to work with Java package names. The "mixer" needs to declare a String field @package. 
   # Author::          Peter Kofler
   module PackageLogic
     SEPARATOR = '.'
@@ -40,7 +40,7 @@ module JavaClass
     
   end
 
-  # Mixin with logic for a name @simple_name to work with Java simple names.
+  # Mixin with logic to work with Java simple names. The "mixer" needs to declare a String field @simple_name. 
   # Author::          Peter Kofler
   module SimpleNameLogic
 
@@ -61,6 +61,7 @@ module JavaClass
     
   end
 
+  # TODO comment
   class JavaPackageName < String
     include PackageLogic
   
@@ -85,15 +86,11 @@ module JavaClass
   
   end
       
+  # A full qualified class name. That is <code>a.b.C</code>. 
+  # Author::          Peter Kofler
   class JavaQualifiedName < String
     include PackageLogic
     include SimpleNameLogic
-
-    # Full normalized class name of this class.
-    # This returns just the plain String.
-    def full_name
-      @full_name
-    end
 
     VALID_REGEX = /^
                     (
@@ -116,6 +113,11 @@ module JavaClass
       package_remove_trailing_dot!
     end
 
+    # Full normalized class name of this class. This returns just the plain String.
+    def full_name
+      @full_name
+    end
+    
     def to_javaname
       self 
     end
@@ -133,7 +135,7 @@ module JavaClass
     # Return the Java source file name of this class, e.g. <code>java/lang/Object.java</code>.
     def to_java_file
       (to_jvmname + JavaLanguage::SOURCE).to_javaname # TODO lazy field
-     # TODO NEXT CONTINUE 99 - create source file name
+      # TODO NEXT CONTINUE 99 - create source file name
     end
 
     # Return the Java class file name of this class, e.g. <code>java/lang/Object.class</code>.
@@ -152,8 +154,6 @@ module JavaClass
     include PackageLogic
     include SimpleNameLogic
 
-    # Full normalized class name of this class.
-    # This returns just the plain String.
     def full_name
       @full_name
     end
@@ -189,7 +189,6 @@ module JavaClass
 
     def to_javaname; self end
 
-    # Return the full classname of this class, e.g. <code>java.lang.Object</code>.
     def to_classname
       if @full_name == self
         self
@@ -198,17 +197,14 @@ module JavaClass
       end
     end
 
-    # Return the VM name of this class, e.g. <code>java/lang/Object</code>.
     def to_jvmname
       JavaVMName.new(@full_name.dot_to_slash, self)
     end
 
-    # Return the Java source file name of this class, e.g. <code>java/lang/Object.java</code>.
     def to_java_file
       (to_jvmname + JavaLanguage::SOURCE).to_javaname # TODO needs to be transitive
     end
 
-    # Return the Java class file name of this class, e.g. <code>java/lang/Object.class</code>.
     def to_class_file
       JavaClassFileName.new(@full_name.gsub(SEPARATOR, JavaClassFileName::SEPARATOR) + JavaLanguage::CLASS, self)
       # TODO lazy field
@@ -216,13 +212,16 @@ module JavaClass
 
   end
 
-  module JavaQualifiedNameDelegation
+  # Delegation of JavaQualifiedName's methods. The "mixer" needs to define a to_classname method which returns a JavaQualifiedName.
+  # Author::          Peter Kofler
+  module JavaQualifiedNameDelegation # :nodoc:
     extend DelegateDirective
 
     def to_javaname
       self 
     end
 
+    # TODO remove these 3, implement them in all 3 cases, as they are similar (all with /)
     delegate :to_jvmname, :to_classname
     delegate :to_java_file, :to_classname
     delegate :to_class_file, :to_classname
@@ -236,7 +235,8 @@ module JavaClass
     delegate :in_jdk?, :to_classname
   end 
   
-  # A class name from the JVM. That is a/b/C. These names are read from the constant pool.
+  # A class name from the JVM. That is <code>a/b/C</code>. These names are read from the constant pool.
+  # Author::          Peter Kofler
   class JavaVMName < String
     include JavaQualifiedNameDelegation
 
@@ -265,9 +265,16 @@ module JavaClass
       # TODO test if this method is called, not the delegated
       self 
     end 
+
+    def to_class_file
+      JavaClassFileName.new(@jvm_name + JavaLanguage::CLASS, self)
+      # TODO lazy field
+    end
+    
   end
 
-  # A class file name from the file system. That is a/b/C.class. These names are read from the FolderClasspath.
+  # A Java class file name from the file system. That is <code>a/b/C.class</code>. These names are read from the FolderClasspath.
+  # Author::          Peter Kofler
   class JavaClassFileName < String
     include JavaQualifiedNameDelegation
   
@@ -297,10 +304,16 @@ module JavaClass
         ) 
     end
 
+    def to_jvmname
+      JavaVMName.new(@file_name.sub(JavaLanguage::CLASS_REGEX, ''), self)
+      # TODO lazy
+    end
+    
     def to_class_file
       # TODO test if this method is called, not the delegated
       self 
     end
+    
   end
   
 end
@@ -315,11 +328,6 @@ class String
   # Replace all dots in this String with slashes.
   def dot_to_slash
     gsub('.', '/')
-  end
-
-  # Replace all slashes in this String with dots.
-  def slash_to_dot
-    gsub(/\/|\\/, '.')
   end
 
 end
