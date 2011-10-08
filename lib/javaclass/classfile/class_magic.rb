@@ -1,3 +1,5 @@
+require 'javaclass/classfile/class_format_error'
+
 module JavaClass
   module ClassFile
 
@@ -21,6 +23,11 @@ module JavaClass
       # Return the value of the magic in this class.
       def bytes
         @bytes.dup
+      end
+      
+      # Check if this magic is valid and raise an ClassFormatError if not with an optional _msg_ .
+      def check(msg='invalid java class magic')
+        raise(ClassFormatError, msg) unless valid?
       end
 
     end

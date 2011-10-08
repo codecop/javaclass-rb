@@ -55,7 +55,7 @@ module TestJavaClass
       end
 
       def test_class_new_invalud
-        assert_raise(RuntimeError){ 
+        assert_raise(ArgumentError){ 
           JavaClass::Classpath::TrackingClasspath.new('123')
         }
       end

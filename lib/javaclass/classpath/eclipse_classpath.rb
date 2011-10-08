@@ -28,7 +28,9 @@ module JavaClass
 
       # Create a classpath for an Eclipse base project in _folder_ where the .classpath is.
       def initialize(folder)
-        raise IOError, "folder #{folder} not an Eclipse project" if !EclipseClasspath::valid_location?(folder)
+        unless EclipseClasspath::valid_location?(folder)
+          raise IOError, "folder #{folder} not an Eclipse project"
+        end
         dot_classpath = File.join(folder, DOT_CLASSPATH)
         super(dot_classpath)
         classpath = IO.readlines(dot_classpath)

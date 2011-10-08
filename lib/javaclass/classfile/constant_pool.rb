@@ -2,6 +2,7 @@ require 'javaclass/string_ux'
 require 'javaclass/classfile/constants/value'
 require 'javaclass/classfile/constants/single_reference'
 require 'javaclass/classfile/constants/double_reference'
+require 'javaclass/classfile/class_format_error'
 
 module JavaClass
   module ClassFile
@@ -38,10 +39,12 @@ module JavaClass
         cnt = 1
         while cnt <= @item_count-1
 
-          type = CONSTANT_TYPE_TAGS[data.u1(pos)]
+          tag_index = data.u1(pos)
+          type = CONSTANT_TYPE_TAGS[tag_index]
           unless type
             # puts dump.join("\n")
-            raise "const ##{cnt} = unknown constant pool tag #{data.u1(pos)} at pos #{pos} in class"
+            raise ClassFormatError, "const ##{cnt} contains unknown constant pool tag/index #{tag_index} (at pos #{pos} in class).\n" +
+                  "allowed are #{CONSTANT_TYPE_TAGS.keys.sort.join(',')}"
           end
 
           constant = type.new(@pool, data, pos)
@@ -62,7 +65,7 @@ module JavaClass
 
       # Return the _index_'th pool item. _index_ is the real index in the pool which may skip numbers.
       def[](index)
-        raise "index #{index} is out of bounds of constant pool" if index < 0 || index > item_count
+        raise ArgumentError, "index #{index} is out of bounds of constant pool" if index < 0 || index > item_count
         @pool[index]
       end
 
@@ -89,7 +92,7 @@ module JavaClass
       # Return the constant class from _index_'th pool item.
       def class_item(index)
         if self[index] && !self[index].const_class?
-          raise "inconsistent constant pool entry #{index} for class, should be Constant Class"
+          raise ClassFormatError, "inconsistent constant pool entry #{index} for class, should be Constant Class"
         end
         self[index]
       end
@@ -97,7 +100,7 @@ module JavaClass
       # Return the constant field from _index_'th pool item.
       def field_item(index)
         if self[index] && !self[index].const_field?
-          raise "inconsistent constant pool entry #{index} for field, should be Constant Field"
+          raise ClassFormatError, "inconsistent constant pool entry #{index} for field, should be Constant Field"
         end
         self[index]
       end
@@ -105,7 +108,7 @@ module JavaClass
       # Return the constant method from _index_'th pool item.
       def method_item(index)
         if self[index] && !self[index].const_method?
-          raise "inconsistent constant pool entry #{index} for method, should be Constant Method"
+          raise ClassFormatError, "inconsistent constant pool entry #{index} for method, should be Constant Method"
         end
         self[index]
       end

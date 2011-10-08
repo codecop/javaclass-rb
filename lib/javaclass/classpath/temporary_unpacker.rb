@@ -43,7 +43,7 @@ module JavaClass
 
       # Unpack the given jar file.
       def unpack!
-        raise 'no temporary folder created' unless defined?(@folder) && @folder
+        raise IOError, 'no temporary folder created' unless defined?(@folder) && @folder
 
         # Find the first working strategy and keep it
         if ! @@unpack_strategies.first.call(@jarfile, @folder)

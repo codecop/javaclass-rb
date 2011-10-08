@@ -16,7 +16,9 @@ module JavaClass
 
       # Create a classpath for a Maven base project _folder_ 
       def initialize(folder)
-        raise IOError, "folder #{folder} not a Maven project" if !MavenClasspath::valid_location?(folder)
+        unless MavenClasspath::valid_location?(folder)
+          raise IOError, "folder #{folder} not a Maven project"
+        end
         pom = File.join(folder, POM_XML)
         super(pom)
         add_if_exist(File.join(folder, 'target/classes'))

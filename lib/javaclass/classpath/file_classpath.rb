@@ -1,3 +1,5 @@
+require 'javaclass/classpath/class_not_found_error'
+
 module JavaClass
   module Classpath
 

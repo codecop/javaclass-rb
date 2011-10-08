@@ -75,7 +75,7 @@ module JavaClass
       if string =~ VALID_REGEX
         @package = string
       else
-        raise "#{string} is no valid qualified package name"
+        raise ArgumentError, "#{string} is no valid qualified package name"
       end
       package_remove_trailing_dot!
     end
@@ -108,7 +108,7 @@ module JavaClass
         @simple_name = $2
         @full_name = string
       else
-        raise "#{string} is no valid qualified name"
+        raise ArgumentError, "#{string} is no valid qualified name"
       end
       package_remove_trailing_dot!
     end
@@ -253,7 +253,7 @@ module JavaClass
         @jvm_name = string
         @qualified_name = qualified
       else
-        raise "#{string} is no valid JVM name"
+        raise ArgumentError, "#{string} is no valid JVM name"
       end 
     end
 
@@ -292,7 +292,7 @@ module JavaClass
         @file_name = string
         @qualified_name = qualified
       else
-        raise "#{string} is no valid class file name"
+        raise ArgumentError, "#{string} is no valid class file name"
       end 
     end
 
