@@ -4,6 +4,7 @@ require 'test/unit' if $0 == __FILE__
 
 require File.dirname(__FILE__) + '/test_string_ux'
 require File.dirname(__FILE__) + '/test_string_hexdump'
+require File.dirname(__FILE__) + '/test_class_magic'
 require File.dirname(__FILE__) + '/test_class_version'
 require File.dirname(__FILE__) + '/test_base'
 require File.dirname(__FILE__) + '/test_constant_pool'
@@ -44,6 +45,7 @@ class TsAllTests
     suite << TestJavaClass::TestJavaName.suite
 
     # Java class parser
+    suite << TestJavaClass::TestClassFile::TestClassMagic.suite
     suite << TestJavaClass::TestClassFile::TestClassVersion.suite
     suite << TestJavaClass::TestClassFile::TestConstants::TestBase.suite
     suite << TestJavaClass::TestClassFile::TestConstantPool.suite

@@ -53,17 +53,25 @@ module TestJavaClass
         assert(@final.final?)
       end
 
-      #    def test_inner_eh
-      #      assert(!@public.inner?)
-      #      assert(!@package.inner?)
-      #      assert(!@abstract.inner?)
-      #      assert(!@interface.inner?)
-      #      assert(!@final.inner?)
-      #      assert(@inner.inner?)
-      #      assert(@staticinner.inner?)
-      #      assert(@innerinterface.inner?)
-      #    end
+      def test_enum_eh
+        assert(!@public.enum?)
+        # TODO add positive case
+      end
 
+      def test_inner_eh
+        assert(!@public.inner?)
+        assert(!@inner.inner?)
+        assert(!@staticinner.inner?)
+        assert(!@innerinterface.inner?)
+        # TODO add positive case
+      end
+
+      def test_class_new_jdk10_fix
+        flags = JavaClass::ClassFile::JavaClassHeader.new(load_class('Runnable_102')).access_flags
+        assert(flags.abstract?)
+        assert(flags.interface?)
+      end
+      
     end
 
   end
