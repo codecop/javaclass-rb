@@ -17,7 +17,8 @@ module JavaClass
       # Add an Eclipse variable _name_ with _value to look up libraries.
       def self.add_variable(name, value)
         @@variables ||= Hash.new
-        @@variables[name] = value
+        @@variables.delete(name)
+        @@variables[name] = value if value
       end
 
       # Skip the lib containers if .classpath.

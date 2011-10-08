@@ -16,6 +16,9 @@ module TestJavaClass
 
         @cpe = JavaClass::Classpath::JavaHomeClasspath.new("#{@folder}/jdk")
         assert_equal(1, @cpe.count)
+
+        @cpe = JavaClass::Classpath::JavaHomeClasspath.new("#{@folder}/jdk118")
+        assert_equal(1, @cpe.count)
       end
 
       def test_additional_classpath
@@ -44,6 +47,9 @@ module TestJavaClass
         assert_equal(['ClassVersionTest10.class'], @cpe.names)
       end
 
+      def test_class_new_invalid
+        assert_raise(IOError) { JavaClass::Classpath::JavaHomeClasspath.new("#{@folder}/non_existing_folder") }
+      end
     end
 
   end

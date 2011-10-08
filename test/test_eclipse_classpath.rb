@@ -42,6 +42,18 @@ module TestJavaClass
         assert(cpe.includes?('ClassVersionTest12.class'))
       end
 
+      def test_class_add_variable
+        begin
+          JavaClass::Classpath::EclipseClasspath.add_variable("TEST", TEST_DATA_PATH)
+
+          cpe = JavaClass::Classpath::EclipseClasspath.new("#{TEST_DATA_PATH}/eclipse_classpath")
+          assert(cpe.includes?('ClassVersionTest10.class'))
+
+        ensure
+          JavaClass::Classpath::EclipseClasspath.add_variable("TEST", nil)
+        end
+      end
+      
     end
 
   end
