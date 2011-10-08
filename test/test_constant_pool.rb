@@ -109,7 +109,7 @@ const #43 = Asciz       java/lang/Runnable;'
 
       def test_class_new_invalid_type
         data = load_class('constant_pool/ConstantPoolTest')
-        data[10] = 42; # was 10
+        data[10] = '*'; # 42, was 10
         assert_raise(RuntimeError){ 
           JavaClass::ClassFile::ConstantPool.new(data)
         }
