@@ -56,8 +56,8 @@ module JavaClass
           add_element(FolderClasspath.new(name))
         elsif JarClasspath.valid_location?(name)
           add_element(JarClasspath.new(name))
-        else
-          # warn("tried to add invalid classpath location #{name}")
+        # else
+        #   warn("tried to add invalid classpath location #{name}")
         end
       end
 
