@@ -11,6 +11,7 @@ module TestJavaClass
 
       def setup
         super
+        @original = @cpe
         @cpe = JavaClass::Classpath::TrackingClasspath.new(@cpe)
       end
 
@@ -36,12 +37,29 @@ module TestJavaClass
         assert(@cpe.accessed?('ClassVersionTest10'))
       end
 
+      def test_load_tracked
+        class << @original
+          def load(name)
+            load_binary(name)
+          end 
+        end
+        assert(!@cpe.accessed?('ClassVersionTest10'))
+        @cpe.load('ClassVersionTest10')
+        assert(@cpe.accessed?('ClassVersionTest10'))
+      end
+      
       def test_all_accessed
         @cpe.mark_accessed('ClassVersionTest11')
         @cpe.mark_accessed('ClassVersionTest10')
         assert_equal(['ClassVersionTest10.class', 'ClassVersionTest11.class'], @cpe.all_accessed)
       end
 
+      def test_class_new_invalud
+        assert_raise(RuntimeError){ 
+          JavaClass::Classpath::TrackingClasspath.new('123')
+        }
+      end
+      
     end
 
     class TestTrackingCompositeClasspath  < TestCompositeClasspath

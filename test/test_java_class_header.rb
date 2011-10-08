@@ -9,6 +9,7 @@ module TestJavaClass
       def setup
         @public = JavaClass::ClassFile::JavaClassHeader.new(load_class('access_flags/AccessFlagsTestPublic'))
         @package = JavaClass::ClassFile::JavaClassHeader.new(load_class('access_flags/AccessFlagsTestPackage'))
+        @object = JavaClass::ClassFile::JavaClassHeader.new(load_class('Object_102'))
       end
 
       def test_magic
@@ -25,6 +26,7 @@ module TestJavaClass
 
       def test_super_class
         assert_equal('java/lang/Object', @public.super_class)
+        assert_nil(@object.super_class)
       end
 
       def test_interfaces
