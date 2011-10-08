@@ -101,6 +101,7 @@ module JavaClass
           # This is a ConstantClass entry in the constant pool.
           @constant_pool.class_item(@super_class_idx).class_name
         else
+          # special case: java.lang.Object has no superclass 
           nil
         end
       end
