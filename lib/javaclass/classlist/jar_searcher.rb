@@ -47,12 +47,11 @@ module JavaClass
       def public?(classpath, classfile)
         begin
           header = ClassFile::JavaClassHeader.new(classpath.load_binary(classfile))
-        rescue
-          puts "error for class #{classfile} on #{classpath.to_s}"
-          puts $!
-          raise
+        rescue JavaClass::ClassFile::ClassFormatError => ex
+          ex.add_classname(classfile, classpath.to_s)
+          raise ex
         end
-        raise "invalid java class #{classfile}" unless header.magic.valid?
+        header.magic.check("invalid java class #{classfile}")
         header.access_flags.accessible?
       end
 

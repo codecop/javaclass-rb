@@ -14,7 +14,7 @@ module JavaClass
       # Create a lading instance of the _classpath_ .
       def initialize(classpath)
         unless classpath.respond_to? :load_binary 
-          raise "wrong type of delegatee #{classpath.class}"
+          raise ArgumentError, "wrong type of delegatee #{classpath.class}"
         end
         super(classpath)
       end

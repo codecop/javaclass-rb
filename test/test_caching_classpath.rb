@@ -10,7 +10,7 @@ module TestJavaClass
       # extend TestFolderClasspath to execute all tests again
 
       def test_new_wrong_type
-        assert_raise(RuntimeError){ 
+        assert_raise(ArgumentError){ 
           JavaClass::Dsl::CachingClasspath.new('3') 
         }
       end

@@ -10,7 +10,7 @@ module JavaClass
       # Create a cached instance of the _classpath_ .
       def initialize(classpath)
         unless classpath.respond_to? :load 
-          raise "wrong type of delegatee #{classpath.class}"
+          raise ArgumentError, "wrong type of delegatee #{classpath.class}"
         end
         @classpath = classpath
         @cache = {}

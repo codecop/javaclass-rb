@@ -51,7 +51,7 @@ module TestJavaClass
 
       def test_public_eh_fails
         @cpe = JavaClass::Classpath::JarClasspath.new(File.expand_path("#{TEST_DATA_PATH}/jar_searcher/JarClassListTest.jar"))
-        assert_raise(RuntimeError){ @cs.public?(@cpe, 'NonExistingClass') }
+        assert_raise(JavaClass::Classpath::ClassNotFoundError){ @cs.public?(@cpe, 'NonExistingClass') }
       end
       
       class MockList # ZenTest SKIP mock class

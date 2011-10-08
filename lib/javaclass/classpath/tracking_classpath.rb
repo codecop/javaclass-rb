@@ -11,7 +11,7 @@ module JavaClass
       # Create a tracked instance of the _classpath_ .
       def initialize(classpath)
         unless classpath.respond_to?(:load_binary) || classpath.respond_to?(:load)  
-          raise "wrong type of delegatee #{classpath.class}"
+          raise ArgumentError, "wrong type of delegatee #{classpath.class}"
         end
         @classpath = classpath
         reset_access

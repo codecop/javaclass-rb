@@ -22,7 +22,7 @@ module JavaClass
 
         # Return part of debug output.
         def dump
-          super + "#{to_s}"
+          super + to_s
         end
 
         protected
@@ -38,7 +38,7 @@ module JavaClass
 
         # Dummy method to "fix" unused warning of param _pool_ in Eclipse.
         def silence_unused_warning(pool)
-          raise "pool is nil" unless pool
+          raise ArgumentError, 'pool is nil' unless pool
         end
 
       end
