@@ -69,7 +69,7 @@ The trunk repository is available with
 
 == License
 
-* {New BSD License}[http://www.opensource.org/licenses/bsd-license.php]
+* {BSD License}[http://www.opensource.org/licenses/bsd-license.php], it's enclosed in #license.txt.
 
 == Disclaimer Note
 

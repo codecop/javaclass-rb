@@ -131,7 +131,7 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = RDOC_DIR # 'html' is default anyway
   rdoc.title = "#{full_gem_name} Documentation"
   rdoc.main = 'Readme.txt'
-  rdoc.rdoc_files.include 'Readme.txt', 'lib/**/*.rb', 'history.txt'
+  rdoc.rdoc_files.include 'lib/**/*.rb', *gemspec.extra_rdoc_files
 end
 
 # Helper method to add target="_parent" to all external links in _file_ html.
