@@ -48,6 +48,10 @@ module JavaClass
         (@flags & ACC_ANNOTATION) != 0
       end
 
+      def inner?
+        (@flags & ACC_INNER) != 0
+      end
+
     end
 
   end
