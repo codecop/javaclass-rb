@@ -46,7 +46,6 @@ module JavaClass
         def method_missing(method_id, *args)
           str = method_id.id2name
           if JavaLanguage::RESERVED_WORDS.include?(str)
-            p "fail"
             @context.call
           elsif str =~ JavaLanguage::TYPE_REGEX
             # starts with an uppercase letter, this is a class
