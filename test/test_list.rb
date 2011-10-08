@@ -21,10 +21,10 @@ module TestJavaClass
 
       def test_packages
         @list.add_class(PACKAGE_CLASS, false, 0)
-        @list.add_class(PUBLIC_CLASS, true, 0)
+        @list.add_class(PUBLIC_CLASS, :public, 0)
 
-        @list.add_class(PUBLIC_CLASS, true, 1)
-        @list.add_class(PUBLIC_INTERFACE, true, 1)
+        @list.add_class(PUBLIC_CLASS, :public, 1)
+        @list.add_class(PUBLIC_INTERFACE, :public, 1)
 
         packages = @list.packages
         assert_equal(1, packages.size)
@@ -34,37 +34,37 @@ module TestJavaClass
 
       def test_old_access_list
         @list.add_class(PACKAGE_CLASS, false, 0)
-        @list.add_class(PUBLIC_CLASS, true, 0)
+        @list.add_class(PUBLIC_CLASS, :public, 0)
         assert_equal(["packagename.PackageClass [p] - \n"], @list.old_access_list)
 
         @list.add_class(PACKAGE_CLASS, false, 1)
-        @list.add_class(PUBLIC_CLASS, true, 1)
+        @list.add_class(PUBLIC_CLASS, :public, 1)
         @list.add_class(PUBLIC_INTERFACE, false, 1)
         assert_equal(["packagename.PublicInterface [1p] - \n"], @list.old_access_list)
       end
 
       def test_plain_class_list
         @list.add_class(PACKAGE_CLASS, false, 0)
-        @list.add_class(PUBLIC_CLASS, true, 1)
+        @list.add_class(PUBLIC_CLASS, :public, 1)
         assert_equal(["packagename.PackageClass\n", "packagename.PublicClass\n"], @list.plain_class_list)
       end
 
       def test_plain_class_list_block_given
         @list.add_class(PACKAGE_CLASS, false, 0)
-        @list.add_class(PUBLIC_CLASS, true, 1)
+        @list.add_class(PUBLIC_CLASS, :public, 1)
         assert_equal(["packagename.PublicClass\n"], @list.plain_class_list { |c| c.public? })
       end
 
       def test_full_class_list
         @list.add_class(PACKAGE_CLASS, false, 0)
-        @list.add_class(PUBLIC_CLASS, true, 0)
+        @list.add_class(PUBLIC_CLASS, :public, 0)
 
         @list.add_class(PACKAGE_CLASS, false, 1)
-        @list.add_class(PUBLIC_CLASS, true, 1)
-        @list.add_class(PUBLIC_INTERFACE, true, 1)
+        @list.add_class(PUBLIC_CLASS, :public, 1)
+        @list.add_class(PUBLIC_INTERFACE, :public, 1)
 
         @list.add_class(PACKAGE_CLASS, false, 2)
-        @list.add_class(PUBLIC_INTERFACE, true, 2)
+        @list.add_class(PUBLIC_INTERFACE, :public, 2)
 
         expected = [
           "packagename.PackageClass [p] - \n",
@@ -87,26 +87,35 @@ module TestJavaClass
         assert_equal(expected, result)
       end
 
-      def test_version
+      def test_version_normal
         @list.parse_line("javax.swing.HeaderParser [1] - \n", 1)
+        assert_equal([1], @list.version)
+      end
+
+      def test_version_only
         @list.parse_line("javax.swing.HeaderParser [only 2] - \n", 3)
-        assert_equal([1,2], @list.version)
+        assert_equal([2], @list.version)
+      end
+
+      def test_version_range
+        @list.parse_line("javax.swing.HeaderParser [3-4] - \n", 0)
+        assert_equal([3,4], @list.version)
       end
 
       def test_first_last_versions
-        @list.add_class(PUBLIC_CLASS, true, 0)
-        @list.add_class(PUBLIC_CLASS, true, 1)
-        @list.add_class(PUBLIC_INTERFACE, true, 2)
+        @list.add_class(PUBLIC_CLASS, :public, 0)
+        @list.add_class(PUBLIC_CLASS, :public, 1)
+        @list.add_class(PUBLIC_INTERFACE, :public, 2)
         assert_equal([0,2], @list.first_last_versions)
       end
 
       def test_size
-        @list.add_class(PUBLIC_CLASS, true, 0)
+        @list.add_class(PUBLIC_CLASS, :public, 0)
         assert_equal(1, @list.size)
-        @list.add_class(PUBLIC_CLASS, true, 1)
+        @list.add_class(PUBLIC_CLASS, :public, 1)
         assert_equal(1, @list.size)
 
-        @list.add_class(PUBLIC_INTERFACE, true, 2)
+        @list.add_class(PUBLIC_INTERFACE, :public, 2)
         assert_equal(2, @list.size)
       end
 
@@ -118,6 +127,11 @@ module TestJavaClass
         end
       end
 
+      def test_to_s
+        @list.add_class(PACKAGE_CLASS, false, 0)
+        assert_equal('packagename', @list.to_s)
+      end
+      
     end
   end
 end

@@ -8,7 +8,7 @@ require 'javaclass/java_name'
 module JavaClass
 
   # Activate temporary unpacking of all JARs. This speeds up loading of classes later. 
-  def self.unpack_jars!(flag=true)
+  def self.unpack_jars!(flag=:unpack)
     @@unpack_jars = flag
   end
 
