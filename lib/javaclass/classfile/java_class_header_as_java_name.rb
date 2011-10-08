@@ -8,19 +8,18 @@ module JavaClass
     class JavaClassHeader
       extend DelegateDirective
 
-      def to_javaname
-        self
-      end
+      delegate :to_javaname, :this_class
 
+      delegate :to_classname, :this_class
+      delegate :to_jvmname, :this_class
+      delegate :to_java_file, :this_class
+      delegate :to_class_file, :this_class
+      
       delegate :package, :this_class
       delegate :simple_name, :this_class
       delegate :full_name, :this_class
       delegate :same_or_subpackage_of?, :this_class
       delegate :subpackage_of?, :this_class
-      delegate :to_classname, :this_class
-      delegate :to_jvmname, :this_class
-      delegate :to_java_file, :this_class
-      delegate :to_class_file, :this_class
       delegate :split_simple_name, :this_class
       delegate :in_jdk?, :this_class
 
