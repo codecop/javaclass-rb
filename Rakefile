@@ -8,6 +8,7 @@ require 'rake/clean' # for clean/clobber
 require 'rake/testtask'
 require 'rake/packagetask'
 require 'rake/rdoctask'
+require 'rcov/rcovtask' rescue nil
 
 # Test, package and publish functions.
 # Author::           Peter Kofler
@@ -34,7 +35,15 @@ end
 Rake::TestTask.new do |t|
   t.test_files = gemspec.test_files
   t.warning = true
-  #t.verbose = false is default
+  # t.verbose = false is default
+end
+
+# :rcov
+Rcov::RcovTask.new do |t|
+  t.test_files = gemspec.test_files
+  t.warning = true
+  t.rcov_opts << "--sort=coverage" 
+  t.rcov_opts << "--only-uncovered" 
 end
 
 desc 'Find missing test methods with ZenTest'

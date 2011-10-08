@@ -6,6 +6,7 @@ hosting/cloudbees.com/**
 html/**
 pkg/**
 api/**
+coverage/**
 gems/*.gem
 ClassLists
 fullClassList*.txt

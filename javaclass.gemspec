@@ -17,8 +17,10 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.add_dependency('rubyzip', '>= 0.9.1')
   s.required_ruby_version = '>= 1.8.6'
+  s.required_rubygems_version = nil if s.respond_to? :required_rubygems_version=
   s.platform = Gem::Platform::RUBY
   s.add_development_dependency('rake', '>= 0.8.4')
+  s.add_development_dependency('rcov', '>= 0.9.11')
   # s.add_development_dependency('ZenTest', '>= 4.4.0')
 
   s.has_rdoc = true
