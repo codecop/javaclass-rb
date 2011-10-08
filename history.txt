@@ -3,18 +3,18 @@
 * add some examples
 * fixed generate_class_lists.rb
 * finish first version of DSL with loading/values
-* added Eclipse project aware classpath
+* added Eclipse project aware EclipseClasspath
 * added Maven aware classpath
-* added abstraction over rubyzip gem
-* added class scanning "framework" and imported types scanner
-* added cached classpath
+* added ZipFile abstraction over rubyzip gem
+* added class scanning "framework" and imported types Scanners
+* added CachingClasspath
 * added usage of system 7za/unzip (if available) which unpack much faster
 * added option to unpack JARs for faster access later
-* added support for Enum and Annotations
+* added support for Java Enum and Annotations
 * added DSL like shortcuts for java.* and javax.* package and class names.
 * added interfaces implemented by the class
 * fixed String ux problem in Ruby 1.9
-* replaced leading 0 in exponent of float and double because Linux printf does not have them
+* replaced leading 0 in exponent of float/double because of Linux printf 
 * split Gemspec from Rakefile as proposed by Yeguda Katz
 
 === 0.0.3 02/10/2010
@@ -25,8 +25,8 @@
 * moved classes into submodules for classpath, classfile, etc.
 * migrated to Google Code and Mercurial repository
 * added access flag $1000
-* added references to used classes
-* added classpath abstraction
+* added References to used classes
+* added Classpath abstraction
 
 === 0.0.2 08/04/2009
 
@@ -38,5 +38,5 @@
 === 0.0.1 01/03/2009
 
 * extracted initial version of javaclass-rb from ClassList project
-* reads the class version and package/public flag of a class
-* understands the constant pool of class file but does not use it
+* reads the ClassVersion and package/public flag of a class
+* understands the ConstantPool of class file but does not use it

@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.author = 'Peter Kofler'
   s.email = 'peter dot kofler at code minus cop dot org'
 
-  s.files = ['Readme.txt'] + Dir.glob('{lib,test,examples}/**/*.*') + ['history.txt', 'javaclass.gemspec', 'Rakefile']
+  s.files = Dir.glob('*.txt') + Dir.glob('{lib,test,examples}/**/*.*') + ['javaclass.gemspec', 'Rakefile']
   s.test_files = Dir.glob('test/**/test_*.rb')
   s.require_path = 'lib'
   s.add_dependency('rubyzip', '>= 0.9.1')
@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   # s.add_development_dependency('ZenTest', '>= 4.4.0')
 
   s.has_rdoc = true
-  s.extra_rdoc_files = ['Readme.txt', 'history.txt'] 
+  s.extra_rdoc_files = Dir.glob('*.txt')
   s.rdoc_options << '--title' << "#{s.name}-#{s.version} Documentation" <<
                     '--main' << 'Readme.txt'
 end

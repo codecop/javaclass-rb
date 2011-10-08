@@ -54,7 +54,7 @@ module JavaClass
         #    attribute_info attributes[attributes_count];
         #  }
         #  Body {
-        # TODO Class: add the byte code sequences to the methods so it can be analysed later (see JVM spec)
+        # Class: add the byte code sequences to the methods so it can be analysed later (see JVM spec)
         #  }
 
         @magic = ClassMagic.new(data)

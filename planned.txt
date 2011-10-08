@@ -1,8 +1,9 @@
 === Planned
 
-* implement
-  * scanning of byte code for numbers, which methods loaded, which fields loaded 
+* implement byte code awareness
+  * add the byte code sequences to the methods so it can be analysed later (see JVM spec) 
+  * scanning of byte code for numbers, which methods loaded, which fields loaded
 
-* test
-  * test with all classes of all JDKs against javap from this version "compileTheWorld"
+* test with a large set of classes
+  * use all classes of all JDKs against javap (compileTheWorld)
   * use the Quality Corpus
