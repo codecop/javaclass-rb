@@ -3,11 +3,11 @@ if exist ClassVersionTest*.class del ClassVersionTest*.class
 setlocal
 
 call profile102
-javac -classpath %CLASSPATH% ClassVersionTest.java
+javac -classpath "%CLASSPATH%" ClassVersionTest.java
 ren ClassVersionTest.class ClassVersionTest10.class
 
 call profile118
-javac -classpath %CLASSPATH% ClassVersionTest.java
+javac -classpath "%CLASSPATH%" ClassVersionTest.java
 ren ClassVersionTest.class ClassVersionTest11.class
 
 call profile122
@@ -29,6 +29,10 @@ ren ClassVersionTest.class ClassVersionTest15.class
 call profile160
 javac ClassVersionTest.java
 ren ClassVersionTest.class ClassVersionTest16.class
+
+call profile170
+javac ClassVersionTest.java
+ren ClassVersionTest.class ClassVersionTest17.class
 
 endlocal
 
