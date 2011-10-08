@@ -52,6 +52,8 @@ module TestJavaClass
         # JarClasspathTest.jar
         assert_equal(load_class('class_version/ClassVersionTest11'), @cpe.load_binary('ClassVersionTest11'))
         assert_equal(load_class('class_version/ClassVersionTest10'), @cpe.load_binary('ClassVersionTest10'))
+          
+        assert_raise(RuntimeError) { @cpe.load_binary('NonExisting') }
       end
 
       def test_names
