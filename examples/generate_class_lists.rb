@@ -27,7 +27,7 @@ JDKS = [
 ]
 
 # 1) create a class searcher which wraps a classpath
-JavaClass.unpack_jars!(true)
+JavaClass.unpack_jars!(:unpack)
 searcher = JavaClass::ClassList::JarSearcher.new
 
 # 2) filter out unwanted classes, e.g. vendor classes

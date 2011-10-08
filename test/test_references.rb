@@ -11,10 +11,10 @@ module TestJavaClass
       end
 
       def test_referenced_fields
-        fields = @refs.referenced_fields(false)
+        fields = @refs.referenced_fields
         assert_equal(0, fields.size)
 
-        fields = @refs.referenced_fields(true)
+        fields = @refs.referenced_fields(:include_own)
         assert_equal(1, fields.size)
         assert_equal('ReferencesTest', fields[0].class_name)
         assert_equal('ReferencesTest', fields[0].class_name.to_classname)
@@ -22,12 +22,12 @@ module TestJavaClass
       end
 
       def test_referenced_methods
-        methods = @refs.referenced_methods(false)
+        methods = @refs.referenced_methods
         assert_equal(1, methods.size) # ctor init
         assert_equal('java/lang/Object', methods[0].class_name)
         assert_equal('java.lang.Object', methods[0].class_name.to_classname)
 
-        methods = @refs.referenced_methods(true)
+        methods = @refs.referenced_methods(:include_own)
         assert_equal(2, methods.size)
         assert_equal('java/lang/Object', methods[0].class_name)
         assert_equal('ReferencesTest', methods[1].class_name)

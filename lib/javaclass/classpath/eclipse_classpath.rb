@@ -21,7 +21,7 @@ module JavaClass
       end
 
       # Skip the lib containers if .classpath.
-      def self.skip_lib(flag=true)
+      def self.skip_lib(flag=:skip)
         @@skip_lib = flag
       end
 

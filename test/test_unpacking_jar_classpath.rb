@@ -24,7 +24,7 @@ module TestJavaClass
     class TestUnpackingJarClasspath < Test::Unit::TestCase
 
       def setup
-        JavaClass.unpack_jars!(true)
+        JavaClass.unpack_jars!(:unpack)
         @cpe = JavaClass::Classpath::JarClasspath.new("#{TEST_DATA_PATH}/jar_classpath/JarClasspathTest.jar")
       end
 

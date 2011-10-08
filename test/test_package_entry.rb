@@ -9,16 +9,16 @@ module TestJavaClass
       def test_size
         pkg = JavaClass::ClassList::PackageEntry.new('packagename', 2)
         assert_equal(0, pkg.size)
-        pkg.add_class('packagename.PublicClass', true, 2);
+        pkg.add_class('packagename.PublicClass', :public, 2);
         assert_equal(1, pkg.size)
-        pkg.add_class('packagename.PublicInterface', true, 2);
+        pkg.add_class('packagename.PublicInterface', :public, 2);
         assert_equal(2, pkg.size)
       end
 
       def test_version
         pkg = JavaClass::ClassList::PackageEntry.new('packagename', 1)
         assert_equal([1], pkg.version)
-        pkg.add_class('packagename.PublicClass', true, 2);
+        pkg.add_class('packagename.PublicClass', :public, 2);
         assert_equal([1,2], pkg.version)
       end
 
@@ -29,8 +29,8 @@ module TestJavaClass
 
       def test_to_package_shortcut_s
         pkg = JavaClass::ClassList::PackageEntry.new('packagename', 2)
-        pkg.add_class('packagename.PublicClass', true, 2);
-        pkg.add_class('packagename.PublicInterface', true, 2);
+        pkg.add_class('packagename.PublicClass', :public, 2);
+        pkg.add_class('packagename.PublicInterface', :public, 2);
         assert_equal([2], pkg.version)
         assert_equal(2, pkg.size)
         assert_equal("packagename [2] - \n" + "   PublicClass - \n" + "   PublicInterface - \n", pkg.to_package_shortcut_s(1,2))
@@ -40,8 +40,8 @@ module TestJavaClass
         assert_equal('PublicClass', classes[0].name)
         assert_equal([2], classes[0].version)
 
-        pkg.add_class('packagename.PublicClass', true, 3)
-        pkg.add_class('packagename.SomeClass', true, 3)
+        pkg.add_class('packagename.PublicClass', :public, 3)
+        pkg.add_class('packagename.SomeClass', :public, 3)
         assert_equal([2,3], pkg.version)
         assert_equal(3, pkg.size)
 
@@ -56,7 +56,7 @@ module TestJavaClass
 
       def test_to_package_shortcut_s_package
         pkg = JavaClass::ClassList::PackageEntry.new('packagename', 2)
-        pkg.add_class('packagename.PublicClass', true, 2);
+        pkg.add_class('packagename.PublicClass', :public, 2);
         pkg.add_class('packagename.PuckageClass', false, 2);
         assert_equal([2], pkg.version)
         assert_equal(2, pkg.size)
@@ -85,6 +85,11 @@ module TestJavaClass
         assert_equal('com.sun', sorted[4].name)
       end
 
+      def test_to_s
+        pkg = JavaClass::ClassList::PackageEntry.new('packagename', 2)
+        assert_equal('packagename', pkg.to_s)
+      end  
+      
     end
 
   end

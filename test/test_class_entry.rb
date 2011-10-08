@@ -14,7 +14,7 @@ module TestJavaClass
       end
 
       def test_public_eh
-        ce = JavaClass::ClassList::ClassEntry.new(self, 'pkg.Class', true, 0)
+        ce = JavaClass::ClassList::ClassEntry.new(self, 'pkg.Class', :public, 0)
         assert(ce.public?)
 
         ce = JavaClass::ClassList::ClassEntry.new(self, 'pkg.Class', false, 0)
@@ -22,7 +22,7 @@ module TestJavaClass
       end
 
       def test_version
-        ce = JavaClass::ClassList::ClassEntry.new(self, 'pkg.Class', true, 0)
+        ce = JavaClass::ClassList::ClassEntry.new(self, 'pkg.Class', :public, 0)
         assert_equal([0], ce.version)
 
         ce.update(1)
@@ -33,7 +33,7 @@ module TestJavaClass
       end
 
       def test_to_full_qualified_s_first
-        ce = JavaClass::ClassList::ClassEntry.new(self, 'pkg.Class', true, 0)
+        ce = JavaClass::ClassList::ClassEntry.new(self, 'pkg.Class', :public, 0)
 
         # new class in 0
         assert_equal("pkg.Class - \n", ce.to_full_qualified_s(0,0))
@@ -66,7 +66,7 @@ module TestJavaClass
       end
 
       def test_to_full_qualified_s_later
-        ce = JavaClass::ClassList::ClassEntry.new(self, 'pkg.Class', true, 1)
+        ce = JavaClass::ClassList::ClassEntry.new(self, 'pkg.Class', :public, 1)
 
         # list is only for 1
         assert_equal("pkg.Class - \n", ce.to_full_qualified_s(1,1))
@@ -98,7 +98,7 @@ module TestJavaClass
       end
 
       def test_to_package_shortcut_s
-        ce = JavaClass::ClassList::ClassEntry.new(self, 'pkg2.Class2', true, 0)
+        ce = JavaClass::ClassList::ClassEntry.new(self, 'pkg2.Class2', :public, 0)
 
         # new class in 0
         @version = [0]
@@ -146,7 +146,7 @@ module TestJavaClass
       end
 
       def test_to_package_shortcut_s_later
-        ce = JavaClass::ClassList::ClassEntry.new(self, 'pkg2.Class2', true, 1)
+        ce = JavaClass::ClassList::ClassEntry.new(self, 'pkg2.Class2', :public, 1)
 
         # list is only for 1
         @version = [1]
