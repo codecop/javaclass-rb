@@ -21,11 +21,9 @@ module JavaClass
           raise IOError, "folder #{folder} not found/no folder"
         end
         @folder = folder
-        @classes = list_classes.collect { |cl| JavaClassFileName.new(cl) } 
-        pairs = @classes.map { |name| [name, 1] }.flatten
-        @class_lookup = Hash[ *pairs ]
+        init_classes
       end
-
+      
       # Return the list of class names found in this folder. An additional block is used as _filter_ on class names.
       def names(&filter)
         if block_given?
@@ -67,9 +65,16 @@ module JavaClass
         ensure
           Dir.chdir current
         end
-        list.sort
+        list
       end
 
+      # Set up the class names.
+      def init_classes
+        @classes = list_classes.sort.reject { |n| n =~ /package-info\.class$/ }.collect { |cl| JavaClassFileName.new(cl) } 
+        pairs = @classes.map { |name| [name, 1] }.flatten
+        @class_lookup = Hash[ *pairs ]
+      end
+      
     end
 
   end
