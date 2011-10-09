@@ -5,14 +5,16 @@ module JavaClass
   module JavaLanguage
 
     SOURCE = '.java'
+    SOURCE_REGEX = /#{Regexp.escape(SOURCE)}$/
     CLASS = '.class'
     CLASS_REGEX = /#{Regexp.escape(CLASS)}$/
 
     # A general Java identifier from Java spec.
     IDENTIFIER_REGEX = /[a-zA-Z_$][a-zA-Z_$0-9]*/
+    LOWER_IDENTIFIER_REGEX = /[a-z_$][a-z_$0-9]*/
 
     # A proper package name part. This is more strict than IDENTIFIER_REGEX because it's all lowercase letters.
-    PACKAGE_REGEX = /^[a-z][a-z_$0-9]*$/
+    PACKAGE_REGEX = /^#{LOWER_IDENTIFIER_REGEX}$/
         
     # A proper type (class) name. This is more strict than IDENTIFIER_REGEX because it starts with uppercase letters.
     TYPE_REGEX = /^[A-Z][a-zA-Z_$0-9]*$/
