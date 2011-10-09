@@ -57,6 +57,8 @@ const #43 = Asciz       java/lang/Runnable;'
       def test_index
         assert_equal('Method', @cp[1].name)
         assert_equal('Field', @cp[10].name)
+        assert_raise(IndexError) { @cp[-1] }
+        assert_raise(IndexError) { @cp[44] }
       end
 
       def test_size

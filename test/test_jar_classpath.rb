@@ -42,7 +42,10 @@ module TestJavaClass
 
       def test_load_binary
         assert_equal(load_class('class_version/ClassVersionTest10'), @cpe.load_binary('ClassVersionTest10'))
-
+        assert_raise(JavaClass::Classpath::ClassNotFoundError) {
+          @cpe.load_binary('NonExistingClass')
+        }
+        
         @cpe = JavaClass::Classpath::JarClasspath.new("#{@folder}/JarClasspathTest.zip")
         assert_equal(load_class('class_version/ClassVersionTest10'), @cpe.load_binary('ClassVersionTest10'))
       end
@@ -56,7 +59,13 @@ module TestJavaClass
         assert_equal(1, @cpe.elements.size)
         assert_equal(@cpe.to_s, @cpe.elements[0].to_s)
       end
-      
+
+      def test_class_new_invalid
+        assert_raise(IOError) {
+          JavaClass::Classpath::JarClasspath.new("#{TEST_DATA_PATH}/folder_classpath")
+        }
+      end
+            
     end
 
   end

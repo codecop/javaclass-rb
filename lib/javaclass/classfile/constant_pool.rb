@@ -65,7 +65,9 @@ module JavaClass
 
       # Return the _index_'th pool item. _index_ is the real index in the pool which may skip numbers.
       def[](index)
-        raise ArgumentError, "index #{index} is out of bounds of constant pool" if index < 0 || index > item_count
+        if index < 0 || index > item_count
+          raise IndexError, "index #{index} is out of bounds of constant pool"
+        end
         @pool[index]
       end
 

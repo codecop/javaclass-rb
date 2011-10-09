@@ -33,6 +33,10 @@ module TestJavaClass
 
       def test_load_binary
         assert_equal(load_class('class_version/ClassVersionTest10'), @cpe.load_binary('ClassVersionTest10'))
+
+        assert_raise(JavaClass::Classpath::ClassNotFoundError) {
+          @cpe.load_binary('NonExistingClass')
+        }
       end
 
       def test_names
@@ -45,6 +49,12 @@ module TestJavaClass
         assert_equal(@cpe.to_s, @cpe.elements[0].to_s)
       end
 
+      def test_class_new_invalid
+        assert_raise(IOError) {
+          JavaClass::Classpath::FolderClasspath.new("#{TEST_DATA_PATH}/jar_classpath/JarClasspathTest.jar")
+        }
+      end
+      
     end unless defined? TestFolderClasspath
     
   end

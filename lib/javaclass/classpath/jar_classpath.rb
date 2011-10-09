@@ -32,7 +32,9 @@ module JavaClass
       # Create a classpath with this _jarfile_ .
       def initialize(jarfile)
         super(jarfile)
-        raise IOError, "jarfile #{jarfile} not found/no file" unless JarClasspath::valid_location?(jarfile)
+        unless JarClasspath::valid_location?(jarfile)
+          raise IOError, "jarfile #{jarfile} not found/no file"
+        end
         @jarfile = jarfile
         
         @classes = list_classes.collect { |cl| JavaClassFileName.new(cl) } 
@@ -82,7 +84,9 @@ module JavaClass
         if JavaClass.unpack_jars?
           @delegate.load_binary(key)
         else
-          raise ClassNotFoundError.new(key, @jarfile) unless includes?(key)
+          unless includes?(key)
+            raise ClassNotFoundError.new(key, @jarfile)
+          end
           JavaClass::Gems::ZipFile.new(@jarfile).read(key)
         end
       end

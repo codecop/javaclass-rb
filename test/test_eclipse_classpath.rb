@@ -54,6 +54,12 @@ module TestJavaClass
         end
       end
       
+      def test_class_new_invalid
+        assert_raise(IOError) {
+          JavaClass::Classpath::EclipseClasspath.new("#{TEST_DATA_PATH}/folder_classpath")
+        }
+      end
+
     end
 
   end

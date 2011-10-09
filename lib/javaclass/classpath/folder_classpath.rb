@@ -17,7 +17,9 @@ module JavaClass
       # Create a classpath with this _folder_ .
       def initialize(folder)
         super(folder)
-        raise IOError, "folder #{folder} not found/no folder" unless FolderClasspath::valid_location?(folder)
+        unless FolderClasspath::valid_location?(folder)
+          raise IOError, "folder #{folder} not found/no folder"
+        end
         @folder = folder
         @classes = list_classes.collect { |cl| JavaClassFileName.new(cl) } 
         pairs = @classes.map { |name| [name, 1] }.flatten
@@ -41,7 +43,9 @@ module JavaClass
       # Load the binary data of the file name or class name _classname_ from this folder.
       def load_binary(classname)
         key = classname.to_javaname.to_class_file
-        raise ClassNotFoundError.new(key, @folder) unless includes?(key)
+        unless includes?(key)
+          raise ClassNotFoundError.new(key, @folder)
+        end
         File.open(File.join(@folder, key), 'rb') {|io| io.read }
       end
 

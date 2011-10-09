@@ -16,7 +16,7 @@ module JavaClass
 
       # Record the offending _classname_ and optional _classpath_ name.
       def add_classname(classname, classpath=nil)
-        raise ArgumentError unless @classname 
+        raise ArgumentError, "classname already set to #{@classname}" if @classname 
         @classname = classname
         @classpath = classpath
       end
