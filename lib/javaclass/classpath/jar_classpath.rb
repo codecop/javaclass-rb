@@ -36,15 +36,11 @@ module JavaClass
           raise IOError, "jarfile #{jarfile} not found/no file"
         end
         @jarfile = jarfile
-        
-        @classes = list_classes.collect { |cl| JavaClassFileName.new(cl) } 
-        pairs = @classes.map { |name| [name, 1] }.flatten
-        @class_lookup = Hash[ *pairs ]
+        init_classes
         @manifest = JavaClass::Gems::ZipFile.new(@jarfile).read('META-INF/MANIFEST.MF')
-
         setup_cache if JavaClass.unpack_jars?
       end
-
+      
       # Return +true+ as this classpath element is a jar.
       def jar?
         @manifest != nil
@@ -106,9 +102,16 @@ module JavaClass
           next unless entry.file? and name =~ JavaLanguage::CLASS_REGEX # class file
           list << name
         end
-        list.sort
+        list
       end
 
+      # Set up the class names.
+      def init_classes
+        @classes = list_classes.sort.reject { |n| n =~ /package-info\.class$/ }.collect { |cl| JavaClassFileName.new(cl) } 
+        pairs = @classes.map { |name| [name, 1] }.flatten
+        @class_lookup = Hash[ *pairs ]
+      end
+      
       # Set up the temporary unpacking. This sets the delegate field for future use.
       def setup_cache
         unpacker = TemporaryUnpacker.new(@jarfile)
