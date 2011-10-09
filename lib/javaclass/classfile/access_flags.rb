@@ -10,6 +10,8 @@ module JavaClass
     class AccessFlags
       include AccessFlagsConstants
 
+      attr_reader :flags
+      
       def initialize(data, pos)
         @flags = data.u2(pos)
         raise ClassFormatError, "inconsistent flags #{@flags} (abstract and final)" if abstract? && final?
@@ -49,10 +51,14 @@ module JavaClass
         (@flags & ACC_ANNOTATION) != 0
       end
 
-      def inner?
-        (@flags & ACC_INNER) != 0
-      end
+#      def inner?
+#        (@flags & ACC_INNER) != 0
+#      end
 
+      # Return the hex word of the flag.
+      def flags_hex
+        format '%4.4X', @flags
+      end
     end
 
   end
