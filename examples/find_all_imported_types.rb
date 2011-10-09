@@ -6,11 +6,11 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'javaclass/dsl/mixin'
 
-base_path = 'E:\InArbeit\Kopie_Dropbox_NichtAendern\xbean\xbean-finder'
+base_path = 'E:\Develop\Java'
 
 puts '---------- used 3rd party types in production'
 # 1) create a classpath
-cp_prod = classpath(File.join(base_path, 'target/classes'))
+cp_prod = classpath(File.join(base_path, 'classes'))
 # 2) remember all types in this classpath
 own_prod = cp_prod.types
 # 3) collect their external dependencies
@@ -20,7 +20,6 @@ used_prod = cp_prod.external_types
 puts used_prod
 
 puts '---------- used 3rd party types in tests (only)'
-cp_test = classpath(File.join(base_path, 'target/test-classes'))
+cp_test = classpath(File.join(base_path, 'CodeLib/classes'))
 used_test = cp_test.external_types - own_prod - used_prod
 puts used_test
-
