@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/setup'
 require 'javaclass/classlist/jar_searcher'
+require 'javaclass/classpath/folder_classpath'
 require 'javaclass/classpath/jar_classpath'
 
 module TestJavaClass
@@ -52,6 +53,11 @@ module TestJavaClass
       def test_public_eh_fails
         @cpe = JavaClass::Classpath::JarClasspath.new(File.expand_path("#{TEST_DATA_PATH}/jar_searcher/JarClassListTest.jar"))
         assert_raise(JavaClass::Classpath::ClassNotFoundError){ @cs.public?(@cpe, 'NonExistingClass') }
+
+        @cpe = JavaClass::Classpath::FolderClasspath.new(File.expand_path("#{TEST_DATA_PATH}/jar_searcher"))
+        assert_raise(JavaClass::ClassFile::ClassFormatError) { 
+          @cs.public?(@cpe, 'BrokenRunnable_102') 
+        }
       end
       
       class MockList # ZenTest SKIP mock class

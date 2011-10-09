@@ -34,6 +34,12 @@ module TestJavaClass
         assert(@cpe.includes?('ClassVersionTest12.class'))
       end
 
+      def test_class_new_invalid
+        assert_raise(IOError) {
+          JavaClass::Classpath::MavenClasspath.new("#{TEST_DATA_PATH}/folder_classpath")
+        }
+      end
+      
     end
 
   end

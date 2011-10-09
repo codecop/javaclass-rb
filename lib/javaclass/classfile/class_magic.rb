@@ -27,7 +27,9 @@ module JavaClass
       
       # Check if this magic is valid and raise an ClassFormatError if not with an optional _msg_ .
       def check(msg='invalid java class magic')
-        raise(ClassFormatError, msg) unless valid?
+        unless valid?
+          raise(ClassFormatError, msg)
+        end
       end
 
     end

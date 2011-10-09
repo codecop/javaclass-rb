@@ -43,13 +43,17 @@ module JavaClass
 
       # Unpack the given jar file.
       def unpack!
-        raise IOError, 'no temporary folder created' unless defined?(@folder) && @folder
-
+        unless defined?(@folder) && @folder
+          raise IOError, 'no temporary folder created'
+        end
+          
         # Find the first working strategy and keep it
         if ! @@unpack_strategies.first.call(@jarfile, @folder)
           warn("Dropping unpacker for #{@jarfile}. Install 7zip or unzip!")
           @@unpack_strategies.delete_at(0)
-          raise 'no suitable unpack strategy found' if @@unpack_strategies.empty?
+          if @@unpack_strategies.empty?
+            raise 'no suitable unpack strategy found'
+          end
           unpack!
         end
       end
