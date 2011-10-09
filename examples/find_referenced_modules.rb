@@ -7,10 +7,9 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'javaclass/classpath/tracking_classpath' # load tracking first!
 require 'javaclass/dsl/mixin'
-# require 'profile'
 
-workspace_location = 'C:\Users\pkofler\Dropbox\InArbeit\DRY_Research\In the Wild\Java5_Servlets(HBD)'
-workspace_location = 'C:\Users\pkofler\Dropbox\InArbeit\Corpus\Java5_Swing(BIA)'
+workspace_location = 'C:\Users\pkofler\Dropbox\InArbeit\Corpus\Java6_Web(HBD)'
+workspace_location = 'C:\Users\pkofler\Dropbox\InArbeit\Corpus\Java6_Swing(BIA)'
 
 # 1) create the CompositeClasspath of the given workspace
 cp = workspace(workspace_location)

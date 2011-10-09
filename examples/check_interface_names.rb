@@ -8,7 +8,7 @@ $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'javaclass/dsl/mixin'
 
 workspace_location = 'E:\Develop\Java'
-package = 'at.kugel' # 'com.ibm.arc.sdm'
+package = 'at.kugel' 
 
 # add an Eclipse classpath variable
 Eclipse.add_variable('KOR_HOME', 'E:\Develop\Java')
@@ -24,9 +24,9 @@ puts "#{cp.names { |clazz| clazz.same_or_subpackage_of?(package) }.size} classes
 # 3) find all interfaces and collect their simple names
 names = cp.values { |clazz| clazz.same_or_subpackage_of?(package) }.
            find_all { |clazz| clazz.access_flags.interface? && !clazz.access_flags.annotation? }.
-           collect { |clazz| clazz.simple_name }
+           collect { |clazz| clazz.to_classname }
 puts "#{names.size} interfaces found:\n  #{names.sort.join("\n  ")}"
 
 # 4) select all names that start with I and print them
-inames = names.find_all { |name| name =~ /^I[A-Z]/ }
+inames = names.find_all { |name| name.simple_name =~ /^I[A-Z]/ }
 puts "#{inames.size} interfaces start with I:\n  #{inames.join("\n  ")}"
