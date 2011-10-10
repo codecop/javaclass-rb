@@ -3,15 +3,19 @@ require 'javaclass/delegate_directive'
 module JavaClass
   module ClassFile
 
-    # Extend JavaClassHeader to behave like a JavaName in delegating to _this_class_ method.
-    # Author::          Peter Kofler
     class JavaClassHeader
       extend DelegateDirective
 
-      delegate :to_javaname, :this_class
+      # Extend JavaClassHeader to behave like a JavaName in delegating to _this_class_ method which returns a JavaVMName.
+      def to_javaname
+        this_class
+      end
 
+      def to_jvmname
+        this_class
+      end
+      
       delegate :to_classname, :this_class
-      delegate :to_jvmname, :this_class
       delegate :to_java_file, :this_class
       delegate :to_class_file, :this_class
       
