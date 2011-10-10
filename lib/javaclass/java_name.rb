@@ -118,7 +118,7 @@ module JavaClass
       string =~ VALID_REGEX
     end
 
-    def initialize(string)
+    def initialize(string, jvmname=nil, classname=nil)
       super string
       if string =~ VALID_REGEX
         @package = $1 || ''
@@ -128,6 +128,9 @@ module JavaClass
         raise ArgumentError, "#{string} is no valid qualified name"
       end
       package_remove_trailing_dot!
+      
+      @jvm_name = jvmname
+      @class_name = classname
     end
 
     # Full normalized class name of this class. This returns just the plain String.
@@ -146,7 +149,7 @@ module JavaClass
 
     # Return the VM name of this class, e.g. <code>java/lang/Object</code>.
     def to_jvmname
-      JavaVMName.new(@full_name.gsub(SEPARATOR, JavaVMName::SEPARATOR), self) # TODO lazy field
+      @jvm_name ||= JavaVMName.new(@full_name.gsub(SEPARATOR, JavaVMName::SEPARATOR), self) 
     end
 
     # Return the Java source file name of this class, e.g. <code>java/lang/Object.java</code>.
@@ -157,8 +160,7 @@ module JavaClass
     # Return the Java class file name of this class, e.g. <code>java/lang/Object.class</code>.
     def to_class_file
       # p self, self.class, @package, @simple_name, @full_name
-      JavaClassFileName.new(@full_name.gsub(SEPARATOR, JavaClassFileName::SEPARATOR) + JavaLanguage::CLASS, self)
-      # TODO lazy field
+      @class_name ||= JavaClassFileName.new(@full_name.gsub(SEPARATOR, JavaClassFileName::SEPARATOR) + JavaLanguage::CLASS, self)
     end
 
   end
@@ -242,7 +244,7 @@ module JavaClass
     end
 
     def to_classname
-      @qualified_name ||= JavaQualifiedName.new(@jvm_name.gsub(SEPARATOR, JavaQualifiedName::SEPARATOR))
+      @qualified_name ||= JavaQualifiedName.new(@jvm_name.gsub(SEPARATOR, JavaQualifiedName::SEPARATOR), self)
     end
 
     def to_jvmname
@@ -251,7 +253,7 @@ module JavaClass
     end
 
     def to_class_file
-      JavaClassFileName.new(@jvm_name + JavaLanguage::CLASS, self)
+      JavaClassFileName.new(@jvm_name + JavaLanguage::CLASS, @qualified_name)
       # TODO lazy field
     end
 
@@ -288,12 +290,12 @@ module JavaClass
       @qualified_name ||=
         JavaQualifiedName.new(
           @file_name.gsub(SEPARATOR_REGEX, JavaQualifiedName::SEPARATOR).
-                     sub(JavaLanguage::CLASS_REGEX, '')
+                     sub(JavaLanguage::CLASS_REGEX, ''), nil, self
         )
     end
 
     def to_jvmname
-      JavaVMName.new(@file_name.sub(JavaLanguage::CLASS_REGEX, ''), self)
+      JavaVMName.new(@file_name.sub(JavaLanguage::CLASS_REGEX, ''), @qualified_name)
       # TODO lazy
     end
 
