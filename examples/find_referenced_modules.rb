@@ -29,3 +29,5 @@ unused = cp.elements.find_all { |clp| !clp.accessed? }
 puts "#{unused.size} unused modules found:\n  #{unused.join("\n  ")}"
 
 p cp.elements.map { |clp| [clp.to_s, clp.accessed?] }
+
+# TODO BUG!!! why is class name info lost?
