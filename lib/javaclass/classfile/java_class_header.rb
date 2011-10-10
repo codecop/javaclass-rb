@@ -92,7 +92,7 @@ module JavaClass
       # Return the name of this class. Returns a JavaVMName.
       def this_class
         # This is a ConstantClass entry in the constant pool.
-        @constant_pool.class_item(@this_class_idx).class_name 
+        @jvmname ||= @constant_pool.class_item(@this_class_idx).class_name 
       end
 
       # Return the name of the superclass of this class or +nil+. Returns a JavaVMName.
