@@ -7,7 +7,7 @@ class TestString < Test::Unit::TestCase
     assert_equal(JavaClass::JavaClassFileName, 'at/kugel/tool/Some.class'.to_javaname.class)
     assert_equal('Some', 'Some'.to_javaname)
     assert_equal('at/kugel/tool/Some.class', 'at/kugel/tool/Some.class'.to_javaname)
-    #assert_equal("at\\kugel\\tool\\Some.java", "at\\kugel\\tool\\Some.java".to_javaname)
+    assert_equal("at/kugel/tool/Some", "at\\kugel\\tool\\Some.java".to_javaname)
     assert_equal('at.kugel.tool.Some', 'at.kugel.tool.Some'.to_javaname)
   end
 
@@ -43,6 +43,9 @@ module TestJavaClass
 
       @package = 'java.lang'
       assert(in_jdk?)
+
+      @package = '' # default
+      assert(!in_jdk?)
     end
         
   end
@@ -131,24 +134,63 @@ module TestJavaClass
     
   end
 
-  class TestJavaName < Test::Unit::TestCase
+  class TestJavaVMName < Test::Unit::TestCase
 
     def setup
-      #@source_file = JavaClass::JavaName.new("at\\kugel\\tool\\Some.java")
       @jvm_path = JavaClass::JavaVMName.new('at/kugel/tool/SomeClassWithMoreNames')
       #@jvm_method_name = JavaClass::JavaName.new('at/kugel/tool/Some.<init>')
-      @class_file = JavaClass::JavaClassFileName.new('at/kugel/tool/Some.class')
-      @jdk_class_file = JavaClass::JavaClassFileName.new('java/lang/String.class')
       @jvm_array_name = JavaClass::JavaVMName.new('[Ljava/lang/String;')
+      @jvm_atom_name = JavaClass::JavaVMName.new('[[[B')
     end
 
     def test_to_classname
-      #assert_equal('at.kugel.tool.Some', @source_file.to_classname)
       assert_equal('at.kugel.tool.SomeClassWithMoreNames', @jvm_path.to_classname)
       #assert_equal('at.kugel.tool.Some', @jvm_method_name.to_classname)
+      assert_equal('java.lang.String', @jvm_array_name.to_classname)
+      assert_equal('java.lang.Byte', @jvm_atom_name.to_classname)
+    end
+
+    def test_to_jvmname
+      assert_equal('at/kugel/tool/SomeClassWithMoreNames', @jvm_path.to_jvmname)
+      #assert_equal('at/kugel/tool/Some', @jvm_method_name.to_jvmname)
+      assert_same(@jvm_path.to_jvmname, @jvm_path.to_jvmname)
+    end
+
+    def test_to_java_file
+      assert_equal('at/kugel/tool/SomeClassWithMoreNames.java', @jvm_path.to_java_file)
+      #assert_equal('at/kugel/tool/Some.java', @jvm_method_name.to_java_file)
+    end
+
+    def test_to_class_file
+      assert_equal('at/kugel/tool/SomeClassWithMoreNames.class', @jvm_path.to_class_file)
+      #assert_equal('at/kugel/tool/Some.class', @jvm_method_name.to_class_file)
+    end
+
+    def test_full_name
+      assert_equal('at.kugel.tool.SomeClassWithMoreNames', @jvm_path.full_name)
+      #assert_equal('at.kugel.tool.Some', @jvm_method_name.full_name)
+    end
+    
+    def test_array_eh
+      assert(!@jvm_path.array?)
+      assert_equal(1, @jvm_array_name.array?)
+      assert_equal(3, @jvm_atom_name.array?)
+    end
+    
+  end
+  
+  class TestJavaClassFile < Test::Unit::TestCase
+
+    def setup
+      @win_file = JavaClass::JavaClassFileName.new("at\\kugel\\tool\\Some.class")
+      @class_file = JavaClass::JavaClassFileName.new('at/kugel/tool/Some.class')
+      @jdk_class_file = JavaClass::JavaClassFileName.new('java/lang/String.class')
+    end
+
+    def test_to_classname
+      assert_equal('at.kugel.tool.Some', @win_file.to_classname)
       assert_equal('at.kugel.tool.Some', @class_file.to_classname)
       assert_equal('java.lang.String', @jdk_class_file.to_classname)
-      assert_equal('java.lang.String', @jvm_array_name.to_classname)
     end
 
     def test_to_javaname
@@ -157,41 +199,23 @@ module TestJavaClass
     end
 
     def test_to_jvmname
-      #assert_equal('at/kugel/tool/Some', @source_file.to_jvmname)
-      assert_equal('at/kugel/tool/SomeClassWithMoreNames', @jvm_path.to_jvmname)
-      #assert_equal('at/kugel/tool/Some', @jvm_method_name.to_jvmname)
+      assert_equal('at/kugel/tool/Some', @win_file.to_jvmname)
       assert_equal('at/kugel/tool/Some', @class_file.to_jvmname)
     end
 
     def test_to_java_file
-      #assert_equal('at/kugel/tool/Some.java', @source_file.to_java_file)
-      assert_equal('at/kugel/tool/SomeClassWithMoreNames.java', @jvm_path.to_java_file)
-      #assert_equal('at/kugel/tool/Some.java', @jvm_method_name.to_java_file)
+      assert_equal('at/kugel/tool/Some.java', @win_file.to_java_file)
       assert_equal('at/kugel/tool/Some.java', @class_file.to_java_file)
     end
 
     def test_to_class_file
-      #assert_equal('at/kugel/tool/Some.class', @source_file.to_class_file)
-      assert_equal('at/kugel/tool/SomeClassWithMoreNames.class', @jvm_path.to_class_file)
-      #assert_equal('at/kugel/tool/Some.class', @jvm_method_name.to_class_file)
+      assert_equal('at\\kugel\\tool\\Some.class', @win_file.to_class_file)
       assert_equal('at/kugel/tool/Some.class', @class_file.to_class_file)
     end
 
     def test_full_name
-      #assert_equal('at.kugel.tool.Some', @source_file.full_name)
-      assert_equal('at.kugel.tool.SomeClassWithMoreNames', @jvm_path.full_name)
-      #assert_equal('at.kugel.tool.Some', @jvm_method_name.full_name)
+      assert_equal('at.kugel.tool.Some', @win_file.full_name)
       assert_equal('at.kugel.tool.Some', @class_file.full_name)
-    end
-
-    def test_package
-      #assert_equal('at.kugel.tool', @source_file.package)
-      assert_equal('at.kugel.tool', @jvm_path.package)
-    end
-
-    def test_simple_name
-      #assert_equal('Some', @source_file.simple_name)
-      #assert_equal('SomeClassWithMoreNames', @jvm_path.simple_name)
     end
 
   end
