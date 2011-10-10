@@ -37,6 +37,8 @@ module JavaClass
       
     end
 
+    # A special directive which wraps a method with a LoadingClasspath.
+    # Author::          Peter Kofler
     module LoadDirective # :nodoc:
       
       # Wrap the method with _method_name_ in a LoadingClasspath.

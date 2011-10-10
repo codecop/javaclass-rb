@@ -78,9 +78,9 @@ module JavaClass
 
     class CompositeClasspath 
 
+      # Wrap the _elem_ classpath with TrackingClasspath and add it to the list.
       alias __old__add_element__ add_element # :nodoc:
       
-      # Wrap the _elem_ classpath with TrackingClasspath and add it to the list.
       def add_element(elem)
         __old__add_element__(TrackingClasspath.new(elem)) unless @elements.find { |cpe| cpe == elem }
       end
@@ -118,7 +118,8 @@ module JavaClass
       end
 
       private
-      
+
+      # Return the key for the access map from this _classname_ .      
       def to_key(classname)
         classname.to_javaname.to_class_file
       end
