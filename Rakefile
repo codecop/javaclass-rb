@@ -203,7 +203,7 @@ task :publish_rdoc => [:clobber_rdoc, :rdoc, :fix_rdoc] do
 end
 
 # :clean :clobber
-CLOBBER.include(RDOC_REPO, 'googlecode_upload.py')
+CLOBBER.include(RDOC_REPO, 'googlecode_upload.py', 'ClassLists', 'fullClassList*.txt')
 
 # Helper method to grep all the sources for some _pattern_ words.
 def egrep(pattern)
