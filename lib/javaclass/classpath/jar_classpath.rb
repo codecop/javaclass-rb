@@ -108,7 +108,7 @@ module JavaClass
       # Set up the class names.
       def init_classes
         @classes = list_classes.sort.reject { |n| n =~ /package-info\.class$/ }.collect { |cl| JavaClassFileName.new(cl) } 
-        pairs = @classes.map { |name| [name.file_name, :anything] }.flatten
+        pairs = @classes.map { |name| [name.file_name, 1] }.flatten
         @class_lookup = Hash[ *pairs ] # file_name (String) => anything
       end
       
