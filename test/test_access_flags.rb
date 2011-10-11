@@ -7,7 +7,6 @@ module TestJavaClass
     class TestAccessFlags < Test::Unit::TestCase
 
       def setup
-        @cls = {}
         %w[Public Package Abstract Interface Final Enum Annotation
            Public$Inner Public$StaticInner Public$InnerInterface Enum$1 Inner Inner$1 Inner$2].each do |t|
           binary_data = load_class("access_flags/AccessFlagsTest#{t}")
