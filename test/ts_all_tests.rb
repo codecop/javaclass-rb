@@ -42,7 +42,11 @@ class TsAllTests
     # common
     suite << TestStringUx.suite
     suite << TestStringHexdump.suite
-    suite << TestJavaClass::TestJavaName.suite
+    suite << TestJavaClass::TestPackageLogic.suite
+    suite << TestJavaClass::TestSimpleNameLogic.suite
+    suite << TestJavaClass::TestJavaQualifiedName.suite
+    suite << TestJavaClass::TestJavaVMName.suite
+    suite << TestJavaClass::TestJavaClassFile.suite
 
     # Java class parser
     suite << TestJavaClass::TestClassFile::TestClassMagic.suite
