@@ -66,6 +66,85 @@ module JavaClass
 
   end
 
+  # A delegator to a String with only read only methods. This should delegate all methods to a inner _value_ but the modifying ones.
+  # Author::          Peter Kofler
+  class ReadOnlyString < ::Object
+    include Enumerable
+    include Comparable
+    
+    class << ::String
+      include Kernel
+    end
+
+    extend DelegateDirective
+        
+    # Create a new pseude String _string_ .
+    def initialize(string)
+      @value = string
+    end
+
+    delegate_field :%, :value
+    delegate_field :*, :value
+    delegate_field :+, :value
+    delegate_field :<=>, :value
+    delegate_field :[], :value
+    delegate_field :bytes, :value
+    delegate_field :bytesize, :value
+    delegate_field :capitalize, :value
+    delegate_field :casecmp, :value
+    delegate_field :center, :value
+    delegate_field :chars, :value
+    delegate_field :chomp, :value
+    delegate_field :chop, :value
+    delegate_field :crypt, :value
+    delegate_field :delete, :value
+    delegate_field :downcase, :value
+    delegate_field :dump, :value
+    delegate_field :each, :value
+    delegate_field :each_byte, :value
+    delegate_field :each_char, :value
+    delegate_field :each_line, :value
+    delegate_field :empty?, :value
+    delegate_field :end_with?, :value
+    delegate_field :gsub, :value
+    delegate_field :hex, :value
+    delegate_field :index, :value
+    delegate_field :intern, :value
+    delegate_field :length, :value
+    delegate_field :lines, :value
+    delegate_field :ljust, :value
+    delegate_field :lstrip, :value
+    delegate_field :match, :value
+    delegate_field :next, :value
+    delegate_field :oct, :value
+    delegate_field :reverse, :value
+    delegate_field :rindex, :value
+    delegate_field :rjust, :value
+    delegate_field :rpartition, :value
+    delegate_field :rstrip, :value
+    delegate_field :scan, :value
+    delegate_field :size, :value
+    delegate_field :slice, :value
+    delegate_field :split, :value
+    delegate_field :squeeze, :value
+    delegate_field :start_with?, :value
+    delegate_field :strip, :value
+    delegate_field :sub, :value
+    delegate_field :succ, :value
+    delegate_field :sum, :value
+    delegate_field :swapcase, :value
+    delegate_field :to_a, :value
+    delegate_field :to_f, :value
+    delegate_field :to_i, :value
+    delegate_field :to_str, :value
+    delegate_field :to_sym, :value
+    delegate_field :tr, :value
+    delegate_field :tr_s, :value
+    delegate_field :unpack, :value
+    delegate_field :upcase, :value
+    delegate_field :upto, :value
+  end
+  
   # A full qualified package name. That is like <code>a.b.c</code>.
   # Author::          Peter Kofler
   class JavaPackageName < String
