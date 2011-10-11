@@ -31,7 +31,17 @@ started adding methods to that end...)
 
 == Usage
 
-See the various examples in the examples folder of the gem.
+See the various examples in the examples folder of the gem. There is also some 
+experimental logic to have Java class name literals in Ruby. Packages have to be 
+suffixed with ".*" to be recognized. This is a bit dangerous, as wrong methods or 
+variables with a valid county code are not recognized but a +JavaQualifiedName+
+is created instead.
+
+  require 'javaclass/dsl/java_name_factory'
+  include JavaNameFactory
+
+  java.lang.String      # => "java.lang.String" 
+  java.lang.*           # => "java.lang" 
 
 == Documentation
 
