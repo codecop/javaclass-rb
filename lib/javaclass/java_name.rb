@@ -65,85 +65,6 @@ module JavaClass
     end
 
   end
-
-  # A delegator to a String with only read only methods. This should delegate all methods to a inner _value_ but the modifying ones.
-  # Author::          Peter Kofler
-  class ReadOnlyString < ::Object
-    include Enumerable
-    include Comparable
-    
-    class << ::String
-      include Kernel
-    end
-
-    extend DelegateDirective
-        
-    # Create a new pseude String _string_ .
-    def initialize(string)
-      @value = string
-    end
-
-    delegate_field :%, :value
-    delegate_field :*, :value
-    delegate_field :+, :value
-    delegate_field :<=>, :value
-    delegate_field :[], :value
-    delegate_field :bytes, :value
-    delegate_field :bytesize, :value
-    delegate_field :capitalize, :value
-    delegate_field :casecmp, :value
-    delegate_field :center, :value
-    delegate_field :chars, :value
-    delegate_field :chomp, :value
-    delegate_field :chop, :value
-    delegate_field :crypt, :value
-    delegate_field :delete, :value
-    delegate_field :downcase, :value
-    delegate_field :dump, :value
-    delegate_field :each, :value
-    delegate_field :each_byte, :value
-    delegate_field :each_char, :value
-    delegate_field :each_line, :value
-    delegate_field :empty?, :value
-    delegate_field :end_with?, :value
-    delegate_field :gsub, :value
-    delegate_field :hex, :value
-    delegate_field :index, :value
-    delegate_field :intern, :value
-    delegate_field :length, :value
-    delegate_field :lines, :value
-    delegate_field :ljust, :value
-    delegate_field :lstrip, :value
-    delegate_field :match, :value
-    delegate_field :next, :value
-    delegate_field :oct, :value
-    delegate_field :reverse, :value
-    delegate_field :rindex, :value
-    delegate_field :rjust, :value
-    delegate_field :rpartition, :value
-    delegate_field :rstrip, :value
-    delegate_field :scan, :value
-    delegate_field :size, :value
-    delegate_field :slice, :value
-    delegate_field :split, :value
-    delegate_field :squeeze, :value
-    delegate_field :start_with?, :value
-    delegate_field :strip, :value
-    delegate_field :sub, :value
-    delegate_field :succ, :value
-    delegate_field :sum, :value
-    delegate_field :swapcase, :value
-    delegate_field :to_a, :value
-    delegate_field :to_f, :value
-    delegate_field :to_i, :value
-    delegate_field :to_str, :value
-    delegate_field :to_sym, :value
-    delegate_field :tr, :value
-    delegate_field :tr_s, :value
-    delegate_field :unpack, :value
-    delegate_field :upcase, :value
-    delegate_field :upto, :value
-  end
   
   # A full qualified package name. That is like <code>a.b.c</code>.
   # Author::          Peter Kofler
@@ -177,7 +98,9 @@ module JavaClass
 
   end
 
-  # A full qualified class name. That is like <code>a.b.C</code>.
+  # A full qualified class name. That is like <code>a.b.C</code>. Care has to be taken
+  # if this is used as hash key. String is treated special and the additional fields are lost
+  # when the key is retrieved from the Hash (because it is frozen). 
   # Author::          Peter Kofler
   class JavaQualifiedName < String
     include PackageLogic
@@ -226,7 +149,13 @@ module JavaClass
 
     # Return the VM name of this class, e.g. <code>java/lang/Object</code>.
     def to_jvmname
-      @jvm_name ||= JavaVMName.new(@full_name.gsub(SEPARATOR, JavaVMName::SEPARATOR), self) 
+      return @jvm_name if @jvm_name
+      new_val = JavaVMName.new(@full_name.gsub(SEPARATOR, JavaVMName::SEPARATOR), self)
+      if frozen?
+        new_val
+      else
+        @jvm_name = new_val
+      end
     end
 
     # Return the Java source file name of this class, e.g. <code>java/lang/Object.java</code>. This is a plain String.
@@ -236,8 +165,13 @@ module JavaClass
 
     # Return the Java class file name of this class, e.g. <code>java/lang/Object.class</code>.
     def to_class_file
-      # p self, self.class, @package, @simple_name, @full_name
-      @class_name ||= JavaClassFileName.new(@full_name.gsub(SEPARATOR, JavaClassFileName::SEPARATOR) + JavaLanguage::CLASS, self)
+      return @class_name if @class_name
+      new_val = JavaClassFileName.new(@full_name.gsub(SEPARATOR, JavaClassFileName::SEPARATOR) + JavaLanguage::CLASS, self)
+      if frozen?
+        new_val
+      else 
+        @class_name = new_val
+      end 
     end
 
   end
@@ -301,10 +235,11 @@ module JavaClass
 
       if string =~ VALID_REGEX
         @jvm_name = string
-        @qualified_name = qualified
       else
         raise ArgumentError, "#{string} is no valid JVM name"
       end
+      @qualified_name = qualified
+      @class_name = nil      
     end
 
     # Is this a bytecode array, e.g. represented by <code>[B</code>.
@@ -313,7 +248,13 @@ module JavaClass
     end
 
     def to_classname
-      @qualified_name ||= JavaQualifiedName.new(@jvm_name.gsub(SEPARATOR, JavaQualifiedName::SEPARATOR), self, nil)
+      return @qualified_name if @qualified_name
+      new_val = JavaQualifiedName.new(@jvm_name.gsub(SEPARATOR, JavaQualifiedName::SEPARATOR), self, nil)
+      if frozen?
+        new_val
+      else 
+        @qualified_name = new_val
+      end 
     end
 
     def to_jvmname
@@ -325,7 +266,13 @@ module JavaClass
     end
     
     def to_class_file
-      @class_name ||= JavaClassFileName.new(@jvm_name + JavaLanguage::CLASS, @qualified_name)
+      return @class_name if @class_name
+      new_val = JavaClassFileName.new(@jvm_name + JavaLanguage::CLASS, @qualified_name)
+      if frozen?
+        new_val
+      else 
+        @class_name = new_val
+      end 
     end
 
   end
@@ -347,29 +294,45 @@ module JavaClass
       string =~ VALID_REGEX
     end
 
+    # The plain file name of this class file.
+    attr_reader :file_name
+    
     # Create a new class file name _string_ with optional _qualified_ class which may be available.               
     def initialize(string, qualified=nil)
       super string
       if string =~ VALID_REGEX
-        @class_name = string.gsub(SEPARATOR_REGEX, SEPARATOR)
-        @qualified_name = qualified
+        @file_name = string.gsub(SEPARATOR_REGEX, SEPARATOR)
       else
         raise ArgumentError, "#{string} is no valid class file name"
       end
+      @qualified_name = qualified
+      @jvm_name = nil
     end
 
     def to_classname
-      @qualified_name ||= JavaQualifiedName.new(
-            @class_name.gsub(SEPARATOR_REGEX, JavaQualifiedName::SEPARATOR).sub(JavaLanguage::CLASS_REGEX, ''),
-        nil, self)
+      return @qualified_name if @qualified_name
+      new_val = JavaQualifiedName.new(
+                    @file_name.gsub(SEPARATOR_REGEX, JavaQualifiedName::SEPARATOR).sub(JavaLanguage::CLASS_REGEX, ''),
+                      nil, self)
+      if frozen?
+        new_val
+      else 
+        @qualified_name = new_val
+      end 
     end
 
     def to_jvmname
-      @jvm_name ||= JavaVMName.new(@class_name.sub(JavaLanguage::CLASS_REGEX, ''), @qualified_name)
+      return @jvm_name if @jvm_name
+      new_val = JavaVMName.new(@file_name.sub(JavaLanguage::CLASS_REGEX, ''), @qualified_name)
+      if frozen?
+        new_val
+      else
+        @jvm_name = new_val
+      end
     end
 
     def to_java_file
-      @class_name.sub(JavaLanguage::CLASS_REGEX, JavaLanguage::SOURCE)
+      @file_name.sub(JavaLanguage::CLASS_REGEX, JavaLanguage::SOURCE)
     end
     
     def to_class_file
@@ -399,7 +362,7 @@ class String
     if match
       match.new(plain_name)
     else
-      raise "unknown Java name #{self}"
+      raise ArgumentError, "unknown Java name #{self}"
     end
   end
 

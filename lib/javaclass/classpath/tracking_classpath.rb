@@ -29,7 +29,7 @@ module JavaClass
       
       # Reset all prior marked access.
       def reset_access
-        @accessed = Hash.new(0)
+        @accessed = Hash.new(0) # class_file (JavaClassFileName) => cnt
       end
       
       # Load the binary and mark the _classname_ as accessed.
@@ -49,6 +49,12 @@ module JavaClass
       # Mark the _classname_ as accessed. Return the number of accesses so far.
       def mark_accessed(classname)
         key = to_key(classname)
+        
+        # hash keys need to be frozen to keep state
+        if !@accessed.include?(key)
+          key = key.freeze 
+        end
+
         @accessed[key] += 1
       end
       
@@ -63,7 +69,7 @@ module JavaClass
         if total > 0 then total else nil end
       end
 
-      # Return the classnames of all accessed classes.      
+      # Return the classnames of all accessed classes. This is a list of frozen JavaClassFileName.      
       def all_accessed
         @accessed.keys.sort
       end
