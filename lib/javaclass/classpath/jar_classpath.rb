@@ -107,7 +107,15 @@ module JavaClass
 
       # Set up the class names.
       def init_classes
-        @classes = list_classes.sort.reject { |n| n =~ /package-info\.class$/ }.collect { |cl| JavaClassFileName.new(cl) } 
+        @classes = list_classes.reject { |n| n =~ /package-info\.class$/ }.
+                                find_all { |n| 
+                                  if JavaClassFileName.valid?(n) 
+                                    true
+                                  else
+                                    warn("skipping invalid class file name #{n} in classpath #{@jarfile}") 
+                                    false
+                                  end
+                                }.sort.collect { |cl| JavaClassFileName.new(cl) } 
         pairs = @classes.map { |name| [name.file_name, 1] }.flatten
         @class_lookup = Hash[ *pairs ] # file_name (String) => anything
       end
