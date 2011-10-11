@@ -88,7 +88,13 @@ module JavaClass
       alias __old__add_element__ add_element # :nodoc:
       
       def add_element(elem)
-        __old__add_element__(TrackingClasspath.new(elem)) unless @elements.find { |cpe| cpe == elem }
+        unless @elements.find { |cpe| cpe == elem }
+          if [FolderClasspath, JarClasspath].include?(elem.class)
+            __old__add_element__(TrackingClasspath.new(elem))
+          else
+            __old__add_element__(elem)
+          end
+        end 
       end
 
       # Reset all prior marked access in child elements.
@@ -100,7 +106,11 @@ module JavaClass
       def mark_accessed(classname)
         key = to_key(classname)
         found = @elements.find { |e| e.includes?(key) }
-        if found then found.mark_accessed(key) else nil end
+        if found 
+          found.mark_accessed(key) 
+        else 
+          nil 
+        end
       end
 
       # Was the _classname_ accessed then return the count? If _classname_ is nil then check if any class was accessed.
