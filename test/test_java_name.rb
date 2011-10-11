@@ -9,6 +9,7 @@ class TestString < Test::Unit::TestCase
     assert_equal('at/kugel/tool/Some.class', 'at/kugel/tool/Some.class'.to_javaname)
     assert_equal("at/kugel/tool/Some", "at\\kugel\\tool\\Some.java".to_javaname)
     assert_equal('at.kugel.tool.Some', 'at.kugel.tool.Some'.to_javaname)
+    assert_raise(ArgumentError) { 'abc/xyz.123'.to_javaname }
   end
 
 end
@@ -81,7 +82,9 @@ module TestJavaClass
 
     def setup
       @simple_name = JavaClass::JavaQualifiedName.new('Some')
-      @qualified_name= JavaClass::JavaQualifiedName.new('at.kugel.tool.Some')
+      @qualified_name = JavaClass::JavaQualifiedName.new('at.kugel.tool.Some')
+      @frozen_name = JavaClass::JavaQualifiedName.new('at.kugel.tool.Some')
+      @frozen_name.freeze
     end
 
     def test_class_new_invalid
@@ -121,6 +124,9 @@ module TestJavaClass
     def test_to_jvmname
       assert_equal('at/kugel/tool/Some', @qualified_name.to_jvmname)
       assert_same(@qualified_name.to_jvmname, @qualified_name.to_jvmname) # is saved
+
+      assert_equal('at/kugel/tool/Some', @frozen_name.to_jvmname)
+      assert_not_same(@frozen_name.to_jvmname, @frozen_name.to_jvmname) # is not saved
     end
   
     def test_to_java_file
@@ -130,11 +136,14 @@ module TestJavaClass
     def test_to_class_file
       assert_equal('at/kugel/tool/Some.class', @qualified_name.to_class_file)
       assert_same(@qualified_name.to_class_file, @qualified_name.to_class_file) # is saved
+
+      assert_equal('at/kugel/tool/Some.class', @frozen_name.to_class_file)
+      assert_not_same(@frozen_name.to_class_file, @frozen_name.to_class_file) # is not saved
     end
     
-    def test_integration_hash
-      map = {}
-      map[@qualified_name] = :anything
+    def test_hash_keys_needs_freeze
+      map = Hash.new # x (JavaQualifiedName) => anything
+      map[@qualified_name.freeze] = :anything
       qn = map.keys[0]
       assert_same(JavaClass::JavaQualifiedName, qn.class)
       assert_equal('Some', qn.simple_name)
@@ -149,6 +158,8 @@ module TestJavaClass
       #@jvm_method_name = JavaClass::JavaName.new('at/kugel/tool/Some.<init>')
       @jvm_array_name = JavaClass::JavaVMName.new('[Ljava/lang/String;')
       @jvm_atom_name = JavaClass::JavaVMName.new('[[[B')
+      @frozen_path = JavaClass::JavaVMName.new('at/kugel/tool/SomeClassWithMoreNames')
+      @frozen_path.freeze
     end
 
     def test_to_classname
@@ -156,6 +167,7 @@ module TestJavaClass
       #assert_equal('at.kugel.tool.Some', @jvm_method_name.to_classname)
       assert_equal('java.lang.String', @jvm_array_name.to_classname)
       assert_equal('java.lang.Byte', @jvm_atom_name.to_classname)
+      assert_equal('at.kugel.tool.SomeClassWithMoreNames', @frozen_path.to_classname)
     end
 
     def test_to_jvmname
@@ -172,6 +184,7 @@ module TestJavaClass
     def test_to_class_file
       assert_equal('at/kugel/tool/SomeClassWithMoreNames.class', @jvm_path.to_class_file)
       #assert_equal('at/kugel/tool/Some.class', @jvm_method_name.to_class_file)
+      assert_equal('at/kugel/tool/SomeClassWithMoreNames.class', @frozen_path.to_class_file)
     end
 
     def test_full_name
@@ -193,6 +206,8 @@ module TestJavaClass
       @win_file = JavaClass::JavaClassFileName.new("at\\kugel\\tool\\Some.class")
       @class_file = JavaClass::JavaClassFileName.new('at/kugel/tool/Some.class')
       @jdk_class_file = JavaClass::JavaClassFileName.new('java/lang/String.class')
+      @frozen_file = JavaClass::JavaClassFileName.new('at/kugel/tool/Some.class')
+      @frozen_file.freeze
     end
 
     def test_to_classname
@@ -200,6 +215,7 @@ module TestJavaClass
       assert_equal('at.kugel.tool', @win_file.to_classname.package)
       assert_equal('at.kugel.tool.Some', @class_file.to_classname)
       assert_equal('java.lang.String', @jdk_class_file.to_classname)
+      assert_equal('at.kugel.tool.Some', @frozen_file.to_classname)
     end
 
     def test_to_javaname
@@ -210,6 +226,7 @@ module TestJavaClass
     def test_to_jvmname
       assert_equal('at/kugel/tool/Some', @win_file.to_jvmname)
       assert_equal('at/kugel/tool/Some', @class_file.to_jvmname)
+      assert_equal('at/kugel/tool/Some', @frozen_file.to_jvmname)
     end
 
     def test_to_java_file
@@ -220,6 +237,7 @@ module TestJavaClass
     def test_to_class_file
       assert_equal('at\\kugel\\tool\\Some.class', @win_file.to_class_file)
       assert_equal('at/kugel/tool/Some.class', @class_file.to_class_file)
+      assert_equal('at/kugel/tool/Some.class', @frozen_file.to_class_file)
     end
 
     def test_full_name
