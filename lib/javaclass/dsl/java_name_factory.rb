@@ -6,6 +6,8 @@ module JavaClass
 
     # Module to mixin a mini DSL to recognize full qualified Java classnames in Ruby code.
     # Packages have to be suffixed with ".*" to be recognized.
+    # This is a bit dangerous, as wrong methods or variables with a valid county code are not recognized but
+    # a classname is created instead.
     # Author::          Peter Kofler
     module JavaNameFactory
 
