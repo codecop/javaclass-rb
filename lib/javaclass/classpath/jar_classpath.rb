@@ -71,7 +71,7 @@ module JavaClass
 
       # Return if _classname_ is included in this jar.
       def includes?(classname)
-        @class_lookup[classname.to_javaname.to_class_file]
+        @class_lookup[classname.to_javaname.to_class_file.file_name]
       end
 
       # Load the binary data of the file name or class name _classname_ from this jar.
@@ -108,8 +108,8 @@ module JavaClass
       # Set up the class names.
       def init_classes
         @classes = list_classes.sort.reject { |n| n =~ /package-info\.class$/ }.collect { |cl| JavaClassFileName.new(cl) } 
-        pairs = @classes.map { |name| [name, 1] }.flatten
-        @class_lookup = Hash[ *pairs ]
+        pairs = @classes.map { |name| [name.file_name, :anything] }.flatten
+        @class_lookup = Hash[ *pairs ] # file_name (String) => anything
       end
       
       # Set up the temporary unpacking. This sets the delegate field for future use.
