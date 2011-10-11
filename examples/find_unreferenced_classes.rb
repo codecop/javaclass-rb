@@ -22,12 +22,14 @@ puts "#{cp.elements.size} classpaths found under the workspace #{workspace_locat
 filter = Proc.new { |clazz| clazz.same_or_subpackage_of?(package1) || clazz.same_or_subpackage_of?(package2) }
 
 # 2) load all classes in the given packages 
+puts 'loading all classes... (can take several minutes)'
 classes = cp.values(&filter)
 puts "#{classes.size} classes loaded from classpaths"
 # TODO CONTINUE 6 - improve loading performance, why does it take so long to load 10.000 headers?
 # use -r profile
 
 # 3) mark all their referenced types as accessed
+cp.reset_access
 classes.map { |clazz| clazz.imported_types }.flatten.
    find_all(&filter).
    each { |clazz| cp.mark_accessed(clazz) }
