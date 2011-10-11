@@ -13,7 +13,7 @@ module JavaClass
           raise ArgumentError, "wrong type of delegatee #{classpath.class}"
         end
         @classpath = classpath
-        @cache = {}
+        @cache = Hash.new # full_name (String) => ClassEntryHeader
         super(classpath)
       end
 

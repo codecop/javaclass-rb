@@ -15,7 +15,7 @@ module JavaClass
       def initialize(name, vers=0)
         @name = name
         @version = [vers]
-        @classes = {}
+        @classes = Hash.new # class_name (most likely String) => ClassEntry
       end
 
       def add_class(class_name, is_public, version)
@@ -24,6 +24,7 @@ module JavaClass
 
         unless @classes.has_key?(class_name)
           @classes[class_name] = ClassEntry.new(self, class_name, is_public, version)
+          # class_name does not need to be frozen because it's not read from the keys 
         else
           @classes[class_name].update(version, is_public)
         end

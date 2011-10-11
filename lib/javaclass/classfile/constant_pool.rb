@@ -31,7 +31,7 @@ module JavaClass
 
       # Parse the constant pool from the bytes _data_ beginning at position _start_ (which is usually 8).
       def initialize(data, start=8)
-        @pool = {} # cnt (fixnum) => constant
+        @pool = Hash.new # cnt (Fixnum) => constant class
 
         # parsing
         @item_count = data.u2(start)

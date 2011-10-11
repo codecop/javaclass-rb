@@ -10,7 +10,7 @@ module JavaClass
     class List
 
       def initialize
-        @packages = {}
+        @packages = Hash.new # package_name (String) => PackageEntry
       end
 
       # Add a _fileentry_ to the list. The _fileentry_ is the file name of the class in the jar file. _version_
@@ -19,7 +19,7 @@ module JavaClass
         class_name = fileentry.to_javaname.to_classname
         package_name = class_name.package
         @packages[package_name] = PackageEntry.new(package_name, version) unless @packages.has_key?(package_name)
-        @packages[package_name].add_class(class_name, is_public, version)
+        @packages[package_name].add_class(class_name.full_name, is_public, version)
       end
 
       # Parse a _line_ from a <code>fullClassList</code> and fill the list again. _maxversion_ is the maximum
