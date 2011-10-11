@@ -132,6 +132,14 @@ module TestJavaClass
       assert_same(@qualified_name.to_class_file, @qualified_name.to_class_file) # is saved
     end
     
+    def test_integration_hash
+      map = {}
+      map[@qualified_name] = :anything
+      qn = map.keys[0]
+      assert_same(JavaClass::JavaQualifiedName, qn.class)
+      assert_equal('Some', qn.simple_name)
+    end
+    
   end
 
   class TestJavaVMName < Test::Unit::TestCase
@@ -189,6 +197,7 @@ module TestJavaClass
 
     def test_to_classname
       assert_equal('at.kugel.tool.Some', @win_file.to_classname)
+      assert_equal('at.kugel.tool', @win_file.to_classname.package)
       assert_equal('at.kugel.tool.Some', @class_file.to_classname)
       assert_equal('java.lang.String', @jdk_class_file.to_classname)
     end
