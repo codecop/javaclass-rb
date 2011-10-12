@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Some Plug-in
+Bundle-SymbolicName: some.plugin;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: some.plugin.Activator
+Bundle-Vendor: Codecop
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

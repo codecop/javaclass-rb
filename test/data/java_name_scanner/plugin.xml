@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="some..treeReOrder"
+            name="Re Order Event">
+      </command>
+   </extension>
+   <extension
+         point="some.sessionSecurityCheck">
+      <sessionSecurityCheck
+            class="some.PrivilegeCheck">
+      </sessionSecurityCheck>
+   </extension>
+
+</plugin>
