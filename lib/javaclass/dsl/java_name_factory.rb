@@ -49,15 +49,15 @@ module JavaClass
           str = method_id.id2name
           if JavaLanguage::RESERVED_WORDS.include?(str)
             @context.call
-          elsif str =~ JavaLanguage::TYPE_REGEX
+          elsif str =~ /^#{JavaLanguage::TYPE_REGEX}$/
             # starts with an uppercase letter, this is a class
-            JavaQualifiedName.new("#{@history}#{JavaQualifiedName::SEPARATOR}#{str}", &@context) 
+            JavaQualifiedName.new("#{@history}#{JavaLanguage::SEPARATOR}#{str}", &@context) 
           elsif str == '*'
             # special syntax, ending with *, this is a package
             JavaPackageName.new("#{@history}") 
           elsif str =~ JavaLanguage::PACKAGE_REGEX
             # starts with a lowercase letter, this is a package
-            TemporaryJavaNamePart.new("#{@history}#{JavaQualifiedName::SEPARATOR}#{str}", &@context)
+            TemporaryJavaNamePart.new("#{@history}#{JavaLanguage::SEPARATOR}#{str}", &@context)
           else
             @context.call
           end

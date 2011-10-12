@@ -6,8 +6,6 @@ module JavaClass
   # Mixin with logic to work with Java package names. The "mixer" needs to declare a String field @package.
   # Author::          Peter Kofler
   module PackageLogic
-    SEPARATOR = '.'
-    SEPARATOR_REGEX = Regexp.escape(SEPARATOR)
 
     # Return the package name of a classname or the name of the package. Return an empty String if default package.
     # This returns just the plain String.
@@ -23,13 +21,13 @@ module JavaClass
 
     # Return +true+ if this class is in a subpackage of the given Java _packages_ .
     def subpackage_of?(packages)
-      packages.find {|pkg| @package =~ /^#{Regexp.escape(pkg)}#{SEPARATOR_REGEX}/ } != nil
+      packages.find {|pkg| @package =~ /^#{Regexp.escape(pkg)}#{JavaLanguage::SEPARATOR_REGEX}/ } != nil
     end
 
     # Is this package or class in the JDK? Return the first JDK package this is inside or nil.
     def in_jdk?
       if @package && @package != ''
-        package_dot = @package + '.'
+        package_dot = @package + JavaLanguage::SEPARATOR
         JavaLanguage::JDK_PACKAGES_REGEX.find { |package| package_dot =~ package }
       else
         # default package is never in JDK
@@ -40,7 +38,7 @@ module JavaClass
     private
 
     def package_remove_trailing_dot!
-      @package = @package[0..-2] if @package.size > 0 && @package[-1..-1] == SEPARATOR
+      @package = @package[0..-2] if @package.size > 0 && @package[-1..-1] == JavaLanguage::SEPARATOR
     end
 
   end
@@ -71,10 +69,8 @@ module JavaClass
   class JavaPackageName < String
     include PackageLogic
 
-    SEPARATOR = '.'
-    SEPARATOR_REGEX = Regexp::escape(SEPARATOR)
-    VALID_REGEX = /^   (?:   #{JavaLanguage::IDENTIFIER_REGEX}#{SEPARATOR_REGEX}   )*
-                       #{JavaLanguage::LOWER_IDENTIFIER_REGEX}#{SEPARATOR_REGEX}?   $/x
+    VALID_REGEX = /^   (?:   #{JavaLanguage::IDENTIFIER_REGEX}#{JavaLanguage::SEPARATOR_REGEX}   )*
+                       #{JavaLanguage::LOWER_IDENTIFIER_REGEX}#{JavaLanguage::SEPARATOR_REGEX}?   $/x
 
     # Is _string_ a valid package name?               
     def self.valid?(string)
@@ -106,9 +102,7 @@ module JavaClass
     include PackageLogic
     include SimpleNameLogic
 
-    SEPARATOR = '.'
-    SEPARATOR_REGEX = Regexp::escape(SEPARATOR)
-    VALID_REGEX = /^   (    (?:  #{JavaLanguage::IDENTIFIER_REGEX}#{SEPARATOR_REGEX}   )*   )
+    VALID_REGEX = /^   (    (?:  #{JavaLanguage::IDENTIFIER_REGEX}#{JavaLanguage::SEPARATOR_REGEX}   )*   )
                        (   #{JavaLanguage::IDENTIFIER_REGEX}    )   $/x
 
     # Is _string_ a valid qualified name?               
@@ -150,7 +144,7 @@ module JavaClass
     # Return the VM name of this class, e.g. <code>java/lang/Object</code>.
     def to_jvmname
       return @jvm_name if @jvm_name
-      new_val = JavaVMName.new(@full_name.gsub(SEPARATOR, JavaVMName::SEPARATOR), self)
+      new_val = JavaVMName.new(@full_name.gsub(JavaLanguage::SEPARATOR, JavaVMName::SEPARATOR), self)
       if frozen?
         new_val
       else
@@ -160,13 +154,13 @@ module JavaClass
 
     # Return the Java source file name of this class, e.g. <code>java/lang/Object.java</code>. This is a plain String.
     def to_java_file
-      @full_name.gsub(SEPARATOR, JavaClassFileName::SEPARATOR) + JavaLanguage::SOURCE
+      @full_name.gsub(JavaLanguage::SEPARATOR, JavaClassFileName::SEPARATOR) + JavaLanguage::SOURCE
     end
 
     # Return the Java class file name of this class, e.g. <code>java/lang/Object.class</code>.
     def to_class_file
       return @class_name if @class_name
-      new_val = JavaClassFileName.new(@full_name.gsub(SEPARATOR, JavaClassFileName::SEPARATOR) + JavaLanguage::CLASS, self)
+      new_val = JavaClassFileName.new(@full_name.gsub(JavaLanguage::SEPARATOR, JavaClassFileName::SEPARATOR) + JavaLanguage::CLASS, self)
       if frozen?
         new_val
       else 
@@ -249,7 +243,7 @@ module JavaClass
 
     def to_classname
       return @qualified_name if @qualified_name
-      new_val = JavaQualifiedName.new(@jvm_name.gsub(SEPARATOR, JavaQualifiedName::SEPARATOR), self, nil)
+      new_val = JavaQualifiedName.new(@jvm_name.gsub(SEPARATOR, JavaLanguage::SEPARATOR), self, nil)
       if frozen?
         new_val
       else 
@@ -312,7 +306,7 @@ module JavaClass
     def to_classname
       return @qualified_name if @qualified_name
       new_val = JavaQualifiedName.new(
-                    @file_name.gsub(SEPARATOR_REGEX, JavaQualifiedName::SEPARATOR).sub(JavaLanguage::CLASS_REGEX, ''),
+                    @file_name.gsub(SEPARATOR_REGEX, JavaLanguage::SEPARATOR).sub(JavaLanguage::CLASS_REGEX, ''),
                       nil, self)
       if frozen?
         new_val

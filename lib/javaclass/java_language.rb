@@ -17,11 +17,15 @@ module JavaClass
     PACKAGE_REGEX = /^#{LOWER_IDENTIFIER_REGEX}$/
         
     # A proper type (class) name. This is more strict than IDENTIFIER_REGEX because it starts with uppercase letters.
-    TYPE_REGEX = /^[A-Z][a-zA-Z_$0-9]*$/
+    TYPE_REGEX = /[A-Z][a-zA-Z_$0-9]*/
 
     # A proper member (field or method) name. This is more strict than IDENTIFIER_REGEX because it starts with lowercase letters.
     MEMBER_REGEX = /^[a-z][a-zA-Z_$0-9]*$/
 
+    # Separator between qualified name parts.
+    SEPARATOR = '.'
+    SEPARATOR_REGEX = Regexp::escape(SEPARATOR)
+    
     RESOURCE_FOLDER = File.join(File.dirname(__FILE__), 'resources')
 
     # Reserved words of the Java language.
