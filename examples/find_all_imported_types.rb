@@ -6,20 +6,21 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'javaclass/dsl/mixin'
 
-base_path = 'E:\Develop\Java'
+workspace_location = 'E:\Develop\Java\CodeLib'
 
-puts '---------- used 3rd party types in production'
 # 1) create a classpath
-cp_prod = classpath(File.join(base_path, 'classes'))
-# 2) remember all types in this classpath
-own_prod = cp_prod.types
-# 3) collect their external dependencies
-used_prod = cp_prod.external_types
-# TODO CONTINUE 9 - add hardcoded class name finder as in Java, use for Spring, plugin.xml
-# detect and read spring XML configs to find used third party types?
+cp_prod = classpath(File.join(workspace_location, '..', 'classes'))
+# 2) remember types defined on the classpath
+defined_prod = cp_prod.types
+# 3) collect external dependencies of all classes on the classpath
+imported_prod = cp_prod.external_types
+# 4) also collect all classes referenced from config files
+hardcoded_prod = scan_config_for_class_names(workspace_location).reject { |c| c.in_jdk? }
+puts '---------- used 3rd party types in production'
+used_prod = (imported_prod + hardcoded_prod - defined_prod).uniq.sort 
 puts used_prod
 
+cp_test = classpath(File.join(workspace_location, 'classes'))
+imported_test = cp_test.external_types - defined_prod - used_prod
 puts '---------- used 3rd party types in tests (only)'
-cp_test = classpath(File.join(base_path, 'CodeLib/classes'))
-used_test = cp_test.external_types - own_prod - used_prod
-puts used_test
+puts imported_test
