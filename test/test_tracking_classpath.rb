@@ -25,10 +25,13 @@ module TestJavaClass
       def test_mark_accessed
         assert(!@cpe.accessed?)
         assert(!@cpe.accessed?('ClassVersionTest10'))
-        @cpe.mark_accessed('ClassVersionTest10')
+        assert_equal(1, @cpe.mark_accessed('ClassVersionTest10'))
         assert(@cpe.accessed?('ClassVersionTest10'))
         assert(!@cpe.accessed?('ClassVersionTest11'))
         assert(@cpe.accessed?)
+
+        assert_equal(2, @cpe.mark_accessed('ClassVersionTest10'))
+        assert_nil(@cpe.mark_accessed('NonExistingClass'))
       end
 
       def test_load_binary_tracked
@@ -49,9 +52,9 @@ module TestJavaClass
       end
       
       def test_all_accessed
-        @cpe.mark_accessed('ClassVersionTest11')
+        @cpe.mark_accessed('package/ClassVersionTest11')
         @cpe.mark_accessed('ClassVersionTest10')
-        assert_equal(['ClassVersionTest10.class', 'ClassVersionTest11.class'], @cpe.all_accessed)
+        assert_equal(['ClassVersionTest10.class', 'package/ClassVersionTest11.class'], @cpe.all_accessed)
       end
 
       def test_class_new_invalud
@@ -75,11 +78,18 @@ module TestJavaClass
       def test_mark_accessed
         assert(!@cpe.accessed?)
         assert(!@cpe.accessed?('ClassVersionTest10'))
-        @cpe.mark_accessed('ClassVersionTest10')
+        assert_equal(1, @cpe.mark_accessed('ClassVersionTest10'))
         assert(@cpe.accessed?('ClassVersionTest10'))
         assert(!@cpe.accessed?('ClassVersionTest11'))
         assert(@cpe.accessed?)
 
+        assert_equal(2, @cpe.mark_accessed('ClassVersionTest10'))
+        assert_nil(@cpe.mark_accessed('NonExistingClass'))
+      end
+  
+      def test_mark_accessed_elements
+        @cpe.mark_accessed('ClassVersionTest10')
+        
         assert(!@cpe.elements[0].accessed?)
         assert(@cpe.elements[1].accessed?)
       end
