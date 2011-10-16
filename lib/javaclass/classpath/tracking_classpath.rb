@@ -50,12 +50,17 @@ module JavaClass
       def mark_accessed(classname)
         key = to_key(classname)
         
-        # hash keys need to be frozen to keep state
-        if !@accessed.include?(key)
-          key = key.freeze 
+        if @classpath.includes?(key)
+          
+          # hash keys need to be frozen to keep state
+          if !@accessed.include?(key)
+            key = key.freeze 
+          end
+    
+          @accessed[key] += 1
+        else
+          nil
         end
-
-        @accessed[key] += 1
       end
       
       # Was the _classname_ accessed then return the count? If _classname_ is nil then check if any class was accessed.
