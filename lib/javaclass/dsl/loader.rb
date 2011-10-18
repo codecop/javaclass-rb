@@ -22,7 +22,7 @@ module JavaClass
       # Read and disassemble the given class _classname_ from _classpath_ .
       def load_cp(classname, classpath)
         begin
-          disassemble(classpath.load_binary(classname))
+          disassemble(classpath.load_binary(classname), classpath)
         rescue ClassFile::ClassFormatError => ex
           ex.add_classname(classname, classpath.to_s)
           raise ex
@@ -30,10 +30,11 @@ module JavaClass
       end
 
       # Read and disassemble the given class inside _data_ (byte data). Might throw a 
-      # ClassFile::ClassFormatError if the classfile is not valid.
+      # ClassFile::ClassFormatError if the classfile is not valid. Optional _from_classpath_
+      # describes the classpath it was loaded from.
       # This creates a +ClassFile::JavaClassHeader+ .
-      def disassemble(data)
-        ClassFile::JavaClassHeader.new(data)
+      def disassemble(data, from_classpath=nil)
+        ClassFile::JavaClassHeader.new(data, from_classpath)
       end
 
     end
