@@ -1,5 +1,6 @@
 require 'javaclass/classfile/java_class_header'
 require 'javaclass/classfile/java_class_header_as_java_name'
+require 'javaclass/classfile/java_class_header_shortcuts'
 
 module JavaClass
   module Dsl
