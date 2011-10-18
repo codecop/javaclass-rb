@@ -5,7 +5,11 @@ module JavaClass
   # Mixin with logic to scan for hard coded class names.
   # Author::          Peter Kofler
   module JavaNameScanner
-  
+
+    def scan_config_for_3rd_party_class_names(path)
+      scan_config_for_class_names(path).reject { |c| c.in_jdk? }
+    end
+
     # Find all possible class names in all XML and property files under _path_
     def scan_config_for_class_names(path)
       return unless File.exist? path

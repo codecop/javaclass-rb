@@ -17,7 +17,7 @@ module JavaClass
 
       # Determine all imported types from all classes in this classpath together with count of imports.
       # An additional block is used as _filter_ on class names.
-      def used_types(&filter)
+      def used_types_map(&filter)
         type_map = Hash.new(0) # class_name (JavaQualifiedName) => cnt
         values(&filter).collect { |clazz| clazz.imported_3rd_party_types }.flatten.each do |type|
 
@@ -31,10 +31,16 @@ module JavaClass
         type_map
       end
 
+      # Determine all imported types from all classes in this classpath.
+      # An additional block is used as _filter_ on class names.
+      def used_types(&filter)
+        used_types_map(&filter).keys.sort
+      end
+      
       # Determine all foreign imported types from all classes in this classpath.
       # An additional block is used as _filter_ on class names.
       def external_types(&filter)
-        used_types(&filter).keys.sort - types(&filter)
+        used_types(&filter) - types(&filter)
       end
 
     end

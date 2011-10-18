@@ -42,5 +42,5 @@ hardcoded_classes.each { |clazz| cp.mark_accessed(clazz) }
 puts 'all hardcoded classes mapped'
 
 # 5) find non accessed classes
-unused = cp.names(&filter).find_all { |clazz| !cp.accessed?(clazz) }
+unused = cp.names(&filter).find_all { |clazz| !cp.accessed(clazz) }
 puts "#{unused.size} unused classes found:\n  #{unused.join("\n  ")}"
