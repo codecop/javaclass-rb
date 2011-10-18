@@ -16,6 +16,7 @@ defined_prod = cp_prod.types
 imported_prod = cp_prod.external_types
 # 4) also collect all classes referenced from config files
 hardcoded_prod = scan_config_for_class_names(workspace_location).reject { |c| c.in_jdk? }
+# TODO clumsy, improve scanner, then use agains
 puts '---------- used 3rd party types in production'
 used_prod = (imported_prod + hardcoded_prod - defined_prod).uniq.sort 
 puts used_prod
