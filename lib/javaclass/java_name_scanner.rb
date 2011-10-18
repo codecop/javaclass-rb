@@ -36,34 +36,27 @@ module JavaClass
 
   end
 
-  module ClassScanner
+  # TODO make class and add logic like in ImportedTypes
+  # e.g. hardcoded_types, 3rd_party_types
 
-    class ImportedTypes < SimpleDelegator
+  # init
+  #        @hardcoded_types = scan_config_for_class_names
 
 #      # Determine the imported types of this class and return their names. This does not contain the name if this class itself.
-#      def imported_types
-#        @imported_types ||= references.used_classes.collect { |c| c.class_name.to_classname }.sort
+#      def hardcoded_types
+#        @hardcoded_types 
 #      end
 #
-#      # Determine the imported types of this class which are not from the JDK. This are all imported_types - all jdk types.
-#      def imported_3rd_party_types
-#        imported_types.reject { |name| name.in_jdk? }
+#      # Determine the imported types of this class which are not from the JDK. This are all hardcoded_types - all jdk types.
+#      def hardcoded_3rd_party_types
+#        hardcoded_types.reject { |name| name.in_jdk? }
 #      end
-
-    end
-
-  end
-  
-  module Analyse
-    module Dependencies
-
-      # TODO add method to scan Java String constants of classes to find Class.Forname 
 
 #      # Determine all imported types from all classes in this classpath together with count of imports.
 #      # An additional block is used as _filter_ on class names.
 #      def hardcoded_types(&filter)
 #        type_map = Hash.new(0) # class_name (JavaQualifiedName) => cnt
-#        values(&filter).collect { |clazz| clazz.imported_3rd_party_types }.flatten.each do |type|
+#        hardcoded_3rd_party_types.each do |type|
 #
 #          # hash keys need to be frozen to keep state
 #          if !type_map.include?(type)
@@ -75,13 +68,12 @@ module JavaClass
 #        type_map
 #      end
 #
-#      # Determine all foreign imported types from all classes in this classpath.
+#      # Determine all hardcoded types from all classes in this classpath.
 #      # An additional block is used as _filter_ on class names.
 #      def external_types(&filter)
-#        used_types(&filter).keys.sort - types(&filter)
+#        used_types(&filter).keys.sort
 #      end
 
-    end
-  end  
-
 end
+
+# TODO add method to scan Java String constants of classes to find Class.Forname 
