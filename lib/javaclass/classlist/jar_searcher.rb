@@ -1,4 +1,4 @@
-require 'javaclass/classpath/composite_classpath'
+require 'javaclass/classpath/any_classpath'
 require 'javaclass/classfile/java_class_header'
 
 module JavaClass
@@ -59,8 +59,7 @@ module JavaClass
       # and adds them to the given _list_ of found classes. _version_ is a number >= 0, e.g. 2 for JDK 1.2.
       # _list_ must provide a <code>add_class(entry, is_public, version)</code> method.
       def compile_list(version, path, list)
-        cpe = Classpath::CompositeClasspath.new
-        cpe.find_jars(path)
+        cpe = Classpath::AnyClasspath.new(path)
         filter_classes(cpe.names).each do |entry|
           is_public = public?(cpe, entry)
           next if @skip_package_classes && !is_public

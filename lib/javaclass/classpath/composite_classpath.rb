@@ -26,30 +26,6 @@ module JavaClass
         @elements.map { |cp| cp.elements }.flatten
       end
 
-      # Search the given _path_ recursively for zips or jars. Add all found jars to this classpath.
-      def find_jars(path)
-        if FileTest.file?(path) && path =~ /\.jar$|\.zip$/
-          add_file_name File.expand_path(path)
-          return
-        end
-        
-        current = Dir.getwd
-        begin
-          Dir.chdir File.expand_path(path)
-
-          Dir['*'].collect do |name|
-            if FileTest.directory?(name)
-              find_jars(name)
-            elsif name =~ /\.jar$|\.zip$/
-              add_file_name File.expand_path(name)
-            end
-          end
-
-        ensure
-          Dir.chdir current
-        end
-      end
-
       # Add the _name_ class path which may be a file or a folder to this classpath.
       def add_file_name(name)
         if FolderClasspath.valid_location?(name)
