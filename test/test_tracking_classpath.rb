@@ -19,20 +19,20 @@ module TestJavaClass
         @cpe.mark_accessed('ClassVersionTest10')
         assert(@cpe.accessed?('ClassVersionTest10'))
         @cpe.reset_access
-        assert(!@cpe.accessed?('ClassVersionTest10'))
+        assert_equal(0, @cpe.accessed?('ClassVersionTest10'))
       end
 
       def test_mark_accessed
-        assert(!@cpe.accessed?)
-        assert(!@cpe.accessed?('ClassVersionTest10'))
+        assert_equal(0, @cpe.accessed?)
+        assert_equal(0, @cpe.accessed?('ClassVersionTest10'))
         @cpe.mark_accessed('ClassVersionTest10')
         assert(@cpe.accessed?('ClassVersionTest10'))
-        assert(!@cpe.accessed?('ClassVersionTest11'))
+        assert_equal(0, @cpe.accessed?('ClassVersionTest11'))
         assert(@cpe.accessed?)
       end
 
       def test_load_binary_tracked
-        assert(!@cpe.accessed?('ClassVersionTest10'))
+        assert_equal(0, @cpe.accessed?('ClassVersionTest10'))
         @cpe.load_binary('ClassVersionTest10')
         assert(@cpe.accessed?('ClassVersionTest10'))
       end
@@ -43,7 +43,7 @@ module TestJavaClass
             load_binary(name)
           end 
         end
-        assert(!@cpe.accessed?('ClassVersionTest10'))
+        assert_equal(0, @cpe.accessed?('ClassVersionTest10'))
         @cpe.load('ClassVersionTest10')
         assert(@cpe.accessed?('ClassVersionTest10'))
       end
@@ -69,23 +69,23 @@ module TestJavaClass
         @cpe.mark_accessed('package/ClassVersionTest11.class')
         assert(@cpe.accessed?('package/ClassVersionTest11.class'))
         @cpe.reset_access
-        assert(!@cpe.accessed?('package/ClassVersionTest11.class'))
+        assert_equal(0, @cpe.accessed?('package/ClassVersionTest11.class'))
       end
 
       def test_mark_accessed
-        assert(!@cpe.accessed?)
-        assert(!@cpe.accessed?('ClassVersionTest10'))
+        assert_equal(0, @cpe.accessed?)
+        assert_equal(0, @cpe.accessed?('ClassVersionTest10'))
         @cpe.mark_accessed('ClassVersionTest10')
         assert(@cpe.accessed?('ClassVersionTest10'))
-        assert(!@cpe.accessed?('ClassVersionTest11'))
+        assert_equal(0, @cpe.accessed?('ClassVersionTest11'))
         assert(@cpe.accessed?)
 
-        assert(!@cpe.elements[0].accessed?)
+        assert_equal(0, @cpe.elements[0].accessed?)
         assert(@cpe.elements[1].accessed?)
       end
 
       def test_load_binary_tracked
-        assert(!@cpe.accessed?('ClassVersionTest10'))
+        assert_equal(0, @cpe.accessed?('ClassVersionTest10'))
         @cpe.load_binary('ClassVersionTest10')
         assert(@cpe.accessed?('ClassVersionTest10'))
       end

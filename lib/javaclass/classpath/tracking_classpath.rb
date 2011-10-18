@@ -62,11 +62,10 @@ module JavaClass
       def accessed?(classname=nil)
         if classname
           key = to_key(classname)
-          total = @accessed[key] 
+          @accessed[key] 
         else
-          total = @accessed.values.inject(0) {|s,e| s + e }
+          @accessed.values.inject(0) {|s,e| s + e }
         end
-        if total > 0 then total else nil end
       end
 
       # Return the classnames of all accessed classes. This is a list of frozen JavaClassFileName.      
@@ -118,13 +117,12 @@ module JavaClass
         if classname
           key = to_key(classname)
           found = @elements.find { |e| e.includes?(key) }
-          if found then found.accessed?(key) else nil end 
+          if found then found.accessed?(key) else 0 end 
         else
-          total = @elements.inject(0) do |s,e| 
+          @elements.inject(0) do |s,e| 
             accessed = e.accessed?
             if accessed then s + accessed else s end
           end
-          if total > 0 then total else nil end
         end
       end
 
