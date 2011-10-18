@@ -64,7 +64,7 @@ module JavaClass
       end
       
       # Was the _classname_ accessed then return the count? If _classname_ is nil then check if any class was accessed.
-      def accessed?(classname=nil)
+      def accessed(classname=nil)
         if classname
           key = to_key(classname)
           @accessed[key] 
@@ -118,14 +118,14 @@ module JavaClass
       end
 
       # Was the _classname_ accessed then return the count? If _classname_ is nil then check if any class was accessed.
-      def accessed?(classname=nil)
+      def accessed(classname=nil)
         if classname
           key = to_key(classname)
           found = @elements.find { |e| e.includes?(key) }
-          if found then found.accessed?(key) else 0 end 
+          if found then found.accessed(key) else 0 end 
         else
           @elements.inject(0) do |s,e| 
-            accessed = e.accessed?
+            accessed = e.accessed
             if accessed then s + accessed else s end
           end
         end

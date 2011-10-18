@@ -9,33 +9,33 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'javaclass/dsl/mixin'
 
-workspace_location = "#{ENV['USERPROFILE']}\\Dropbox\\InArbeit\\Corpus\\Java6_Web(HBD)"
-#workspace_location = "#{ENV['USERPROFILE']}\\Dropbox\\InArbeit\\Corpus\\Java6_Swing(BIA)"
+location = "#{ENV['USERPROFILE']}\\Dropbox\\InArbeit\\Corpus\\Java6_Web(HBD)"
+location = "#{ENV['USERPROFILE']}\\Dropbox\\InArbeit\\Corpus\\Java6_Swing(BIA)"
 
 # 1) create a classpath of the module(s) under test 
-main_classes = classpath(File.join(workspace_location, 'classes'), classpath(File.join(workspace_location, 'test-classes')))
-puts "#{main_classes.names.size} classes found in main classpath:\n  #{main_classes.elements.join("\n  ")}"
+main_classpath = classpath(File.join(location, 'classes'), classpath(File.join(location, 'test-classes')))
+puts "#{main_classpath.names.size} classes found in main classpath:\n  #{main_classpath.elements.join("\n  ")}"
 
 # 2) load tracking before creating new classpaths
 require 'javaclass/classpath/tracking_classpath' 
 
 # 3) create the (tracking) CompositeClasspath of the given workspace
-cp = workspace(workspace_location)
-puts "#{cp.elements.size} classpaths found under the workspace #{workspace_location}:\n  #{cp.elements.join("\n  ")}"
+cp = workspace(location)
+puts "#{cp.elements.size} classpaths found under the workspace #{location}:\n  #{cp.elements.join("\n  ")}"
 
 # 4) mark all their referenced types as accessed in the workspace
 puts 'mapping referenced classes... (can take several minutes)'
 cp.reset_access
-main_classes.external_types.each { |clazz| cp.mark_accessed(clazz) }
+main_classpath.external_types.each { |clazz| cp.mark_accessed(clazz) }
 puts 'referenced classes mapped'
 
-# 5a) now find non accessed modules (i.e. classpath elements)
-unused = cp.elements.find_all { |clp| clp.jar? && clp.accessed? == 0 }
+# 5a) now find non accessed modules/libraries (i.e. classpath elements)
+unused = cp.elements.find_all { |clp| clp.jar? && clp.accessed == 0 }
 puts "\n#{unused.size} unused modules found:\n  #{unused.join("\n  ")}"
 
 # 5b) or print the list of classpath elements with access
 puts "\nlibrary (module path): number of accessed classes"
-puts cp.elements.map { |clp| [clp.to_s, clp.accessed?] }.sort { |a,b| a[1] <=> b[1] }.map { |e| "#{e[0]}: #{e[1]}" }
+puts cp.elements.map { |clp| [clp.to_s, clp.accessed] }.sort { |a,b| a[1] <=> b[1] }.map { |e| "  #{e[0]}: #{e[1]}" }
 
 # TODO CONTINUE 6 - improve loading performance, why does it take so long to load 10.000 headers?
 # use -r profile
