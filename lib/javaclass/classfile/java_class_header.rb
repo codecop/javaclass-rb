@@ -31,9 +31,9 @@ module JavaClass
       attr_reader :references
       attr_reader :interfaces
 
-      # Create a header with the binary _data_ from the class file which has been loaded from _classpath_.
-      def initialize(data, classpath=nil)
-        @classpath = classpath
+      # Create a header with the binary _data_ from the class file.
+      def initialize(data)
+
         #  ClassFile {
         #    u4 magic; - ok
         #    u2 minor_version; - ok
@@ -120,11 +120,6 @@ module JavaClass
         d << '{'
         d << '}'
         d
-      end
-
-      # Returns the classpath this class was loaded from (if any).
-      def on_classpath
-        @classpath
       end
       
     end
