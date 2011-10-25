@@ -36,6 +36,11 @@ module JavaClass
         [self]
       end
 
+      # Return the key for the access of this class file named _classname_ .      
+      def to_key(classname)
+        classname.to_javaname.to_class_file
+      end
+      
     end
 
   end

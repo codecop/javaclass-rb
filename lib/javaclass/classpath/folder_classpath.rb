@@ -27,29 +27,29 @@ module JavaClass
       # Return the list of class names found in this folder. An additional block is used as _filter_ on class names.
       def names(&filter)
         if block_given?
-          @classes.find_all { |n| filter.call(n) }
+          @class_names.find_all { |n| filter.call(n) }
         else
-          @classes.dup
+          @class_names.dup
         end
       end
 
       # Return if _classname_ is included in this folder.
       def includes?(classname)
-        @class_lookup[classname.to_javaname.to_class_file.file_name] 
+        @class_lookup[to_key(classname).file_name] 
       end
 
       # Load the binary data of the file name or class name _classname_ from this folder.
       def load_binary(classname)
-        key = classname.to_javaname.to_class_file
+        key = to_key(classname)
         unless includes?(key)
           raise ClassNotFoundError.new(key, @folder)
         end
-        File.open(File.join(@folder, key), 'rb') {|io| io.read }
+        File.open(File.join(@folder, key), 'rb') { |io| io.read }
       end
 
       # Return the number of classes in this folder.
       def count
-        @classes.size
+        @class_names.size
       end
 
       private
@@ -70,8 +70,8 @@ module JavaClass
 
       # Set up the class names.
       def init_classes
-        @classes = list_classes.sort.reject { |n| n =~ /package-info\.class$/ }.collect { |cl| JavaClassFileName.new(cl) } 
-        pairs = @classes.map { |name| [name.file_name, 1] }.flatten
+        @class_names = list_classes.sort.reject { |n| n =~ /package-info\.class$/ }.collect { |cl| JavaClassFileName.new(cl) } 
+        pairs = @class_names.map { |name| [name.file_name, 1] }.flatten
         @class_lookup = Hash[ *pairs ] # file_name (String) => anything
       end
       
