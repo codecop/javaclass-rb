@@ -2,10 +2,17 @@
 # Author::          Peter Kofler
 class String
 
+  RUBY19 = ''.respond_to? :codepoints 
+  
   # Return the _index_'th element as byte.
   def u1(index=0)
     # self[index..index].unpack('C')[0]
-    self[index].to_i
+    c = self[index]
+    if RUBY19
+      c.codepoints[0]
+    else
+      c
+    end
   end
 
   # Return the _index_'th and the next element as unsigned word.
