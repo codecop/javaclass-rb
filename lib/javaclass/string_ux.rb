@@ -5,7 +5,7 @@ class String
   # Return the _index_'th element as byte.
   def u1(index=0)
     # self[index..index].unpack('C')[0]
-    self[index]
+    self[index].to_i
   end
 
   # Return the _index_'th and the next element as unsigned word.
