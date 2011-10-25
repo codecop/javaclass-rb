@@ -6,12 +6,10 @@ class String
   
   # Return the _index_'th element as byte.
   def u1(index=0)
-    # self[index..index].unpack('C')[0]
-    c = self[index]
     if RUBY19
-      c.codepoints[0]
+      self[index..index].unpack('C')[0]
     else
-      c
+      self[index]
     end
   end
 
