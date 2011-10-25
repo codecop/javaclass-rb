@@ -109,7 +109,7 @@ module JavaClass
       # Mark the _classname_ as accessed. Return the number of accesses so far.
       def mark_accessed(classname)
         key = to_key(classname)
-        found = @elements.find { |e| e.includes?(key) }
+        found = find_element_for(key)
         if found 
           found.mark_accessed(key) 
         else 
@@ -121,7 +121,7 @@ module JavaClass
       def accessed(classname=nil)
         if classname
           key = to_key(classname)
-          found = @elements.find { |e| e.includes?(key) }
+          found = find_element_for(key)
           if found then found.accessed(key) else 0 end 
         else
           @elements.inject(0) do |s,e| 
@@ -136,13 +136,6 @@ module JavaClass
         @elements.map { |cp| cp.all_accessed }.flatten.sort
       end
 
-      private
-
-      # Return the key for the access map from this _classname_ .      
-      def to_key(classname)
-        classname.to_javaname.to_class_file
-      end
-      
     end
     
   end
