@@ -4,13 +4,14 @@ class String
 
   # Return the _index_'th element as byte.
   def u1(index=0)
-    self[index..index].unpack('C')[0]
+    # self[index..index].unpack('C')[0]
+    self[index]
   end
 
   # Return the _index_'th and the next element as unsigned word.
   def u2(index=0)
     self[index..index+1].unpack('n')[0]
-    # same as self[index]*256 + self[index+1]
+    # self[index]*256 + self[index+1]
   end
 
   # Return the _index_'th and the next element as unsigned word, repeat it for _count_
