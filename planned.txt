@@ -1,5 +1,9 @@
 === Planned
 
+* add collecting of incoming references (mark my interfaces, mark my referenced classes)
+  * can calculate stability
+  * find interfaces with only 1 implementation (smell?)
+
 * implement byte code awareness
   * add the byte code sequences to the methods so it can be analysed later (see JVM spec) 
   * scanning of byte code for numbers, which methods loaded, which fields loaded
