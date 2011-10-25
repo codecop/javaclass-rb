@@ -11,6 +11,7 @@ class TestStringUx < Test::Unit::TestCase
     assert_equal(0, "\x00".u1(0))
     assert_equal(7, "\x07".u1(0))
     assert_equal(10, "\x0A".u1(0))
+    assert_equal(255, "\xFF".u1(0))
   end
 
   def test_u2
