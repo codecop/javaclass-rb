@@ -63,20 +63,20 @@ module JavaClass
       # Return the list of class names found in this jar. An additional block is used as _filter_ on class names.
       def names(&filter)
         if block_given?
-          @classes.find_all { |n| filter.call(n) }
+          @class_names.find_all { |n| filter.call(n) }
         else
-          @classes.dup
+          @class_names.dup
         end
       end
 
       # Return if _classname_ is included in this jar.
       def includes?(classname)
-        @class_lookup[classname.to_javaname.to_class_file.file_name]
+        @class_lookup[to_key(classname).file_name]
       end
 
       # Load the binary data of the file name or class name _classname_ from this jar.
       def load_binary(classname)
-        key = classname.to_javaname.to_class_file
+        key = to_key(classname)
         if JavaClass.unpack_jars?
           @delegate.load_binary(key)
         else
@@ -89,7 +89,7 @@ module JavaClass
 
       # Return the number of classes in this jar.
       def count
-        @classes.size
+        @class_names.size
       end
 
       private
@@ -107,7 +107,7 @@ module JavaClass
 
       # Set up the class names.
       def init_classes
-        @classes = list_classes.reject { |n| n =~ /package-info\.class$/ }.
+        @class_names = list_classes.reject { |n| n =~ /package-info\.class$/ }.
                                 find_all { |n| 
                                   if JavaClassFileName.valid?(n) 
                                     true
@@ -116,7 +116,7 @@ module JavaClass
                                     false
                                   end
                                 }.sort.collect { |cl| JavaClassFileName.new(cl) } 
-        pairs = @classes.map { |name| [name.file_name, 1] }.flatten
+        pairs = @class_names.map { |name| [name.file_name, 1] }.flatten
         @class_lookup = Hash[ *pairs ] # file_name (String) => anything
       end
       
