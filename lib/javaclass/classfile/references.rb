@@ -17,7 +17,7 @@ module JavaClass
       # Return the constants referring to fields (Constants::ConstantField).
       # If _includeown_ is +true+ then fields of this class are returned also.
       def referenced_fields(includeown=false)
-        @constant_pool.find(ConstantPool::FIELD_TAG).find_all do |field|
+        @constant_pool.find_1(ConstantPool::FIELD_TAG).find_all do |field|
           includeown || field.class_index != @class_idx
         end
       end
@@ -34,7 +34,7 @@ module JavaClass
       # Returns a list of ConstantClass. 
       def used_classes
         my_class_name = @constant_pool[@class_idx].class_name
-        @constant_pool.find(ConstantPool::CLASS_TAG).find_all do |cl|
+        @constant_pool.find_1(ConstantPool::CLASS_TAG).find_all do |cl|
           cl.class_name != my_class_name 
         end
       end
