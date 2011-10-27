@@ -76,12 +76,6 @@ module JavaClass
         @pool.keys.sort.collect { |k| self[k] }
       end
 
-      # Return an array of all constants of the given _tag_ type.
-      def find_1(tag)
-        # performance shortcut, use == instead of Array#include?
-        items.find_all { |item| tag == item.tag }
-      end
-      
       # Return an array of all constants of the given _tags_ types.
       def find(*tags)
         items.find_all { |item| tags.include? item.tag }

@@ -81,20 +81,13 @@ const #43 = Asciz       java/lang/Runnable;'
         assert_equal('stringField', pool[14].value)
       end
 
-      def test_find_1
-        found = @cp.find_1(JavaClass::ClassFile::ConstantPool::STRING_TAG)
+      def test_find
+        found = @cp.find(JavaClass::ClassFile::ConstantPool::STRING_TAG)
         assert_equal(1, found.size)
         assert_equal('String', found[0].name)
         assert_equal(34, found[0].string_index)
       end
 
-      def test_find
-        found = @cp.find(JavaClass::ClassFile::ConstantPool::METHOD_TAG, JavaClass::ClassFile::ConstantPool::INTERFACE_METHOD_TAG)
-        assert_equal(2, found.size)
-        assert_equal('Method', found[0].name)
-        assert_equal('InterfaceMethod', found[1].name)
-      end
-      
       def test_strings
         found = @cp.strings
         assert_equal(1, found.size)
