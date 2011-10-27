@@ -14,16 +14,26 @@ module JavaClass
       
       def initialize(data, pos)
         @flags = data.u2(pos)
-        raise ClassFormatError, "inconsistent flags #{@flags} (abstract and final)" if abstract? && final?
+        correct_flags
+        assert_flags
+      end
+      
+      def correct_flags
         if interface? && !abstract?
           # JDK 1.0 and 1.1 do have non abstract interfaces, fix it
           @flags = @flags | ACC_ABSTRACT
         end
+      end
+      private :correct_flags
+      
+      def assert_flags
+        raise ClassFormatError, "inconsistent flags #{@flags} (abstract and final)" if abstract? && final?
         raise ClassFormatError, "inconsistent flags #{@flags} (interface not abstract)" if interface? && !abstract?
         raise ClassFormatError, "inconsistent flags #{@flags} (interface is final)" if interface? && final?
         raise ClassFormatError, "inconsistent flags #{@flags} (annotation not interface)" if annotation? && !interface?
         raise ClassFormatError, "inconsistent flags #{@flags} (other value #{@flags & ACC_OTHER})" if (@flags & ACC_OTHER) != 0
       end
+      private :assert_flags
 
       # Return +true+ if the class is public.
       def public?

@@ -35,58 +35,58 @@ module JavaClass
       def initialize(data)
 
         #  ClassFile {
-        #    u4 magic; - ok
-        #    u2 minor_version; - ok
-        #    u2 major_version; - ok
-        #    u2 constant_pool_count; - ok
-        #    cp_info constant_pool[constant_pool_count-1]; - ok
-        #    u2 access_flags; - ok
-        #    u2 this_class; - ok
-        #    u2 super_class; - ok
-        #    u2 interfaces_count;
-        #    u2 interfaces[interfaces_count];
-        # TODO Class: implement fields and methods (see JVM spec)
-        #    u2 fields_count;
-        #    field_info fields[fields_count];
-        #    u2 methods_count;
-        #    method_info methods[methods_count];
-        #    u2 attributes_count;
-        #    attribute_info attributes[attributes_count];
-        #  }
-        #  Body {
-        # Class: add the byte code sequences to the methods so it can be analysed later (see JVM spec)
-        #  }
-
+        #    u4 magic; 
         @magic = ClassMagic.new(data)
+
+        #    u2 minor_version;
+        #    u2 major_version;
         @version = ClassVersion.new(data)
 
+        #    u2 constant_pool_count;
+        #    cp_info constant_pool[constant_pool_count-1];
         @constant_pool = ConstantPool.new(data)
         pos = 8 + @constant_pool.size
 
+        #    u2 access_flags;
         @access_flags = AccessFlags.new(data, pos)
         pos += 2
 
-        idx = data.u2(pos)
+        #    u2 this_class;
+        @this_class_idx = data.u2(pos)
         pos += 2
-        @this_class_idx = idx
 
-        @references = References.new(@constant_pool, @this_class_idx)
-
-        idx = data.u2(pos)
+        #    u2 super_class;
+        @super_class_idx = data.u2(pos)
         pos += 2
-        @super_class_idx = idx
 
+        #    u2 interfaces_count;
+        #    u2 interfaces[interfaces_count];
         count = data.u2(pos)
         @interfaces = data.u2rep(count, pos + 2).collect { |i| @constant_pool.class_item(i) }
         pos += 2 + count*2
 
+        # TODO Class: implement fields and methods (see JVM spec)
+        #    u2 fields_count;
+        #    field_info fields[fields_count];
         #        count = data.u2(pos)
         #        @fields = data.u2rep(count, pos + 2).collect { |i| @constant_pool.field_item(i) }
         #        pos += 2 + count*2
 
+        #    u2 methods_count;
+        #    method_info methods[methods_count];
         #        count = data.u2(pos)
         #        @methods = data.u2rep(count, pos + 2).collect { |i| @constant_pool.method_item(i) }
         #        pos += 2 + count*2
+
+        #    u2 attributes_count;
+        #    attribute_info attributes[attributes_count];
+        #  }
+        @references = References.new(@constant_pool, @this_class_idx)
+        
+        #  Body {
+        # Class: add the byte code sequences to the methods so it can be analysed later (see JVM spec)
+        #  }
+
       end
 
       # Return the name of this class. Returns a JavaVMName.

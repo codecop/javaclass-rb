@@ -18,8 +18,11 @@ module JavaClass
 
         # Set default constants.
         def initialize(name=nil)
-          @name = self.class.to_s[/::[^:]+$/][10..-1] # skip modules (::) and "Constant"
-          @name = name if name
+          if name
+            @name = name
+          else 
+            @name = self.class.to_s[/::[^:]+$/][10..-1] # skip modules (::) and "Constant"
+          end
           @size = 3
           @slots = 1
         end

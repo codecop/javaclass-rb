@@ -11,7 +11,6 @@ module JavaClass
 
       # Check the class magic in the _data_ beginning at position _start_ (which is usually 0).
       def initialize(data, start=0)
-        # "parsing"
         @bytes = data[start..start+3]
       end
 
