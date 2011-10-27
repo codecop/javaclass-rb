@@ -44,7 +44,7 @@ module JavaClass
         unless includes?(key)
           raise ClassNotFoundError.new(key, @folder)
         end
-        File.open(File.join(@folder, key), 'rb') { |io| io.read }
+        File.open(File.join(@folder, key), 'rb') { |io| io.read.freeze }
       end
 
       # Return the number of classes in this folder.

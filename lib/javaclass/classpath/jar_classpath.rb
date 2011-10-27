@@ -83,7 +83,7 @@ module JavaClass
           unless includes?(key)
             raise ClassNotFoundError.new(key, @jarfile)
           end
-          JavaClass::Gems::ZipFile.new(@jarfile).read(key)
+          JavaClass::Gems::ZipFile.new(@jarfile).read(key).freeze
         end
       end
 

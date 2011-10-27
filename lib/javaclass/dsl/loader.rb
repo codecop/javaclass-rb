@@ -12,7 +12,7 @@ module JavaClass
       # Read and disassemble the given class from _filename_ (full file name).
       def load_fs(filename)
         begin
-          disassemble(File.open(filename, 'rb') { |io| io.read } )
+          disassemble(File.open(filename, 'rb') { |io| io.read.freeze } )
         rescue ClassFile::ClassFormatError => ex
           ex.add_classname(filename)
           raise ex
