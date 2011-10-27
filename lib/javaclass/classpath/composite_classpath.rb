@@ -18,6 +18,7 @@ module JavaClass
       def initialize(root='.')
         super(root)
         @elements = []
+        @element_lookup = {} # JavaVMName => Classpath
       end
 
       # Return all the classpath elements (the children) of this path and all child paths.
@@ -39,7 +40,10 @@ module JavaClass
 
       # Add the _elem_ classpath element to the list.
       def add_element(elem)
-        @elements << elem unless elem.count == 0 || @elements.find { |cpe| cpe == elem } 
+        if elem.count > 0 && !@elements.find { |cpe| cpe == elem }
+          @elements << elem
+          fill_lookup_cache(elem)
+        end
         elem.additional_classpath.each do |acpe|
           # referred classpath elements may be missing
           if JarClasspath.valid_location?(acpe)
@@ -55,17 +59,19 @@ module JavaClass
 
       # Return if _classname_ is included in this classpath. If yes, return the count (usually 1).
       def includes?(classname)
-        count = @elements.find_all { |e| e.includes?(classname) }.size 
-        if count > 0 then count else nil end
+        key = to_key(classname)
+        found = find_element_for(key)
+        if found then 1 else nil end
       end
 
       # Load the binary data of the file name or class name _classname_ from this classpath.
       def load_binary(classname)
-        found = @elements.find { |e| e.includes?(classname) }
+        key = to_key(classname)
+        found = find_element_for(key)
         unless found
-          raise ClassNotFoundError.new(classname, to_s)
+          raise ClassNotFoundError.new(key, to_s)
         end
-        found.load_binary(classname) 
+        found.load_binary(key) 
       end
 
       # Return the number of classes in this classpath.
@@ -82,6 +88,19 @@ module JavaClass
         end
       end
 
+      private 
+
+      # Return the matching classpath element for the given _key_
+      def find_element_for(key)
+        # @elements.find { |e| e.includes?(key) }
+        @element_lookup[key]
+      end
+      
+      # Fill the classpath element lookup cache with this classpath
+      def fill_lookup_cache(elem)
+        elem.names.each { |classname| @element_lookup[classname] = elem }
+      end
+            
     end
 
   end
