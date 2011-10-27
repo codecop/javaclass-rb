@@ -14,7 +14,7 @@ location = "#{ENV['USERPROFILE']}\\Dropbox\\InArbeit\\Corpus\\Java6_Swing(BIA)"
 
 # 1) create a classpath of the module(s) under test 
 main_classpath = classpath(File.join(location, 'classes'), classpath(File.join(location, 'test-classes')))
-puts "#{main_classpath.names.size} classes found in main classpath:\n  #{main_classpath.elements.join("\n  ")}"
+puts "#{main_classpath.count} classes found in main classpath:\n  #{main_classpath.elements.join("\n  ")}"
 
 # 2) load tracking before creating new classpaths
 require 'javaclass/classpath/tracking_classpath' 
@@ -22,6 +22,7 @@ require 'javaclass/classpath/tracking_classpath'
 # 3) create the (tracking) CompositeClasspath of the given workspace
 cp = workspace(location)
 puts "#{cp.elements.size} classpaths found under the workspace #{location}:\n  #{cp.elements.join("\n  ")}"
+puts "#{cp.count} classes found in classpaths"
 
 # 4) mark all their referenced types as accessed in the workspace
 puts 'mapping referenced classes... (can take several minutes)'
