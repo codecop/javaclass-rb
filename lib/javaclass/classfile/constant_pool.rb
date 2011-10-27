@@ -31,30 +31,13 @@ module JavaClass
 
       # Parse the constant pool from the bytes _data_ beginning at position _start_ (which is usually 8).
       def initialize(data, start=8)
-        @pool = Hash.new # cnt (Fixnum) => constant class
-
-        # parsing
-        @item_count = data.u2(start)
-        pos = start + 2
-        cnt = 1
-        while cnt <= @item_count-1
-
-          tag_index = data.u1(pos)
-          type = CONSTANT_TYPE_TAGS[tag_index]
-          unless type
-            # puts dump.join("\n")
-            raise ClassFormatError, "const ##{cnt} contains unknown constant pool tag/index #{tag_index} (at pos #{pos} in class).\n" +
-                  "allowed are #{CONSTANT_TYPE_TAGS.keys.sort.join(',')}"
-          end
-
-          constant = type.new(@pool, data, pos)
-          @pool[cnt] = constant
-          pos += constant.size
-          cnt += constant.slots
-
-        end
-
-        @size = pos - start
+        creator = PoolCreator.new(data, start)
+        creator.create!
+        
+        @pool = creator.pool # cnt (Fixnum) => constant class
+        @item_count = creator.item_count
+        
+        @size = @pool.values.inject(0) { |sum, constant| sum + constant.size } + 2
       end
 
       # Return the number of pool items. This number might be larger than +items+ available,
@@ -65,11 +48,16 @@ module JavaClass
 
       # Return the _index_'th pool item. _index_ is the real index in the pool which may skip numbers.
       def[](index)
+        check_index(index)
+        @pool[index]
+      end
+
+      def check_index(index)
         if index < 0 || index > item_count
           raise IndexError, "index #{index} is out of bounds of constant pool"
         end
-        @pool[index]
       end
+      private :check_index
 
       # Return an array of the ordered list of constants.
       def items
@@ -115,6 +103,53 @@ module JavaClass
         self[index]
       end
 
+    end
+    
+    class PoolCreator # :nodoc:
+
+      attr_reader :pool, :item_count
+      
+      def initialize(data, start)
+        @data = data
+        @start = start
+      end
+      
+      def create!
+        create_pool
+        fill_pool
+      end
+
+      def create_pool
+        @pool = {}
+        @item_count = @data.u2(@start)
+        @pos = @start + 2
+      end
+      
+      def fill_pool
+        @cnt = 1
+        while @cnt <= @item_count-1
+          create_next_constant
+        end
+      end
+            
+      def create_next_constant
+        type = determine_constant_type
+        constant = type.new(@pool, @data, @pos)
+        @pool[@cnt] = constant
+        @pos += constant.size
+        @cnt += constant.slots
+      end
+      
+      def determine_constant_type
+        tag_index = @data.u1(@pos)
+        type = ConstantPool::CONSTANT_TYPE_TAGS[tag_index]
+        unless type
+          raise ClassFormatError, "const ##{@cnt} contains unknown constant pool tag/index #{tag_index} (at pos #{@pos} in class).\n" +
+                "allowed are #{ConstantPool::CONSTANT_TYPE_TAGS.keys.sort.join(',')}"
+        end
+        type
+      end
+      
     end
 
   end

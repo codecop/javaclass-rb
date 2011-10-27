@@ -13,7 +13,6 @@ module JavaClass
 
       # Extract the class version from the bytes _data_ starting at position _start_ (which is usually 4).
       def initialize(data, start=4)
-        # parsing
         @minor = data.u2(start)
         @major = data.u2(start+2)
       end
@@ -25,15 +24,18 @@ module JavaClass
 
       # Return the version as +major+.+minor+ float.
       def to_f
-        if @minor <= 0
-          denom = 1.0
-        else
-          denom = 1.0 * 10**(Math.log10(@minor).floor + 1)
-        end
-
         @major + @minor/denom
       end
 
+      def denom
+        if @minor <= 0
+          1.0
+        else
+          1.0 * 10**(Math.log10(@minor).floor + 1)
+        end
+      end
+      private :denom 
+      
       # Return a debug output of this version.
       def dump
         ["  minor version: #{@minor}", "  major version: #{@major}"]
