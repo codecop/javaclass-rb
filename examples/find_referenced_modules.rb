@@ -37,6 +37,3 @@ puts "\n#{unused.size} unused modules found:\n  #{unused.join("\n  ")}"
 # 5b) or print the list of classpath elements with access
 puts "\nlibrary (module path): number of accessed classes"
 puts cp.elements.map { |clp| [clp.to_s, clp.accessed] }.sort { |a,b| a[1] <=> b[1] }.map { |e| "  #{e[0]}: #{e[1]}" }
-
-# TODO CONTINUE 6 - improve loading performance, why does it take so long to load 10.000 headers?
-# use -r profile
