@@ -18,7 +18,6 @@ module JavaClass
       def initialize(root='.')
         super(root)
         @elements = []
-        @element_lookup = {} # JavaVMName => Classpath
       end
 
       # Return all the classpath elements (the children) of this path and all child paths.
@@ -42,7 +41,6 @@ module JavaClass
       def add_element(elem)
         if elem.count > 0 && !@elements.find { |cpe| cpe == elem }
           @elements << elem
-          fill_lookup_cache(elem)
         end
         elem.additional_classpath.each do |acpe|
           # referred classpath elements may be missing
@@ -92,15 +90,9 @@ module JavaClass
 
       # Return the matching classpath element for the given _key_
       def find_element_for(key)
-        # @elements.find { |e| e.includes?(key) }
-        @element_lookup[key]
+        @elements.find { |e| e.includes?(key) }
       end
       
-      # Fill the classpath element lookup cache with this classpath
-      def fill_lookup_cache(elem)
-        elem.names.each { |classname| @element_lookup[classname] = elem }
-      end
-            
     end
 
   end
