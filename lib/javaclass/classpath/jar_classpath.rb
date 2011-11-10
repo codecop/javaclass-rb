@@ -41,7 +41,7 @@ module JavaClass
         setup_cache if JavaClass.unpack_jars?
       end
       
-      # Return +true+ as this classpath element is a jar.
+      # Return +true+ as this classpath element is a jar. Zip files return +false+ as well.
       def jar?
         @manifest != nil
       end
