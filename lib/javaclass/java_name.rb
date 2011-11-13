@@ -216,15 +216,16 @@ module JavaClass
       if string =~ ARRAY_REGEX
         @is_array = string[/^\[+/].length
         string = string.sub(ARRAY_REGEX, '\1\2')
+
+        if string =~ /^[BSIJFDZC]$/
+          @is_atom = string
+          string = ATOMS[string]
+        else
+          @is_atom = false
+        end
+      
       else
         @is_array = false
-      end
-
-      if string =~ /^[A-Z]$/
-        @is_atom = string
-        string = ATOMS[string]
-      else
-        @is_atom = false
       end
 
       if string =~ VALID_REGEX
