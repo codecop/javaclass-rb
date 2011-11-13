@@ -2,6 +2,7 @@ require 'javaclass/classpath/factory'
 require 'javaclass/classscanner/scanners'
 require 'javaclass/dsl/loader'
 require 'javaclass/dsl/loading_classpath'
+require 'javaclass/dsl/classpath_analysers'
 require 'javaclass/java_name_scanner'
 
 module JavaClass
@@ -19,7 +20,7 @@ module JavaClass
         Classpath::EclipseClasspath::skip_lib
       end
     end
-    
+
     # Methods to be mixed into Object.
     # Author::          Peter Kofler
     module Mixin
@@ -35,7 +36,7 @@ module JavaClass
       wrap_classpath :environment_classpath
       wrap_classpath :full_classpath
       wrap_classpath :workspace
-      # add scanner factory methods
+      # add scanner factory methods for direct use by user
       include ClassScanner::Scanners
       # add hard coded class name finder
       include JavaNameScanner      
