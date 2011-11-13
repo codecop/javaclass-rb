@@ -36,6 +36,7 @@ require File.dirname(__FILE__) + '/test_tracking_classpath'
 require File.dirname(__FILE__) + '/test_factory'
 
 # classpath analyser
+require File.dirname(__FILE__) + '/test_transitive_dependencies'
 
 # class list
 require File.dirname(__FILE__) + '/test_jar_searcher'
@@ -96,6 +97,7 @@ class TsAllTests
     suite << TestJavaClass::TestClasspath::TestFactory.suite
 
     # classpath analyser
+    suite << TestJavaClass::TestAnalyse::TestTransitiveDependencies.suite
 
     # class list
     suite << TestJavaClass::TestClassList::TestJarSearcher.suite
