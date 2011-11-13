@@ -113,14 +113,9 @@ module JavaClass
 
       # List the entries of this zip for the block given.
       def entries(&block)
-        #begin
-          Zip::ZipFile.foreach(@archive) do |entry|
-            block.call(ZipEntry.new(entry))
-          end
-        #rescue
-          # skip bug in zip for certain JARs
-        #  warn("could not open archive #{@archive}: #{$!}")
-        #end
+        Zip::ZipFile.foreach(@archive) do |entry|
+          block.call(ZipEntry.new(entry))
+        end
       end
 
     end
