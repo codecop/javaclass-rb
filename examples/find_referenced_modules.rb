@@ -1,25 +1,31 @@
 # Example usage of classpath and class files: Scan all classes of an Eclipse
 # "workspace". Use the classes of one module and find all modules which are not
 # referenced. This lists *potential* unused libraries (classpaths). Note that the
-# libraries may still be used from configuration files (e.g. Spring contexts) or
-# from used libraries.
+# libraries may still be used by reflection or inernal from used libraries.
 # Author::          Peter Kofler
 
+#--
 # add the lib of this gem to the load path
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+require File.join(File.dirname(__FILE__), 'corpus')
+
+location = Corpus[:HBD]
+location = Corpus[:RCP]
+location = Corpus[:BIA]
+
+main_location = File.join(location, 'classes')
+test_location = File.join(location, 'test-classes')
+#++
 require 'javaclass/dsl/mixin'
 
-location = "#{ENV['USERPROFILE']}\\Dropbox\\InArbeit\\Corpus\\Java6_Web(HBD)"
-location = "#{ENV['USERPROFILE']}\\Dropbox\\InArbeit\\Corpus\\Java6_Swing(BIA)"
-
-# 1) create a classpath of the module(s) under test 
-main_classpath = classpath(File.join(location, 'classes'), classpath(File.join(location, 'test-classes')))
+# 1) create a classpath of the main module(s) under test
+main_classpath = classpath("#{main_location};#{test_location}")
 puts "#{main_classpath.count} classes found in main classpath:\n  #{main_classpath.elements.join("\n  ")}"
 
-# 2) load tracking before creating new classpaths
-require 'javaclass/classpath/tracking_classpath' 
+# 2) load tracking before creating any new classpaths
+require 'javaclass/classpath/tracking_classpath'
 
-# 3) create the (tracking) CompositeClasspath of the given workspace
+# 3) create the (tracking) composite classpath of the given workspace
 cp = workspace(location)
 puts "#{cp.elements.size} classpaths found under the workspace #{location}:\n  #{cp.elements.join("\n  ")}"
 puts "#{cp.count} classes found in classpaths"
