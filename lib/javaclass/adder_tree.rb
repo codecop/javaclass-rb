@@ -1,11 +1,11 @@
 # A simple add only tree. Once the tree is build if can't be changed. Only new elements can be added.
 # Author::          Peter Kofler
-class AdderTree
+class AdderTreeNode
 
   attr_reader :parent
   attr_reader :data
 
-  def initialize(data, parent=NullAdderTree.new)
+  def initialize(data, parent)
     @data = data
     @parent = parent
     @children = []
@@ -16,25 +16,25 @@ class AdderTree
   end
 
   def add(o)
-    node = self.class.new(o, self)
+    node = AdderTreeNode.new(o, self)
     @children << node
     node
   end
 
-  def below?(o)
+  def contain?(o)
     if @data == o
       self
     else
-      @children.find { |child| child.below?(o) }
+      @children.find { |child| child.contain?(o) }
     end
   end
 
-  def above?(o)
-    if @data == o
-      self
-    else
-      @parent.above?(o)
-    end
+  def level
+    @parent.level + 1
+  end
+
+  def root
+    @parent.root
   end
 
   def size
@@ -46,35 +46,38 @@ class AdderTree
   end
 
   def to_a
-    [ @data ] + @children.map { |child| child.to_a }
+    if @children.size > 0
+      sublist = []
+      @children.each { |child| child.to_a.each { |c| sublist << c } } 
+      [data, sublist]
+    else
+      [data]
+    end
   end
 
+  def debug_print
+    puts ' ' * level + data
+    @children.each { |child| child.debug_print }
+  end
+  
 end
 
-class NullAdderTree # :nodoc:
+# The root node of the adder tree.
+class AdderTree < AdderTreeNode
 
-  def children
-    []
+  attr_reader :parent
+  attr_reader :data
+
+  def initialize(data)
+    super(data, nil)
   end
 
-  def below?(o)
-    nil
-  end
-
-  def above?(o)
-    nil
-  end
-
-  def size
+  def level
     0
   end
 
-  def levels
-    0
-  end
-
-  def to_a
-    [ ]
+  def root
+    self
   end
 
 end

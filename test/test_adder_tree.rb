@@ -18,6 +18,11 @@ class TestAdderTree < Test::Unit::TestCase
   def test_add
     @tree.add(1)
     assert_equal([0, [1]], @tree.to_a)
+    node = @tree.add(2)
+    assert_equal([0, [1, 2]], @tree.to_a)
+
+    node.add(3)
+    assert_equal([0, [1, 2, [3]]], @tree.to_a)
   end
 
   def test_size
@@ -44,25 +49,30 @@ class TestAdderTree < Test::Unit::TestCase
     assert_equal(1, @tree.children[0].data)
   end
 
-  def test_below_eh_itself
-    assert(@tree.below?(0))
-    assert_nil(@tree.below?(1))
+  def test_contain_eh_itself
+    assert(@tree.contain?(0))
+    assert_nil(@tree.contain?(1))
   end
 
-  def test_below_eh
-    assert_nil(@tree.below?(1))
+  def test_contain_eh
+    assert_nil(@tree.contain?(1))
     @tree.add(1)
-    assert(@tree.below?(1))
+    assert(@tree.contain?(1))
   end
 
-  def test_above_eh_itself
-    assert(@tree.above?(0))
-    assert_nil(@tree.above?(1))
-  end
-
-  def test_above_eh
+  def test_level
+    assert_equal(0, @tree.level)
     node = @tree.add(1)
-    assert(node.above?(0))
+    assert_equal(0, @tree.level)
+    assert_equal(1, node.level)
+    node.add(2)
+    assert_equal(1, node.level)
+  end
+
+  def test_root
+    assert_equal(0, @tree.root.data)
+    node = @tree.add(1)
+    assert_equal(0, node.root.data)
   end
 
 end
