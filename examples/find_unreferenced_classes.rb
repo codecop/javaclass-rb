@@ -4,14 +4,17 @@
 # reflection.
 # Author::          Peter Kofler
 
+#--
 # add the lib of this gem to the load path
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
-require 'javaclass/classpath/tracking_classpath'
-require 'javaclass/dsl/mixin'
+require File.join(File.dirname(__FILE__), 'corpus')
 
-location = 'C:\RTC3.0\workspaces\Costing_Dev'
+location = Corpus[:RCP]
 package1 = 'com.ibm.arc.sdm'
 package2 = 'pricingTool'
+#++
+require 'javaclass/dsl/mixin'
+require 'javaclass/classpath/tracking_classpath'
 
 # speed up loading by skipping non source file classpaths
 Eclipse.skip_lib
@@ -41,7 +44,7 @@ puts "#{hardcoded_classnames.size} classes references found in configs"
 hardcoded_classnames.each { |classname| cp.mark_accessed(classname) }
 puts 'hardcoded classes mapped'
 
-# 5) mark unit tests (all classes ending in Test on the test projects)
+# 5) mark unit tests (all classes ending in Test) on the test projects (projects ending in .test)
 test_projects = cp.elements.find_all { |cpe| cpe.to_s =~ /\.test\// }
 test_projects.each do |project|
   project.names { |classname| classname =~ /Test(?:Case|Suite|s)?\.class/ }.
@@ -51,6 +54,5 @@ puts 'test classes mapped'
 
 # 6) find non accessed classes and report unused in specific packages
 unused_classes = classes.find_all { |clazz| cp.accessed(clazz) == 0 }
-report = unused_classes.reject{ |clazz| clazz.this_class =~ /\/gpe\/|\/s2\// }.
-                        map { |clazz| "#{clazz.to_classname}" }
+report = unused_classes.map { |clazz| "#{clazz.to_classname}" }
 puts "#{report.size} unused classes found:\n  #{report.join("\n  ")}"
