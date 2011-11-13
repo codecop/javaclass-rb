@@ -4,6 +4,13 @@ require 'zip/zipfilesystem'
 module Zip # :nodoc:all
   class ZipEntry
 
+    # unsomment to not swallow errors, else we get nil entries later
+    # def ZipEntry.read_c_dir_entry(io)
+    #   entry = new(io.path)
+    #   entry.read_c_dir_entry(io)
+    #   return entry
+    # end
+    
     alias :strict_read_c_dir_entry read_c_dir_entry
     
     def read_c_dir_entry(io)  
