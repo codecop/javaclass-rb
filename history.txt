@@ -1,5 +1,6 @@
 === 0.0.4 not released yet
 
+* patched the rubyzip for invalid flags found in some JARs
 * add some examples
 * fixed generate_class_lists.rb
 * finish first version of DSL with loading/values
