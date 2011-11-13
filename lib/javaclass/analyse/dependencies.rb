@@ -5,7 +5,7 @@ module JavaClass
   # Author::          Peter Kofler
   module Analyse
 
-    # Class dependency analysing to be mixed into a Classpath.
+    # Class dependency analysing to be mixed into LoadingClasspath.
     # Author::          Peter Kofler
     module Dependencies
 
