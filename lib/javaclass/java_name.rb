@@ -118,7 +118,7 @@ module JavaClass
         @simple_name = $2
         @full_name = string
       else
-        # TODO implement for inner classes: CollectionUtils$IChecker
+        # TODO implement JavaQualifiedName for inner classes like CollectionUtils$IChecker
         raise ArgumentError, "#{string} is no valid qualified name"
       end
       package_remove_trailing_dot!

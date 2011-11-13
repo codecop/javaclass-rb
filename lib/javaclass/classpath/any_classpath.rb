@@ -12,8 +12,10 @@ module JavaClass
       def initialize(folder)
         super(File.join(folder, '*'))
         find_jars(folder)
-        # TODO find_classes(folder)
-        # add_file_name(sub_folders) - so the names are correct package names
+        
+        # TODO implement find_classes_under(folder) to find also all class folders under this path. 
+        # Search for classes, open the first one, check its package, backtrack to its base folder, 
+        # add it to this classpath "add_file_name(sub_folders)", skip it in further analysis and continue.
       end
       
       # Search the given _path_ recursively for zips or jars. Add all found jars to this classpath.
