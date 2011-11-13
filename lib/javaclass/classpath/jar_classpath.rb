@@ -107,17 +107,22 @@ module JavaClass
 
       # Set up the class names.
       def init_classes
-        @class_names = list_classes.reject { |n| n =~ /package-info\.class$/ }.
-                                find_all { |n| 
-                                  if JavaClassFileName.valid?(n) 
-                                    true
-                                  else
-                                    warn("skipping invalid class file name #{n} in classpath #{@jarfile}") 
-                                    false
-                                  end
-                                }.sort.collect { |cl| JavaClassFileName.new(cl) } 
+        @class_names = list_classes.
+          reject { |n| n =~ /package-info\.class$/ }.
+          find_all { |n| valid_java_name?(n) }.
+          sort.
+          collect { |cl| JavaClassFileName.new(cl) } 
         pairs = @class_names.map { |name| [name.file_name, 1] }.flatten
         @class_lookup = Hash[ *pairs ] # file_name (String) => anything
+      end
+      
+      def valid_java_name?(name)
+        if JavaClassFileName.valid?(name) 
+          true
+        else
+          warn("skipping invalid class file name #{name} in classpath #{@jarfile}") 
+          false
+        end
       end
       
       # Set up the temporary unpacking. This sets the delegate field for future use.
