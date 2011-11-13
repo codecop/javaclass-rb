@@ -3,6 +3,7 @@ require 'test/unit/testsuite'
 require 'test/unit' if $0 == __FILE__
 
 # common
+require File.dirname(__FILE__) + '/test_adder_tree'
 require File.dirname(__FILE__) + '/test_string_ux'
 require File.dirname(__FILE__) + '/test_string_hexdump'
 require File.dirname(__FILE__) + '/test_zip_file'
@@ -57,6 +58,7 @@ class TsAllTests
     suite = Test::Unit::TestSuite.new("Ruby Java Class")
 
     # common
+    suite << TestAdderTree.suite
     suite << TestStringUx.suite
     suite << TestStringHexdump.suite
     suite << TestJavaClass::TestGems::TestZipFile.suite
