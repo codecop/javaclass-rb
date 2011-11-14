@@ -1,4 +1,4 @@
-# Example usage of transitive dependencies.
+# Example usage of transitive dependencies to get an idea about  Cumulative Component Dependencies.
 # Author::          Peter Kofler
 
 #--
@@ -11,12 +11,8 @@ package = 'at.herold'
 start_class = 'at.herold.waf.hbd.servlet.HBDServlet'
 # 'at/spardat/krimiaps/service/client/service/impl/ClientSmeSearchServiceImpl'
 # 'at/spardat/krimiaps/service/client/service/impl/ClientPrivateSearchServiceImpl'
-
 #++
 require 'javaclass/dsl/mixin'
-
-# speed up loading by skipping non source file classpaths
-Eclipse.skip_lib
 
 # 1) create the (tracking) CompositeClasspath of the given workspace
 cp = workspace(location)
