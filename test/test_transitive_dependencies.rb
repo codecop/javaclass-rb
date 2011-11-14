@@ -15,12 +15,12 @@ module TestJavaClass
       end
 
       def test_transitive_dependency_tree_not_exist
-        tree = @cpe.transitive_dependency_tree('NotExisting')
+        tree = @cpe.transitive_dependency_tree('NotExisting'.to_javaname)
         assert_equal(1, tree.size)
       end
 
       def test_transitive_dependency_tree
-        tree = @cpe.transitive_dependency_tree('Start')
+        tree = @cpe.transitive_dependency_tree('Start'.to_javaname)
         assert_equal(4, tree.size)
         assert_equal(['Start', ['A', ['B', 'C']]], tree.to_a)
       end
