@@ -6,7 +6,7 @@
   * which signatures are called how often
   * maybe move current method there?
   * CRSS Metric
-  * CCD
+  * CCD: lazy init, classpath sits inside the analyser and works recursively through all elements
 
  * {Chidamber and Kemerer Java Metrics (ckjm)}[http://www.spinellis.gr/sw/ckjm/]
  * {The CRSS Metric for Package Design Quality}[http://crpit.com/confpapers/CRPITV62Melton2.pdf]
