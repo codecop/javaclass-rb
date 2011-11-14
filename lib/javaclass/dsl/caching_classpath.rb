@@ -7,7 +7,7 @@ module JavaClass
     # Author::          Peter Kofler
     class CachingClasspath < SimpleDelegator
 
-      # Create a cached instance of the _classpath_ .
+      # Create a cached instance of the _classpath_ (a LoadingClasspath).
       def initialize(classpath)
         unless classpath.respond_to? :load 
           raise ArgumentError, "wrong type of delegatee #{classpath.class}"
