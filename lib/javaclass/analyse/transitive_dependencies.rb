@@ -37,7 +37,7 @@ module JavaClass
       def transitive_dependencies_package(package, &filter)
         tree = AdderTree.new(package)
 
-        names { |classname| classname.same_or_subpackage_of?(base_package) }.each do |classname| 
+        names { |classname| classname.same_or_subpackage_of?(package) }.each do |classname| 
           transitive_dependency_tree(classname, tree, &filter)
         end
         
