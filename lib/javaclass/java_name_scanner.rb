@@ -2,12 +2,27 @@ require 'javaclass/java_name'
 
 module JavaClass
 
+  # TODO CONTINUE 6 implement hard coded class searching in ClassHeader as well
+  # 1) extract common usage classes from here, to be used from 2 places
+  # 2) make nice convenience methods here, which get mixed into the DSL, so it's easy
+  # 3) add logic to ImportedTypes, which returnes the hardcoded_types, and hardcoded_3rd_party_types
+  #    wich scans Java String constants of classes to find Class.Forname
+  #    will use the JavaNameScanner module as private inclusion!
+  #    ImportedTypes new method all_types = is the old one so calling code stays the same
+  #    and a new one is declared_types and hardcoded ,   
+  # 4) add 2 methods to Dependencies, so it's also with all hardcoded types possible - automatically, no extra method
+  #    will use the JavaNameScanner module as private inclusion!  
+
   # Mixin with logic to scan for hard coded class names.
   # Author::          Peter Kofler
   module JavaNameScanner
 
     def scan_config_for_3rd_party_class_names(path)
-      scan_config_for_class_names(path).reject { |c| c.in_jdk? }
+      scan_config_for_class_names(path).reject { |name| name.in_jdk? }
+      # need abstraction for - .reject { |name| name.in_jdk? } - have it three times
+      # maybe a mixin for enumerables containing JavaTypes
+      #JavaNameEnumerable with - .reject { |name| name.in_jdk? } - und anderen? reject_in_jdk = 3rd Party
+      # and find_all { |n| n.same_or_subpackage_of?(x) } -- also very often  = in_package()
     end
 
     # Find all possible class names in all XML and property files under _path_
@@ -40,12 +55,10 @@ module JavaClass
 
   end
 
-  # TODO make class and add logic like in ImportedTypes
-  # e.g. hardcoded_types, 3rd_party_types
-
-  # init
-  #        @hardcoded_types = scan_config_for_class_names
-
+#      -- Class Scanner
+#      init
+#        @hardcoded_types = scan_config_for_class_names
+#
 #      # Determine the imported types of this class and return their names. This does not contain the name if this class itself.
 #      def hardcoded_types
 #        @hardcoded_types 
@@ -56,12 +69,12 @@ module JavaClass
 #        hardcoded_types.reject { |name| name.in_jdk? }
 #      end
 
+#      -- Analyse - add to Dependencies (automatically, no extra method)
 #      # Determine all imported types from all classes in this classpath together with count of imports.
 #      # An additional block is used as _filter_ on class names.
 #      def hardcoded_types(&filter)
 #        type_map = Hash.new(0) # class_name (JavaQualifiedName) => cnt
 #        hardcoded_3rd_party_types.each do |type|
-#
 #          # hash keys need to be frozen to keep state
 #          if !type_map.include?(type)
 #            type = type.freeze 
@@ -80,4 +93,3 @@ module JavaClass
 
 end
 
-# TODO add method to scan Java String constants of classes to find Class.Forname 
