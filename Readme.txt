@@ -29,28 +29,24 @@ started adding methods to that end...)
 * {Gem Hosting}[http://rubygems.org/gems/javaclass]
 * {Download of tarballs and gems}[http://code.google.com/p/javaclass-rb/downloads/list]
 
-== Usage
-
-See the various examples in the examples folder of the gem. There is also some 
-experimental logic to have Java class name literals in Ruby. Packages have to be 
-suffixed with ".*" to be recognized. This is a bit dangerous, as wrong methods or 
-variables with a valid county code are not recognized but a +JavaQualifiedName+
-is created instead.
-
-  require 'javaclass/dsl/java_name_factory'
-  include JavaNameFactory
-
-  java.lang.String      # => "java.lang.String" 
-  java.lang.*           # => "java.lang" 
-
 == Documentation
 
-Module +JavaClass+ is the entry point for most functions in the gem.
-The main class is JavaClass::ClassFile::JavaClassHeader which provides access
-to all information of a Java class file. There are also some examples in the
-examples folder of the gem.
+Module JavaClass is the entry point for basic functions. All advanced functions are
+available in Object through the JavaClass::Dsl::Mixin. The main class or the parser 
+is JavaClass::ClassFile::JavaClassHeader which provides access to all information 
+of a Java class file. 
 
 * {API RDoc}[http://api.javaclass-rb.googlecode.com/hg/index.html]
+
+== Usage
+
+See the various examples in the examples folder of the gem. 
+
+* TODO link examples in order by complexity, change rdoc of examples in that order, don't repeat
+
+There is some experimental logic to recognize Java class name literals in Ruby 
+which are mapped to JavaClass::JavaQualifiedName. Packages have to be suffixed 
+with ".*" to be recognized. See JavaClass::Dsl::JavaNameFactory for its usage. 
 
 == Support
 
@@ -79,7 +75,7 @@ The trunk repository is available with
 
 == License
 
-* {BSD License}[http://www.opensource.org/licenses/bsd-license.php], it's enclosed in #license.txt.
+* {BSD License}[http://www.opensource.org/licenses/bsd-license.php], it's enclosed in license.txt.
 
 == Disclaimer Note
 
