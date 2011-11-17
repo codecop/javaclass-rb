@@ -3,8 +3,13 @@ require 'javaclass/dsl/loader'
 require 'javaclass/classscanner/scanners'
 
 # Main entry point for class file parsing. This provides all main methods as
-# class methods. For alternative usage see ObjectMethods.
+# class methods. For an alternative usage see JavaClass::Dsl::Mixin.
 # Author::          Peter Kofler
+# TODO change header of all main classes to contain copyright and license as well?
+# Author::          Peter Kofler
+# Copyright::       Copyright (c) 2009, Peter Kofler.       
+# License::         BSD License
+
 module JavaClass
   extend Classpath::Factory
   extend Dsl::Loader

@@ -1,7 +1,11 @@
-# Example usage of classpath and class files: Scan all classes of an Eclipse
-# "workspace". A workspace is a folder containing several Eclipse projects.
-# Find all interfaces, print their names and find all which are prefixed with 'I'.
+# Example usage of classpath (JavaClass::Classpath) and class files: Scan all 
+# classes of an Eclipse "workspace". A workspace is a folder containing several 
+# Eclipse projects, e.g. JavaClass::Classpath::EclipseClasspath. Then find 
+# all interfaces, print their names and find all which are prefixed with 'I'.
 # Author::          Peter Kofler
+#
+# === Usage
+#
 
 #--
 # add the lib of this gem to the load path

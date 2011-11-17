@@ -4,11 +4,20 @@ require 'javaclass/java_name'
 module JavaClass
   module Dsl 
 
-    # Module to mixin a mini DSL to recognize full qualified Java classnames in Ruby code.
+    # Module to mixin to recognize full qualified Java classnames in Ruby code.
     # Packages have to be suffixed with ".*" to be recognized.
-    # This is a bit dangerous, as wrong methods or variables with a valid county code are not recognized but
-    # a classname is created instead.
+    # This is a bit dangerous, as wrong method or variable names with are a valid 
+    # country code are not recognized as invalid.
     # Author::          Peter Kofler
+    #
+    # === Usage
+    #
+    #  require 'javaclass/dsl/java_name_factory'
+    #  include JavaNameFactory
+    #  
+    #  java.lang.String      # => "java.lang.String" 
+    #  java.lang.*           # => "java.lang"
+    # 
     module JavaNameFactory
 
       alias :__top_level_method_missing__ :method_missing # :nodoc:
