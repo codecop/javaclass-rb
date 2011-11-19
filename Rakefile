@@ -146,6 +146,8 @@ task :publish_gem => [:clobber_package, :package, :release_rubygems, :release_go
 Rake::ExampleTask.new do |example|
   example.example_files.include 'examples/**/*.rb'
 end
+task :clobber_rdoc => [:clobber_example]
+task :rdoc => [:example]
 
 # :rdoc, :clobber_rdoc, :rerdoc
 Rake::RDocTask.new do |rdoc|
@@ -185,7 +187,7 @@ def add_frameset_version(file, dir)
 end
 
 desc 'Publish the RDoc files to Google Code'
-task :publish_rdoc => [:clobber_rdoc, :rdoc, :fix_rdoc] do
+task :publish_rdoc => [:clobber_rdoc, :fix_rdoc] do
   puts "Releasing #{full_gem_name} to API"
   remote_repo = "https://code.google.com/p/#{GOOGLE_PROJECT}.#{RDOC_REPO}"
   remote_dir = "#{gemspec.version}"
