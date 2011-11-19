@@ -1,4 +1,3 @@
-#require 'FileUtils' # already required
 require 'net/http'
 require 'rubygems'
 require 'rubygems/gem_runner' # install and uninstall
@@ -8,6 +7,7 @@ require 'rake/clean' # for clean/clobber
 require 'rake/testtask'
 require 'rake/packagetask'
 require 'rake/rdoctask'
+require 'example_task'
 
 # Test, package and publish functions.
 # Author::           Peter Kofler
@@ -142,17 +142,18 @@ end
 desc 'Package and upload gem to Rubygems and Google Code'
 task :publish_gem => [:clobber_package, :package, :release_rubygems, :release_googlecode]
 
+# :example, :clobber_example, :reexample
+Rake::ExampleTask.new do |example|
+  example.example_files.include 'examples/**/*.rb'
+end
+
 # :rdoc, :clobber_rdoc, :rerdoc
 Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = RDOC_DIR # 'html' is default anyway
   rdoc.title = "#{full_gem_name} Documentation"
   rdoc.main = 'Readme.txt'
-  rdoc.rdoc_files.include 'lib/**/*.rb', 'lib/examples/**/*.txt', *gemspec.extra_rdoc_files
+  rdoc.rdoc_files.include 'lib/**/*.rb', 'lib/generated/**/*.txt', *gemspec.extra_rdoc_files
 end
-
-# TODO create rdoc task which adds
-# clobber_examples and adds to clobber list
-# examples, reexamples
 
 # Helper method to add target="_parent" to all external links in _file_ html.
 def add_href_parent(file)

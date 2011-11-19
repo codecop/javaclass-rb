@@ -7,7 +7,7 @@ html/**
 pkg/**
 api/**
 coverage/**
-lib/examples/**
+lib/generated/**
 gems/*.gem
 ClassLists
 fullClassList*.txt
