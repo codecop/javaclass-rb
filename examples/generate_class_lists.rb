@@ -1,11 +1,15 @@
-# Example how to use the class list (JavaClass::ClassList::List) facility. 
-# This script generates the full class lists starting from am optional saved one 
-# which contain all classes with version numbers. The list is created iterating 
-# all JDKs, searching and opening the RT.jars. 
+# Example how to use the class list (JavaClass::ClassList::List) facility.
+# This script generates the full class lists starting from am optional saved one
+# which contain all classes with version numbers. The list is created iterating
+# all JDKs, searching and opening the RT.jars.
 # Author::          Peter Kofler
+#
+# === Usage
 
+#--
 # add the lib of this gem to the load path
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+#++
 require 'javaclass/classlist/jar_searcher'
 require 'javaclass/classpath/jar_classpath'
 require 'javaclass/classlist/list'
@@ -13,6 +17,7 @@ require 'javaclass/classlist/list'
 # Struct to keep configuration what kind of JDK classes should be searched and added.
 JDK_CONFIG = Struct.new(:version, :label, :paths)
 
+#--
 # Windows 7 configuration for 32bit Sun/Oracle JVMs
 PROGRAMS = 'C:\Program Files (x86)\Java'
 JDKS = [
@@ -25,6 +30,9 @@ JDKS = [
   JDK_CONFIG.new(6, '1.6.0-26', [PROGRAMS + '\jdk1.6.0_26\jre\lib', PROGRAMS + '\jdk1.6.0_26\lib\dt.jar']),
   JDK_CONFIG.new(7, '1.7.0',    [PROGRAMS + '\jdk1.7.0\jre\lib',    PROGRAMS + '\jdk1.7.0\lib\dt.jar']),
 ]
+#++
+# configuration for some JVMs
+#  JDKS = [ JDK_CONFIG.new(...), ... ]
 
 # 1) create a class searcher which wraps a classpath
 JavaClass.unpack_jars!(:unpack)

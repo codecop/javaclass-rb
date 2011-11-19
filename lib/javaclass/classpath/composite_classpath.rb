@@ -9,7 +9,7 @@ module JavaClass
   # Author::          Peter Kofler
   module Classpath 
 
-    # List of class path elements constructed from a full CLASSPATH variable.
+    # List of class path elements constructed from a full _CLASSPATH_ variable.
     # Author::   Peter Kofler
     class CompositeClasspath < FileClasspath
 

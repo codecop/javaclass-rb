@@ -1,11 +1,10 @@
-# Example usage of classpath (JavaClass::Classpath) and class files: Scan all 
-# classes of an Eclipse "workspace". A workspace is a folder containing several 
-# Eclipse projects, e.g. JavaClass::Classpath::EclipseClasspath. Then find 
-# all interfaces, print their names and find all which are prefixed with 'I'.
+# Example usage of classpath and class files: Scan all classes of an workspace.
+# Find all interfaces, print their names and find all which are prefixed with 'I'.
 # Author::          Peter Kofler
+# Copyright::       Copyright (c) 2009, Peter Kofler.       
+# License::         {BSD License}[link:/files/license_txt.html]
 #
-# === Usage
-#
+# === Steps
 
 #--
 # add the lib of this gem to the load path
@@ -17,22 +16,26 @@ package = 'at.kugel'
 #++
 require 'javaclass/dsl/mixin'
 
-# add an Eclipse classpath variable
+# 1) define the location of the project and a package you are interrested
+#  location = 'C:\Eclipse\workspace'
+#  package = 'com.biz.app'
+
+# e.g. add an Eclipse classpath variable to find external dependencies.
 Eclipse.add_variable('KOR_HOME', location)
 
-# 1) create the CompositeClasspath of the given workspace
+# 2) create the classpath of the given workspace
 cp = workspace(location)
 puts "#{cp.elements.size} classpaths found under the workspace #{location}:\n  #{cp.elements.join("\n  ")}"
 puts "#{cp.count} classes found on classpath"
 
-# 2) select classes to analyse
+# 3) filter the classes to analyse
 to_analyse = cp.names { |classname| classname.same_or_subpackage_of?(package) }
 puts "#{to_analyse.size} classes matched #{package}"
 
-# 3) find all interfaces and collect their simple names
+# 4) load and analyse all selected classes, find all interfaces and collect their qualified names
 names = cp.values(to_analyse).find_all { |clazz| clazz.interface? }.collect { |clazz| clazz.to_classname }
 puts "#{names.size} interfaces found:\n  #{names.sort.join("\n  ")}"
 
-# 4) select all names that start with I and print them
+# 5) print all qualified names have a simple namee staring with an I
 inames = names.find_all { |classname| classname.simple_name =~ /^I[A-Z][a-z]/ }
 puts "#{inames.size} interfaces start with I:\n  #{inames.join("\n  ")}"

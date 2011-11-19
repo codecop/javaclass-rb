@@ -1,5 +1,7 @@
-# Example usage of transitive dependencies to get an idea about  Cumulative Component Dependencies.
+# Example usage of transitive dependencies to get an idea about Cumulative Component Dependencies.
 # Author::          Peter Kofler
+#
+# === Usage
 
 #--
 # add the lib of this gem to the load path
