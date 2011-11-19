@@ -3,6 +3,10 @@
 # referenced. This lists *potential* unused libraries (classpaths). Note that the
 # libraries may still be used by reflection or inernal from used libraries.
 # Author::          Peter Kofler
+# Copyright::       Copyright (c) 2009, Peter Kofler.
+# License::         {BSD License}[link:/files/license_txt.html]
+#
+# === Steps
 
 #--
 # add the lib of this gem to the load path

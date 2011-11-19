@@ -3,6 +3,10 @@
 # lists *potential* unused classes. Note that the classes may still be used by
 # reflection.
 # Author::          Peter Kofler
+# Copyright::       Copyright (c) 2009, Peter Kofler.
+# License::         {BSD License}[link:/files/license_txt.html]
+#
+# === Steps
 
 #--
 # add the lib of this gem to the load path
