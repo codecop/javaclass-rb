@@ -4,6 +4,8 @@ require 'javaclass/classpath/eclipse_classpath'
 module TestJavaClass
   module TestClasspath
 
+    # TODO save the .classpath file myself, it's not added to the ZIP, tests fail after download
+    
     class TestEclipseClasspath < Test::Unit::TestCase
 
       def setup
