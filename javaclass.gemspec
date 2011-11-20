@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.email = 'peter dot kofler at code minus cop dot org'
   s.date = Time::gm(2009, 3, 1)
 
-  s.files = Dir.glob('*.txt') + Dir.glob('{lib,test,examples}/**/*.*') + ['javaclass.gemspec', 'Rakefile', 'example_task.rb']
+  s.files = Dir.glob('*.txt') + Dir.glob('{lib,test,examples}/**/*') + ['javaclass.gemspec', 'Rakefile', 'example_task.rb']
   s.test_files = Dir.glob('test/**/test_*.rb')
   s.require_path = 'lib'
   s.add_dependency('rubyzip', '>= 0.9.1')
