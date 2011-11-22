@@ -1,19 +1,24 @@
 require File.dirname(__FILE__) + '/setup'
 require 'javaclass/classpath/eclipse_classpath'
+require 'test/dot_classpath'
 
 module TestJavaClass
   module TestClasspath
 
-    # TODO save the .classpath file myself, it's not added to the ZIP, tests fail after download
-    
     class TestEclipseClasspath < Test::Unit::TestCase
+      include DotClasspath
 
       def setup
-        @cpe = JavaClass::Classpath::EclipseClasspath.new("#{TEST_DATA_PATH}/eclipse_classpath")
+        create_dot_classpath
+        @cpe = JavaClass::Classpath::EclipseClasspath.new(eclipse_classpath)
+      end
+
+      def teardown
+        remove_dot_classpath
       end
 
       def test_class_valid_location_eh
-        assert(JavaClass::Classpath::EclipseClasspath.valid_location?("#{TEST_DATA_PATH}/eclipse_classpath"))
+        assert(JavaClass::Classpath::EclipseClasspath.valid_location?(eclipse_classpath))
       end
 
       def test_class_valid_location_eh_invalid
@@ -38,7 +43,7 @@ module TestJavaClass
 
       def test_class_skip_lib
         JavaClass::Classpath::EclipseClasspath.skip_lib
-        cpe = JavaClass::Classpath::EclipseClasspath.new("#{TEST_DATA_PATH}/eclipse_classpath")
+        cpe = JavaClass::Classpath::EclipseClasspath.new(eclipse_classpath)
         JavaClass::Classpath::EclipseClasspath.skip_lib(false)
         assert(!cpe.includes?('ClassVersionTest10.class'))
         assert(cpe.includes?('ClassVersionTest12.class'))
@@ -48,7 +53,7 @@ module TestJavaClass
         begin
           JavaClass::Classpath::EclipseClasspath.add_variable("TEST", TEST_DATA_PATH)
 
-          cpe = JavaClass::Classpath::EclipseClasspath.new("#{TEST_DATA_PATH}/eclipse_classpath")
+          cpe = JavaClass::Classpath::EclipseClasspath.new(eclipse_classpath)
           assert(cpe.includes?('ClassVersionTest10.class'))
 
         ensure
