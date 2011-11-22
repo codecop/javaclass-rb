@@ -15,7 +15,10 @@ require File.join(File.dirname(__FILE__), 'corpus')
 
 location = Corpus[:HBD]
 #++
-require 'javaclass/dsl/mixin'
+require 'javaclass/classpath/factory'
+include JavaClass::Classpath::Factory
+# The require/include above just imports what is needed, but usually one would require the whole 
+# JavaClass::Dsl::Mixin for conveniance, e.g. require 'javaclass/dsl/mixin'. 
 
 # 1) define the location of the project
 #  location = 'C:\Eclipse\workspace'

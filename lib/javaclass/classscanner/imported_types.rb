@@ -3,7 +3,7 @@ require 'delegate'
 module JavaClass
   module ClassScanner
 
-    # Add analysis for imported types to +JavaClassHeader+.
+    # Add analysis for imported types to ClassFile::JavaClassHeader.
     # Author::          Peter Kofler
     class ImportedTypes < SimpleDelegator
 

@@ -5,11 +5,11 @@ module JavaClass
 
   # The module ClassList is for separating namespaces. It contains the logic 
   # to create a list of all classes of all JDK versions. The main logic is
-  # performed in +JarSearcher+, which creates the +List+. It uses a 
-  # +CompositeClasspath+ to find all classes and +JavaClassHeader+ to read the
-  # class information from. The generated list contains packages and these
-  # packages contain the names of classes, their accessibility and the 
-  # versions they were added (or removed) from JDK. ClassList is an 
+  # performed in JarSearcher, which creates the +List+. It uses a 
+  # Classpath::CompositeClasspath to find all classes and ClassFile::JavaClassHeader 
+  # to read the class information from. The generated list contains packages 
+  # and these packages contain the names of classes, their accessibility 
+  # and the versions they were added (or removed) from JDK. ClassList is an 
   # "application" using the JavaClass intrastructure.
   # Author::          Peter Kofler
   module ClassList 
@@ -28,7 +28,7 @@ module JavaClass
         @package_filters = []
       end
 
-      # The given _filters_ will be dropped during searching.  _filters_ contain the beginning of package paths, i.e. <code>com/sun/</code>.
+      # The given _filters_ will be dropped during searching. _filters_ contain the beginning of package paths, i.e. <code>com/sun/</code>.
       def filters=(filters)
         @package_filters = filters.collect{ |f| /^#{f}/ }
       end

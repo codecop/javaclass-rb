@@ -1,4 +1,4 @@
-# Example of simple usage of JavaClass to load and inspect class files.
+# Example of basic usage of JavaClass to load and inspect class files.
 # Author::          Peter Kofler
 # Copyright::       Copyright (c) 2009, Peter Kofler.       
 # License::         {BSD License}[link:/files/license_txt.html]
