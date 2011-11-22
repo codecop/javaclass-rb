@@ -1,10 +1,12 @@
 require File.dirname(__FILE__) + '/setup'
 require 'javaclass/classpath/factory'
+require 'test/dot_classpath'
 
 module TestJavaClass
   module TestClasspath
 
     class TestFactory < Test::Unit::TestCase
+      include DotClasspath
       include JavaClass::Classpath::Factory
 
       def test_full_classpath
@@ -43,9 +45,14 @@ module TestJavaClass
       end
 
       def test_workspace_second_level
-        cp = workspace("#{TEST_DATA_PATH}")
-        elem = cp.elements 
-        assert_equal(7, elem.size) # 2 folder + 1 jar Eclipse, 2+1 folder Maven, folder plain
+        create_dot_classpath
+        begin
+          cp = workspace("#{TEST_DATA_PATH}")
+          elem = cp.elements 
+          assert_equal(7, elem.size) # 2 folder + 1 jar Eclipse, 2+1 folder Maven, folder plain
+        ensure
+          remove_dot_classpath
+        end
       end
       
     end
