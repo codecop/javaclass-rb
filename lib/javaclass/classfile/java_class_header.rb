@@ -11,7 +11,7 @@ module JavaClass
   # The module ClassFile is for separating namespaces. It contains the logic 
   # to parse a Java class file. This logic is tied to the JVM specification
   # of class files, very low-level and has no usage/DSL features.
-  # The main entry point is +JavaClassHeader+. It's the only "public" class
+  # The main entry point is JavaClassHeader. It's the only "public" class
   # of the module, so the only class to require from outside.
   # Author::          Peter Kofler
   module ClassFile

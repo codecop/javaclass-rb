@@ -28,11 +28,11 @@ cp = workspace(location)
 puts "#{cp.elements.size} classpaths found under the workspace #{location}:\n  #{cp.elements.join("\n  ")}"
 puts "#{cp.count} classes found on classpath"
 
-# 3) filter the classes to analyse
+# 3) filter the classes to analyse, using JavaClass::JavaQualifiedName methods
 to_analyse = cp.names { |classname| classname.same_or_subpackage_of?(package) }
 puts "#{to_analyse.size} classes matched #{package}"
 
-# 4) load and analyse all selected classes, find all interfaces and collect their qualified names
+# 4) load all selected classes, parse into JavaClass::ClassFile, find all interfaces and collect their qualified names
 names = cp.values(to_analyse).find_all { |clazz| clazz.interface? }.collect { |clazz| clazz.to_classname }
 puts "#{names.size} interfaces found:\n  #{names.sort.join("\n  ")}"
 
