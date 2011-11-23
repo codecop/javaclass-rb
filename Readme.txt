@@ -48,9 +48,9 @@ See the various examples in the examples folder of the gem.
 * JavaClass::Classpath Usage: {Count the number of classes in modules/JARs of a project}[link:/files/lib/generated/examples/count_classes_in_modules_txt.html]
 * {Check all interfaces for naming convention}[link:/files/lib/generated/examples/check_interface_names_txt.html]
 * {List all types imported by a code base}[link:/files/lib/generated/examples/find_all_imported_types_txt.html]
-* coming soon Show all cumulative dependencies of a class: cumulative_dependencies
-* coming soon Find all (un)referenced modules in a project (i.e. unused Jars): find_referenced_modules
-* coming soon Find potential unused classes: find_unreferenced_classes
+* coming soon Show all cumulative dependencies of a class: [link:/files/lib/generated/examples/cumulative_dependencies_txt.html]
+* coming soon Find all (un)referenced modules in a project: {unused Jars}[link:/files/lib/generated/examples/find_referenced_modules_txt.html] 
+* coming soon Find potential unused classes: {unused classes}[link:/files/lib/generated/examples/find_unreferenced_classes_txt.html]
 
 There is some experimental logic to recognize Java class name literals in Ruby 
 which are mapped to JavaClass::JavaQualifiedName. Packages have to be suffixed 
