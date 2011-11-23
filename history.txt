@@ -1,5 +1,6 @@
 === 0.0.4 not released yet
 
+* convert examples to RDOC using example_task
 * added transitive dependency trees from references
 * patched the rubyzip for invalid flags found in some JARs
 * add some examples
