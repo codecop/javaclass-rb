@@ -3,7 +3,7 @@ require 'javaclass/classlist/class_entry'
 module JavaClass
   module ClassList
 
-    # A package in the List.
+    # A package in the List. A package contains ClassEntry.
     # Author::          Peter Kofler
     class PackageEntry # ZenTest FULL to find method <=>
 

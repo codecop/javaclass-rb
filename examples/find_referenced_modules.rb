@@ -24,14 +24,16 @@ require 'javaclass/dsl/mixin'
 
 # 1) create a classpath of the main module(s) under test
 main_classpath = classpath("#{main_location};#{test_location}")
-puts "#{main_classpath.count} classes found in main classpath:\n  #{main_classpath.elements.join("\n  ")}"
+puts "#{main_classpath.count} classes found in main classpath:"
+puts "  #{main_classpath.elements.join("\n  ")}"
 
 # 2) mix in JavaClass::Classpath::TrackingClasspath before creating any new classpaths
 require 'javaclass/classpath/tracking_classpath'
 
 # 3) create the (tracking) composite classpath of the given workspace
 cp = workspace(location)
-puts "#{cp.elements.size} classpaths found under the workspace #{location}:\n  #{cp.elements.join("\n  ")}"
+puts "#{cp.elements.size} classpaths found under the workspace #{location}"
+puts "  #{cp.elements.join("\n  ")}"
 puts "#{cp.count} classes found in classpaths"
 
 # 4) mark all their referenced types as accessed in the workspace

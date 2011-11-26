@@ -5,7 +5,7 @@ module JavaClass
   module ClassList
 
     # Classes to form a list of JDK classes to find classes which have been 
-    # added in new releases. This is the list containing packages (+PackageEntry+).
+    # added in new releases. This is the list containing packages (PackageEntry).
     # Author::          Peter Kofler
     class List
 
@@ -13,7 +13,7 @@ module JavaClass
         @packages = Hash.new # package_name (String) => PackageEntry
       end
 
-      # Add a _fileentry_ to the list. The _fileentry_ is the file name of the class in the jar file. _version_
+      # Add a _fileentry_ to the list. The _fileentry_ is the file name of the class in the JAR file. _version_
       # is the version of the JDK scanned and is used if the class is new.
       def add_class(fileentry, is_public, version)
         class_name = fileentry.to_javaname.to_classname
@@ -85,7 +85,7 @@ module JavaClass
 
       # The access list is the raw list of all package access classes for one version. It was used to differ
       # normal classes from hidden classes and was saved in <code>doc/AccessLists/*_p.txt</code>.
-      # This works only if JarSearcher was used with +skip_package_classes+ set to false (default).
+      # This works only if JarSearcher was used with <i>skip_package_classes</i> set to false (default).
       # If there are more versions loaded, then only the last version is printed. So we get consecutive lists
       # of new package access classes with every JDK version.
       def old_access_list
