@@ -1,10 +1,10 @@
 require 'zip/zipfilesystem'
 
-# Patch the zip for invalid flags found in some JARs.
+# Patch the zip for invalid Linux file system flags found in some JARs.
 module Zip # :nodoc:all
   class ZipEntry
 
-    # unsomment to not swallow errors, else we get nil entries later
+    # uncomment next method to avoid swallowing errors, else we get +nil+ entries later.
     # def ZipEntry.read_c_dir_entry(io)
     #   entry = new(io.path)
     #   entry.read_c_dir_entry(io)
@@ -100,9 +100,13 @@ module Zip # :nodoc:all
 end
 
 module JavaClass
-  module Gems # :nodoc:
 
-    # Abstraction of a Zip archive.
+  # Module for wrappers around used gems to avoid direct dependencies to gems.
+  # Author::   Peter Kofler
+  module Gems 
+
+    # Abstraction of a Zip archive. Wraps around
+    # Zip::ZipFile of {rubyzip}[http://rubyzip.sourceforge.net/]
     # Author::   Peter Kofler
     class ZipFile
       def initialize(file)
@@ -127,7 +131,8 @@ module JavaClass
 
     end
     
-    # Abstraction of an entry in a Zip archive.
+    # Abstraction of an entry in a Zip archive. Wraps around 
+    # Zip::ZipEntry of {rubyzip}[http://rubyzip.sourceforge.net/]
     # Author::   Peter Kofler
     class ZipEntry
 

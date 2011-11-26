@@ -4,7 +4,8 @@ require 'javaclass/classpath/composite_classpath'
 module JavaClass
   module Classpath
 
-    # A delegator classpath that tracks which classes have been accessed.
+    # A delegator classpath that tracks which classes have been accessed. For an example see
+    # {how to find (un)referenced JARs}[link:/files/lib/generated/examples/find_referenced_modules_txt.html]. 
     # Author::          Peter Kofler
     class TrackingClasspath < SimpleDelegator
 
@@ -18,7 +19,7 @@ module JavaClass
         super(classpath)
       end
 
-      # Must return the wrapped classpath elements of this decorated classpath.
+      # Returns the wrapped classpath element (+self+) of this decorated classpath.
       def elements
         if [FolderClasspath, JarClasspath].include?(@classpath.class)
           [self]
@@ -63,7 +64,7 @@ module JavaClass
         end
       end
       
-      # Was the _classname_ accessed then return the count? If _classname_ is nil then check if any class was accessed.
+      # Was the _classname_ accessed then return the count? If _classname_ is +nil+ then check if any class was accessed.
       def accessed(classname=nil)
         if classname
           key = to_key(classname)
@@ -88,8 +89,8 @@ module JavaClass
 
     class CompositeClasspath 
 
-      # Wrap the _elem_ classpath with TrackingClasspath and add it to the list.
-      alias __old__add_element__ add_element # :nodoc:
+      # Wrap the _elem_ classpath with a new TrackingClasspath and add it to the list of elements.
+      alias __old__add_element__ add_element 
       
       def add_element(elem)
         unless @elements.find { |cpe| cpe == elem }
@@ -101,12 +102,12 @@ module JavaClass
         end 
       end
 
-      # Reset all prior marked access in child elements.
+      # Reset all prior marked access in child elements. (See TrackingClasspath)
       def reset_access
         @elements.each { |e| e.reset_access }
       end
             
-      # Mark the _classname_ as accessed. Return the number of accesses so far.
+      # Mark the _classname_ as accessed. Return the number of accesses so far. (See TrackingClasspath)
       def mark_accessed(classname)
         key = to_key(classname)
         found = find_element_for(key)
@@ -117,7 +118,8 @@ module JavaClass
         end
       end
 
-      # Was the _classname_ accessed then return the count? If _classname_ is nil then check if any class was accessed.
+      # Was the _classname_ accessed then return the count? If _classname_ is +nil+ 
+      # then check if any class was accessed. (See TrackingClasspath)
       def accessed(classname=nil)
         if classname
           key = to_key(classname)
@@ -131,7 +133,7 @@ module JavaClass
         end
       end
 
-      # Return the classnames of all accessed classes in child elements.    
+      # Return the classnames of all accessed classes in child elements. (See TrackingClasspath)    
       def all_accessed
         @elements.map { |cp| cp.all_accessed }.flatten.sort
       end

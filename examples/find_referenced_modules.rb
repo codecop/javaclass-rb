@@ -1,7 +1,7 @@
-# Example usage of classpath and class files: Scan all classes of an Eclipse
-# "workspace". Use the classes of one module and find all modules which are not
-# referenced. This lists *potential* unused libraries (classpaths). Note that the
-# libraries may still be used by reflection or inernal from used libraries.
+# Example usage of JavaClass::Classpath and JavaClass::Classpath::TrackingClasspath: 
+# Use the classes of one module and mark all their dependencies. Then find all modules 
+# which were not referenced. This list contains *potential* unused libraries (modules). 
+# Note that the libraries may still be used by reflection or internal from other libraries.
 # Author::          Peter Kofler
 # Copyright::       Copyright (c) 2009, Peter Kofler.
 # License::         {BSD License}[link:/files/license_txt.html]
@@ -26,7 +26,7 @@ require 'javaclass/dsl/mixin'
 main_classpath = classpath("#{main_location};#{test_location}")
 puts "#{main_classpath.count} classes found in main classpath:\n  #{main_classpath.elements.join("\n  ")}"
 
-# 2) load tracking before creating any new classpaths
+# 2) mix in JavaClass::Classpath::TrackingClasspath before creating any new classpaths
 require 'javaclass/classpath/tracking_classpath'
 
 # 3) create the (tracking) composite classpath of the given workspace
@@ -44,6 +44,8 @@ puts 'referenced classes mapped'
 unused = cp.elements.find_all { |clp| clp.jar? && clp.accessed == 0 }
 puts "\n#{unused.size} unused modules found:\n  #{unused.join("\n  ")}"
 
-# 5b) or print the list of classpath elements with access
+# 5b) or print the list of classpath elements (e.g. JARs) with their access
 puts "\nlibrary (module path): number of accessed classes"
-puts cp.elements.map { |clp| [clp.to_s, clp.accessed] }.sort { |a,b| a[1] <=> b[1] }.map { |e| "  #{e[0]}: #{e[1]}" }
+puts cp.elements.map { |clp| [clp.to_s, clp.accessed] }.
+                 sort { |a,b| a[1] <=> b[1] }.
+                 map { |e| "  #{e[0]}: #{e[1]}" }

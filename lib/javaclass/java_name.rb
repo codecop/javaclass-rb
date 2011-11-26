@@ -24,7 +24,7 @@ module JavaClass
       packages.find {|pkg| @package =~ /^#{Regexp.escape(pkg)}#{JavaLanguage::SEPARATOR_REGEX}/ } != nil
     end
 
-    # Is this package or class in the JDK? Return the first JDK package this is inside or nil.
+    # Is this package or class in the JDK? Return the first JDK package this is inside or +nil+.
     def in_jdk?
       if @package && @package != ''
         package_dot = @package + JavaLanguage::SEPARATOR
