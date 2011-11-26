@@ -5,16 +5,18 @@ module JavaClass
 
   # The module ClassList is for separating namespaces. It contains the logic 
   # to create a list of all classes of all JDK versions. The main logic is
-  # performed in JarSearcher, which creates the +List+. It uses a 
+  # performed in ClassList::JarSearcher, which creates the ClassList::List. 
+  # It uses a 
   # Classpath::CompositeClasspath to find all classes and ClassFile::JavaClassHeader 
   # to read the class information from. The generated list contains packages 
   # and these packages contain the names of classes, their accessibility 
   # and the versions they were added (or removed) from JDK. ClassList is an 
-  # "application" using the JavaClass intrastructure.
+  # "application" using the JavaClass infrastructure. For a full example see
+  # {how to generate lists of JDK classes}[link:/files/lib/generated/examples/generate_class_lists_txt.html].
   # Author::          Peter Kofler
   module ClassList 
 
-    # Search in zip or jar files for Java class files, check for package access or inner classes and call back a list of all these.
+    # Search in zip or JAR files for Java class files, check for package access or inner classes and call back a list of all these.
     # Author::          Peter Kofler
     class JarSearcher
 
@@ -42,7 +44,7 @@ module JavaClass
         end
       end
 
-      # Return true if the _classfile_ in the given _classpath_ is public. This is expensive because the jarfile is opened and the
+      # Return true if the _classfile_ in the given _classpath_ is public. This is expensive because the JAR file is opened and the
       # _classfile_ is extracted and read.
       def public?(classpath, classfile)
         begin
@@ -55,7 +57,7 @@ module JavaClass
         header.access_flags.accessible?
       end
 
-      # Compile the class list for the given _version_ of Java. This searches the _path_ for zips and jars
+      # Compile the class list for the given _version_ of Java. This searches the _path_ for zips and JARs
       # and adds them to the given _list_ of found classes. _version_ is a number >= 0, e.g. 2 for JDK 1.2.
       # _list_ must provide a <code>add_class(entry, is_public, version)</code> method.
       def compile_list(version, path, list)

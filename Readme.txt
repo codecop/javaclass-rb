@@ -44,13 +44,14 @@ I tried hard to rdoc all classes and public methods, so just {read it}[http://ap
 
 See the various examples in the examples folder of the gem. 
 
-* JavaClass {Basic Usage}[link:/files/lib/generated/examples/simple_usage_txt.html]
-* JavaClass::Classpath Usage: {Count the number of classes in modules/JARs of a project}[link:/files/lib/generated/examples/count_classes_in_modules_txt.html]
-* {Check all interfaces for naming convention}[link:/files/lib/generated/examples/check_interface_names_txt.html]
-* {List all types imported by a code base}[link:/files/lib/generated/examples/find_all_imported_types_txt.html]
-* {Show cumulative dependencies of a class}[link:/files/lib/generated/examples/cumulative_dependencies_txt.html]
+* {Basic Usage}[link:/files/lib/generated/examples/simple_usage_txt.html]
+* {Number of classes in modules/JARs}[link:/files/lib/generated/examples/count_classes_in_modules_txt.html]
+* {Check names of all interfaces}[link:/files/lib/generated/examples/check_interface_names_txt.html]
+* {All imported types}[link:/files/lib/generated/examples/find_all_imported_types_txt.html]
+* {Cumulative dependencies of a class}[link:/files/lib/generated/examples/cumulative_dependencies_txt.html]
 * {Find (un)referenced JARs}[link:/files/lib/generated/examples/find_referenced_modules_txt.html] 
-* coming soon Find potential unused classes: {unused classes}[link:/files/lib/generated/examples/find_unreferenced_classes_txt.html]
+* {Find unused classes}[link:/files/lib/generated/examples/find_unreferenced_classes_txt.html]
+* {Generate lists of JDK classes}[link:/files/lib/generated/examples/generate_class_lists_txt.html]
 
 There is some experimental logic to recognize Java class name literals in Ruby 
 which are mapped to JavaClass::JavaQualifiedName. Packages have to be suffixed 

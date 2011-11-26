@@ -1,8 +1,9 @@
-# Example how to use the class list (JavaClass::ClassList::List) facility.
-# This script generates the full class lists starting from am optional saved one
-# which contain all classes with version numbers. The list is created iterating
-# all JDKs, searching and opening the RT.jars.
+# Generate a JavaClass::ClassList, which contains all class 
+# names with version numbers when introduced. The list is created 
+# iterating all JDKs, opening the RT.jars and loading all classes.
 # Author::          Peter Kofler
+# Copyright::       Copyright (c) 2009, Peter Kofler.
+# License::         {BSD License}[link:/files/license_txt.html]
 #
 # === Usage
 
@@ -31,15 +32,17 @@ JDKS = [
   JDK_CONFIG.new(7, '1.7.0',    [PROGRAMS + '\jdk1.7.0\jre\lib',    PROGRAMS + '\jdk1.7.0\lib\dt.jar']),
 ]
 #++
-# configuration for some JVMs
+# configuration for some JDKs
 #  JDKS = [ JDK_CONFIG.new(...), ... ]
 
-# 1) create a class searcher which wraps a classpath
+# 1) create a JavaClass::ClassList::JarSearcher
 JavaClass.unpack_jars!(:unpack)
 searcher = JavaClass::ClassList::JarSearcher.new
 
 # 2) filter out unwanted classes, e.g. vendor classes
-searcher.filters = %w[sun/ sunw/ com/oracle/ com/sun/ netscape/ COM/rsa/ quicktime/ com/apple/mrj/macos/carbon/ org/jcp/xml/dsig/internal/]
+searcher.filters = %w[sun/ sunw/ com/oracle/ com/sun/ netscape/ COM/rsa/ 
+         quicktime/ com/apple/mrj/macos/carbon/ org/jcp/xml/dsig/internal/]
+#--
 # netscape ... applet js security [2]
 # COM/rsa/ ... jsafe [4]
 # quicktime ... quicktime [5]
@@ -47,10 +50,12 @@ searcher.filters = %w[sun/ sunw/ com/oracle/ com/sun/ netscape/ COM/rsa/ quickti
 # com/oracle/ ... com.oracle.net.Sdp [7]
 
 Dir.mkdir './ClassLists' unless File.exist? './ClassLists'
+#++
 
-# 3) create a new list to contain the found classes
+# 3) create a new JavaClass::ClassList::List to contain the classes
 list = JavaClass::ClassList::List.new
 
+#--
 # load an already good list if we do not start with JDK 1.0
 if JDKS[0].version > 0
   full_class_list_version = JDKS[0].version - 1
@@ -58,6 +63,7 @@ if JDKS[0].version > 0
   IO.readlines(full_class_list).each {|line| list.parse_line(line, full_class_list_version) }
   puts "loaded full class list #{full_class_list} with versions #{list.version}"
 end
+#++
 
 # Work on all lists defined in +JDKS+, add to the list and write list files.
 JDKS.each do |conf|
