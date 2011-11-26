@@ -6,7 +6,9 @@ module JavaClass
   # Author::          Peter Kofler
   module Analyse
 
-    # Class dependency analysing to be mixed into Dsl::LoadingClasspath.
+    # Analyser to get dependencies of a whole Classpath (to be mixed into Dsl::LoadingClasspath). 
+    # For an example see 
+    # {how to list all imported types}[link:/files/lib/generated/examples/find_all_imported_types_txt.html].
     # Author::          Peter Kofler
     module Dependencies
 

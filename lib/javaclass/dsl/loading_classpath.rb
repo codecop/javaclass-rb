@@ -5,7 +5,7 @@ require 'javaclass/dsl/loader'
 module JavaClass
   module Dsl
 
-    # A delegator classpath that loads and parses classes.
+    # A delegator Classpath that loads and parses classes.
     # Author::          Peter Kofler
     class LoadingClasspath < SimpleDelegator
       

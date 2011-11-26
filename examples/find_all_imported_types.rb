@@ -1,6 +1,6 @@
 # Example usage of the class analysis featuress of JavaClass::ClassScanner and JavaClass::Analyse. 
 # After defining a classpath, use dependency analysis to find all used classes of a codebase. 
-# This code uses in turn the method imported_3rd_party_types of 
+# This code uses in turn the method <i>imported_3rd_party_types</i> of 
 # JavaClass::ClassScanner::ImportedTypes to find all imported classes.
 # Author::          Peter Kofler
 # Copyright::       Copyright (c) 2009, Peter Kofler.

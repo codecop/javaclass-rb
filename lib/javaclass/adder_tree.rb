@@ -1,4 +1,4 @@
-# A simple add only tree. Once the tree is build if can't be changed. Only new elements can be added.
+# A node in the AdderTree. 
 # Author::          Peter Kofler
 class AdderTreeNode
 
@@ -37,6 +37,7 @@ class AdderTreeNode
     @parent.root
   end
 
+  # Return the number of nodes this this (sub-)tree.
   def size
     @children.inject(1) { |sum, child| sum + child.size }
   end
@@ -45,6 +46,10 @@ class AdderTreeNode
     ( [1] + @children.map { |child| 1 + child.levels } ).max
   end
 
+  # Return an array of all children. Each child has its own array. For example
+  #  tree = AdderTree.new(0)
+  #  tree.add(1)
+  #  tree.to_a               # => [0, [1]]
   def to_a
     if @children.size > 0
       sublist = []
@@ -55,6 +60,7 @@ class AdderTreeNode
     end
   end
 
+  # Prints the tree to the console. Each level of the tree is intended by a blank.
   def debug_print
     puts ' ' * level + data
     @children.each { |child| child.debug_print }
@@ -62,7 +68,10 @@ class AdderTreeNode
   
 end
 
-# The root node of the adder tree.
+# The root node of the adder tree. The "adder tree" is a simple add-only tree. 
+# Once the tree is build it can't be changed. Only new elements can be added. 
+# The tree's main functionality is defined in AdderTreeNode.
+# Author::          Peter Kofler
 class AdderTree < AdderTreeNode
 
   attr_reader :parent
