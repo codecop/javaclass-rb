@@ -37,21 +37,21 @@ Rake::TestTask.new do |t|
   # t.verbose = false is default
 end
 
-begin 
+begin
   require 'rcov/rcovtask'
 
 # :rcov
 Rcov::RcovTask.new do |t|
   t.test_files = gemspec.test_files
   t.warning = true
-  t.rcov_opts << "--sort=coverage" 
-  t.rcov_opts << "--only-uncovered" 
+  t.rcov_opts << "--sort=coverage"
+  t.rcov_opts << "--only-uncovered"
 end
 
 rescue LoadError
   # skip if not installed
   warn("rcov not installed. coverage not available. #{$!}")
-end 
+end
 
 desc 'Find missing test methods with ZenTest'
 task :zentest do
@@ -214,7 +214,7 @@ CLOBBER.include(RDOC_REPO, 'googlecode_upload.py', 'ClassLists', 'fullClassList*
 
 # Helper method to grep all the sources for some _pattern_ words.
 def egrep(pattern)
-  Dir['**/*'].find_all { |fn| FileTest.file? fn }.each do |fn|
+  Dir['**/*'].find_all { |fn| FileTest.file?(fn) && File.basename(fn) != /^\./ }.each do |fn|
     line_count = 0
     open(fn) do |f|
       while line = f.gets
