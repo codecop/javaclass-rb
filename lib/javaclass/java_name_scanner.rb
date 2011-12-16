@@ -2,7 +2,7 @@ require 'javaclass/java_name'
 
 module JavaClass
 
-  # TODO CONTINUE 6 implement hard coded class searching in ClassHeader as well
+  # TODO Implement hard coded class searching in ClassHeader as well
   # 1) extract common usage classes from here, to be used from 2 places
   # 2) make nice convenience methods here, which get mixed into the DSL, so it's easy
   # 3) add logic to ImportedTypes, which returnes the hardcoded_types, and hardcoded_3rd_party_types

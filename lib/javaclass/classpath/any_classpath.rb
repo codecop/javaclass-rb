@@ -13,7 +13,7 @@ module JavaClass
         super(File.join(folder, '*'))
         find_jars(folder)
         
-        # TODO implement find_classes_under(folder) to find also all class folders under this path. 
+        # TODO Implement "find_classes_under(folder)" to find all class folders under this path. 
         # Search for classes, open the first one, check its package, backtrack to its base folder, 
         # add it to this classpath "add_file_name(sub_folders)", skip it in further analysis and continue.
       end
