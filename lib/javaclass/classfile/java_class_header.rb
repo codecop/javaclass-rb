@@ -65,7 +65,7 @@ module JavaClass
         @interfaces = data.u2rep(count, pos + 2).collect { |i| @constant_pool.class_item(i) }
         pos += 2 + count*2
 
-        # TODO implement parsing of fields and methods of the JVM spec 
+        # TODO Implement parsing of fields and methods of the JVM spec 
         #    u2 fields_count;
         #    field_info fields[fields_count];
         #        count = data.u2(pos)
