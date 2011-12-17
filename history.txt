@@ -1,4 +1,4 @@
-=== 0.0.4 not released yet
+=== next release
 
 * convert examples to RDOC using example_task
 * added transitive dependency trees from references
