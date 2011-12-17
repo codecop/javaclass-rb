@@ -20,6 +20,9 @@ RDOC_REPO = 'api'
 gemspec = eval(IO.readlines('javaclass.gemspec').join)
 full_gem_name = "#{gemspec.name}-#{gemspec.version}"
 
+desc 'Validate all the work products (multi task)'
+task :validate => [ :clean, :clobber, :validate_gem, :test, :fix_rdoc, :rcov, :todo ]
+
 desc 'Validates the gemspec'
 task :validate_gem do
   gemspec.validate
@@ -92,7 +95,9 @@ end
 desc 'Tag current version in Hg'
 task :tag do
   hg ['tag', '-f', "-m \"Released gem version #{gemspec.version}\"", "#{full_gem_name}"]
+  # hg ['push']
   puts 'Tag created. Don\'t forget to push'
+  puts 'hg push'
 end
 
 # internal - desc 'Release the gem to Rubygems'
@@ -135,7 +140,9 @@ task :release_googlecode => :package do
   download_googlecode_upload_py 'googlecode_upload.py'
   ['gem', 'zip'].each do |extension|
     puts "uploading \"pkg/#{full_gem_name}.#{extension}\"..."
-    python ['googlecode_upload.py', "-s \"JavaClass #{gemspec.version} #{extension.capitalize}\"", "-p #{GOOGLE_PROJECT}", "-u #{user}", "-w #{pass}", "pkg/#{full_gem_name}.#{extension}"]
+    python ['googlecode_upload.py', "-s \"JavaClass #{gemspec.version} #{extension.capitalize}\"", 
+                                    "-p #{GOOGLE_PROJECT}", "-u #{user}", "-w #{pass}", 
+                                    "pkg/#{full_gem_name}.#{extension}"]
   end
 end
 
@@ -143,7 +150,7 @@ desc 'Package and upload gem to Rubygems and Google Code'
 task :publish_gem => [:clobber_package, :package, :release_rubygems, :release_googlecode]
 
 # :example, :clobber_example, :reexample
-Rake::ExampleTask.new do |example|
+example_task_lib = Rake::ExampleTask.new do |example|
   example.example_files.include 'examples/**/*.rb'
 end
 task :clobber_rdoc => [:clobber_example]
@@ -154,7 +161,12 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = RDOC_DIR # 'html' is default anyway
   rdoc.title = "#{full_gem_name} Documentation"
   rdoc.main = 'Readme.txt'
-  rdoc.rdoc_files.include 'lib/**/*.rb', 'lib/generated/**/*.txt', *gemspec.extra_rdoc_files
+
+  # examples are generated later and not necessarily available at definition time
+  examples = example_task_lib.conversion_pairs.map { |a| a[1] }
+  
+  rdoc.rdoc_files.include *examples
+  rdoc.rdoc_files.include 'lib/**/*.rb', *gemspec.extra_rdoc_files
 end
 
 # Helper method to add target="_parent" to all external links in _file_ html.
@@ -206,7 +218,9 @@ task :publish_rdoc => [:clobber_rdoc, :fix_rdoc] do
   hg ['addremove', '-q', "-R #{RDOC_REPO}"]
   hg ['ci', "-m \"Update Rdoc for version #{gemspec.version}\"", "-R #{RDOC_REPO}"]
   hg ['tag', '-f', "-m \"Released gem version #{gemspec.version}\"", "-R #{RDOC_REPO}", "#{full_gem_name}"]
-  hg ['push', "-R #{RDOC_REPO}"]
+  # hg ['push', "-R #{RDOC_REPO}"]
+  puts 'API site created. Don\'t forget to push'
+  puts "hg push -R #{RDOC_REPO}"
 end
 
 # :clean :clobber
