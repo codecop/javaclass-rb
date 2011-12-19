@@ -20,9 +20,6 @@ RDOC_REPO = 'api'
 gemspec = eval(IO.readlines('javaclass.gemspec').join)
 full_gem_name = "#{gemspec.name}-#{gemspec.version}"
 
-desc 'Validate all the work products (multi task)'
-task :validate => [ :clean, :clobber, :validate_gem, :test, :fix_rdoc, :rcov, :todo ]
-
 desc 'Validates the gemspec'
 task :validate_gem do
   gemspec.validate
