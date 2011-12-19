@@ -144,7 +144,7 @@ task :release_googlecode => :package do
 end
 
 desc 'Package and upload gem to Rubygems and Google Code'
-task :publish_gem => [:clobber_package, :package, :release_rubygems, :release_googlecode]
+task :publish_gem => [:clobber_package, :example, :package, :release_rubygems, :release_googlecode]
 
 # :example, :clobber_example, :reexample
 example_task_lib = Rake::ExampleTask.new do |example|
@@ -152,6 +152,7 @@ example_task_lib = Rake::ExampleTask.new do |example|
 end
 task :clobber_rdoc => [:clobber_example]
 task :rdoc => [:example]
+task :package => [:example]
 
 # :rdoc, :clobber_rdoc, :rerdoc
 Rake::RDocTask.new do |rdoc|
