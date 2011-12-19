@@ -27,7 +27,7 @@ module JavaClass
         TemporaryJavaNamePart.new('java') { __top_level_method_missing__(:java) }
       end
 
-      # Convert the beginning of a full qualified Java classname to a JavaName instance.
+      # Convert the beginning of a full qualified Java classname to a JavaQualifiedName instance.
       def method_missing(method_id, *args)
         str = method_id.id2name
         if JavaLanguage::ALLOWED_PACKAGE_PREFIX.include?(str)
