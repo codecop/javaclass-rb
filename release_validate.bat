@@ -12,7 +12,7 @@ pause
 
 rem validate the documentation
 call rake fix_rdoc
-start html\index.html 
+start html\index.html
 echo RDOC ok?
 pause
 
@@ -25,9 +25,10 @@ echo packaged test ok?
 pause
 
 call rake rdoc
-start html\index.html 
+start html\index.html
 echo packaged RDOC ok?
 cd ..\..
+set VERS=
 pause
 
 call rake clean clobber

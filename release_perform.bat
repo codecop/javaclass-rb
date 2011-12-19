@@ -14,7 +14,8 @@ call rake tag
 echo version and tag ok?
 pause
 
-rem publish gem 
+rem publish gem
+set HOME=%HOMEDRIVE%%HOMEPATH%
 call rake publish_gem
 echo publish ok?
 pause
@@ -27,6 +28,7 @@ echo publish ok?
 cd api
 call hg push
 cd ..
+set HOME=
 echo push ok?
 pause
 
