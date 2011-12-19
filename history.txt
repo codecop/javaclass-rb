@@ -1,4 +1,4 @@
-=== next release
+=== 0.0.4 19/12/2011
 
 * convert examples to RDOC using example_task
 * added transitive dependency trees from references
@@ -17,7 +17,7 @@
 * added DSL like shortcuts for java.* and javax.* package and class names.
 * added interfaces implemented by the class
 * fixed string ux problem in Ruby 1.9
-* replaced leading 0 in exponent of float/double because of Linux printf 
+* replaced leading 0 in exponent of float/double because of Linux printf
 * split Gemspec from Rakefile as proposed by Yeguda Katz
 
 === 0.0.3 02/10/2010
