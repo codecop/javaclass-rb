@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://code.google.com/p/#{GOOGLE_PROJECT}/"
   s.author = 'Peter Kofler'
   s.email = 'peter dot kofler at code minus cop dot org'
-  s.date = Time::gm(2009, 3, 1)
+  s.date = Time::gm(2011, 12, 19)
 
   s.files = Dir.glob('*.txt') + Dir.glob('{lib,test,examples}/**/*') + ['javaclass.gemspec', 'Rakefile', 'example_task.rb']
   s.test_files = Dir.glob('test/**/test_*.rb')
