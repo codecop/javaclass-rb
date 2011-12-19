@@ -2,7 +2,7 @@ GEM_NAME = 'javaclass'
 GOOGLE_PROJECT = "#{GEM_NAME}-rb"
 
 Gem::Specification.new do |s|
-  s.version = '0.0.4'
+  s.version = '0.0.5'
   s.name = GEM_NAME
   s.rubyforge_project = 'javaclass' # old, just redirects
   s.summary = 'A parser and disassembler for Java class files'
