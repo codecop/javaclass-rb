@@ -58,42 +58,42 @@ module Zip # :nodoc:all
       end
 
       case @fstype
-        when FSTYPE_UNIX
-          @unix_perms = (@externalFileAttributes >> 16) & 07777
-  
-          case (@externalFileAttributes >> 28)
-          when 04
-            @ftype = :directory
-          when 010
-            @ftype = :file
-          when 012
-            @ftype = :link
-          else
-            # raise ZipInternalError, "unknown file type #{'0%o' % (@externalFileAttributes >> 28)}"
-            
-            # PKZIP format see http://www.pkware.com/documents/APPNOTE/APPNOTE-6.3.0.TXT
-            # external file attributes: (4 bytes)
-            # The mapping of the external attributes is host-system dependent (see 'version made by').
-            # For MS-DOS, the low order byte is the MS-DOS directory attribute byte. If input came 
-            # from standard input, this field is set to zero.
-            # for the meaning of these flags see http://unix.stackexchange.com/questions/14705/the-zip-formats-external-file-attribute
+      when FSTYPE_UNIX
+        @unix_perms = (@externalFileAttributes >> 16) & 07777
 
-            # unknown flag, fall back to name detection
-            if name_is_directory?
-              @ftype = :directory
-            else
-              @ftype = :file
-            end
-            
-          end
-          
+        case (@externalFileAttributes >> 28)
+        when 04
+          @ftype = :directory
+        when 010
+          @ftype = :file
+        when 012
+          @ftype = :link
         else
+          # raise ZipInternalError, "unknown file type #{'0%o' % (@externalFileAttributes >> 28)}"
+          
+          # PKZIP format see http://www.pkware.com/documents/APPNOTE/APPNOTE-6.3.0.TXT
+          # external file attributes: (4 bytes)
+          # The mapping of the external attributes is host-system dependent (see 'version made by').
+          # For MS-DOS, the low order byte is the MS-DOS directory attribute byte. If input came 
+          # from standard input, this field is set to zero.
+          # for the meaning of these flags see http://unix.stackexchange.com/questions/14705/the-zip-formats-external-file-attribute
+
+          # unknown flag, fall back to name detection
           if name_is_directory?
             @ftype = :directory
           else
             @ftype = :file
           end
+          
         end
+        
+      else
+        if name_is_directory?
+          @ftype = :directory
+        else
+          @ftype = :file
+        end
+      end
     end
 
   end
