@@ -104,8 +104,8 @@ module Rake
     def define_transform(example_path, example_target)
       task build_task_name => [example_target]
       file example_target => [example_path, Rake.application.rakefile] do
-        print '.'
         transform(example_path, example_target)
+        puts "generated #{example_target}"
       end
     end
         
