@@ -2,10 +2,10 @@ GEM_NAME = 'javaclass'
 GOOGLE_PROJECT = "#{GEM_NAME}-rb"
 
 Gem::Specification.new do |s|
-  s.version = '0.0.5'
+  s.version = '0.5.0'
   s.name = GEM_NAME
   s.rubyforge_project = 'javaclass' # old, just redirects
-  s.summary = 'A parser and disassembler for Java class files'
+  s.summary = 'Java class files parser and disassembler for Ruby'
   s.description = 'Provides access to the package, protected, and public fields and methods of the classes passed to it together with a list of all outgoing references.'
   s.license = 'BSD'
   s.homepage = "http://code.google.com/p/#{GOOGLE_PROJECT}/"
