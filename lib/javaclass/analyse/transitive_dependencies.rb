@@ -24,8 +24,8 @@ module JavaClass
         end
 
         if includes?(classname)
-          load(classname).imported_3rd_party_types.each do |classname|
-            transitive_dependency_tree(classname, tree, &filter)
+          load(classname).imported_3rd_party_types.each do |type|
+            transitive_dependency_tree(type, tree, &filter)
           end
         end
         
