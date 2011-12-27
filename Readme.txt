@@ -74,7 +74,7 @@ The trunk repository is available with
 == Dependencies
 
 * Ruby 1.8.6 (also tested under 1.8.7 and 1.9.1)
-* {rubyzip}[http://rubyzip.sourceforge.net/] 0.9.1 (also tested with 0.9.4)
+* {rubyzip}[http://rubyzip.sourceforge.net/] 0.9.1 (also tested with 0.9.4 and 0.9.5)
 
 == References
 
