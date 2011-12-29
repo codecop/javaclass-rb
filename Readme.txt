@@ -20,7 +20,8 @@ Ruby for all kind of stuff, just for fun. When I needed some Java class
 analysis I wrote it in Ruby. As I am a puritan, I did not
 want to call javap from my script, so I started disassembling the class files,
 which might be the base for some serious static code analysis tools. (I
-{started adding methods}[link:/files/history_txt.html] to that end.)
+{started adding methods}[link:/files/history_txt.html] to that end and
+{planned}[link:/files/planned_txt.html] for some common metrics as well.)
 
 == Install
 

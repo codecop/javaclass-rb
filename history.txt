@@ -1,7 +1,7 @@
 === 0.5 next release
 
 * change version number from micro to minor which more proper reflects code
-* fix warnings show by Ruby 1.9.1
+* fix some warnings shown by Ruby 1.9.1
 
 === 0.4 named "0.0.4" 19/12/2011
 
