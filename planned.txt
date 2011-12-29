@@ -1,13 +1,38 @@
-=== Planned
+=== Classpath (JavaClass::Classpath)
 
-* add collecting of incoming references (mark my interfaces, mark my referenced classes)
-  * can calculate stability
-  * find interfaces with only 1 implementation (smell?)
+* WARs and EARs contain JARs and a folder
+
+=== Class File Format (JavaClass::ClassFile)
 
 * implement byte code awareness
   * add the byte code sequences to the methods so it can be analysed later (see JVM spec) 
   * scanning of byte code for numbers, which methods loaded, which fields loaded
 
+* see what {similar project by unageanu}[http://github.com/unageanu/javaclass] has to offer ;-)
+
+=== Class Analysis, on a single class (JavaClass::ClassScanner)
+* count outgoing references (usage) per method, similar to general imported types
+* display graph of fields and methods per class and which methods use/call which (as seen in "Code Blindness")
+
+=== Metrics/Analysis across a whole classpath (JavaClass::Analyse)
+
+* add collecting of incoming references (mark my interfaces, mark my referenced classes)
+  * can calculate stability
+  * find interfaces with only 1 implementation (smell?)
+
+* "Greed Detector" = "metric" if all referencing classes of a class is another package, propose moving it there.
+  * count outgoing references (usage) per method 
+  * which signatures are called how often
+  * maybe move current method there?
+
+* {Chidamber and Kemerer Java Metrics (ckjm)}[http://www.spinellis.gr/sw/ckjm/]
+* {The CRSS Metric for Package Design Quality}[http://crpit.com/confpapers/CRPITV62Melton2.pdf]
+* {Evolutionary architecture and emergent design: Emergent design through metrics}[http://www.ibm.com/developerworks/java/library/j-eaed6/]
+
+=== Test
+
 * test with a large set of classes
   * use all classes of all JDKs against javap (compileTheWorld)
   * use the Quality Corpus
+  
+* improve test coverage

@@ -1,2 +1,0 @@
-TODO other classpath abstractions: 
-* WARs and EARs contain JARs and a folder
