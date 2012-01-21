@@ -85,4 +85,5 @@ The trunk repository is available with
 
 == License
 
+Typically the licenses listed for the project are that of the project itself, and not of dependencies.
 * {BSD License}[http://www.opensource.org/licenses/bsd-license.php], it's enclosed in {license.txt}[link:/files/license_txt.html].
