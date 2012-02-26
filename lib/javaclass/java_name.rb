@@ -56,7 +56,7 @@ module JavaClass
     # Split the simple name at the camel case boundary _pos_ and return two parts. _pos_ may be < 0 for counting backwards.
     def split_simple_name(pos)
       parts = @simple_name.scan(/([A-Z][^A-Z]+)/).flatten
-      pos = parts.size + pos +1 if pos < 0
+      pos = parts.size + pos + 1 if pos < 0
       return ['', @simple_name] if pos <= 0
       return [@simple_name, ''] if pos >= parts.size
       [parts[0...pos].join, parts[pos..-1].join]
