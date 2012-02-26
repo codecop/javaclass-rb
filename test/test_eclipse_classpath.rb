@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/setup'
 require 'javaclass/classpath/eclipse_classpath'
-require 'test/dot_classpath'
+require File.dirname(__FILE__) + '/dot_classpath'
 
 module TestJavaClass
   module TestClasspath
