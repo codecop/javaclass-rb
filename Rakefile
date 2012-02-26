@@ -6,11 +6,6 @@ require 'rake'
 require 'rake/clean' # for clean/clobber
 require 'rake/testtask'
 require 'rake/packagetask'
-begin 
-  require 'rake/rdoctask' 
-rescue LoadError
-  require 'rdoc/task' 
-end
 require 'example_task'
 
 # Test, package and publish functions.
@@ -158,8 +153,7 @@ task :clobber_rdoc => [:clobber_example]
 task :rdoc => [:example]
 task :package => [:example]
 
-# :rdoc, :clobber_rdoc, :rerdoc
-Rake::RDocTask.new do |rdoc|
+def configure_rdoc(rdoc)
   rdoc.rdoc_dir = RDOC_DIR # 'html' is default anyway
   rdoc.title = "#{full_gem_name} Documentation"
   rdoc.main = 'Readme.txt'
@@ -171,6 +165,24 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb', *gemspec.extra_rdoc_files)
   
   rdoc.before_running_rdoc { }
+end
+
+begin 
+  require 'rake/rdoctask' 
+
+# :rdoc, :clobber_rdoc, :rerdoc
+Rake::RDocTask.new do |rdoc| 
+  configure_rdoc(rdoc)
+end
+
+rescue LoadError
+  require 'rdoc/task' 
+
+# :rdoc, :clobber_rdoc, :rerdoc
+RDoc::Task.new do |rdoc|
+  configure_rdoc(rdoc)
+end
+
 end
 
 # Helper method to add target="_parent" to all external links in _file_ html.
