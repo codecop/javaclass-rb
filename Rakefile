@@ -154,15 +154,15 @@ task :rdoc => [:example]
 task :package => [:example]
 
 begin 
-  require 'rake/rdoctask'
-  RDocTask = Rake::RDocTask 
-rescue LoadError
   require 'rdoc/task' 
-  RDocTask = RDoc::Task 
+  SomeRDocTask = RDoc::Task 
+rescue LoadError
+  require 'rake/rdoctask'
+  SomeRDocTask = Rake::RDocTask 
 end
 
 # :rdoc, :clobber_rdoc, :rerdoc
-RDocTask.new do |rdoc| 
+SomeRDocTask.new do |rdoc| 
   rdoc.rdoc_dir = RDOC_DIR # 'html' is default anyway
   rdoc.title = "#{full_gem_name} Documentation"
   rdoc.main = 'Readme.txt'
