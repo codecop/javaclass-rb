@@ -6,7 +6,11 @@ require 'rake'
 require 'rake/clean' # for clean/clobber
 require 'rake/testtask'
 require 'rake/packagetask'
-require 'rake/rdoctask'
+begin 
+  require 'rake/rdoctask' 
+rescue LoadError
+  require 'rdoc/task' 
+end
 require 'example_task'
 
 # Test, package and publish functions.
