@@ -20,8 +20,8 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 1.8.6'
   s.required_rubygems_version = nil if s.respond_to? :required_rubygems_version=
   s.platform = Gem::Platform::RUBY
-  s.add_development_dependency('rake', '>= 0.8.4')
-  s.add_development_dependency('rcov', '>= 0.8.1.2')
+  s.add_development_dependency('rake', '>= 0.8.3')
+  # s.add_development_dependency('rcov', '>= 0.8.1.2')
   # s.add_development_dependency('ZenTest', '>= 4.4.0')
 
   s.has_rdoc = true

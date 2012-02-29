@@ -172,8 +172,6 @@ SomeRDocTask.new do |rdoc|
   
   rdoc.rdoc_files.include(*examples)
   rdoc.rdoc_files.include('lib/**/*.rb', *gemspec.extra_rdoc_files)
-  
-  rdoc.before_running_rdoc { }
 end
 
 # Helper method to add target="_parent" to all external links in _file_ html.
