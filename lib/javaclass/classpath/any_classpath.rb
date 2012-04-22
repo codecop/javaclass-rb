@@ -29,7 +29,7 @@ module JavaClass
         begin
           Dir.chdir File.expand_path(path)
 
-          Dir['*'].collect do |name|
+          Dir['*'].sort.collect do |name|
             if FileTest.directory?(name)
               find_jars(name)
             elsif name =~ /\.jar$|\.zip$/
