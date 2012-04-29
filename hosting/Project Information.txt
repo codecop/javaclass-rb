@@ -52,7 +52,9 @@ and for section 8, use the [http://code.google.com/p/javaclass-rb/issues/list Is
 The trunk repository is available with 
 
  `hg clone https://javaclass-rb.googlecode.com/hg/ javaclass-rb`
- >>>
+
+<g:plusone size="medium"></g:plusone>
+>>>
 
 Link:
 https://code.google.com/p/javaclass-rb/
