@@ -1,8 +1,20 @@
+=== Tools
+
+* document an API from a Jar. Use with commons.lang, collections etc with version 0 for snapshot (don't show version)
+* find boundaries of my own code, i.e. find leafs of my dependency hull
+  * find all without dependency on my code
+  * find all with one dependency to these
+  * etc.
+
+
 === Classpath (JavaClass::Classpath)
 
 * WARs and EARs contain JARs and a folder
 
+
 === Class File Format (JavaClass::ClassFile)
+
+* {understand synthetic class}[http://stackoverflow.com/questions/8540768/when-is-the-jvm-bytecode-access-modifier-flag-0x1000-hex-synthetic-set]
 
 * implement byte code awareness
   * add the byte code sequences to the methods so it can be analysed later (see JVM spec) 
@@ -10,9 +22,12 @@
 
 * see what {similar project by unageanu}[http://github.com/unageanu/javaclass] has to offer ;-)
 
+
 === Class Analysis, on a single class (JavaClass::ClassScanner)
+
 * count outgoing references (usage) per method, similar to general imported types
 * display graph of fields and methods per class and which methods use/call which (as seen in "Code Blindness")
+
 
 === Metrics/Analysis across a whole classpath (JavaClass::Analyse)
 
@@ -28,6 +43,7 @@
 * {Chidamber and Kemerer Java Metrics (ckjm)}[http://www.spinellis.gr/sw/ckjm/]
 * {The CRSS Metric for Package Design Quality}[http://crpit.com/confpapers/CRPITV62Melton2.pdf]
 * {Evolutionary architecture and emergent design: Emergent design through metrics}[http://www.ibm.com/developerworks/java/library/j-eaed6/]
+
 
 === Test
 
