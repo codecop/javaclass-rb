@@ -62,16 +62,22 @@ module JavaClass
       # _list_ must provide a <code>add_class(entry, is_public, version)</code> method.
       def compile_list(version, path, list)
         cpe = Classpath::AnyClasspath.new(path)
-        filter_classes(cpe.names).each do |entry|
-          is_public = public?(cpe, entry)
+        add_list_from_classpath(version, cpe, list)
+        list
+      end
+
+      # Compile the class list for the given _classpath_ . This searches the _path_ for zips and JARs
+      # and adds them to the given _list_ of found classes. _version_ is a number >= 0, e.g. 2 for JDK 1.2.
+      # _list_ must provide a <code>add_class(entry, is_public, version)</code> method.
+      def add_list_from_classpath(version, classpath, list)
+        filter_classes(classpath.names).each do |entry|
+          is_public = public?(classpath, entry)
           next if @skip_package_classes && !is_public
           list.add_class(entry, is_public, version) if list
           yield(entry, is_public, version) if block_given?
         end
-
-        list
       end
-
+      
     end
 
   end
