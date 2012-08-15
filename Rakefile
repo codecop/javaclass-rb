@@ -52,6 +52,19 @@ rescue LoadError
   warn("rcov not installed. coverage not available. #{$!}")
 end
 
+begin
+  require File.dirname(__FILE__) + '/saikuro_task'
+
+# :complexity, :clobber_complexity, :recomplexity
+Rake::SaikuroTask.new do |saikuro|
+  saikuro.files.include "#{gemspec.require_path}/**/*.rb"
+end
+
+rescue LoadError
+  # skip if not installed
+  warn("Saikuro not installed. complexity not available. #{$!}")
+end
+
 desc 'Find missing test methods with ZenTest'
 task :zentest do
   files = gemspec.files.find_all { |f| f =~ /^#{gemspec.require_path}.*\.rb$/ } + gemspec.test_files

@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.email = 'peter dot kofler at code minus cop dot org'
   s.date = Time::gm(2011, 12, 19)
 
-  s.files = Dir.glob('*.txt') + Dir.glob('{lib,test,examples}/**/*') + ['javaclass.gemspec', 'Rakefile', 'example_task.rb']
+  s.files = Dir.glob('*.txt') + Dir.glob('{lib,test,examples}/**/*') + ['javaclass.gemspec', 'Rakefile'] + Dir.glob('*_task.rb')
   s.test_files = Dir.glob('test/**/test_*.rb')
   s.require_path = 'lib'
   s.add_dependency('rubyzip', '>= 0.9.1')
@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.add_development_dependency('rake', '>= 0.8.3')
   # s.add_development_dependency('rcov', '>= 0.8.1.2')
+  # s.add_development_dependency('saikuro', '>= 1.2.1')
   # s.add_development_dependency('ZenTest', '>= 4.4.0')
 
   s.has_rdoc = true
