@@ -30,7 +30,12 @@ module JavaClass
         cp.add_file_name(repository_path)
         cp
       end
-      
+
+      # Return the Jar's file path of this artefact inside ~/.m2/repository
+      def repository_path
+        File.join(ENV['HOME'], '.m2', 'repository', @group.gsub(/\./, '/'),  @name, @version, "#{basename}.jar" )
+      end
+
       private
       
       def make_title
@@ -43,11 +48,6 @@ module JavaClass
         }.join(' ')
       end
 
-      # Return the Jar's file path of this artefact inside ~/.m2/repository
-      def repository_path
-        File.join(ENV['HOME'], '.m2', 'repository', @group.gsub(/\./, '/'),  @name, @version, "#{basename}.jar" )
-      end
-      
       def basename
         "#{@name}-#{@version}"
       end
