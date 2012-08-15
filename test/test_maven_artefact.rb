@@ -26,6 +26,11 @@ module TestJavaClass
         assert_equal('Commons CLI', a.title)
       end
 
+      def test_repository_path
+        a = JavaClass::Classpath::MavenArtefact.new('org.apache.commons', 'commons-lang3', '1.6')
+        assert_equal("#{ENV['HOME']}/.m2/repository/org/apache/commons/commons-lang3/1.6/commons-lang3-1.6.jar", a.repository_path)
+      end
+      
     end
 
   end
