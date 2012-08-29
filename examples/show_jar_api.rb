@@ -17,19 +17,24 @@ require 'javaclass/classlist/list'
 #--
 JARS = [
   # some Apache Commons
-  JavaClass::Classpath::MavenArtefact.new('commons-beanutils',    'commons-beanutils', '1.8.3', 'Commons BeanUtils'),
-  JavaClass::Classpath::MavenArtefact.new('commons-cli',          'commons-cli', '1.2'),
-  JavaClass::Classpath::MavenArtefact.new('commons-codec',        'commons-codec', '1.6'),
-  JavaClass::Classpath::MavenArtefact.new('commons-collections',  'commons-collections', '3.2.1'),
-  JavaClass::Classpath::MavenArtefact.new('commons-configuration', 'commons-configuration', '1.8'),
-  JavaClass::Classpath::MavenArtefact.new('commons-digester',     'commons-digester', '2.1'),
-  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',   'commons-digester3', '3.2'),
-  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',   'commons-jexl', '2.1.1', 'Commons JEXL'),
-  JavaClass::Classpath::MavenArtefact.new('commons-lang',         'commons-lang', '2.6'),
-  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',   'commons-lang3', '3.1'),
-  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',   'commons-math', '2.2'),
-  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',   'commons-math3', '3.0'),
-  JavaClass::Classpath::MavenArtefact.new('commons-io',           'commons-io', '2.4'),
+#  JavaClass::Classpath::MavenArtefact.new('commons-beanutils',     'commons-beanutils', '1.8.3', 'Commons BeanUtils'),
+#  JavaClass::Classpath::MavenArtefact.new('commons-cli',           'commons-cli', '1.2'),
+#  JavaClass::Classpath::MavenArtefact.new('commons-codec',         'commons-codec', '1.6'),
+#  JavaClass::Classpath::MavenArtefact.new('commons-collections',   'commons-collections', '3.2.1'),
+#  JavaClass::Classpath::MavenArtefact.new('commons-configuration', 'commons-configuration', '1.8'),
+#  JavaClass::Classpath::MavenArtefact.new('commons-digester',      'commons-digester', '2.1'),
+#  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',    'commons-digester3', '3.2'),
+#  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',    'commons-email', '1.2'),
+#  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',    'commons-exec', '1.1'),
+#  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',    'commons-id', '1.0-SNAPSHOT'),
+#  JavaClass::Classpath::MavenArtefact.new('commons-io',            'commons-io', '2.4'),
+#  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',    'commons-jexl', '2.1.1', 'Commons JEXL'),
+#  JavaClass::Classpath::MavenArtefact.new('commons-lang',          'commons-lang', '2.6'),
+#  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',    'commons-lang3', '3.1'),
+#  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',    'commons-math', '2.2'),
+#  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',    'commons-math3', '3.0'),
+#  JavaClass::Classpath::MavenArtefact.new('commons-net',           'commons-net', '3.1'),
+#  JavaClass::Classpath::MavenArtefact.new('commons-httpclient',    'commons-httpclient', '3.0'),
 ]
 #++
 # configuration for some artefacts
