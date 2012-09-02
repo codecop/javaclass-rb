@@ -26,7 +26,7 @@ JARS = [
 #  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',    'commons-digester3', '3.2'),
 #  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',    'commons-email', '1.2'),
 #  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',    'commons-exec', '1.1'),
-#  JavaClass::Classpath::MavenArtefact.new('commons-httpclient',    'commons-httpclient', '3.0'),
+#  JavaClass::Classpath::MavenArtefact.new('commons-httpclient',    'commons-httpclient', '3.0', 'Jakarta Httpclient'),
 #  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',    'commons-id', '1.0-SNAPSHOT'),
 #  JavaClass::Classpath::MavenArtefact.new('commons-io',            'commons-io', '2.4'),
 #  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',    'commons-jexl', '2.1.1', 'Commons JEXL'),
