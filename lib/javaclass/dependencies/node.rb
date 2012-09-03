@@ -16,6 +16,14 @@ module JavaClass
       def to_s
         @name
       end
+      
+      def ==(other)
+        other.respond_to?(:name) && @name == other.name
+      end
+      
+      def hash
+        @name.hash
+      end
 
       # Add a list of _provider_ Node as a _dependency_ to. 
       def add_dependency_to(dependency, providers)
@@ -29,7 +37,14 @@ module JavaClass
           warn "dependency to #{dependency} found more than once: #{providers.join(', ')}"
         end
       end
-      
+
+      # Add a list _dependencies_ of _provider_. 
+      def add_dependencies_to(dependencies, providers)
+        dependencies.each do |dependency|
+          add_dependency_to(dependency, providers)
+        end
+      end
+
     end
 
   end
