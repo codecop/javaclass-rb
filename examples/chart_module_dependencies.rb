@@ -47,6 +47,7 @@ Dir.new(location).each do |folder|
   plugins.add(JavaClass::Dependencies::ClasspathNode.new(folder, cp))
 end
 plugins.resolve_dependencies
+puts "#{plugins.to_a.size} plugins loaded" 
 
 JavaClass::Dependencies::GraphmlSerializer.new.save('plugin_dependencies', plugins)
 JavaClass::Dependencies::YamlSerializer.new.save('plugin_dependencies', plugins)
