@@ -17,8 +17,8 @@ module JavaClass
         @name
       end
 
-      # Add a list of _provider_ Node for a _dependency_ 
-      def add_dependency_for(dependency, providers)
+      # Add a list of _provider_ Node as a _dependency_ to. 
+      def add_dependency_to(dependency, providers)
         if providers.size == 0
           # external dependency, skip this
         elsif providers.size == 1
