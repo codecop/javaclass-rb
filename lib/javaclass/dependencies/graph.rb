@@ -1,4 +1,9 @@
 module JavaClass
+  
+  # The module Dependencies is for separating namespaces. It contains logic 
+  # to analyse and structure general dependencies. A set of dependencies build
+  # a Graph which can be analaysed.
+  # Author::          Peter Kofler
   module Dependencies
    
     # A graph contains a list of Node
@@ -25,7 +30,7 @@ module JavaClass
 
           node.dependency_names.each do |dependency|
             providers = nodes_satisfying(dependency)
-            node.add_dependency_for(dependency, providers)
+            node.add_dependency_to(dependency, providers)
           end
           
         end
