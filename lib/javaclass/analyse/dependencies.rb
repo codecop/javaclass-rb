@@ -1,7 +1,7 @@
 module JavaClass
 
   # The module Analyse is for separating namespaces. It contains various methods
-  # to analyse classes accross a whole whole code bases (Classpath). The functionality
+  # to analyse classes accross a whole code bases (Classpath). The functionality
   # of all analysers is collected in Dsl::ClasspathAnalysers.
   # Author::          Peter Kofler
   module Analyse
