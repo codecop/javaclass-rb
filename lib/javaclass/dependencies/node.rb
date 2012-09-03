@@ -24,6 +24,10 @@ module JavaClass
       def hash
         @name.hash
       end
+      
+      def <=>(other)
+        @name <=> other.name 
+      end
 
       # Add a list of _provider_ Node as a _dependency_ to. 
       def add_dependency_to(dependency, providers)
