@@ -52,7 +52,7 @@ module TestJavaClass
         assert_equal(2, graph.to_a.size)
 
         # which one of them was "someNode"
-        some_node = graph.to_a[1]
+        some_node = graph.to_a.sort[1]
         assert_equal('someNode', some_node.name)
 
         # which had 1 dependant node
