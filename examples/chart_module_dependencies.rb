@@ -13,7 +13,7 @@ location = 'C:\RTC3.0\workspaces\Costing_Dev'
 
 def relatedPlugin?(name)
   name == 'PricingTool2' ||
-  name == 'org.eclipse.update.scheduler' ||
+  name == 'org.eclipse.update.scheduler' || # all other org.eclipse, nebula and zentest are in 1st level
   name =~ /^com\.ibm\./ && !(
     name =~ /\.test$|\.testing$|\.mock$|\.test\.perfmon$/ ||
     name =~ /\.build/ ||
