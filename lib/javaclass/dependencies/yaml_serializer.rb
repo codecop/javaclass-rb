@@ -1,3 +1,5 @@
+require 'yaml'
+
 module JavaClass
   module Dependencies
 
@@ -25,7 +27,7 @@ module JavaClass
       end
       
       def dependencies_to_yaml(dependencies)
-        dependencies.map { |dep| '      - ' + dep.to_s }.join("\n")
+        dependencies.map { |dep| '    - ' + dep.to_s }.join("\n")
       end
 
     end
