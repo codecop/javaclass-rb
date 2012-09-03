@@ -25,6 +25,7 @@ module TestJavaClass
 
       def test_graph_to_yaml
         string = @serializer.graph_to_yaml(@graph)
+        puts string # is ok for all but Ruby 1.9.3 YAML
         yaml = YAML.load(StringIO.new(string))
 
         # we saved a hash with 2 nodes
@@ -45,6 +46,7 @@ module TestJavaClass
 
       def test_yaml_to_graph
         string = @serializer.graph_to_yaml(@graph)
+        puts string # is ok for all but Ruby 1.9.3 YAML
         yaml = YAML.load(StringIO.new(string))
         graph = @serializer.yaml_to_graph(yaml)
         
