@@ -46,7 +46,7 @@ module JavaClass
 
       # Save the _graph_ from YAML _filename_
       def load(filename)
-        yaml = YAML.load(filename + '.yaml')
+        yaml = YAML.load_file(filename + '.yaml')
         yaml_to_graph(yaml)
       end
       
