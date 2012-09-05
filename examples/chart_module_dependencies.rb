@@ -43,7 +43,6 @@ Dir.new(location).each do |folder|
   cp = classpath(classes)
   next if cp.count == 0
 
-  puts "#{cp.count} classes found in plugin #{folder}"
   plugins.add(JavaClass::Dependencies::ClasspathNode.new(folder, cp))
 end
 plugins.resolve_dependencies
