@@ -1,7 +1,8 @@
 require File.dirname(__FILE__) + '/setup'
 require 'javaclass/dependencies/yaml_serializer'
-require 'javaclass/dependencies/graph'
+require 'javaclass/dependencies/edge'
 require 'javaclass/dependencies/node'
+require 'javaclass/dependencies/graph'
 
 module TestJavaClass
   module TestDependencies
@@ -14,9 +15,9 @@ module TestJavaClass
         node = JavaClass::Dependencies::Node.new('someNode')
         @other = JavaClass::Dependencies::Node.new('otherNode')
 
-        node.add_dependency_to('dependency1', [@other])
-        node.add_dependency_to('dependency2', [@other])
-        node.add_dependency_to('dependency3', [@other])
+        node.add_dependency(JavaClass::Dependencies::Edge.new('from1', 'dependency1'), [@other])
+        node.add_dependency(JavaClass::Dependencies::Edge.new('from2', 'dependency2'), [@other])
+        node.add_dependency(JavaClass::Dependencies::Edge.new('from3', 'dependency3'), [@other])
 
         @graph = JavaClass::Dependencies::Graph.new
         @graph.add(node)
@@ -40,7 +41,7 @@ module TestJavaClass
         # with 3 actual imports
         imports = dependencies['otherNode']
         assert_equal(3, imports.size)
-        assert_equal('dependency1', imports[0])
+        assert_equal('from1->dependency1', imports[0])
       end
 
       def test_yaml_to_graph
@@ -65,7 +66,8 @@ module TestJavaClass
         # with 3 actual imports
         imports = dependencies[new_other]
         assert_equal(3, imports.size)
-        assert_equal('dependency1', imports[0])
+        assert_equal('from2', imports[1].source)
+        assert_equal('dependency2', imports[1].target)
       end
 
     end

@@ -16,12 +16,12 @@ module TestJavaClass
       end
 
       def test_add_dependency_to_for_unsatisfied
-        @node.add_dependency_to('dependency.for.another.node', [])
+        @node.add_dependency('dependency.for.another.node', [])
         assert_equal(0, @node.dependencies().size)
       end
 
       def test_add_dependency_to_for_found
-        @node.add_dependency_to('dependency.for.other.node', [@other])
+        @node.add_dependency('dependency.for.other.node', [@other])
         assert_equal(1, @node.dependencies().size)
         assert_equal(['dependency.for.other.node'], @node.dependencies[@other])
       end

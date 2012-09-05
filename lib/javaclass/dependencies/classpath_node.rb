@@ -1,4 +1,5 @@
 require 'javaclass/dependencies/node'
+require 'javaclass/dependencies/edge'
 
 module JavaClass
   module Dependencies
@@ -12,9 +13,15 @@ module JavaClass
         @classpath = classpath
       end
 
-      # Return a list of String names of the dependencies this node has.
-      def dependency_names
-        @classpath.external_types
+      # Iterate on a list of Edge dependencies this node has.
+      def outgoing_dependencies
+        @classpath.values.each do |clazz|
+          clazz.imported_3rd_party_types.each do |import|
+            unless satisfies?(import) 
+              yield Edge.new(clazz.to_classname, import)
+            end
+          end
+        end
       end
       
       # Does this Node satisfy the dependency.

@@ -28,11 +28,12 @@ module JavaClass
         @nodes.each do |node|
           puts "processing #{node}"
 
-          node.dependency_names.each do |dependency|
-            providers = nodes_satisfying(dependency)
-            node.add_dependency_to(dependency, providers)
+          node.outgoing_dependencies do |dependency|
+            providers = nodes_satisfying(dependency.target)
+            node.add_dependency(dependency, providers)
           end
           
+          node.dependencies.values.each { |vals| vals.sort! }
         end
       end
       
