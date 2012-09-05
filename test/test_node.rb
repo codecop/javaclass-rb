@@ -12,7 +12,7 @@ module TestJavaClass
       end
 
       def test_to_s
-        assert_equal('someNode', @node.to_s)
+        assert_equal('someNode (1)', @node.to_s)
       end
 
       def test_add_dependency_to_for_unsatisfied

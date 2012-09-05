@@ -7,19 +7,19 @@ module JavaClass
     # Author::          Peter Kofler
     class ClasspathNode < Node
     
-      def initialize(name, data)
-        super(name)
-        @data = data
+      def initialize(name, classpath)
+        super(name, classpath.count)
+        @classpath = classpath
       end
 
       # Return a list of String names of the dependencies this node has.
       def dependency_names
-        @data.external_types
+        @classpath.external_types
       end
       
       # Does this Node satisfy the dependency.
       def satisfies?(dependency_name)
-        @data.includes?(dependency_name)
+        @classpath.includes?(dependency_name)
       end
 
     end

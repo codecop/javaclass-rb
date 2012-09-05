@@ -46,7 +46,7 @@ module JavaClass
         elem.add_element('data', 'key' => 'n1').
           add_element('y:ShapeNode').
           add_element('y:NodeLabel').
-          add_text(node.name)
+          add_text(node.to_s)
     
         node.dependencies.keys.each do |dep|
           edge = container.add_element('edge')

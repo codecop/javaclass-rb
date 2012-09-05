@@ -6,15 +6,17 @@ module JavaClass
     class Node
 
       attr_reader :name
+      attr_reader :size
       attr_reader :dependencies
     
-      def initialize(name)
+      def initialize(name, size=1)
         @name = name
+        @size = size
         @dependencies = Hash.new([])
       end
 
       def to_s
-        @name
+        "#{@name} (#{@size.to_s})"
       end
       
       def ==(other)
