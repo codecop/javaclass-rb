@@ -45,8 +45,8 @@ module JavaClass
         elem = container.add_element('node', 'id' => node.name)
         elem.add_element('data', 'key' => 'n1').
           add_element('y:ShapeNode').
-          add_element('y:NodeLabel').
-          add_text(node.to_s)
+            add_element('y:NodeLabel').
+              add_text(node.to_s)
     
         node.dependencies.keys.each do |dep|
           edge = container.add_element('edge')
@@ -54,10 +54,12 @@ module JavaClass
           edge.add_attribute('source', node.name)
           edge.add_attribute('target', dep.name)
           
+          number_total_dependencies = node.dependencies[dep].size.to_s
+          number_unique_dependencies = node.dependencies[dep].collect { |d| d.target }.uniq.size.to_s
           edge.add_element('data', 'key' => 'e1').
             add_element('y:PolyLineEdge').
-            add_element('y:EdgeLabel').
-            add_text(node.dependencies[dep].size.to_s)
+              add_element('y:EdgeLabel').
+                add_text("#{number_total_dependencies} (#{number_unique_dependencies})")
         end
       end
   

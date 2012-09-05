@@ -1,7 +1,7 @@
 module JavaClass
   module Dependencies
     
-    # A node in a graph of dependencies. A node contains a map of dependencies to other nodes.
+    # A node in a graph of dependencies. A node contains a map of dependencies (Edge) to other nodes.
     # Author::          Peter Kofler
     class Node
 
@@ -31,8 +31,8 @@ module JavaClass
         @name <=> other.name 
       end
 
-      # Add a list of _provider_ Node as a _dependency_ to. 
-      def add_dependency_to(dependency, providers)
+      # Add a _dependency_ Edge for a list of _provider_ Node. 
+      def add_dependency(dependency, providers)
         if providers.size == 0
           # external dependency, skip this
         elsif providers.size == 1
@@ -40,14 +40,14 @@ module JavaClass
           provider = providers[0]
           @dependencies[provider] = @dependencies[provider] + [dependency]
         else
-          warn "dependency to #{dependency} found more than once: #{providers.join(', ')}"
+          warn "dependency to \"#{dependency}\" found more than once: #{providers.join(', ')}"
         end
       end
 
       # Add a list _dependencies_ of _provider_. 
-      def add_dependencies_to(dependencies, providers)
+      def add_dependencies(dependencies, providers)
         dependencies.each do |dependency|
-          add_dependency_to(dependency, providers)
+          add_dependency(dependency, providers)
         end
       end
 

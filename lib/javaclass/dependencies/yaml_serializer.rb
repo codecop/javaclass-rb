@@ -1,4 +1,5 @@
 require 'yaml'
+require 'javaclass/dependencies/edge'
 require 'javaclass/dependencies/node'
 require 'javaclass/dependencies/graph'
 
@@ -31,7 +32,7 @@ module JavaClass
       private
 
       def dependencies_to_yaml(dependencies)
-        dependencies.map { |dep| '    - ' + dep.to_s }.join("\n")
+        dependencies.map { |dep| "    - #{dep.source}->#{dep.target}" }.join("\n")
       end
 
       def node_with(name)
@@ -63,8 +64,8 @@ module JavaClass
           dependency_map = yaml[name] || {}
           dependency_map.keys.each do |dependency_name|
             depending_node = node_with(dependency_name)
-            dependencies = dependency_map[dependency_name]
-            node.add_dependencies_to(dependencies, [depending_node])
+            dependencies = dependency_map[dependency_name].collect { |d| Edge.new(*d.split(/->/)) }
+            node.add_dependencies(dependencies, [depending_node])
           end
         end
         
