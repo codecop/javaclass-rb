@@ -1,5 +1,6 @@
 === 0.5 next release
 
+* add dependency graph and classpath (module/component/plugin) implementation
 * add Maven artefact to generate classpath from group/name/version
 * change version number from micro to minor which more proper reflects code
 * fix some warnings shown by Ruby 1.9.1
