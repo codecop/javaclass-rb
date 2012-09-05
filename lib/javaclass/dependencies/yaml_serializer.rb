@@ -16,6 +16,7 @@ module JavaClass
 
       # Return a String of the YAML serialitzed _graph_
       def graph_to_yaml(graph)
+        "---\n" +
         graph.to_a.map { |node| node_to_yaml(node) }.join("\n")
       end
 
@@ -23,14 +24,14 @@ module JavaClass
       def node_to_yaml(node)
         node.name + ":\n" +
         node.dependencies.keys.map { |dep|
-          '  ' + dep.name + ": ---\n" + dependencies_to_yaml(node.dependencies[dep])
+          '  ' + dep.name + ":\n" + dependencies_to_yaml(node.dependencies[dep])
         }.join("\n")
       end
 
       private
 
       def dependencies_to_yaml(dependencies)
-        dependencies.map { |dep| '  - ' + dep.to_s }.join("\n")
+        dependencies.map { |dep| '    - ' + dep.to_s }.join("\n")
       end
 
       def node_with(name)
