@@ -19,7 +19,8 @@ def relatedPlugin?(name)
     name =~ /\.build/ ||
     name =~ /rocketDBtools$/ || # tools
     name =~ /\.s2r2\./ ||
-    name =~ /gpe\.persistence$/ # looks like duplicate of rocketdb
+    name =~ /gpe\.persistence$/ || # looks like duplicate of rocketdb
+    name =~ /com\.ibm\.arc\.sdm\.gpe\.ui|com\.ibm\.arc\.sdm\.addendum/ # known to be layer 14, depending on all
   )
 end
 #++
