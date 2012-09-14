@@ -30,6 +30,7 @@ JARS = [
 #  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',    'commons-id', '1.0-SNAPSHOT'),
 #  JavaClass::Classpath::MavenArtefact.new('commons-io',            'commons-io', '2.4'),
 #  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',    'commons-jexl', '2.1.1', 'Commons JEXL'),
+#  JavaClass::Classpath::MavenArtefact.new('commons-jxpath',        'commons-jxpath', '1.3', 'Commons JXPath'),
 #  JavaClass::Classpath::MavenArtefact.new('commons-lang',          'commons-lang', '2.6'),
 #  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',    'commons-lang3', '3.1'),
 #  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',    'commons-math', '2.2'),
@@ -59,7 +60,7 @@ JARS.each do |artefact|
   searcher.add_list_from_classpath(artefact.version, classpath, list)
 
   # 5) save the list to a file
-  File.open("Classes in #{artefact.title} #{artefact.version}.txt", "w") do |f|
+  File.open("#{artefact.title} #{artefact.version}.txt", "w") do |f|
     # print title
     f.print "*** #{artefact.title}\n"
 
