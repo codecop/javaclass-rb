@@ -33,7 +33,7 @@ def has_all_deps_in_list(component)
 end
 
 while components.size > 0
-
+  cycle = true
   components.each do |component|
 
     if has_all_deps_in_list(component)
@@ -50,15 +50,18 @@ while components.size > 0
       @list[index] << component
 
       puts "added #{component}"
+      cycle = false
       break
     end
 
   end
-
+  if cycle
+    warn "cycle in #{components.join(', ')}, can't continue with layering"
+  end
 end
 
 (1..@list.size).each do |i|
-  layer = @list[i-1]
+  layer = @list[i-1].sort
   puts "#{i} " + layer.join(', ')
 end
 
