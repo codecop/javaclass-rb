@@ -51,3 +51,5 @@ puts "#{plugins.to_a.size} plugins loaded"
 
 JavaClass::Dependencies::GraphmlSerializer.new.save('plugin_dependencies', plugins)
 JavaClass::Dependencies::YamlSerializer.new.save('plugin_dependencies', plugins)
+JavaClass::Dependencies::YamlSerializer.new(:summary).save('plugin_dependencies_summary', plugins)
+

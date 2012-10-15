@@ -16,8 +16,8 @@ module TestJavaClass
         @other = JavaClass::Dependencies::Node.new('otherNode')
 
         node.add_dependency(JavaClass::Dependencies::Edge.new('from1', 'dependency1'), [@other])
-        node.add_dependency(JavaClass::Dependencies::Edge.new('from2', 'dependency2'), [@other])
-        node.add_dependency(JavaClass::Dependencies::Edge.new('from3', 'dependency3'), [@other])
+        node.add_dependency(JavaClass::Dependencies::Edge.new('from2', 'dependency1'), [@other])
+        node.add_dependency(JavaClass::Dependencies::Edge.new('from3', 'dependency2'), [@other])
 
         @graph = JavaClass::Dependencies::Graph.new
         @graph.add(node)
@@ -44,6 +44,26 @@ module TestJavaClass
         assert_equal('from1->dependency1', imports[0])
       end
 
+      def test_graph_to_yaml_summary
+        string = JavaClass::Dependencies::YamlSerializer.new(:summary).graph_to_yaml(@graph)
+        yaml = YAML.load(StringIO.new(string))
+  
+        # we saved a hash with 2 nodes
+        assert_equal(2, yaml.size)
+  
+        # which one of them was "someNode"
+        assert(yaml.has_key?('someNode'))
+  
+        # which had 1 dependant node
+        dependencies = yaml['someNode']
+        assert_equal(1, dependencies.size)
+  
+        # with 2 summarized imports
+        imports = dependencies['otherNode']
+        assert_equal(2, imports.size)
+        assert_equal('dependency1', imports[0])
+      end
+      
       def test_yaml_to_graph
         string = @serializer.graph_to_yaml(@graph)
         yaml = YAML.load(StringIO.new(string))
@@ -67,7 +87,7 @@ module TestJavaClass
         imports = dependencies[new_other]
         assert_equal(3, imports.size)
         assert_equal('from2', imports[1].source)
-        assert_equal('dependency2', imports[1].target)
+        assert_equal('dependency1', imports[1].target)
       end
 
     end

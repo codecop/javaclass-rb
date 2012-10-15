@@ -10,6 +10,11 @@ module JavaClass
     # Author::          Peter Kofler
     class YamlSerializer
       
+      def initialize(outgoing = :detailed)
+        # :detailed or :summary
+        @outgoing = outgoing
+      end
+      
       # Save the _graph_ to YAML _filename_
       def save(filename, graph)
         File.open(filename + '.yaml', 'w') { |f| f.print graph_to_yaml(graph) }
@@ -32,9 +37,15 @@ module JavaClass
       private
 
       def dependencies_to_yaml(dependencies)
-        dependencies.map { |dep| "    - #{dep.source}->#{dep.target}" }.join("\n")
+        if @outgoing == :detailed 
+          dependencies.map { |dep| "    - #{dep.source}->#{dep.target}" }.join("\n")
+        elsif @outgoing == :summary
+          dependencies.map { |dep| dep.target }.uniq.sort.map { |dep| "    - #{dep}" }.join("\n")
+        else
+          raise "unknown outgoing dependency mode #{@outgoing}"
+        end
       end
-
+      
       def node_with(name)
         node = @nodes_by_name[name]
         if node
