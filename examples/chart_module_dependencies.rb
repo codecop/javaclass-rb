@@ -38,9 +38,9 @@ plugins = JavaClass::Dependencies::Graph.new
 
 # 2) iterate all plugins of a workspace location
 Dir.new(location).each do |folder|
-  #--
+#--
   next unless relatedPlugin?(folder)
-  #++
+#++
   path = File.join(location, folder)
   next unless FileTest.directory? path
 
