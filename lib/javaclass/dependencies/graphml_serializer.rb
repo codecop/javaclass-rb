@@ -3,15 +3,14 @@ require 'rexml/document'
 module JavaClass
   module Dependencies
 
-    # Serializes a Graph of Node to GraphML (XML).
+    # Serializes a Graph of Node to GraphML (XML). 
+    # To see the graph, use yED, http://www.yworks.com/en/products_yed_about.html to  
+    # * load the graphml file. 
+    # * Then select all nodes and apply Tools/Fit Node to Label.
+    # * Finally apply the Layout/Hierarchical or maybe Layout/Organic/Smart.
     # Author::          Peter Kofler
     class GraphmlSerializer
       include REXML
-      
-      
-      # yEd
-      # (Tools -> Fit Node to Label)
-      # (Layout -> Organic -> Smart
       
       # Save the _graph_ to _filename_
       def save(filename, graph)
