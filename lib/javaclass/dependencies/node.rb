@@ -1,7 +1,7 @@
 module JavaClass
   module Dependencies
     
-    # A node in a graph of dependencies. A node contains a map of dependencies (Edge) to other nodes.
+    # A node in a Graph of dependencies. A node contains a map of dependencies (Edge) to other nodes.
     # Author::          Peter Kofler
     class Node
 
@@ -9,14 +9,18 @@ module JavaClass
       attr_reader :size
       attr_reader :dependencies
     
-      def initialize(name, size=1)
+      def initialize(name, size=0)
         @name = name
         @size = size
         @dependencies = Hash.new([])
       end
 
       def to_s
-        "#{@name} (#{@size.to_s})"
+        if @size > 0
+          "#{@name} (#{@size.to_s})"
+        else
+          @name
+        end
       end
       
       def ==(other)
