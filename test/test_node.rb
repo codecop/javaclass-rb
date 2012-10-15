@@ -8,11 +8,12 @@ module TestJavaClass
       
       def setup
         @node = JavaClass::Dependencies::Node.new('someNode')
-        @other = JavaClass::Dependencies::Node.new('otherNode')
+        @other = JavaClass::Dependencies::Node.new('otherNode', 1)
       end
 
       def test_to_s
-        assert_equal('someNode (1)', @node.to_s)
+        assert_equal('someNode', @node.to_s)
+        assert_equal('otherNode (1)', @other.to_s)
       end
 
       def test_add_dependency_to_for_unsatisfied
