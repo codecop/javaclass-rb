@@ -15,18 +15,22 @@ module JavaClass
         @outgoing = outgoing
       end
       
+      def has_yaml?(filename)
+        File.exist? yaml_file(filename)
+      end
+      
       # Save the _graph_ to YAML _filename_
       def save(filename, graph)
-        File.open(filename + '.yaml', 'w') { |f| f.print graph_to_yaml(graph) }
+        File.open(yaml_file(filename), 'w') { |f| f.print graph_to_yaml(graph) }
       end
 
-      # Return a String of the YAML serialitzed _graph_
+      # Return a String of the YAML serialized _graph_
       def graph_to_yaml(graph)
         "---\n" +
         graph.to_a.map { |node| node_to_yaml(node) }.join("\n")
       end
 
-      # Return a String of the YAML serialitzed _node_
+      # Return a String of the YAML serialized _node_
       def node_to_yaml(node)
         node.name + ":\n" +
         node.dependencies.keys.map { |dep|
@@ -36,6 +40,10 @@ module JavaClass
 
       private
 
+      def yaml_file(filename)
+        filename + '.yaml'
+      end
+            
       def dependencies_to_yaml(dependencies)
         if @outgoing == :detailed 
           dependencies.map { |dep| "    - #{dep.source}->#{dep.target}" }.join("\n")
@@ -57,9 +65,9 @@ module JavaClass
 
       public
 
-      # Save the _graph_ from YAML _filename_
+      # Load the Graph from YAML _filename_
       def load(filename)
-        yaml = YAML.load_file(filename + '.yaml')
+        yaml = YAML.load_file(yaml_file(filename))
         yaml_to_graph(yaml)
       end
       
