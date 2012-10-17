@@ -20,7 +20,13 @@ module JavaClass
       def ==(other)
         @source == other.source && @target == other.target 
       end
-            
+
+      alias eql? ==
+
+      def hash
+        [@source, @target].hash
+      end
+                  
       def <=>(other)
         res = @target <=> other.target
         if res == 0
