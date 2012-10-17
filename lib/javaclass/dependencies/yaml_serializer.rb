@@ -10,9 +10,9 @@ module JavaClass
     # Author::          Peter Kofler
     class YamlSerializer
       
-      def initialize(outgoing = :detailed)
+      def initialize(options = {:outgoing => :detailed })
         # :detailed or :summary
-        @outgoing = outgoing
+        @options = options
       end
       
       def has_yaml?(filename)
@@ -45,12 +45,12 @@ module JavaClass
       end
             
       def dependencies_to_yaml(dependencies)
-        if @outgoing == :detailed 
+        if @options[:outgoing] == :detailed 
           dependencies.map { |dep| "    - #{dep.source}->#{dep.target}" }.join("\n")
-        elsif @outgoing == :summary
+        elsif @options[:outgoing] == :summary
           dependencies.map { |dep| dep.target }.uniq.sort.map { |dep| "    - #{dep}" }.join("\n")
         else
-          raise "unknown outgoing dependency mode #{@outgoing}"
+          raise "unknown option for outgoing dependency mode #{@options[:outgoing]}"
         end
       end
       
