@@ -10,8 +10,9 @@ module JavaClass
     # Author::          Peter Kofler
     class YamlSerializer
       
+      # Create a new serializer with _options_ hash:
+      # outgoing:: how to persist outgoing dependencies, either :detailed or :summary 
       def initialize(options = {:outgoing => :detailed })
-        # :detailed or :summary
         @options = options
       end
       
@@ -50,7 +51,7 @@ module JavaClass
         elsif @options[:outgoing] == :summary
           dependencies.map { |dep| dep.target }.uniq.sort.map { |dep| "    - #{dep}" }.join("\n")
         else
-          raise "unknown option for outgoing dependency mode #{@options[:outgoing]}"
+          raise "unknown option for outgoing dependencies #{@options[:outgoing]}"
         end
       end
       
