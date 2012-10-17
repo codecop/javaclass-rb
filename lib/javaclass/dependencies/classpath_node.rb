@@ -5,8 +5,8 @@ module JavaClass
   module Dependencies
     
     # A concrete Node which contains a Classpath and its dependencies.
-    # This models a Node as a component, maybe an Eclipse plugin, a Maven
-    # module or a library.
+    # This models a Node as a component, maybe an Eclipse plugin, a Maven module or a library. 
+    # Dependencies (Edge) contain all references imported by any class of this component.  
     # Author::          Peter Kofler
     class ClasspathNode < Node
     
