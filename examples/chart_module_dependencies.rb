@@ -16,12 +16,12 @@ def relatedPlugin?(name)
   name == 'PricingTool2' ||
   name == 'org.eclipse.update.scheduler' || # all other org.eclipse, nebula and zentest are in 1st level
   name =~ /^com\.ibm\./ && !(
-    name =~ /\.test$|\.testing$|\.mock$|\.test\.perfmon$/ ||
-    name =~ /\.build/ ||
-    name =~ /rocketDBtools$/ || # tools
+    # name =~ /com\.ibm\.arc\.sdm\.gpe\.ui|com\.ibm\.arc\.sdm\.addendum/ || # known to be layer 14, depending on all
     name =~ /\.s2r2\./ ||
     name =~ /gpe\.persistence$/ || # looks like duplicate of rocketdb
-    name =~ /com\.ibm\.arc\.sdm\.gpe\.ui|com\.ibm\.arc\.sdm\.addendum/ # known to be layer 14, depending on all
+    name =~ /\.test$|\.testing$|\.mock$|\.test\.perfmon$/ || # test
+    name =~ /\.build/ || # build
+    name =~ /rocketDBtools$/ # tools
   )
 end
 #++
