@@ -35,20 +35,22 @@ module JavaClass
         @name <=> other.name 
       end
 
-      # Add a _dependency_ Edge for a list of _provider_ Node. 
+      # Add a _dependency_ Edge for a list of _provider_ Node if the dependency is not included already. 
       def add_dependency(dependency, providers)
         if providers.size == 0
           # external dependency, skip this
         elsif providers.size == 1
           # add dependency to this provider
           provider = providers[0]
+          # unless @dependencies[provider].include? dependency
           @dependencies[provider] = @dependencies[provider] + [dependency]
+          # end
         else
           warn "dependency to \"#{dependency}\" found more than once: #{providers.join(', ')}"
         end
       end
 
-      # Add a list _dependencies_ of _provider_. 
+      # Add a list _dependencies_ of _provider_ . 
       def add_dependencies(dependencies, providers)
         dependencies.each do |dependency|
           add_dependency(dependency, providers)
