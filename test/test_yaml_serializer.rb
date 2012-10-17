@@ -45,7 +45,7 @@ module TestJavaClass
       end
 
       def test_graph_to_yaml_summary
-        string = JavaClass::Dependencies::YamlSerializer.new(:summary).graph_to_yaml(@graph)
+        string = JavaClass::Dependencies::YamlSerializer.new(:outgoing => :summary).graph_to_yaml(@graph)
         yaml = YAML.load(StringIO.new(string))
   
         # we saved a hash with 2 nodes
