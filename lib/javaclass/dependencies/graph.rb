@@ -41,6 +41,11 @@ module JavaClass
       def nodes_satisfying(dependency)
         @nodes.find_all { |n| n.satisfies?(dependency) }
       end      
+
+      # Iterate all nodes in this Graph and call _block_ for each Node 
+      def each_node(&block)
+        @nodes.each { |node| block.call(node) }
+      end      
       
     end
 
