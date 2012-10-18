@@ -57,6 +57,22 @@ module JavaClass
         end
       end
 
+      # Iterate all providers of dependencies of this Node and call _block_ for each provider with its list of dependencies (Edge). 
+      def each_dependency_provider(&block)
+        @dependencies.keys.each do |provider|
+          block.call(provider, @dependencies[provider])
+        end
+      end
+
+      # Iterate all dependencies of this Node and call _block_ for each provider with each of its dependencies. 
+      def each_edge(&block)
+        each_dependency_provider do |provider, edges|
+          edges.each do |edge|
+            block.call(provider, edge)
+          end
+        end
+      end
+            
     end
 
   end
