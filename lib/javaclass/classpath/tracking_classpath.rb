@@ -90,7 +90,7 @@ module JavaClass
     class CompositeClasspath 
 
       # Wrap the _elem_ classpath with a new TrackingClasspath and add it to the list of elements.
-      alias __old__add_element__ add_element 
+      alias :__old__add_element__ :add_element unless method_defined?('__old__add_element__') 
       
       def add_element(elem)
         unless @elements.find { |cpe| cpe == elem }

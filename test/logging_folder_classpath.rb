@@ -6,8 +6,8 @@ module JavaClass
 
     # Add a field +was_called+ to see if the load_binary was called.
     class FolderClasspath
-      alias :__old_load_binary :load_binary
-
+      alias :__old_load_binary :load_binary unless method_defined?('__old_load_binary')  
+      
       def load_binary(classname)
         @was_called = true
         __old_load_binary(classname)
