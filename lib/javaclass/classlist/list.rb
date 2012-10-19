@@ -36,20 +36,7 @@ module JavaClass
           is_public = (versions !~ /p/)
           versions = versions.gsub(/p/, '')
 
-          # \d, \d-\d, only \d, -\d, oder leer
-          if versions =~ /^(\d)$/
-            first_vers = $1.to_i
-          elsif versions =~ /^(\d)-(\d)$/
-            first_vers = $1.to_i
-            last_vers = $2.to_i
-          elsif versions =~ /^(?:bis\s|-)(\d)$/
-            last_vers = $1.to_i
-          elsif versions =~ /^only (\d)$/
-            first_vers = $1.to_i
-            last_vers = $1.to_i
-          else
-            raise "can't match version number #{versions} in line #{line.chomp}" unless versions == ''
-          end
+          first_vers, last_vers = *split_version(versions, first_vers, last_vers)
         end
 
         first_vers.upto(last_vers) do |v|
@@ -59,6 +46,32 @@ module JavaClass
         raise "#{$!} in line #{line.chomp}: class_name=#{class_name}, versions=#{versions}, first_vers=#{first_vers}, last_vers=#{last_vers}, is_public=#{is_public}"
       end
 
+      private
+
+      # Split _versions_ String which is \d, \d-\d, only \d, -\d, or empty.
+      def split_version(versions, prior_first_vers, prior_last_vers)
+        if versions =~ /^(\d)$/
+          first_vers = $1.to_i
+          [first_vers, prior_last_vers]
+        elsif versions =~ /^(\d)-(\d)$/
+          first_vers = $1.to_i
+          last_vers = $2.to_i
+          [first_vers, last_vers]
+        elsif versions =~ /^(?:bis\s|-)(\d)$/
+          last_vers = $1.to_i
+          [prior_first_vers, last_vers]
+        elsif versions =~ /^only (\d)$/
+          first_vers = $1.to_i
+          last_vers = $1.to_i
+          [first_vers, last_vers]
+        else
+          raise "can't match version number #{versions}" unless versions == ''
+          [prior_first_vers, prior_last_vers]
+        end
+      end
+      
+      public
+      
       def packages
         @packages.values.sort
       end
