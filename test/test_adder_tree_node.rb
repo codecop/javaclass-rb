@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/setup'
 require 'javaclass/adder_tree'
 
-class TestAdderTree < Test::Unit::TestCase
+class TestAdderTreeNode < Test::Unit::TestCase
 
   def setup
     @tree = AdderTree.new(0)

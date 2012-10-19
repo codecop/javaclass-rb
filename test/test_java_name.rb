@@ -87,6 +87,10 @@ module TestJavaClass
       @frozen_name.freeze
     end
 
+    def test_class_valid_eh
+      # TODO 'Need to write test_class_valid_eh'
+    end
+    
     def test_class_new_invalid
       assert_raise(ArgumentError) { JavaClass::JavaQualifiedName.new('at.kugel.tool/Some') }
       assert_raise(ArgumentError) { JavaClass::JavaQualifiedName.new('at.kugel.tool.') }
@@ -162,6 +166,10 @@ module TestJavaClass
       @frozen_path.freeze
     end
 
+    def test_class_valid_eh
+      # TODO 'Need to write test_class_valid_eh'
+    end
+    
     def test_to_classname
       assert_equal('at.kugel.tool.SomeClassWithMoreNames', @jvm_path.to_classname)
       #assert_equal('at.kugel.tool.Some', @jvm_method_name.to_classname)
@@ -200,7 +208,7 @@ module TestJavaClass
     
   end
   
-  class TestJavaClassFile < Test::Unit::TestCase
+  class TestJavaClassFileName < Test::Unit::TestCase
 
     def setup
       @win_file = JavaClass::JavaClassFileName.new("at\\kugel\\tool\\Some.class")
@@ -210,6 +218,10 @@ module TestJavaClass
       @frozen_file.freeze
     end
 
+    def test_class_valid_eh
+      # TODO 'Need to write test_class_valid_eh'
+    end
+    
     def test_to_classname
       assert_equal('at.kugel.tool.Some', @win_file.to_classname)
       assert_equal('at.kugel.tool', @win_file.to_classname.package)

@@ -16,6 +16,10 @@ module TestJavaClass
         assert_equal('otherNode (1)', @other.to_s)
       end
 
+      def test_size
+        assert_equal(1, @other.size)
+      end
+      
       def test_add_dependency_to_for_unsatisfied
         @node.add_dependency('dependency.for.another.node', [])
         assert_equal(0, @node.dependencies().size)
@@ -38,6 +42,14 @@ module TestJavaClass
         assert_equal(@node.hash, JavaClass::Dependencies::Node.new('someNode').hash)
       end
 
+      def test_each_dependency_provider
+        # TODO 'Need to write test_each_dependency_provider'
+      end
+
+      def test_each_edge
+        # TODO 'Need to write test_each_edge'
+      end
+      
     end
 
   end

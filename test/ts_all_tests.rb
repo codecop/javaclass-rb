@@ -3,7 +3,7 @@ require 'test/unit/testsuite'
 require 'test/unit' if $0 == __FILE__
 
 # common
-require File.dirname(__FILE__) + '/test_adder_tree'
+require File.dirname(__FILE__) + '/test_adder_tree_node'
 require File.dirname(__FILE__) + '/test_string_ux'
 require File.dirname(__FILE__) + '/test_string_hexdump'
 require File.dirname(__FILE__) + '/test_zip_file'
@@ -53,13 +53,19 @@ require File.dirname(__FILE__) + '/test_caching_classpath'
 # API
 require File.dirname(__FILE__) + '/test_javaclass_api'
 
+# Graph
+require File.dirname(__FILE__) + '/test_graph'
+require File.dirname(__FILE__) + '/test_node'
+require File.dirname(__FILE__) + '/test_edge'
+require File.dirname(__FILE__) + '/test_yaml_serializer'
+
 class TsAllTests
 
   def self.suite
     suite = Test::Unit::TestSuite.new("Ruby Java Class")
 
     # common
-    suite << TestAdderTree.suite
+    suite << TestAdderTreeNode.suite
     suite << TestStringUx.suite
     suite << TestStringHexdump.suite
     suite << TestJavaClass::TestGems::TestZipFile.suite
@@ -67,7 +73,7 @@ class TsAllTests
     suite << TestJavaClass::TestSimpleNameLogic.suite
     suite << TestJavaClass::TestJavaQualifiedName.suite
     suite << TestJavaClass::TestJavaVMName.suite
-    suite << TestJavaClass::TestJavaClassFile.suite
+    suite << TestJavaClass::TestJavaClassFileName.suite
 
     # Java class parser
     suite << TestJavaClass::TestClassFile::TestClassMagic.suite
@@ -113,6 +119,13 @@ class TsAllTests
 
     # API
     suite << TestJavaClass::TestJavaClassAPI.suite
+
+    # Graph
+    suite << TestJavaClass::TestDependencies::TestGraph.suite
+    suite << TestJavaClass::TestDependencies::TestNode.suite
+    suite << TestJavaClass::TestDependencies::TestEdge.suite
+    suite << TestJavaClass::TestDependencies::TestYamlSerializer.suite
+
     return suite
   end
 
