@@ -36,7 +36,8 @@ module JavaClass
       
       # Create a classpath from a workspace _basepath_ which contains Eclipse or Maven projects.
       def workspace(basepath, cp=CompositeClasspath.new)
-        # check for a valid project in this folder
+
+        # check for a valid project in this basepath
         Classpath_types.each do |classpath_type|
           if classpath_type.valid_location?(basepath)
             cp.add_element(classpath_type.new(basepath))
@@ -44,21 +45,30 @@ module JavaClass
           end
         end
 
-        # check the children as regular workspace
-        Dir.entries(basepath).each do |entry|
-          next if entry == '.' || entry == '..'
-          file = File.join(basepath, entry)
-
-          Classpath_types.each do |classpath_type|
-            if classpath_type.valid_location?(file)
-              cp.add_element(classpath_type.new(file))
-              break
-            end
-          end
-        end if FileTest.directory? basepath
-        cp
+        root_folder(basepath, cp)
       end
       
+      # Create a classpath from a project root directory _basepath_ by looking in the children folder for regular workspaces.
+      def root_folder(basepath, cp=CompositeClasspath.new)
+        if FileTest.directory? basepath
+        
+          Dir.entries(basepath).each do |entry|
+            next if entry == '.' || entry == '..'
+            file = File.join(basepath, entry)
+  
+            Classpath_types.each do |classpath_type|
+              if classpath_type.valid_location?(file)
+                cp.add_element(classpath_type.new(file))
+                break
+              end
+            end
+          end
+        
+        end
+        
+        cp 
+      end
+
     end
     
   end
