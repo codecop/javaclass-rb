@@ -24,6 +24,10 @@ module TestJavaClass
         @graph.add(@other)
       end
 
+      def test_has_yaml_eh
+        # TODO 'Need to write test_has_yaml_eh'
+      end
+
       def test_graph_to_yaml
         string = @serializer.graph_to_yaml(@graph)
         yaml = YAML.load(StringIO.new(string))
@@ -63,7 +67,12 @@ module TestJavaClass
         assert_equal(2, imports.size)
         assert_equal('dependency1', imports[0])
       end
-      
+
+      def test_node_to_yaml
+        # fake methods for zentest, tested in all test_graph_to_yaml
+        assert(true)
+      end
+
       def test_yaml_to_graph
         string = @serializer.graph_to_yaml(@graph)
         yaml = YAML.load(StringIO.new(string))

@@ -11,13 +11,13 @@ module TestJavaClass
         assert_equal('target (source)', Edge.new('source', 'target').to_s)
       end
 
-      def test_equal_true
+      def test_equals2_true
         edge1 = Edge.new('blue', 'ball')
         edge2 = Edge.new('blue', 'ball')
         assert(edge1 == edge2)
       end
 
-      def test_equal_false
+      def test_equals2_false
         edge1 = Edge.new('blue', 'ball')
         edge2 = Edge.new('red', 'ball')
         edge3 = Edge.new('blue', 'balloon')
@@ -25,7 +25,7 @@ module TestJavaClass
         assert(edge1 != edge3)
       end
 
-      def test_sort_of_list
+      def test_spaceship_sort_of_list
         original_list = [
           Edge.new('2', 'b'),
           Edge.new('1', 'b'),
@@ -42,7 +42,7 @@ module TestJavaClass
         assert_equal(sorted_list, original_list.sort)
       end
 
-      def test_uniq_of_list
+      def test_hash_uniq_of_list
         original_list = [
           Edge.new('1', 'a'),
           Edge.new('1', 'a')
