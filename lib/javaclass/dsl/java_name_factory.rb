@@ -20,7 +20,7 @@ module JavaClass
     # 
     module JavaNameFactory
 
-      alias :__top_level_method_missing__ :method_missing # :nodoc:
+      alias :__top_level_method_missing__ :method_missing unless method_defined?('__top_level_method_missing__') # :nodoc:
       
       # Convert the beginning of a full qualified Java classname starting with 'java' to a JavaQualifiedName instance.
       def java
@@ -52,7 +52,7 @@ module JavaClass
           @context = fail
         end
 
-        alias :__unused_method_missing__ :method_missing
+        alias :__unused_method_missing__ :method_missing unless method_defined?('__unused_method_missing__')
 
         def method_missing(method_id, *args)
           str = method_id.id2name
