@@ -22,6 +22,7 @@ module JavaClass
       # Returns the wrapped classpath element (+self+) of this decorated classpath.
       def elements
         if [FolderClasspath, JarClasspath].include?(@classpath.class)
+          # TODO check for any subclass of FileClasspath instead
           [self]
         else
           @classpath.elements
@@ -95,6 +96,7 @@ module JavaClass
       def add_element(elem)
         unless @elements.find { |cpe| cpe == elem }
           if [FolderClasspath, JarClasspath].include?(elem.class)
+            # TODO check for any subclass of FileClasspath instead -> fail a test with ConventionClasspath and Tracker
             __old__add_element__(TrackingClasspath.new(elem))
           else
             __old__add_element__(elem)
