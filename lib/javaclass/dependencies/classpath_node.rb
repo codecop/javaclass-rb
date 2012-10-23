@@ -26,7 +26,7 @@ module JavaClass
         end
       end
       
-      # Does this Node satisfy the dependency.
+      # Does this Node satisfy the dependency _dependency_name_ .
       def satisfies?(dependency_name)
         @classpath.includes?(dependency_name)
       end

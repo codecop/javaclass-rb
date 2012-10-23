@@ -1,5 +1,6 @@
 # Generate a JavaClass::ClassList, which contains all class of a given
 # JAR in the local Maven repository. Use JavaClass::Classpath::MavenArtefact
+# to identify and (possibly download) the JAR under question.
 # Author::          Peter Kofler
 # Copyright::       Copyright (c) 2009, Peter Kofler.
 # License::         {BSD License}[link:/files/license_txt.html]
@@ -39,27 +40,27 @@ JARS = [
 #  JavaClass::Classpath::MavenArtefact.new('oro',                           'oro', '2.0.8', 'Jakarta ORO'),
 ]
 #++
-# configuration for some artefacts
+# Define configuration for some Maven artefacts
 #  JARS = [ JavaClass::Classpath::MavenArtefact.new(...), ... ]
 
 # For all artefacts listed in +JARS+, load classes and write list files.
 JARS.each do |artefact|
 
-  # 1) create a new JavaClass::ClassList::List to contain the classes of this JAR
+# 1) create a new JavaClass::ClassList::List to contain the classes of this JAR
   list = JavaClass::ClassList::List.new
 
-  # 2) create a JavaClass::ClassList::JarSearcher
+# 2) create a JavaClass::ClassList::JarSearcher
   searcher = JavaClass::ClassList::JarSearcher.new
   searcher.skip_package_classes = true
 
-  # 3) create the classpath of the artefact's JAR
+# 3) create the classpath of the artefact's JAR
   artefact.download_if_needed
   classpath = artefact.classpath
 
-  # 4) scan the JAR and add classes to the list
+# 4) scan the JAR and add classes to the list
   searcher.add_list_from_classpath(artefact.version, classpath, list)
 
-  # 5) save the list to a file
+# 5) save the list to a file
   File.open("#{artefact.title} #{artefact.version}.txt", "w") do |f|
     # print title
     f.print "*** #{artefact.title}\n"

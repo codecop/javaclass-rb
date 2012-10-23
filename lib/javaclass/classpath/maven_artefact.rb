@@ -9,7 +9,7 @@ module JavaClass
 
       attr_reader :group, :name, :version, :title
 
-      # Create a Maven artefact with given _group_ , _name_ and _version_
+      # Create a Maven artefact with given _group_ , _name_ and _version_ .
       def initialize(group, name, version, title=nil)
         @group = group
         @name = name
@@ -24,7 +24,7 @@ module JavaClass
         end
       end
 
-      # Return this Maven artefact's classpath. This is a single Jar in the Maven repository.
+      # Return this Maven artefact's JavaClass::Classpath. This is a single Jar in the Maven repository.
       def classpath
         cp = CompositeClasspath.new(basename)
         cp.add_file_name(repository_path)

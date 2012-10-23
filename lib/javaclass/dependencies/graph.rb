@@ -1,8 +1,8 @@
 module JavaClass
   
   # The module Dependencies is for separating namespaces. It contains logic 
-  # to analyse and structure general dependencies. A set of dependencies build
-  # a Graph which can be analaysed.
+  # to analyse and structure general directed dependency graphs. A set of 
+  # dependencies build a Graph which can be analysed.
   # Author::          Peter Kofler
   module Dependencies
    

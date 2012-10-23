@@ -21,7 +21,7 @@ module JavaClass
         end
       end
       
-      # Does this Node satisfy the dependency. 
+      # Does this Node satisfy the dependency to _class_name_. 
       def satisfies?(class_name)
         @java_class.this_class == class_name
       end
