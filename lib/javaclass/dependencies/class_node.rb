@@ -9,21 +9,24 @@ module JavaClass
     # Author::          Peter Kofler
     class ClassNode < Node
     
-      def initialize(name, java_class)
-        super(name)
+      def initialize(java_class)
+        super(java_class.to_classname)
         @java_class = java_class
       end
 
       # Iterate on a list of Edge dependencies this node has.
       def outgoing_dependencies
         @java_class.imported_3rd_party_types.each do |import|
-            yield Edge.new(@java_class.this_class, import)
+            yield Edge.new(@java_class.to_classname, import.to_classname)
         end
+        # later iterate all types/fields/methods and create an edge from the method to the target type.
+        # So Edges make sense and multiplicity in dependencies is possible. 
       end
       
-      # Does this Node satisfy the dependency to _class_name_. 
+      # Does this Node satisfy the dependency to _class_name_ ?
       def satisfies?(class_name)
-        @java_class.this_class == class_name
+        @java_class.to_classname == class_name.to_classname
+        # later class name will be a full qualified class#method or field name.
       end
 
     end

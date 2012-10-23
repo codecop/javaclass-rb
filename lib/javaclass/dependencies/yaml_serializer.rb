@@ -11,7 +11,7 @@ module JavaClass
     class YamlSerializer
       
       # Create a serializer with _options_ hash:
-      # outgoing:: how to persist outgoing dependencies, either :detailed or :summary 
+      # outgoing:: how to persist outgoing dependencies, either :detailed, :summary or :none 
       def initialize(options = {:outgoing => :detailed })
         @options = options
       end
@@ -36,7 +36,7 @@ module JavaClass
       def node_to_yaml(node)
         node.name + ":\n" +
         node.dependencies.keys.map { |dep|
-          '  ' + dep.name + ":\n" + dependencies_to_yaml(node.dependencies[dep])
+          '  ' + dep.name + dependencies_to_yaml(node.dependencies[dep])
         }.join("\n")
       end
 
@@ -48,9 +48,11 @@ module JavaClass
             
       def dependencies_to_yaml(dependencies)
         if @options[:outgoing] == :detailed 
-          dependencies.map { |dep| "    - #{dep.source}->#{dep.target}" }.join("\n")
+          ":\n" + dependencies.map { |dep| "    - #{dep.source}->#{dep.target}" }.join("\n")
         elsif @options[:outgoing] == :summary
-          dependencies.map { |dep| dep.target }.uniq.sort.map { |dep| "    - #{dep}" }.join("\n")
+          ":\n" + dependencies.map { |dep| dep.target }.uniq.sort.map { |dep| "    - #{dep}" }.join("\n")
+        elsif @options[:outgoing] == :none
+          ''
         else
           raise "unknown option for outgoing dependencies #{@options[:outgoing]}"
         end
