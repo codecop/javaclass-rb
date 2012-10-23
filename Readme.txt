@@ -52,6 +52,7 @@ See the various examples in the examples folder of the gem.
 * {Cumulative dependencies of a class}[link:/files/lib/generated/examples/cumulative_dependencies_txt.html]
 * {Find (un)referenced JARs}[link:/files/lib/generated/examples/find_referenced_modules_txt.html] 
 * {Find unused classes}[link:/files/lib/generated/examples/find_unreferenced_classes_txt.html]
+* {Extract and chart dependencies between classes}[link:/files/lib/generated/examples/chart_class_dependencies_txt.html]
 * {Extract and chart dependency info between modules}[link:/files/lib/generated/examples/chart_module_dependencies_txt.html]
 * {Generate lists of JDK classes}[link:/files/lib/generated/examples/generate_class_lists_txt.html]
 * {List content of a (Maven) JAR}[link:/files/lib/generated/examples/show_jar_api_txt.html]
