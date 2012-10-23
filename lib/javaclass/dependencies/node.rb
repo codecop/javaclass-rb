@@ -8,11 +8,13 @@ module JavaClass
       attr_reader :name
       attr_reader :size
       attr_reader :dependencies
+      ### attr_reader :incoming
     
       def initialize(name, size=0)
         @name = name
         @size = size
         @dependencies = Hash.new([])
+        ### @incoming = Hash.new([])
       end
 
       def to_s
@@ -35,7 +37,7 @@ module JavaClass
         @name <=> other.name 
       end
 
-      # Add a _dependency_ Edge for a list of _provider_ Node if the dependency is not included already. 
+      # Add a _dependency_ Edge for a list of _provider_ Node. 
       def add_dependency(dependency, providers)
         if providers.size == 0
           # external dependency, skip this
@@ -44,6 +46,7 @@ module JavaClass
           provider = providers[0]
           # unless @dependencies[provider].include? dependency
           @dependencies[provider] = @dependencies[provider] + [dependency]
+          ### provider.incoming[self] = provider.incoming[self] + [dependency]
           # end
         else
           warn "dependency to \"#{dependency}\" found more than once: #{providers.join(', ')}"
