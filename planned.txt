@@ -1,6 +1,5 @@
 === Tools
 
-* document an API from a Jar. Use with commons.lang, collections etc with version 0 for snapshot (don't show version)
 * find boundaries of my own code, i.e. find leafs of my dependency hull
   * find all without dependency on my code
   * find all with one dependency to these

@@ -10,28 +10,29 @@ module JavaClass
     # Author::          Peter Kofler
     class YamlSerializer
       
-      # Create a new serializer with _options_ hash:
+      # Create a serializer with _options_ hash:
       # outgoing:: how to persist outgoing dependencies, either :detailed or :summary 
       def initialize(options = {:outgoing => :detailed })
         @options = options
       end
       
+      # Exists a YAML serialized _graph_ ? 
       def has_yaml?(filename)
         File.exist? yaml_file(filename)
       end
       
-      # Save the _graph_ to YAML _filename_
+      # Save the _graph_ to YAML _filename_ .
       def save(filename, graph)
         File.open(yaml_file(filename), 'w') { |f| f.print graph_to_yaml(graph) }
       end
 
-      # Return a String of the YAML serialized _graph_
+      # Return a String of the YAML serialized _graph_ .
       def graph_to_yaml(graph)
         "---\n" +
         graph.to_a.map { |node| node_to_yaml(node) }.join("\n")
       end
 
-      # Return a String of the YAML serialized _node_
+      # Return a String of the YAML serialized _node_ .
       def node_to_yaml(node)
         node.name + ":\n" +
         node.dependencies.keys.map { |dep|
@@ -66,13 +67,13 @@ module JavaClass
 
       public
 
-      # Load the Graph from YAML _filename_
+      # Load the Graph from YAML _filename_ .
       def load(filename)
         yaml = YAML.load_file(yaml_file(filename))
         yaml_to_graph(yaml)
       end
       
-      # Return a Graph from the YAML data _yaml_
+      # Return a Graph from the YAML data _yaml_ .
       def yaml_to_graph(yaml)
         graph = Graph.new
         @nodes_by_name = {}

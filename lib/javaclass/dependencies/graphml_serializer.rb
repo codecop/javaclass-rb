@@ -12,13 +12,13 @@ module JavaClass
     class GraphmlSerializer
       include REXML
 
-      # Create a new serializer with _options_ hash:
+      # Create a serializer with _options_ hash:
       # edges:: how to chart edge labes, either :no_text or :with_counts 
       def initialize(options = { :edges => :with_counts })
         @options = options
       end
 
-      # Save the _graph_ to _filename_
+      # Save the _graph_ to _filename_ .
       def save(filename, graph)
         File.open(filename + '.graphml', 'w') do |f|
           doc = graph_to_xml(graph)
@@ -27,7 +27,7 @@ module JavaClass
         end
       end
 
-      # Return an XML document of the GraphML serialized _graph_
+      # Return an XML document of the GraphML serialized _graph_ .
       def graph_to_xml(graph)
         doc = create_xml_doc
         container = add_graph_element(doc)
@@ -53,7 +53,7 @@ module JavaClass
       
       public
             
-      # Add the _node_ as XML to the _container_
+      # Add the _node_ as XML to the _container_ .
       def add_node_as_xml(container, node)
         add_node_element(container, node)
     
