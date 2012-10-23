@@ -27,6 +27,10 @@ module JavaClass
       delegate :split_simple_name, :this_class
       delegate :in_jdk?, :this_class
 
+      def to_s
+        to_classname
+      end
+      
     end
 
   end
