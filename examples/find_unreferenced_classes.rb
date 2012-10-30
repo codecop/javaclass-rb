@@ -1,7 +1,8 @@
 # Advanced example usage of JavaClass::Classpath::TrackingClasspath. Load all 
 # classes of an Eclipse workspace. Then mark all referenced classes. In the end 
 # report remaining classes as unreferenced. This lists *potential* unused classes. 
-# Note that the classes may still be used by reflection.
+# Note that the classes may still be used by reflection. Also this can be used to
+# find classes that have a certain number of references to them, e.g. only used once.
 # Author::          Peter Kofler
 # Copyright::       Copyright (c) 2009, Peter Kofler.
 # License::         {BSD License}[link:/files/license_txt.html]
@@ -14,6 +15,7 @@ $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require File.join(File.dirname(__FILE__), 'corpus')
 
 location = Corpus[:RCP]
+location = 'C:\RTC3.0\workspaces\Costing_Dev'
 package1 = 'com.ibm.arc.sdm'
 package2 = 'pricingTool'
 #++
@@ -63,3 +65,12 @@ puts 'test classes mapped'
 unused_classes = classes.find_all { |clazz| cp.accessed(clazz) == 0 }
 report = unused_classes.map { |clazz| "#{clazz.to_classname}" }
 puts "#{report.size} unused classes found:\n  #{report.join("\n  ")}"
+
+# 7) find only once accessed classes and report them
+once_used_classes = classes.find_all { |clazz| cp.accessed(clazz) == 1 }
+report = once_used_classes.map { |clazz| "#{clazz.to_classname}" }
+puts "#{report.size} once used classes found:\n  #{report.join("\n  ")}"
+
+twice_used_classes = classes.find_all { |clazz| cp.accessed(clazz) == 2 }
+report = twice_used_classes.map { |clazz| "#{clazz.to_classname}" }
+puts "#{report.size} twice used classes found:\n  #{report.join("\n  ")}"
