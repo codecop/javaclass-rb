@@ -26,7 +26,7 @@ module Rake
   # attributes list for the SaikuroTask class for available customization options.
   #
   # Author::          Peter Kofler
-  # Copyright::       Copyright (c) 2009, Peter Kofler.       
+  # Copyright::       Copyright (c) 2009, Peter Kofler.
   # License::         {BSD License}[link:/files/license_txt.html]
   #
   class SaikuroTask < TaskLib
@@ -48,9 +48,9 @@ module Rake
       @output_dir = 'complexity'
       @cyclo = true
       @token = false
-      
+
       yield self if block_given?
-      
+
       define_tasks
     end
 
@@ -61,7 +61,7 @@ module Rake
       define_clobber_task
       define_build_task
     end
-    
+
     def define_clobber_task
       desc 'Remove Saikuro products'
       task clobber_task_name do
@@ -89,12 +89,13 @@ module Rake
 
     def create_report
       if @cyclo
+        # state_filter = Filter.new(0) use threshold 0 for reporting Measure compatible counts
         state_filter = Filter.new(5)
         state_formater = Saikuro::StateHTMLComplexityFormater.new(STDOUT, state_filter)
       else
         state_formater = nil
       end
-    
+
       if @token
         token_filter = Filter.new(10, 25, 50)
         token_count_formater = Saikuro::HTMLTokenCounterFormater.new(STDOUT, token_filter)
@@ -103,7 +104,7 @@ module Rake
       end
 
       # ignore DEBUG log in Saikuro
-      verbosity = $VERBOSE     
+      verbosity = $VERBOSE
       $VERBOSE = nil
       begin
         idx_states, idx_tokens = Saikuro.analyze(@files, state_formater, token_count_formater, @output_dir)
