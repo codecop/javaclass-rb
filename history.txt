@@ -1,5 +1,6 @@
 === 0.5 next release
 
+* Cloudbees dropped support for Ruby 1.8.6 and 1.8.7 - not testet there anymore
 * add plain class Node for dependency graph
 * add dependency graph and classpath (module/component/plugin) implementation
 * add Maven artefact to generate classpath from group/name/version
