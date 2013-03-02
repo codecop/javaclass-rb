@@ -1,3 +1,9 @@
+=== Defect
+
+* also find as dependency a class inside an annotation. This is likely a String, still could find it
+  @IdClass(ChangeHistoryDetailPK.class)
+  class ...
+
 === Tools
 
 * find boundaries of my own code, i.e. find leafs of my dependency hull
