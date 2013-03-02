@@ -40,7 +40,7 @@ module JavaClass
     end
 
     TEXT_REGEX = /
-      (?:^|>|"|'|=|:)
+      (?:^|>|"|'|=|:|!)
       \s*
       (   (?:#{JavaLanguage::IDENTIFIER_REGEX}#{JavaLanguage::SEPARATOR_REGEX})+#{JavaLanguage::TYPE_REGEX}   )
       \s*
