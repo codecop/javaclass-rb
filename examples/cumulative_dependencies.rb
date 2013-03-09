@@ -13,8 +13,9 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require File.join(File.dirname(__FILE__), 'corpus')
 
-location = Corpus[:HBD]
-package = 'at.herold'
+corpus = Corpus[:HBD]
+location = corpus.location
+package = corpus.package
 start_class = 'at.herold.waf.hbd.servlet.HBDServlet'
 # 'at/spardat/krimiaps/service/client/service/impl/ClientSmeSearchServiceImpl'
 # 'at/spardat/krimiaps/service/client/service/impl/ClientPrivateSearchServiceImpl'
@@ -35,5 +36,5 @@ dependencies.debug_print
 
 # 2b) or collect all transitive dependencies of a whole package
 dependencies = cp.transitive_dependencies_package(start_class.to_javaname.package, &filter)
-puts "#{dependencies.size} classes in transitive dependency graph of package"
+puts "#{dependencies.size} classes in transitive dependency graph of package #{start_class.to_javaname.package}"
 #  dependencies.debug_print

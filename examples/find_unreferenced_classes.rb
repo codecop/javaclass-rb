@@ -14,7 +14,7 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require File.join(File.dirname(__FILE__), 'corpus')
 
-location = Corpus[:RCP]
+location = Corpus[:RCP].location
 location = 'C:\RTC3.0\workspaces\Costing_Dev'
 package1 = 'com.ibm.arc.sdm'
 package2 = 'pricingTool'

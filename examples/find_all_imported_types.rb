@@ -13,10 +13,10 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require File.join(File.dirname(__FILE__), 'corpus')
 
-location = Corpus[:Lib]
-prod_location = File.join(location, '..', 'classes')
-test_location = File.join(location, 'classes')
-conf_location = location
+corpus = Corpus[:Lib]
+prod_location = corpus.classes
+test_location = corpus.testClasses
+conf_location = corpus.location
 #++
 require 'javaclass/dsl/mixin'
 
