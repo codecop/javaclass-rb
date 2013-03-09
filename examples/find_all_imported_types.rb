@@ -27,15 +27,19 @@ cp = classpath(prod_location)
 prod_classnames = cp.types
 
 # 3) collect all dependencies of all classes defined there
-imported_classnames = cp.used_types
+imported_types_with_numbers = cp.used_types_map
+imported_classnames = imported_types_with_numbers.keys
 
 # 4) also collect all classes referenced from config files, defined in JavaClass::JavaNameScanner
 hardcoded_classnames = scan_config_for_3rd_party_class_names(conf_location)
 
 # 5) now we know all classes imported/used by production classes
-puts '---------- used 3rd party types in production'
+puts '---------- used 3rd party types in production ; 0 = hardcoded'
 used_classnames = (imported_classnames + hardcoded_classnames).uniq.sort  - prod_classnames
-puts used_classnames
+# puts used_classnames
+used_classnames.each do |name|
+  puts "#{name} ; #{imported_types_with_numbers[name]}"
+end
 
 # 6) do the same for test classes, at least org.junit.* should show up here
 test_cp = classpath(test_location)
