@@ -13,7 +13,8 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require File.join(File.dirname(__FILE__), 'corpus')
 
-location = Corpus[:HBD]
+corpus = Corpus[:HBD]
+location = corpus.location
 #++
 require 'javaclass/classpath/factory'
 include JavaClass::Classpath::Factory

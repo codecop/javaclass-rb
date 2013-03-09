@@ -11,7 +11,8 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require File.join(File.dirname(__FILE__), 'corpus')
 
-location = Corpus[:WF]
+corpus = Corpus[:WF]
+location = corpus.location
 #++
 require 'javaclass/dsl/mixin'
 require 'javaclass/dependencies/graph'

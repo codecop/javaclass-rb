@@ -11,8 +11,9 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require File.join(File.dirname(__FILE__), 'corpus')
 
-location = Corpus[:Base]
-package = 'at.kugel'
+corpus = Corpus[:Base]
+location = corpus.location
+package = corpus.package
 #++
 require 'javaclass/dsl/mixin'
 
