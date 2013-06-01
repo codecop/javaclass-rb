@@ -46,5 +46,6 @@ Corpus = Hash[
 Corpus[:Base] = CorpusInfo.with_default_folders('E:\Develop\Java', ['at.kugel'])
 Corpus[:Lib] = CorpusInfo.with_default_folders('E:\Develop\Java\CodeLib', ['at.kugel'])
 
-# temporary corpus
+# temporary corpus for static analysis
 Corpus[:Uep2] = CorpusInfo.new('D:\Internet\uep2', 'D:\Internet\cummulated.clz', 'D:\Internet\cummulated_test.clz', ['uep'])
+Corpus[:Nuss] = CorpusInfo.new('D:\Backend\NUSS',  'D:\Backend\cummulated.clz',  'D:\Backend\cummulated_test.clz',  ['at.lotterien'])
