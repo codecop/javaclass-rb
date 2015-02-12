@@ -17,16 +17,16 @@ module JavaClass
   # Author::          Peter Kofler
   module JavaNameScanner
 
-    def scan_config_for_3rd_party_class_names(path)
-      scan_config_for_class_names(path).reject { |name| name.in_jdk? }
+    def scan_config_for_3rd_party_class_names(path, ignorepattern=/^\./)
+      scan_config_for_class_names(path, ignorepattern).reject { |name| name.in_jdk? }
       # need abstraction for - .reject { |name| name.in_jdk? } - have it three times
       # maybe a mixin for enumerables containing JavaTypes
       #JavaNameEnumerable with - .reject { |name| name.in_jdk? } - und anderen? reject_in_jdk = 3rd Party
       # and find_all { |n| n.same_or_subpackage_of?(x) } -- also very often  = in_package()
     end
 
-    # Find all possible class names in all XML and property files under _path_
-    def scan_config_for_class_names(path)
+    # Find all possible class names in all XML and property files under _path_ and optionally ignore _ignorepattern_
+    def scan_config_for_class_names(path, ignorepattern=/^\./)
       return [] unless File.exist? path
       if File.file?(path) 
         if path =~ /\.xml$|\.properties$|MANIFEST.MF$/
@@ -35,7 +35,9 @@ module JavaClass
           []
         end
       else
-        Dir.entries(path).reject { |n| n=~/^\./ }.map { |n| scan_config_for_class_names(File.join(path, n)) }.flatten.sort
+        Dir.entries(path).reject { |n| n =~ /^\./ or n=~ ignorepattern }.
+                          map { |n| scan_config_for_class_names(File.join(path, n), ignorepattern) }.
+                          flatten.sort
       end
     end
 
