@@ -27,7 +27,7 @@ module JavaClass
 
     # Find all possible class names in all XML and property files under _path_
     def scan_config_for_class_names(path)
-      return unless File.exist? path
+      return [] unless File.exist? path
       if File.file?(path) 
         if path =~ /\.xml$|\.properties$|MANIFEST.MF$/
           scan_text_for_class_names(IO.readlines(path).join)
