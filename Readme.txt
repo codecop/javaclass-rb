@@ -1,8 +1,7 @@
 javaclass-rb
 by {Peter 'Code Cop' Kofler}[http://www.code-cop.org/]
 
-* {Homepage (Google Code)}[http://code.google.com/p/javaclass-rb/]
-* {Rubyforge Project (old)}[http://rubyforge.org/projects/javaclass]
+* {Homepage (Bitbucket)}[https://bitbucket.org/pkofler/javaclass-rb]
 * email peter dot kofler at code minus cop dot org
 
 == Description
@@ -28,7 +27,7 @@ which might be the base for some serious static code analysis tools. (I
   sudo gem install javaclass
 
 * {Gem Hosting}[http://rubygems.org/gems/javaclass]
-* {Download of tarballs and gems}[http://code.google.com/p/javaclass-rb/downloads/list]
+* {Download of tarballs and gems}[https://bitbucket.org/pkofler/javaclass-rb/downloads]
 
 == Documentation
 
@@ -37,9 +36,9 @@ available in Object through the JavaClass::Dsl::Mixin. The main class or the par
 is JavaClass::ClassFile::JavaClassHeader which provides access to all information 
 of a Java class file. 
 
-* {API RDoc}[http://api.javaclass-rb.googlecode.com/hg/index.html]
+* {API RDoc}[http://www.code-cop.org/api/javaclass-rb/]
 
-I tried hard to rdoc all classes and public methods, so just {read it}[http://api.javaclass-rb.googlecode.com/hg/index.html].
+I tried hard to rdoc all classes and public methods, so just {read it}[http://www.code-cop.org/api/javaclass-rb/].
 
 == Usage
 
@@ -63,17 +62,17 @@ with ".*" to be recognized. See JavaClass::Dsl::JavaNameFactory for its usage.
 
 == Support
 
-The bug tracker is available at {Google Code}[http://code.google.com/p/javaclass-rb/issues/list]
+The bug tracker is available at {Bitbucket}[https://bitbucket.org/pkofler/javaclass-rb/issues]
 or just drop me an email.
 
 == How to submit patches
 
 Read the {8 steps for fixing other people's code}[http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code/]
-and for section 8, use the {Issue Tracker}[http://code.google.com/p/javaclass-rb/issues/list].
+and for section 8, use the {Issue Tracker}[https://bitbucket.org/pkofler/javaclass-rb/issues].
 
 The trunk repository is available with
 
-  hg clone https://javaclass-rb.googlecode.com/hg/ javaclass-rb
+  hg clone https://bitbucket.org/pkofler/javaclass-rb
 
 == Dependencies
 
