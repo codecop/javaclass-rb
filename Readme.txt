@@ -60,20 +60,6 @@ There is some experimental logic to recognize Java class name literals in Ruby
 which are mapped to JavaClass::JavaQualifiedName. Packages have to be suffixed 
 with ".*" to be recognized. See JavaClass::Dsl::JavaNameFactory for its usage. 
 
-== Support
-
-The bug tracker is available at {Bitbucket}[https://bitbucket.org/pkofler/javaclass-rb/issues]
-or just drop me an email.
-
-== How to submit patches
-
-Read the {8 steps for fixing other people's code}[http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code/]
-and for section 8, use the {Issue Tracker}[https://bitbucket.org/pkofler/javaclass-rb/issues].
-
-The trunk repository is available with
-
-  hg clone https://bitbucket.org/pkofler/javaclass-rb
-
 == Dependencies
 
 * Ruby 1.9.2 (also tested under 1.9.3)
