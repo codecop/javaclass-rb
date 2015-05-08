@@ -1,8 +1,9 @@
 
 syntax: glob
-hosting/rubyforge.org/**
-hosting/googlecode.com/**
-hosting/cloudbees.com/**
+hosting/1_rubyforge.org/**
+hosting/2_googlecode.com/**
+hosting/3_cloudbees.com/**
+hosting/4_bitbucket.org/**
 html/**
 pkg/**
 api/**
