@@ -1,4 +1,7 @@
-require 'zip/zipfilesystem'
+begin
+  # 0.x name
+  require 'zip/zipfilesystem'
+  FILESYSTEM = Zip::ZipFile
 
 # Patch the zip for invalid Linux file system flags found in some JARs.
 module Zip # :nodoc:all
@@ -99,6 +102,12 @@ module Zip # :nodoc:all
   end
 end
 
+rescue LoadError
+  # 1.x name
+  require 'zip/filesystem'
+  FILESYSTEM = Zip::File
+end
+
 module JavaClass
 
   # Module for wrappers around used gems to avoid direct dependencies to gems.
@@ -116,7 +125,7 @@ module JavaClass
       # Read the _file_ from archive.
       def read(file)
         begin
-          Zip::ZipFile.open(@archive) { |zipfile| zipfile.file.read(file) }
+          FILESYSTEM.open(@archive) { |zipfile| zipfile.file.read(file) }
         rescue
           nil
         end
@@ -124,7 +133,7 @@ module JavaClass
 
       # List the entries of this zip for the block given.
       def entries(&block)
-        Zip::ZipFile.foreach(@archive) do |entry|
+        FILESYSTEM.foreach(@archive) do |entry|
           block.call(ZipEntry.new(entry))
         end
       end
@@ -151,4 +160,3 @@ module JavaClass
 
   end
 end
-
