@@ -1,5 +1,5 @@
 GEM_NAME = 'javaclass'
-GOOGLE_PROJECT = "#{GEM_NAME}-rb"
+HG_PROJECT = "#{GEM_NAME}-rb"
 
 Gem::Specification.new do |s|
   s.version = '0.5.0'
@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.summary = 'Java class files parser and disassembler for Ruby'
   s.description = 'Provides access to the package, protected, and public fields and methods of the classes passed to it together with a list of all outgoing references.'
   s.license = 'BSD'
-  s.homepage = "http://code.google.com/p/#{GOOGLE_PROJECT}/"
+  s.homepage = "https://bitbucket.org/pkofler/#{HG_PROJECT}"
   s.author = 'Peter Kofler'
   s.email = 'peter dot kofler at code minus cop dot org'
   s.date = Time::gm(2011, 12, 19)

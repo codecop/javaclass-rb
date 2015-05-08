@@ -113,37 +113,8 @@ def user_pass_from_hgrc(authname)
   [user, pass]
 end
 
-# Download the <code>googlecode_upload.py</code> from Google Code repository and save it as _name_ .
-# See:: http://support.googlecode.com/svn/trunk/scripts/googlecode_upload.py
-def download_googlecode_upload_py(name)
-  Net::HTTP.start('support.googlecode.com', 80) do |http|
-    body = http.get("/svn/trunk/scripts/#{name}").body
-    File.open(name, 'w') { |f| f.print body }
-  end
-end
-
-# Helper method to execute Python with the _params_ array.
-# The +python+ executable must be in the path.
-def python(params)
-  puts `python #{params.join(' ')}`
-end
-
-# internal - desc 'Release the gem to Google Code'
-task :release_googlecode => :package do
-  puts "Releasing #{full_gem_name} to GoogleCode"
-  user, pass = user_pass_from_hgrc(gemspec.name)
-  # See:: http://code.google.com/p/support/wiki/ScriptedUploads
-  download_googlecode_upload_py 'googlecode_upload.py'
-  ['gem', 'zip'].each do |extension|
-    puts "uploading \"pkg/#{full_gem_name}.#{extension}\"..."
-    python ['googlecode_upload.py', "-s \"JavaClass #{gemspec.version} #{extension.capitalize}\"", 
-                                    "-p #{GOOGLE_PROJECT}", "-u #{user}", "-w #{pass}", 
-                                    "pkg/#{full_gem_name}.#{extension}"]
-  end
-end
-
-desc 'Package and upload gem to Rubygems and Google Code'
-task :publish_gem => [:clobber_package, :example, :package, :release_rubygems, :release_googlecode]
+desc 'Package and upload gem to Rubygems'
+task :publish_gem => [:clobber_package, :example, :package, :release_rubygems]
 
 # :example, :clobber_example, :reexample
 example_task_lib = Rake::ExampleTask.new do |example|
@@ -153,23 +124,23 @@ task :clobber_rdoc => [:clobber_example]
 task :rdoc => [:example]
 task :package => [:example]
 
-begin 
-  require 'rdoc/task' 
-  SomeRDocTask = RDoc::Task 
+begin
+  require 'rdoc/task'
+  SomeRDocTask = RDoc::Task
 rescue LoadError
   require 'rake/rdoctask'
-  SomeRDocTask = Rake::RDocTask 
+  SomeRDocTask = Rake::RDocTask
 end
 
 # :rdoc, :clobber_rdoc, :rerdoc
-SomeRDocTask.new do |rdoc| 
+SomeRDocTask.new do |rdoc|
   rdoc.rdoc_dir = RDOC_DIR # 'html' is default anyway
   rdoc.title = "#{full_gem_name} Documentation"
   rdoc.main = 'Readme.txt'
 
   # examples are generated later and not necessarily available at definition time
   examples = example_task_lib.conversion_pairs.map { |a| a[1] }
-  
+
   rdoc.rdoc_files.include(*examples)
   rdoc.rdoc_files.include('lib/**/*.rb', *gemspec.extra_rdoc_files)
 end
@@ -203,10 +174,10 @@ def add_frameset_version(file, dir)
   File.open(file, 'w') { |f| f.print lines.join }
 end
 
-desc 'Publish the RDoc files to Google Code'
+desc 'Publish the RDoc files to repository'
 task :publish_rdoc => [:clobber_rdoc, :fix_rdoc] do
   puts "Releasing #{full_gem_name} to API"
-  remote_repo = "https://code.google.com/p/#{GOOGLE_PROJECT}.#{RDOC_REPO}"
+  remote_repo = "https://bitbucket.org/pkofler/#{HG_PROJECT}.#{RDOC_REPO}/"
   remote_dir = "#{gemspec.version}"
 
   FileUtils.rm_r RDOC_REPO rescue nil
@@ -229,6 +200,6 @@ task :publish_rdoc => [:clobber_rdoc, :fix_rdoc] do
 end
 
 # :clean :clobber
-CLOBBER.include(RDOC_REPO, 'googlecode_upload.py', 'ClassLists', 'fullClassList*.txt')
+CLOBBER.include(RDOC_REPO, 'ClassLists', 'fullClassList*.txt')
 
 task :default => :test

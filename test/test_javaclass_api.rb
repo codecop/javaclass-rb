@@ -6,7 +6,7 @@ module TestJavaClass
   # Test the public API usage.
   class TestJavaClassAPI < Test::Unit::TestCase # ZenTest SKIP
 
-    # See http://api.javaclass-rb.googlecode.com/hg/0.0.2/index.html
+    # See http://www.code-cop.org/api/javaclass-rb/0.0.2/index.html
     def test_usage_002
       clazz = JavaClass.parse("#{TEST_DATA_PATH}/api/packagename/AccessFlagsTestPublic.class")
       assert_not_nil(clazz)
@@ -18,7 +18,7 @@ module TestJavaClass
       assert_equal('java/lang/Object.<init>:()V', clazz.references.referenced_methods[0].to_s)
     end
 
-    # See http://api.javaclass-rb.googlecode.com/hg/0.0.3/index.html
+    # See http://www.code-cop.org/api/javaclass-rb/0.0.3/index.html
     def test_usage_003_fs
       clazz = JavaClass.load_fs("#{TEST_DATA_PATH}/api/packagename/AccessFlagsTestPublic.class")
       assert_not_nil(clazz)
