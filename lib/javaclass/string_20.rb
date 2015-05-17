@@ -2,8 +2,8 @@
 # Author::          Peter Kofler
 class String
 
-  RUBY19 = ''.respond_to? :codepoints 
-  
+  RUBY19 = ''.respond_to? :codepoints
+
   # Return the _index_'th element as byte.
   def byte_at(index=0)
     if RUBY19
@@ -18,6 +18,22 @@ class String
       self.unpack('C*') == other.unpack('C*')
     else
       self == other
+    end
+  end
+
+  def number_bytes
+    if RUBY19
+      self.bytesize
+    else
+      self.length
+    end
+  end
+
+  def strip_non_printable
+    if RUBY19
+      self.unpack('C*').map { |c| if c < 32 or c > 127 then 46 else c end }.pack('C*')
+    else
+      self.gsub(Regexp.new("[^ -\x7f]", nil, 'n'), '.')
     end
   end
   

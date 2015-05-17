@@ -1,6 +1,7 @@
-=== 0.5 next release
+=== 0.4.1 next release
 
-* upgrade rubyzip to 1.x (still support 0.x as well) 
+* make compatible with Ruby 2.0
+* upgrade rubyzip to 1.x (still supports 0.x as well)
 * moved code to Bitbucket, moved API doc to code-cop.org
 * Cloudbees dropped support for Ruby 1.8.6 and 1.8.7 - not testet there anymore
 * add plain class Node for dependency graph
