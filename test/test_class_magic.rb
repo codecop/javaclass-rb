@@ -17,7 +17,7 @@ module TestJavaClass
       end
 
       def test_bytes
-        assert_equal("\xCA\xFE\xBA\xBE", @magic.bytes)
+        assert("\xCA\xFE\xBA\xBE".same_bytes?(@magic.bytes))
       end
 
       def test_check

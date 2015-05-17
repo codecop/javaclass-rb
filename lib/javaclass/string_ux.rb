@@ -47,4 +47,12 @@ class String
     self[index..index+7].unpack('G')[0]
   end
 
+  def same_bytes?(other)
+    if RUBY19
+      self.unpack('C*') == other.unpack('C*')
+    else
+      self == other
+    end
+  end
+  
 end
