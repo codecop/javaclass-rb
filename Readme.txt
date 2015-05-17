@@ -63,7 +63,7 @@ with ".*" to be recognized. See JavaClass::Dsl::JavaNameFactory for its usage.
 == Dependencies
 
 * Ruby 1.8.7 (also tested under 1.9.3, 2.0.0 and 2.1.6)
-* {rubyzip}[http://rubyzip.sourceforge.net/] 0.9.5 (also tested with 0.9.6.1, 0.9.9 and 1.1.7)
+* {rubyzip}[https://github.com/rubyzip/rubyzip] 0.9.5 (also tested with 0.9.6.1, 0.9.9 and 1.1.7)
 * Originally Ruby 1.8.6 with rubyzip 0.9.1
 
 == References
