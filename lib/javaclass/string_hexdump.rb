@@ -1,3 +1,5 @@
+require 'javaclass/string_20'
+
 # Add some +hexdump+ helper method to dump the data contained in this String.
 # Author::          Peter Kofler
 class String
@@ -7,15 +9,29 @@ class String
     return StringLineHexdumper.empty(columns).format if size == 0
 
     input = [0, []]
-    output = scan(/[\x00-\xff]{1,#{columns}}/).inject(input) { |result, part|
+    lines = 1..number_hexdump_lines(columns)
+    output = lines.inject(input) { |result, line_index|
       offset, previous_lines = *result
 
+      part = hexdump_line(line_index, columns)
       line = StringLineHexdumper.new(offset, columns, part).format
       
       [ offset + columns, previous_lines + [line] ]
     }
     offset, lines = *output
     lines.join
+  end
+  
+  private
+  
+  def number_hexdump_lines(columns=16)
+    (self.number_bytes + columns - 1) / columns
+  end
+  
+  def hexdump_line(index, columns=16)
+    from = (index-1) * columns
+    to = index * columns - 1
+    self[from..to]
   end
 
 end
@@ -70,7 +86,7 @@ class StringLineHexdumper
   end
 
   def strip_non_printable
-    @data.gsub(/[^ -\x7f]/, '.')
+    @data.strip_non_printable
   end
   
 end
