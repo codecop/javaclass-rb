@@ -16,7 +16,7 @@ module JavaClass
 
       # Return +true+ if the data was valid, i.e. if the class started with +CAFEBABE+.
       def valid?
-        @bytes.same_bytes?(CAFE_BABE)
+        @bytes.same_bytes_as?(CAFE_BABE)
       end
 
       # Return the value of the magic in this class.

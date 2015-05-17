@@ -1,16 +1,12 @@
+require 'javaclass/string_20'
+
 # Add some +unpack+ helper methods for HI-LO byte order (network byte order) contained in this String.
 # Author::          Peter Kofler
 class String
 
-  RUBY19 = ''.respond_to? :codepoints 
-  
   # Return the _index_'th element as byte.
   def u1(index=0)
-    if RUBY19
-      self[index..index].unpack('C')[0]
-    else
-      self[index]
-    end
+    self.byte_at(index)
   end
 
   # Return the _index_'th and the next element as unsigned word.
@@ -47,12 +43,4 @@ class String
     self[index..index+7].unpack('G')[0]
   end
 
-  def same_bytes?(other)
-    if RUBY19
-      self.unpack('C*') == other.unpack('C*')
-    else
-      self == other
-    end
-  end
-  
 end
