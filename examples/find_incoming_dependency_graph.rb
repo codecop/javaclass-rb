@@ -1,7 +1,8 @@
 # Example usage of dependency graph: Invert the graph and see incoming dependencies of a module.
 # After getting all classes of a module, use previously generated dependency graph to iterate 
 # all incoming edges. Then either report all incoming edges as CSV or find all private/inner
-# classes of the module.
+# classes of the module. Works with an existing dependency graph, 
+# e.g. created by {chart module dependencies example}[link:/files/lib/generated/examples/chart_module_dependencies_txt.html].
 # Author::          Peter Kofler
 # Copyright::       Copyright (c) 2012, Peter Kofler.
 # License::         {BSD License}[link:/files/license_txt.html]
@@ -22,19 +23,18 @@ require 'javaclass/dependencies/edge'
 require 'javaclass/dependencies/yaml_serializer'
 
 # 1) create a classpath of the main model  plugin
-Plugin_name = 'com.some.sdm.model'
+Plugin_name = 'org.codecop.model'
 cp = classpath(File.join(location, Plugin_name, 'bin'))
 classes = cp.names
 puts "#{classes.count} classes found in main plugin"
 cp.reset_access
 
 # 2) load a dependency Graph containing the model
-# e.g. created by {chart module dependencies example}[link:/files/lib/generated/examples/chart_module_dependencies_txt.html].
 plugins = JavaClass::Dependencies::YamlSerializer.new.load('plugin_dependencies')
 
 # used to strip beginning of full qualified names
 def strip(name)
-  name.sub(/^com\.some\.sdm\./, '*.')
+  name.sub(/^org\.codecop\./, '*.')
 end
 
 # 3) mark all accessed classes in model plugin using the dependency graph
