@@ -1,3 +1,5 @@
+# :nodoc:
+
 require 'test/unit'
 require 'test/unit/testcase'
 require File.join(File.dirname(__FILE__), '..', 'examples', 'corpus')
