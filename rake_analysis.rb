@@ -7,7 +7,7 @@ require 'rake/clean' # for clean/clobber
 gemspec = eval(IO.readlines('javaclass.gemspec').join)
 
 begin
-  require File.dirname(__FILE__) + '/saikuro_task'
+  require File.dirname(__FILE__) + '/dev/saikuro_task'
 
 # :complexity, :clobber_complexity, :recomplexity
 Rake::SaikuroTask.new do |saikuro|

@@ -6,7 +6,7 @@ require 'rake'
 require 'rake/clean' # for clean/clobber
 require 'rake/testtask'
 require 'rake/packagetask'
-require File.dirname(__FILE__) + '/example_task'
+require File.dirname(__FILE__) + '/dev/example_task'
 
 # Test, package and publish functions.
 # Author::           Peter Kofler
