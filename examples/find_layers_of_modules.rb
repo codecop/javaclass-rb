@@ -1,7 +1,8 @@
 # Example usage of dependency graph: Organize the nodes into layers 
-# depending on their dependencies.
+# depending on their dependencies. Works with an existing dependency graph, 
+# e.g. created by {chart module dependencies example}[link:/files/lib/generated/examples/chart_module_dependencies_txt.html].
 # Author::          Peter Kofler
-# Copyright::       Copyright (c) 2009, Peter Kofler.
+# Copyright::       Copyright (c) 2012, Peter Kofler.
 # License::         {BSD License}[link:/files/license_txt.html]
 #
 # === Steps
@@ -13,20 +14,19 @@ $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 #++
 require 'javaclass/dependencies/yaml_serializer'
 
-# Load a dependency Graph, 
-# e.g. created by {chart module dependencies example}[link:/files/lib/generated/examples/chart_module_dependencies_txt.html].
+# 1) load dependency graph 
 plugins = JavaClass::Dependencies::YamlSerializer.new.load('plugin_dependencies')
 components = plugins.to_a
 
-first_elements = components.find_all { |c| c.dependencies.size == 0 }.sort
+@layerOfComponents = []
 
-@list = []
-@list << first_elements
+# 2) find modules without any dependencies, these are the first/bottom 
+first_elements = components.find_all { |c| c.dependencies.size == 0 }.sort
+@layerOfComponents << first_elements
 components = components - first_elements
 
-def has_all_deps_in_list(component)
-  already_sorted_dependencies = @list.flatten
-  # puts "testing #{component}"
+def has_all_deps_satisfied?(component)
+  already_sorted_dependencies = @layerOfComponents.flatten
   component.dependencies.keys.find { |dependency|
     !already_sorted_dependencies.include?(dependency)
   } == nil
@@ -34,20 +34,25 @@ end
 
 while components.size > 0
   cycle = true
+
+  # 3) for each component, check if all dependencies are satisfied combined layers below
   components.each do |component|
 
-    if has_all_deps_in_list(component)
+    if has_all_deps_satisfied?(component)
       components -= [component]
 
-      index = @list.size - 1
-      while (component.dependencies.keys.find { |dependency| @list[index].include?(dependency) } == nil)
+      # 4) if yes, walk up the dependencies until highest/lowest possible
+      index = @layerOfComponents.size - 1
+      while (component.dependencies.keys.find { |dependency| @layerOfComponents[index].include?(dependency) } == nil)
         index = index -1
       end
       index = index + 1 # take next
-      if index == @list.size
-        @list[index] = []
+
+      # and add to the layers
+      if index == @layerOfComponents.size
+        @layerOfComponents[index] = []
       end
-      @list[index] << component
+      @layerOfComponents[index] << component
 
       puts "added #{component}"
       cycle = false
@@ -55,16 +60,18 @@ while components.size > 0
     end
 
   end
+  
   if cycle
     warn "cycle in #{components.join(', ')}, can't continue with layering"
+    break
   end
 end
 
-(1..@list.size).each do |i|
-  layer = @list[i-1].sort
+# 5) output the found layering
+(1..@layerOfComponents.size).each do |i|
+  layer = @layerOfComponents[i-1].sort
   puts "#{i} " + layer.join(', ')
 end
 
-# TODO add more, separate the streams, not just the layers, 
-# so if it depends only on parent and not on others there.
-# but chart would be better.
+# TODO separate components not only bz layer, but also be stream
+# if it depends only on parent and not on others in the same layer - but a chart would be better for that.
