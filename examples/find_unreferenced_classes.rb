@@ -14,9 +14,9 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require File.join(File.dirname(__FILE__), 'corpus')
 
-location = Corpus[:RCP].location
-package1 = 'com.some.sdm'
-package2 = 'come.som.more'
+location = Corpus[:Lib].location
+package1 = 'at.kugel'
+package2 = 'org.codecop'
 #++
 require 'javaclass/dsl/mixin'
 require 'javaclass/classpath/tracking_classpath'
