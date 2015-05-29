@@ -9,14 +9,14 @@
 #--
 # add the lib of this gem to the load path
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+require File.join(File.dirname(__FILE__), 'corpus')
 
-location = 'C:\RTC3.0\workspaces\Costing_Dev'
+location = Corpus[:RCP].location
 
 def relatedPlugin?(name)
-  name == 'PricingTool2' ||
+  name == 'com.some.pricing' ||
   name == 'org.eclipse.update.scheduler' || # all other org.eclipse, nebula and zentest are in 1st level
-  name =~ /^com\.ibm\./ && !(
-    # name =~ /com\.ibm\.arc\.sdm\.gpe\.ui|com\.ibm\.arc\.sdm\.addendum/ || # known to be layer 14, depending on all
+  name =~ /^com\.some\./ && !(
     name =~ /gpe\.persistence$/ || # looks like duplicate of rocketdb
     name =~ /\.test$|\.testing$|\.mock$|\.test\.perfmon$/ || # test
     name =~ /\.build/ || # build

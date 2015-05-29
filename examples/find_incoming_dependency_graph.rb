@@ -1,7 +1,13 @@
 # Example usage of dependency graph: Invert the graph and see incoming deps.
 # TODO desc
+
+# Example usage of the class analysis featuress of JavaClass::ClassScanner and JavaClass::Analyse. 
+# After defining a classpath, use dependency analysis to find all used classes of a codebase. 
+# This code uses in turn the method <i>imported_3rd_party_types</i> of 
+# JavaClass::ClassScanner::ImportedTypes to find all imported classes.
+
 # Author::          Peter Kofler
-# Copyright::       Copyright (c) 2009, Peter Kofler.
+# Copyright::       Copyright (c) 2012, Peter Kofler.
 # License::         {BSD License}[link:/files/license_txt.html]
 #
 # === Steps
@@ -9,31 +15,32 @@
 #--
 # add the lib of this gem to the load path
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+require File.join(File.dirname(__FILE__), 'corpus')
 
-location = 'C:\RTC3.0\workspaces\Costing_Dev'
-
+corpus = Corpus[:RCP]
+location = corpus.location
 #++
 require 'javaclass/dsl/mixin'
 require 'javaclass/classpath/tracking_classpath'
 require 'javaclass/dependencies/edge'
 require 'javaclass/dependencies/yaml_serializer'
 
-# e.g. {xxx}[link:/files/lib/generated/examples/find_unreferenced_classes_txt.html].
-cp = classpath(File.join(location, 'com.ibm.arc.sdm.model', 'bin'))
+# 1) create a classpath of the main Eclipse plugin/module(s) under test
+cp = classpath(File.join(location, 'com.some.sdm.model', 'bin'))
 classes = cp.names
-# puts "#{classes.size} classes loaded from classpaths"
+puts "#{classes.count} classes found in main plugin"
 cp.reset_access
 
-# Load a dependency Graph,
+# 2) load a dependency Graph containing the main module,
 # e.g. created by {chart module dependencies example}[link:/files/lib/generated/examples/chart_module_dependencies_txt.html].
 plugins = JavaClass::Dependencies::YamlSerializer.new.load('plugin_dependencies')
 
+# strip
 def strip(name)
-  name.sub(/^com\.ibm\.arc\.sdm\./, '*.')
+  name.sub(/^com\.some\.sdm\./, '*.')
 end
 
-Plugin_name = 'com.ibm.arc.sdm.model'
-# Plugin_name = 'PricingTool2'
+Plugin_name = 'com.some.sdm.model'
 
 # A) mark all accessed classes in model plugin 
 plugins.each_node do |plugin|
