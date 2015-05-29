@@ -10,7 +10,7 @@ api/**
 coverage/**
 complexity/**
 lib/generated/**
-gems/*.gem
+dev/gems/*.gem
 ClassLists
 fullClassList*.txt
 TODO
