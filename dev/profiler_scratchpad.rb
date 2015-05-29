@@ -1,14 +1,15 @@
-# :nodoc:
 # Scratchpad script for profiler execution.
-
+# Author::          Peter Kofler
+# Copyright::       Copyright (c) 2009, Peter Kofler.
+# License::         {BSD License}[link:/files/license_txt.html]
 require 'ruby-prof'
 
 # add the lib of this gem to the load path
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'javaclass/dsl/mixin'
-require File.join(File.dirname(__FILE__), 'corpus')
+require File.join(File.dirname(__FILE__), '..', 'examples', 'corpus')
 
-location = File.join(Corpus[:BIA], 'classes')
+location = Corpus[:BIA].classes
 
 # 1) create a classpath of the given workspace
 #RubyProf.start
