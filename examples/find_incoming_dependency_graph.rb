@@ -1,11 +1,7 @@
-# Example usage of dependency graph: Invert the graph and see incoming deps.
-# TODO desc
-
-# Example usage of the class analysis featuress of JavaClass::ClassScanner and JavaClass::Analyse. 
-# After defining a classpath, use dependency analysis to find all used classes of a codebase. 
-# This code uses in turn the method <i>imported_3rd_party_types</i> of 
-# JavaClass::ClassScanner::ImportedTypes to find all imported classes.
-
+# Example usage of dependency graph: Invert the graph and see incoming dependencies of a module.
+# After getting all classes of a module, use previously generated dependency graph to iterate 
+# all incoming edges. Then either report all incoming edges as CSV or find all private/inner
+# classes of the module.
 # Author::          Peter Kofler
 # Copyright::       Copyright (c) 2012, Peter Kofler.
 # License::         {BSD License}[link:/files/license_txt.html]
@@ -25,24 +21,23 @@ require 'javaclass/classpath/tracking_classpath'
 require 'javaclass/dependencies/edge'
 require 'javaclass/dependencies/yaml_serializer'
 
-# 1) create a classpath of the main Eclipse plugin/module(s) under test
-cp = classpath(File.join(location, 'com.some.sdm.model', 'bin'))
+# 1) create a classpath of the main model  plugin
+Plugin_name = 'com.some.sdm.model'
+cp = classpath(File.join(location, Plugin_name, 'bin'))
 classes = cp.names
 puts "#{classes.count} classes found in main plugin"
 cp.reset_access
 
-# 2) load a dependency Graph containing the main module,
+# 2) load a dependency Graph containing the model
 # e.g. created by {chart module dependencies example}[link:/files/lib/generated/examples/chart_module_dependencies_txt.html].
 plugins = JavaClass::Dependencies::YamlSerializer.new.load('plugin_dependencies')
 
-# strip
+# used to strip beginning of full qualified names
 def strip(name)
   name.sub(/^com\.some\.sdm\./, '*.')
 end
 
-Plugin_name = 'com.some.sdm.model'
-
-# A) mark all accessed classes in model plugin 
+# 3) mark all accessed classes in model plugin using the dependency graph
 plugins.each_node do |plugin|
   next if plugin.name == Plugin_name
   plugin.each_edge do |dep, edge|
@@ -66,6 +61,7 @@ plugins.each_node do |plugin|
   end
 end
 
+# 4) report all incoming dependencies (edges) for further Excel analysis 
 plugins.each_node do |plugin|
   next if plugin.name == Plugin_name
   plugin.each_edge do |dep, edge|
@@ -74,11 +70,12 @@ plugins.each_node do |plugin|
   end
 end
 
-# ad A) report unused classes in model from outside
-unused_classes = classes.find_all { |clazz| cp.accessed(clazz) == 0 }.
+# 5) report unused classes in model from outside
+unused_classes = classes.
+    find_all { |clazz| cp.accessed(clazz) == 0 }.
     reject { |clazz| clazz =~ /\$.*$/ }
 report = unused_classes.map { |clazz| "#{clazz.to_classname}" }.uniq
-# puts "#{report.size} private classes found:\n  #{report.join("\n  ")}"
+puts "#{report.size} private classes found:"
 report.each do |clazz|
   puts "#{strip(clazz)};(internal);NA"
 end  
