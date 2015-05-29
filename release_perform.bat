@@ -11,7 +11,8 @@ del history.txt.bak
 rem commit the new version
 call hg ci -m "prepare release, update version"
 call rake tag
-echo version and tag ok?
+call hg log -l3
+echo tag mit version ok?
 pause
 
 rem publish gem

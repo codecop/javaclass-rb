@@ -2,7 +2,7 @@ GEM_NAME = 'javaclass'
 HG_PROJECT = "#{GEM_NAME}-rb"
 
 Gem::Specification.new do |s|
-  s.version = '0.4.1'
+  s.version = '0.4.2'
   s.name = GEM_NAME
   s.rubyforge_project = 'javaclass' # old, just redirects
   s.summary = 'Java class files parser and disassembler for Ruby'
