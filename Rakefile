@@ -102,17 +102,6 @@ task :release_rubygems => :package do
   Gem::GemRunner.new.run ['push', "pkg/#{full_gem_name}.gem"]
 end
 
-# Read username and password from the <code>~/.hgrc</code> for _authname_ prefix.
-# <code>HOME</code> environment must be set.
-def user_pass_from_hgrc(authname)
-  lines = IO.readlines(File.expand_path('~/.hgrc'))
-  user = lines.find{ |l| l =~ /#{authname}.username/ }[/[^\s=]+$/]
-  raise "could not find key #{authname}.username in ~/.hgrc" unless user
-  pass = lines.find{ |l| l =~ /#{authname}.password/ }[/[^\s=]+$/]
-  raise "could not find key #{authname}.password in ~/.hgrc" unless pass
-  [user, pass]
-end
-
 desc 'Package and upload gem to Rubygems'
 task :publish_gem => [:clobber_package, :example, :package, :release_rubygems]
 
