@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.homepage = "https://bitbucket.org/pkofler/#{HG_PROJECT}"
   s.author = 'Peter Kofler'
   s.email = 'peter dot kofler at code minus cop dot org'
-  s.date = Time::gm(2011, 12, 19)
+  s.date = Time::gm(2015, 5, 30) # set current date for release
 
   s.files = Dir.glob('*.txt') + Dir.glob('{lib,test,examples}/**/*') + ['javaclass.gemspec', 'Rakefile'] + Dir.glob('rake_*.rb') + Dir.glob('dev/*_task.rb')
   s.test_files = Dir.glob('test/**/test_*.rb')
