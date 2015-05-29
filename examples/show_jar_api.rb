@@ -32,7 +32,7 @@ JARS = [
 #  JavaClass::Classpath::MavenArtefact.new('commons-io',            'commons-io', '2.4'),
 #  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',    'commons-jexl', '2.1.1', 'Commons JEXL'),
 #  JavaClass::Classpath::MavenArtefact.new('commons-jxpath',        'commons-jxpath', '1.3', 'Commons JXPath'),
-#  JavaClass::Classpath::MavenArtefact.new('commons-lang',          'commons-lang', '2.6'),
+   JavaClass::Classpath::MavenArtefact.new('commons-lang',          'commons-lang', '2.6'),
 #  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',    'commons-lang3', '3.1'),
 #  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',    'commons-math', '2.2'),
 #  JavaClass::Classpath::MavenArtefact.new('org.apache.commons',    'commons-math3', '3.0'),
@@ -41,7 +41,7 @@ JARS = [
 ]
 #++
 # Define configuration for some Maven artefacts
-#  JARS = [ JavaClass::Classpath::MavenArtefact.new(...), ... ]
+#  JARS = [ JavaClass::Classpath::MavenArtefact.new('commons-lang', 'commons-lang', '2.6'),, ... ]
 
 # For all artefacts listed in +JARS+, load classes and write list files.
 JARS.each do |artefact|
@@ -60,7 +60,7 @@ JARS.each do |artefact|
 # 4) scan the JAR and add classes to the list
   searcher.add_list_from_classpath(artefact.version, classpath, list)
 
-# 5) save the list to a file
+# 5) save the list to a file named "Commons Lang 2.6.txt" (after the artefact)
   File.open("#{artefact.title} #{artefact.version}.txt", "w") do |f|
     # print title
     f.print "*** #{artefact.title}\n"
@@ -77,3 +77,17 @@ JARS.each do |artefact|
 
   puts "processed #{artefact.name}"
 end
+
+# 6) the generated file looks like
+#  *** Commons Lang
+#
+#  * org.apache.commons.lang
+#     ArrayUtils
+#     BitField
+#     ...
+#
+#  * org.apache.commons.lang.builder
+#     CompareToBuilder
+#     EqualsBuilder
+#     HashCodeBuilder
+#     ...
