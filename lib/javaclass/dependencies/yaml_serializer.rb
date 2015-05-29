@@ -71,7 +71,8 @@ module JavaClass
 
       # Load the Graph from YAML _filename_ .
       def load(filename)
-        yaml = YAML.load_file(yaml_file(filename))
+        yaml = File.open(yaml_file(filename)) { |f| YAML.load(f) }
+        # TODO support compressed yaml files, e.g. inside zip
         yaml_to_graph(yaml)
       end
       

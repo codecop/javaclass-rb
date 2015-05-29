@@ -25,6 +25,7 @@ module JavaClass
         NAME_AND_TYPE_TAG = 12 => Constants::ConstantNameAndType,
         ASCIZ_TAG     = 1 => Constants::ConstantAsciz,
       }
+      # TODO Java7/Java8 JDK, implement 3 new tags, see https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.4
 
       # Size of the whole constant pool in bytes.
       attr_reader :size
