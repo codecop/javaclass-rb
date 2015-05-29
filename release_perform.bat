@@ -18,19 +18,32 @@ pause
 rem publish gem
 set HOME=%HOMEDRIVE%%HOMEPATH%
 call rake publish_gem
-echo publish ok?
+echo publish to rubygem ok?
+pause
+
+rem publish zip
+echo upload zip und gem manually!
+copy pkg\*.zip E:\Develop\Ruby\JavaClass\hosting\4_bitbucket.org\downloads\
+copy pkg\*.gem E:\Develop\Ruby\JavaClass\hosting\4_bitbucket.org\downloads\
+start https://bitbucket.org/pkofler/javaclass-rb/downloads
+echo manual upload ok?
 pause
 
 rem publish doc
 call rake publish_rdoc
 start api\index.html
-echo publish ok?
+echo publish to api repo ok?
 
 cd api
 call hg push
 cd ..
 set HOME=
 echo push ok?
+pause
+
+rem publish api doc
+echo upload newest API using FTP
+echo upload manually ok?
 pause
 
 rem update the versions
