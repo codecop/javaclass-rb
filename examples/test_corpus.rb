@@ -9,8 +9,8 @@ class TestCorpus < Test::Unit::TestCase
   def test_regular_corpus
     c = Corpus[:HBD]
     assert_equal('E:\OfficeDateien\Corpus/Java6_Web(HBD_Online)', c.location)
-    assert_equal('E:\OfficeDateien\Corpus/Java6_Web(HBD_Online)/classes', c.classes)
-    assert_equal('E:\OfficeDateien\Corpus/Java6_Web(HBD_Online)/test-classes', c.testClasses)
+    assert_equal('E:\OfficeDateien\Corpus/Java6_Web(HBD_Online)/classes.zip', c.classes)
+    assert_equal('E:\OfficeDateien\Corpus/Java6_Web(HBD_Online)/test-classes.zip', c.testClasses)
     assert_equal(['at.herold'], c.packages)
     assert_equal('at.herold', c.package)
   end
@@ -18,7 +18,7 @@ class TestCorpus < Test::Unit::TestCase
   def test_regular_corpus_without_tests
     c = Corpus[:WF]
     assert_equal('E:\OfficeDateien\Corpus/Java2_Swing(WF_iMagine)', c.location)
-    assert_equal('E:\OfficeDateien\Corpus/Java2_Swing(WF_iMagine)/classes', c.classes)
+    assert_equal('E:\OfficeDateien\Corpus/Java2_Swing(WF_iMagine)/classes.zip', c.classes)
     assert_nil(c.testClasses)
     assert_equal(['at.workforce'], c.packages)
   end

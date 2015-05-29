@@ -1,6 +1,7 @@
 # :nodoc:
 
 # Attributes of a project in the test corpus of Java projects.
+# Test corpus has classes in classes/ or classes.zip. Same for test-classes.
 # Author::          Peter Kofler
 # Copyright::       Copyright (c) 2009, Peter Kofler.       
 # License::         {BSD License}[link:/files/license_txt.html]
@@ -8,9 +9,16 @@
 class CorpusInfo < Struct.new(:location, :classes, :testClasses, :packages)
    
   def self.with_default_folders(location, packages)
-    testClasses = File.join(location, 'test-classes')
-    testClasses = nil unless File.exist?(testClasses) 
-    CorpusInfo.new(location, File.join(location, 'classes'), testClasses, packages )
+    classes = pure_zip_or_nil(location, 'classes')
+    testClasses = pure_zip_or_nil(location, 'test-classes')
+    CorpusInfo.new(location, classes, testClasses, packages )
+  end
+  
+  def self.pure_zip_or_nil(location, name)
+    classes = File.join(location, name)
+    classes = File.join(location, name + '.zip') unless File.exist?(classes) 
+    classes = nil unless File.exist?(classes)
+    classes
   end
   
   def package
