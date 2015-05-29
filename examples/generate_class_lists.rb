@@ -30,6 +30,7 @@ JDKS = [
   JDK_CONFIG.new(5, '1.5.0-07', [PROGRAMS + '\jdk1.5.0_07\jre\lib', PROGRAMS + '\jdk1.5.0_07\lib\dt.jar']),
   JDK_CONFIG.new(6, '1.6.0-26', [PROGRAMS + '\jdk1.6.0_26\jre\lib', PROGRAMS + '\jdk1.6.0_26\lib\dt.jar']),
   JDK_CONFIG.new(7, '1.7.0',    [PROGRAMS + '\jdk1.7.0\jre\lib',    PROGRAMS + '\jdk1.7.0\lib\dt.jar']),
+  JDK_CONFIG.new(8, '1.8.0',    [PROGRAMS + '\jdk1.8.0_25\jre\lib', PROGRAMS + '\jdk1.8.0_25\lib\dt.jar']),
 ]
 #++
 # configuration for some JDKs
