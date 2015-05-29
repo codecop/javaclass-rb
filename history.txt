@@ -1,4 +1,4 @@
-=== 0.4.1 next release
+=== 0.4.1 30/05/2015
 
 * make compatible with Ruby 2.0
 * upgrade rubyzip to 1.x (still supports 0.x as well)
