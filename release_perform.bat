@@ -11,7 +11,7 @@ del history.txt.bak
 rem commit the new version
 call hg ci -m "prepare release, update version"
 call rake tag
-call hg log -l3
+call hg log --stat -l3
 echo tag mit version ok?
 pause
 
@@ -35,13 +35,14 @@ pause
 
 rem update the versions
 call ued javaclass.gemspec
-echo next version number and empty date ok?
+echo next version number ok?
 pause
 del javaclass.gemspec.bak
 
 rem commit the new version
 call hg ci -m "after release, update version"
-echo version ok?
+call hg log --stat -l2
+echo commit ok?
 pause
 
 call rake clean clobber
