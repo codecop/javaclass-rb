@@ -15,5 +15,7 @@ module JavaClass
 
     end
 
+    # TODO add tests for this
+    
   end
 end

@@ -73,5 +73,7 @@ end
   puts "#{i} " + layer.join(', ')
 end
 
-# TODO separate components not only bz layer, but also be stream
-# if it depends only on parent and not on others in the same layer - but a chart would be better for that.
+#--
+# TODO separate components not only by layer, but also be "stream/slice" in layer
+# If it depends only on a single parent and not on others in the same layer - but a chart would be better for that.
+#++
