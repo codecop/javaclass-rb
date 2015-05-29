@@ -13,8 +13,6 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require File.join(File.dirname(__FILE__), 'corpus')
 
-corpus = Corpus[:HBD]
-corpus = Corpus[:RCP]
 corpus = Corpus[:BIA]
 location = corpus.location
 main_location = corpus.classes
