@@ -45,16 +45,20 @@ I tried hard to rdoc all classes and public methods, so just {read it}[http://ww
 See the various examples in the examples folder of the gem. 
 
 * {Basic Usage}[link:/files/lib/generated/examples/simple_usage_txt.html]
-* {Number of classes in modules/JARs}[link:/files/lib/generated/examples/count_classes_in_modules_txt.html]
-* {Check names of all interfaces}[link:/files/lib/generated/examples/check_interface_names_txt.html]
-* {All imported types}[link:/files/lib/generated/examples/find_all_imported_types_txt.html]
-* {Cumulative dependencies of a class}[link:/files/lib/generated/examples/cumulative_dependencies_txt.html]
-* {Find (un)referenced JARs}[link:/files/lib/generated/examples/find_referenced_modules_txt.html] 
-* {Find unused classes}[link:/files/lib/generated/examples/find_unreferenced_classes_txt.html]
-* {Extract and chart dependencies between classes}[link:/files/lib/generated/examples/chart_class_dependencies_txt.html]
-* {Extract and chart dependency info between modules}[link:/files/lib/generated/examples/chart_module_dependencies_txt.html]
-* {Generate lists of JDK classes}[link:/files/lib/generated/examples/generate_class_lists_txt.html]
-* {List content of a (Maven) JAR}[link:/files/lib/generated/examples/show_jar_api_txt.html]
+* Classes in modules/Jars, classpath 
+  * {Number of classes in modules/JARs}[link:/files/lib/generated/examples/count_classes_in_modules_txt.html]
+  * {List content of a (Maven) JAR}[link:/files/lib/generated/examples/show_jar_api_txt.html]
+  * {Generate lists of JDK classes}[link:/files/lib/generated/examples/generate_class_lists_txt.html]
+  * {Check names of all interfaces}[link:/files/lib/generated/examples/check_interface_names_txt.html]
+* Dependencies to other classes 
+  * {All imported types}[link:/files/lib/generated/examples/find_all_imported_types_txt.html]
+  * {Cumulative dependencies of a class}[link:/files/lib/generated/examples/cumulative_dependencies_txt.html]
+  * {Find (un)referenced JARs}[link:/files/lib/generated/examples/find_referenced_modules_txt.html] 
+  * {Find unused classes}[link:/files/lib/generated/examples/find_unreferenced_classes_txt.html]
+  * {Extract and chart dependencies between classes}[link:/files/lib/generated/examples/chart_class_dependencies_txt.html]
+  * {Extract and chart dependency info between modules}[link:/files/lib/generated/examples/chart_module_dependencies_txt.html]
+  * {Find classes that are accessed from outside the module}[link:/files/lib/generated/examples/find_incoming_dependency_graph_txt.html]
+  * {Based on dependencies, sort modules into layers}[link:/files/lib/generated/examples/find_layers_of_modules_txt.html]
 
 There is some experimental logic to recognize Java class name literals in Ruby 
 which are mapped to JavaClass::JavaQualifiedName. Packages have to be suffixed 
