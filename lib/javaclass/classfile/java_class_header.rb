@@ -38,22 +38,25 @@ module JavaClass
 
       # Create a header with the binary _data_ from the class file.
       def initialize(data)
+        pos = 0
 
         #  ClassFile {
         #    u4 magic; 
         @magic = ClassMagic.new(data)
+        pos += 4
 
         #    u2 minor_version;
         #    u2 major_version;
         @version = ClassVersion.new(data)
+        pos += 4
 
         #    u2 constant_pool_count;
         #    cp_info constant_pool[constant_pool_count-1];
         @constant_pool = ConstantPool.new(data)
-        pos = 8 + @constant_pool.size
+        pos += @constant_pool.size
 
         #    u2 access_flags;
-        @access_flags = AccessFlags.new(data, pos)
+        @access_flags = AccessFlags.new(data.u2(pos))
         pos += 2
 
         #    u2 this_class;

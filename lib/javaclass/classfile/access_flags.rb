@@ -12,14 +12,14 @@ module JavaClass
 
       attr_reader :flags
       
-      def initialize(data, pos)
-        @flags = data.u2(pos)
+      def initialize(flags)
+        @flags = flags
         correct_flags
         assert_flags
       end
       
       def correct_flags
-        if interface? && !abstract?
+        if interface_flag? && !abstract?
           # JDK 1.0 and 1.1 do have non abstract interfaces, fix it
           @flags = @flags | ACC_ABSTRACT
         end
@@ -28,42 +28,58 @@ module JavaClass
       
       def assert_flags
         raise ClassFormatError, "inconsistent flags #{@flags} (abstract and final)" if abstract? && final?
-        raise ClassFormatError, "inconsistent flags #{@flags} (interface not abstract)" if interface? && !abstract?
-        raise ClassFormatError, "inconsistent flags #{@flags} (interface is final)" if interface? && final?
-        raise ClassFormatError, "inconsistent flags #{@flags} (annotation not interface)" if annotation? && !interface?
+        raise ClassFormatError, "inconsistent flags #{@flags} (interface not abstract)" if interface_flag? && !abstract?
+        raise ClassFormatError, "inconsistent flags #{@flags} (interface is final)" if interface_flag? && final?
+        raise ClassFormatError, "inconsistent flags #{@flags} (annotation not interface)" if annotation? && !interface_flag?
         raise ClassFormatError, "inconsistent flags #{@flags} (other value #{@flags & ACC_CLASS_OTHER})" if (@flags & ACC_CLASS_OTHER) != 0
       end
       private :assert_flags
 
+      def is?(flag)
+        (@flags & flag) != 0
+      end
+      private :is?
+      
       # Return +true+ if the class is public.
       def public?
-        (@flags & ACC_PUBLIC) != 0
+        is? ACC_PUBLIC
       end
       alias accessible? public?
 
       def final?
-        (@flags & ACC_FINAL) != 0
+        is? ACC_FINAL
       end
-
+     
       def abstract?
-        (@flags & ACC_ABSTRACT) != 0
+        is? ACC_ABSTRACT
       end
 
+      # Is this class a purely abstract class (and not an interface)?
+      def abstract_class?
+        abstract? && !interface?
+      end
+      
+      def interface_flag?
+        is? ACC_INTERFACE
+      end
+
+      # Is this class an interface (and not an annotation)?
       def interface?
-        (@flags & ACC_INTERFACE) != 0
+        interface_flag? && !annotation?
       end
-
+      
       def enum?
-        (@flags & ACC_ENUM) != 0
+        is? ACC_ENUM
       end
 
       def annotation?
-        (@flags & ACC_ANNOTATION) != 0
+        is? ACC_ANNOTATION
       end
 
-#      def inner?
-#        (@flags & ACC_INNER) != 0
-#      end
+      # Static for inner class declarations.
+      def static?
+        is? ACC_STATIC
+      end
 
       # Return the hex word of the flag.
       def flags_hex
