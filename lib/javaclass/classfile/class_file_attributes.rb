@@ -31,14 +31,18 @@ module JavaClass
       end
 
       # Defines an accessible inner class, which is a static inner class which is not synthetic.
-      def accessible_inner_class?
-        if inner_classes.find { |inner| inner.class_name == @this_class &&  inner.access_flags.static? && !inner.access_flags.synthetic? }
+      def static_inner_class?
+        if inner_classes.find { |inner| inner.class_name == @this_class &&  inner.access_flags.static? }
           true
         else
           false
         end
       end
 
+      def anonymous?
+        inner_class? && @this_class =~ /\$\d+$/
+      end
+      
     end
 
   end

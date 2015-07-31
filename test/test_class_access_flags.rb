@@ -76,7 +76,8 @@ module TestJavaClass
 
       def test_synthetic_eh
         assert(!@public.synthetic?)
-        # assert(@anonymous.synthetic?) # should be but is not
+        # assert(@anonymous.synthetic?) # should be but is not, hmm
+        # assert(@enum_inner.synthetic?)
       end
       
       def test_class_new_jdk10_fix
