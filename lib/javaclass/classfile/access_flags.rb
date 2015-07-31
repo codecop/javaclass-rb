@@ -55,6 +55,10 @@ module JavaClass
       def abstract?
         is? ACC_ABSTRACT
       end
+      
+      def synthetic?
+        is? ACC_SYNTHETIC
+      end
 
       def interface?
         is? ACC_INTERFACE
