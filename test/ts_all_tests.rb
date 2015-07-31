@@ -15,7 +15,7 @@ require File.dirname(__FILE__) + '/test_class_version'
 require File.dirname(__FILE__) + '/test_base'
 require File.dirname(__FILE__) + '/test_constant_pool'
 require File.dirname(__FILE__) + '/test_references'
-require File.dirname(__FILE__) + '/test_access_flags'
+require File.dirname(__FILE__) + '/test_class_access_flags'
 require File.dirname(__FILE__) + '/test_class_file_attributes'
 require File.dirname(__FILE__) + '/test_java_class_header'
 require File.dirname(__FILE__) + '/test_java_class_header_as_java_name'
@@ -82,7 +82,7 @@ class TsAllTests
     suite << TestJavaClass::TestClassFile::TestConstants::TestBase.suite
     suite << TestJavaClass::TestClassFile::TestConstantPool.suite
     suite << TestJavaClass::TestClassFile::TestReferences.suite
-    suite << TestJavaClass::TestClassFile::TestAccessFlags.suite
+    suite << TestJavaClass::TestClassFile::TestClassAccessFlags.suite
     suite << TestJavaClass::TestClassFile::TestClassFileAttributes.suite
     suite << TestJavaClass::TestClassFile::TestJavaClassHeader.suite
     suite << TestJavaClass::TestClassFile::TestJavaClassHeaderAsJavaName.suite

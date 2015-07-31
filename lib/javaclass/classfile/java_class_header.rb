@@ -2,7 +2,7 @@ require 'javaclass/string_ux'
 require 'javaclass/classfile/class_magic'
 require 'javaclass/classfile/class_version'
 require 'javaclass/classfile/constant_pool'
-require 'javaclass/classfile/access_flags'
+require 'javaclass/classfile/class_access_flags'
 require 'javaclass/classfile/fields'
 require 'javaclass/classfile/methods'
 require 'javaclass/classfile/attributes/attributes'
@@ -56,7 +56,7 @@ module JavaClass
         pos += @constant_pool.size
 
         #    u2 access_flags;
-        @access_flags = AccessFlags.new(data.u2(pos))
+        @access_flags = ClassAccessFlags.new(data.u2(pos))
         pos += 2
 
         #    u2 this_class;

@@ -4,7 +4,7 @@ require 'javaclass/classfile/java_class_header'
 module TestJavaClass
   module TestClassFile
 
-    class TestAccessFlags < Test::Unit::TestCase
+    class TestClassAccessFlags < Test::Unit::TestCase
 
       def setup
         %w[Public Package Abstract Interface Final Enum Annotation
