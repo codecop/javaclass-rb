@@ -13,6 +13,10 @@ module JavaClass
         access_flags.abstract? && !access_flags.interface?
       end
 
+      def inner?
+        attributes.inner?
+      end
+      
     end
 
     # TODO add tests for this

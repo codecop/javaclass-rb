@@ -30,9 +30,18 @@ module JavaClass
             if attribute_name == 'SourceFile'
               sourcefile_index = data.u2(start + pos)
               source_file = constant_pool[sourcefile_index].string
-              @attributes << SourceFile.new(attribute_name,source_file)
+              @attributes << SourceFile.new(attribute_name, source_file)
+            elsif attribute_name == 'InnerClasses'
+              number_of_classes = data.u2(start + pos)
+              pos += 2
+              inner_classes = (1..number_of_classes).collect do |i|
+                inner_class_info_index = data.u2(start + pos)
+                pos += 8
+                inner_class_info = constant_pool[inner_class_info_index]
+                inner_class_info.class_name
+              end
+              @attributes << InnerClasses.new(attribute_name, inner_classes)
             end
-            # InnerClasses
 
           end
         end
@@ -52,6 +61,16 @@ module JavaClass
         def initialize(name, source_file)
           @name = name
           @source_file = source_file
+        end
+      end
+
+      class InnerClasses
+        attr_reader :name
+        attr_reader :inner_classes
+
+        def initialize(name, inner_classes)
+          @name = name
+          @inner_classes = inner_classes
         end
       end
 
