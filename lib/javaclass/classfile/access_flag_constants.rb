@@ -20,11 +20,6 @@ module JavaClass
       ACC_ENUM = 0x4000
       # TODO How were Java 1.0's "private protected" fields? set up? (see old JVM spec)
 
-      # Bitmask for unknown/not supported flags on classes.
-      ACC_CLASS_OTHER = 0xffff ^ ACC_PUBLIC ^ ACC_FINAL ^ ACC_SUPER ^ ACC_INTERFACE ^ ACC_ABSTRACT ^ ACC_SYNTHETIC ^ ACC_ENUM ^ ACC_ANNOTATION
-      # old alias, deprecated
-      ACC_OTHER = ACC_CLASS_OTHER # :nodoc: 
-
     end
 
   end

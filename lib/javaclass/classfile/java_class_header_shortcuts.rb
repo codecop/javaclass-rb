@@ -5,7 +5,7 @@ module JavaClass
 
       # Is this class an interface (and not an annotation)?
       def interface?
-        access_flags.interface?
+        access_flags.interface_class?
       end
 
       # Is this class an abstract class (and not an interface)?

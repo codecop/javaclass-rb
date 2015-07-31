@@ -38,8 +38,9 @@ module TestJavaClass
         assert(!@abstract.interface?)
         assert(@interface.interface?)
         assert(@public_innerinterface.interface?)
-        assert(@annotation.interface_flag?)
-        assert(!@annotation.interface?)
+        assert(@public_innerinterface.interface_class?)
+        assert(@annotation.interface?)
+        assert(!@annotation.interface_class?)
       end
 
       def test_abstract_eh
