@@ -31,7 +31,7 @@ module JavaClass
         raise ClassFormatError, "inconsistent flags #{@flags} (interface not abstract)" if interface? && !abstract?
         raise ClassFormatError, "inconsistent flags #{@flags} (interface is final)" if interface? && final?
         raise ClassFormatError, "inconsistent flags #{@flags} (annotation not interface)" if annotation? && !interface?
-        raise ClassFormatError, "inconsistent flags #{@flags} (other value #{@flags & ACC_OTHER})" if (@flags & ACC_OTHER) != 0
+        raise ClassFormatError, "inconsistent flags #{@flags} (other value #{@flags & ACC_CLASS_OTHER})" if (@flags & ACC_CLASS_OTHER) != 0
       end
       private :assert_flags
 
