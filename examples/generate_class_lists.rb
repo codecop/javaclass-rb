@@ -40,6 +40,7 @@ JDKS = [
 JavaClass.unpack_jars!(:unpack)
 searcher = JavaClass::ClassList::JarSearcher.new
 searcher.skip_inner_classes = false
+searcher.skip_package_classes = true
 
 # 2) filter out unwanted classes, e.g. vendor classes
 searcher.filters = %w[sun/ sunw/ com/oracle/ com/sun/ netscape/ COM/rsa/ 
@@ -74,8 +75,8 @@ JDKS.each do |conf|
 
   # 5) save various kind of lists
   basename = "./ClassLists/jdk#{conf.label.gsub(/\./, '')}"
-  File.open("#{basename}_new_package_classes.txt", "w") { |f| f.print list.old_access_list.collect{|m| m.sub(/\s.*$/, '')} }
-  File.open("#{basename}_all_classes.txt", "w") { |f| f.print list.plain_class_list }
+  # File.open("#{basename}_new_package_classes.txt", "w") { |f| f.print list.old_access_list.collect{|m| m.sub(/\s.*$/, '')} }
+  # File.open("#{basename}_all_classes.txt", "w") { |f| f.print list.plain_class_list }
   File.open("#{basename}_all_packages.txt", "w") { |f| f.print list.to_s }
   File.open("#{basename}_all_public_classes.txt", "w") { |f| f.print list.plain_class_list { |c| c.public? } }
   File.open("#{basename}_new_public_classes.txt", "w") { |f| f.print list.plain_class_list { |c| c.public? and c.version.first == conf.version } }
