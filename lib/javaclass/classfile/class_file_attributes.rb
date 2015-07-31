@@ -8,10 +8,10 @@ module JavaClass
       def initialize(attributes)
         @attributes = attributes
       end
-      
-      # Return the number of attributes.
-      def count
-        @attributes.count
+
+      # Name of the source file.
+      def source_file
+        @attributes.with('SourceFile').source_file
       end
 
     end
