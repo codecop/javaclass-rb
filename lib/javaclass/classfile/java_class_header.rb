@@ -84,7 +84,7 @@ module JavaClass
         #    attribute_info attributes[attributes_count];
         attr = Attributes::Attributes.new(data, pos, @constant_pool)
         pos += attr.size
-        @attributes =  ClassFileAttributes.new(attr)
+        @attributes =  ClassFileAttributes.new(attr, this_class)
          
         #  }
         @references = References.new(@constant_pool, @this_class_idx)
