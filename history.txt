@@ -1,6 +1,6 @@
 === 0.4.2 next release
 
-* parse fields, methods and attributes
+* parse class attributes: source file and inner classes.
 
 === 0.4.1 30/05/2015
 

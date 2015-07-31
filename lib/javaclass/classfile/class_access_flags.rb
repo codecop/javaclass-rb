@@ -9,7 +9,7 @@ module JavaClass
     class ClassAccessFlags < AccessFlags
 
       # Bitmask for unknown/not supported flags on classes.
-      ACC_OTHER = 0xffff ^ ACC_PUBLIC ^ ACC_FINAL ^ ACC_SUPER ^ ACC_INTERFACE ^ ACC_ABSTRACT ^ ACC_SYNTHETIC ^ ACC_ENUM ^ ACC_ANNOTATION
+      ACC_OTHER = 0xffff ^ ACC_PUBLIC ^ ACC_STATIC ^ ACC_FINAL ^ ACC_SUPER ^ ACC_INTERFACE ^ ACC_ABSTRACT ^ ACC_SYNTHETIC ^ ACC_ENUM ^ ACC_ANNOTATION
 
       def initialize(flags)
         super
