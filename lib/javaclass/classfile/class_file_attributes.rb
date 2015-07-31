@@ -15,15 +15,19 @@ module JavaClass
         @attributes.with('SourceFile').source_file
       end
 
+      # List of inner classes +Attributes::InnerClass+ with name and access flags.
       def inner_classes
         @attributes.with('InnerClasses').inner_classes
       end
-      private :inner_classes
 
-      def inner?
-        inner_classes.include?(@this_class)
+      def inner_class?
+        inner_classes.find { |inner| inner.class_name == @this_class }
       end
-      
+
+      def static_inner_class?
+        inner_classes.find { |inner| inner.class_name == @this_class and inner.access_flags.static? }
+      end
+
     end
 
   end

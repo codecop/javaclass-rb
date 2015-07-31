@@ -19,10 +19,20 @@ module TestJavaClass
       end
 
       def test_inner_eh
-        assert(!@public.inner?)
-        assert(@public_inner.inner?)
-        assert(@anonymous.inner?)
-        assert(@enum_inner.inner?)
+        assert(!@public.inner_class?)
+        assert(@public_inner.inner_class?)
+        assert(@public_staticinner.inner_class?)
+        assert(@public_innerinterface.inner_class?)
+        assert(@anonymous.inner_class?)
+        assert(@enum_inner.inner_class?)
+      end
+
+      def test_static_inner_eh
+        assert(!@public_inner.static_inner_class?)
+        assert(@public_staticinner.static_inner_class?)
+        assert(@public_innerinterface.static_inner_class?)
+        assert(!@anonymous.static_inner_class?)
+        assert(@enum_inner.static_inner_class?)
       end
 
       def test_source_file
