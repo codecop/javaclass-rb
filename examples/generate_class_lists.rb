@@ -39,6 +39,7 @@ JDKS = [
 # 1) create a JavaClass::ClassList::JarSearcher
 JavaClass.unpack_jars!(:unpack)
 searcher = JavaClass::ClassList::JarSearcher.new
+searcher.skip_inner_classes = false
 
 # 2) filter out unwanted classes, e.g. vendor classes
 searcher.filters = %w[sun/ sunw/ com/oracle/ com/sun/ netscape/ COM/rsa/ 
