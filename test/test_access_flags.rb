@@ -8,12 +8,11 @@ module TestJavaClass
 
       def setup
         %w[Public Package Abstract Interface Final Enum Annotation
-           Public$Inner Public$StaticInner Public$InnerInterface Enum$1 Inner Inner$1 Inner$2].each do |t|
+           Public$Inner Public$StaticInner Public$InnerInterface Enum$1 Anonym$1].each do |t|
           binary_data = load_class("access_flags/AccessFlagsTest#{t}")
           clazz = JavaClass::ClassFile::JavaClassHeader.new(binary_data)
           variable_name = t.sub(/Public\$/, 'public_').
-                            sub(/Inner\$1/, 'anonymous').
-                            sub(/Inner\$2/, 'static_anonymous').
+                            sub(/Anonym\$1/, 'anonymous').
                             sub(/Enum\$1/,  'enum_inner').
                             downcase
           eval("@#{variable_name} = clazz.access_flags")
@@ -68,11 +67,9 @@ module TestJavaClass
 
 #      def test_inner_eh
 #        assert(!@public.inner?)
-#        assert(!@public_inner.inner?)
-#        assert(!@inner.inner?)
-#        assert(!@anonymous.inner?)
-#        assert(!@static_anonymous.inner?)
-#        assert(!@enum_inner.inner?)
+#        assert(@public_inner.inner?)
+#        assert(@anonymous.inner?)
+#        assert(@enum_inner.inner?)
 #      end
 
       def test_annotation_eh
