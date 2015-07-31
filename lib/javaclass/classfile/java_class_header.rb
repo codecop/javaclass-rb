@@ -34,6 +34,7 @@ module JavaClass
       attr_reader :access_flags
       attr_reader :references
       attr_reader :interfaces
+      attr_reader :attributes
 
       # Create a header with the binary _data_ from the class file.
       def initialize(data)
@@ -71,17 +72,17 @@ module JavaClass
 
         #    u2 fields_count;
         #    field_info fields[fields_count];
-        @fields = Fields.new(data, pos)
+        @fields = Fields.new(data, pos, @constant_pool)
         pos += @fields.size
         
         #    u2 methods_count;
         #    method_info methods[methods_count];
-        @methods = Methods.new(data, pos)
+        @methods = Methods.new(data, pos, @constant_pool)
         pos += @methods.size
 
         #    u2 attributes_count;
         #    attribute_info attributes[attributes_count];
-        attr = Attributes::Attributes.new(data, pos)
+        attr = Attributes::Attributes.new(data, pos, @constant_pool)
         pos += attr.size
         @attributes =  ClassFileAttributes.new(attr)
          
@@ -118,7 +119,7 @@ module JavaClass
         ext = super_class ? " extends #{super_class.to_classname}" : ''
         int = !@interfaces.empty? ? " implements #{@interfaces.join(',')}" : ''
         d << "#{mod}class #{this_class.to_classname}#{ext}#{int}"
-        # d << "  SourceFile: \"#{read from LineNumberTable?}\""
+        d << "  SourceFile: \"#{attributes.source_file}\""
         d += @version.dump
         d += @constant_pool.dump
         d << ''
