@@ -1,3 +1,7 @@
+=== 0.4.2 next release
+
+* parse fields, methods and attributes
+
 === 0.4.1 30/05/2015
 
 * make compatible with Ruby 2.0
