@@ -2,8 +2,11 @@ require 'javaclass/string_ux'
 require 'javaclass/classfile/class_magic'
 require 'javaclass/classfile/class_version'
 require 'javaclass/classfile/constant_pool'
-require 'javaclass/classfile/references'
 require 'javaclass/classfile/access_flags'
+require 'javaclass/classfile/fields'
+require 'javaclass/classfile/methods'
+require 'javaclass/classfile/attributes'
+require 'javaclass/classfile/references'
 require 'javaclass/java_name'
 
 module JavaClass
@@ -65,21 +68,21 @@ module JavaClass
         @interfaces = data.u2rep(count, pos + 2).collect { |i| @constant_pool.class_item(i) }
         pos += 2 + count*2
 
-        # TODO Implement parsing of fields and methods of the JVM spec 
         #    u2 fields_count;
         #    field_info fields[fields_count];
-        #        count = data.u2(pos)
-        #        @fields = data.u2rep(count, pos + 2).collect { |i| @constant_pool.field_item(i) }
-        #        pos += 2 + count*2
-
+        @fields = Fields.new(data, pos)
+        pos += @fields.size
+        
         #    u2 methods_count;
         #    method_info methods[methods_count];
-        #        count = data.u2(pos)
-        #        @methods = data.u2rep(count, pos + 2).collect { |i| @constant_pool.method_item(i) }
-        #        pos += 2 + count*2
+        @methods = Methods.new(data, pos)
+        pos += @methods.size
 
         #    u2 attributes_count;
         #    attribute_info attributes[attributes_count];
+        @attributes = Attributes.new(data, pos)
+        pos += @attributes.size
+         
         #  }
         @references = References.new(@constant_pool, @this_class_idx)
         
