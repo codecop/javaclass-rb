@@ -48,13 +48,13 @@ module JavaClass
       # _classfile_ is extracted and read.
       def public?(classpath, classfile)
         begin
-          header = ClassFile::JavaClassHeader.new(classpath.load_binary(classfile))
+          @header = ClassFile::JavaClassHeader.new(classpath.load_binary(classfile))
         rescue JavaClass::ClassFile::ClassFormatError => ex
           ex.add_classname(classfile, classpath.to_s)
           raise ex
         end
-        header.magic.check("invalid java class #{classfile}")
-        header.access_flags.accessible?
+        @header.magic.check("invalid java class #{classfile}")
+        @header.access_flags.accessible?
       end
 
       # Compile the class list for the given _version_ of Java. This searches the _path_ for zips and JARs
@@ -73,6 +73,10 @@ module JavaClass
         filter_classes(classpath.names).each do |entry|
           is_public = public?(classpath, entry)
           next if @skip_package_classes && !is_public
+          
+          inner_class_as_api = @skip_inner_classes || !@header.attributes.inner_class? || @header.attributes.accessible_inner_class?
+          next if !inner_class_as_api
+          
           list.add_class(entry, is_public, version) if list
           yield(entry, is_public, version) if block_given?
         end

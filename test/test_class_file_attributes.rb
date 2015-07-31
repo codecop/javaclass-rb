@@ -28,11 +28,11 @@ module TestJavaClass
       end
 
       def test_static_inner_eh
-        assert(!@public_inner.static_inner_class?)
-        assert(@public_staticinner.static_inner_class?)
-        assert(@public_innerinterface.static_inner_class?)
-        assert(!@anonymous.static_inner_class?)
-        assert(@enum_inner.static_inner_class?)
+        assert(!@public_inner.accessible_inner_class?)
+        assert(@public_staticinner.accessible_inner_class?)
+        assert(@public_innerinterface.accessible_inner_class?)
+        assert(!@anonymous.accessible_inner_class?)
+        assert(@enum_inner.accessible_inner_class?)
       end
 
       def test_source_file
