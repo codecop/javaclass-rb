@@ -1,3 +1,5 @@
+require 'javaclass/classfile/attributes'
+
 module JavaClass
   module ClassFile
 
@@ -7,31 +9,30 @@ module JavaClass
 
       # Size of the whole methods structure in bytes.
       attr_reader :size
+      # Return the number of methods.
+      attr_reader :count
 
       # Parse the method structure from the bytes _data_ beginning at position _start_.
-      def initialize(data, start=8)
-        # TODO Implement parsing of methods of the JVM spec
-        #    u2 methods_count;
-        #    method_info methods[methods_count];
-        #        method_info {
-        #            u2             access_flags;
-        #            u2             name_index;
-        #            u2             descriptor_index;
-        #            u2             attributes_count;
-        #            attribute_info attributes[attributes_count];
-        #        }
-        # count = data.u2(pos)
-        # @methods = data.u2rep(count, pos + 2).collect { |i| @constant_pool.method_item(i) }
-        # pos += 2 + each method is 8 + n*(6+x)
+      def initialize(data, start)
+        @count = data.u2(start)
+        @size = 2
 
-        @size = 0
+        @methods = (1..@count).collect do |i|
+          # TODO Implement parsing of methods of the JVM spec into Method class
+          access_flags = data.u2(start + @size) # later ... MethodAccessFlag.new(data, start + @size)
+          @size += 2
+          name_index = data.u2(start + @size) # later ... get from ConstantPool
+          @size += 2
+          descriptor_index = data.u2(start + @size) # later ... get from ConstantPool
+          @size += 2
+
+          attributes = Attributes.new(data, start + @size)
+          @size += attributes.size
+
+          nil
+        end
       end
 
-      # Return the number of methods. 
-      def count
-        0
-      end
-      
     end
 
   end
