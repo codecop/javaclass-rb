@@ -5,7 +5,8 @@ require 'javaclass/classfile/constant_pool'
 require 'javaclass/classfile/access_flags'
 require 'javaclass/classfile/fields'
 require 'javaclass/classfile/methods'
-require 'javaclass/classfile/attributes'
+require 'javaclass/classfile/attributes/attributes'
+require 'javaclass/classfile/class_file_attributes'
 require 'javaclass/classfile/references'
 require 'javaclass/java_name'
 
@@ -80,8 +81,9 @@ module JavaClass
 
         #    u2 attributes_count;
         #    attribute_info attributes[attributes_count];
-        @attributes = Attributes.new(data, pos)
-        pos += @attributes.size
+        attr = Attributes::Attributes.new(data, pos)
+        pos += attr.size
+        @attributes =  ClassFileAttributes.new(attr)
          
         #  }
         @references = References.new(@constant_pool, @this_class_idx)

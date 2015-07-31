@@ -1,4 +1,4 @@
-require 'javaclass/classfile/attributes'
+require 'javaclass/classfile/attributes/attributes'
 
 module JavaClass
   module ClassFile
@@ -26,7 +26,7 @@ module JavaClass
           descriptor_index = data.u2(start + @size) # later ... get from ConstantPool
           @size += 2
 
-          attributes = Attributes.new(data, start + @size)          
+          attributes = Attributes::Attributes.new(data, start + @size)          
           @size += attributes.size
           
           nil
