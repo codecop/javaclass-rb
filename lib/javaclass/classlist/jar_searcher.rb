@@ -57,6 +57,22 @@ module JavaClass
         @header.access_flags.accessible?
       end
 
+      def accessible?
+        if @skip_inner_classes
+          # no inner classes here, everything is accessable
+          true
+        elsif !@header.attributes.inner_class?
+          # not an inner class, so everything is ok
+          true
+        elsif @header.access_flags.synthetic? || @header.attributes.anonymous?
+          # the inner class is anonymous or synthetic
+          false
+        else
+          # must be static to be accessible
+          @header.attributes.static_inner_class?
+        end
+      end
+      
       # Compile the class list for the given _version_ of Java. This searches the _path_ for zips and JARs
       # and adds them to the given _list_ of found classes. _version_ is a number >= 0, e.g. 2 for JDK 1.2.
       # _list_ must provide a <code>add_class(entry, is_public, version)</code> method.
@@ -74,8 +90,7 @@ module JavaClass
           is_public = public?(classpath, entry)
           next if @skip_package_classes && !is_public
           
-          inner_class_as_api = @skip_inner_classes || !@header.attributes.inner_class? || @header.attributes.accessible_inner_class?
-          next if !inner_class_as_api
+          next if !accessible?
           
           list.add_class(entry, is_public, version) if list
           yield(entry, is_public, version) if block_given?
