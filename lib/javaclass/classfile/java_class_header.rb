@@ -22,7 +22,7 @@ module JavaClass
     # Parse and disassemble Java class files, similar to the +javap+ command.
     # Provides all information of a Java class file. This is just a container for all kind of
     # specialised elements. The constuctor parses and creates all contained elements.
-    # See::             http://java.sun.com/docs/books/jvms/second_edition/html/ClassFile.doc.html
+    # See::             https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html
     # See::             {en.wikipedia.org/wiki/Class}[http://en.wikipedia.org/wiki/Class_(file_format)]
     # Author::          Peter Kofler
     class JavaClassHeader
