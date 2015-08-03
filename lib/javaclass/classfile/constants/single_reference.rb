@@ -68,6 +68,41 @@ module JavaClass
         alias string_value first_value
       end
 
+      class ConstantMethodHandle < SingleReference # ZenTest SKIP
+        alias method_handle_index first_index
+  
+        def initialize(pool, data, start)
+          super(pool, data, start)
+  
+          @kind = data.u1(start+1)
+          @first_index = data.u2(start+2)
+          @size = 4
+        end
+        alias method_handle_value first_value
+      end
+      
+      class ConstantMethodType < SingleReference # ZenTest SKIP
+        alias method_type_index first_index
+
+        def initialize(pool, data, start)
+          super(pool, data, start)
+        end
+        alias method_type_value first_value
+      end
+      
+      class ConstantInvokeDynamic < SingleReference # ZenTest SKIP
+        alias name_and_type_index first_index
+
+        def initialize(pool, data, start)
+          super(pool, data, start)
+
+          @bootstrap_method_attr_index = data.u2(start+1)
+          @first_index = data.u2(start+3)
+          @size = 5
+        end
+        alias name_and_type_value first_value
+      end
+
     end
   end
 end
