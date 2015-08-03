@@ -13,19 +13,21 @@ module JavaClass
 
       # Types of constants by their +tag+.
       CONSTANT_TYPE_TAGS = {
-        CLASS_TAG     = 7 => Constants::ConstantClass,
-        FIELD_TAG     = 9 => Constants::ConstantField,
-        METHOD_TAG    = 10 => Constants::ConstantMethod,
+        CLASS_TAG           = 7 => Constants::ConstantClass,
+        FIELD_TAG           = 9 => Constants::ConstantField,
+        METHOD_TAG          = 10 => Constants::ConstantMethod,
         INTERFACE_METHOD_TAG = 11 => Constants::ConstantInterfaceMethod,
-        STRING_TAG    = 8 => Constants::ConstantString,
-        INT_TAG       = 3 => Constants::ConstantInt,
-        FLOAT_TAG     = 4 => Constants::ConstantFloat,
-        LONG_TAG      = 5 => Constants::ConstantLong,
-        DOUBLE_TAG    = 6 => Constants::ConstantDouble,
-        NAME_AND_TYPE_TAG = 12 => Constants::ConstantNameAndType,
-        ASCIZ_TAG     = 1 => Constants::ConstantAsciz,
+        STRING_TAG          = 8 => Constants::ConstantString,
+        INT_TAG             = 3 => Constants::ConstantInt,
+        FLOAT_TAG           = 4 => Constants::ConstantFloat,
+        LONG_TAG            = 5 => Constants::ConstantLong,
+        DOUBLE_TAG          = 6 => Constants::ConstantDouble,
+        NAME_AND_TYPE_TAG   = 12 => Constants::ConstantNameAndType,
+        ASCIZ_TAG           = 1 => Constants::ConstantAsciz,
+        METHOD_HANDLE_TAG   = 15 => Constants::ConstantMethodHandle,
+        METHOD_TYPE_TAG     = 16 => Constants::ConstantMethodType,
+        INVOKE_DYNAMIC_TAG  = 18 => Constants::ConstantInvokeDynamic,
       }
-      # TODO Java7/Java8 JDK, implement 3 new tags, see https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.4
 
       # Size of the whole constant pool in bytes.
       attr_reader :size

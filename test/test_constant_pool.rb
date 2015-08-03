@@ -116,6 +116,24 @@ const #43 = Asciz       java/lang/Runnable;'
           JavaClass::ClassFile::ConstantPool.new(data)
         }
       end
+      
+      def test_java_8_tag_15
+        @cp = JavaClass::ClassFile::ConstantPool.new(load_class('constant_pool/Java8_JavaFX_Animation$1_Tag15'))
+        found = @cp.find(JavaClass::ClassFile::ConstantPool::METHOD_HANDLE_TAG)
+        assert_equal(2, found.size)
+        assert_equal('MethodHandle', found[0].name)
+
+        found = @cp.find(JavaClass::ClassFile::ConstantPool::METHOD_TYPE_TAG)
+        assert_equal(2, found.size)
+        assert_equal('MethodType', found[0].name)
+        assert_equal('()Ljava/lang/Object;', found[0].method_type_value)
+        
+        found = @cp.find(JavaClass::ClassFile::ConstantPool::INVOKE_DYNAMIC_TAG)
+        assert_equal(1, found.size)
+        assert_equal('InvokeDynamic', found[0].name)
+        assert_equal('run:(Ljavafx/animation/Animation$1;J)Ljava/security/PrivilegedAction;', found[0].name_and_type_value)
+      end
+      
     end
 
   end

@@ -1,5 +1,6 @@
 === 0.4.2 next release
 
+* added method handle and invoke dynamic constant pool tags for Java 8
 * parse class attributes: source file and inner classes.
 
 === 0.4.1 30/05/2015
