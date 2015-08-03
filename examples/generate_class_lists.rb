@@ -44,13 +44,16 @@ searcher.skip_package_classes = true
 
 # 2) filter out unwanted classes, e.g. vendor classes
 searcher.filters = %w[sun/ sunw/ com/oracle/ com/sun/ netscape/ COM/rsa/ 
-         quicktime/ com/apple/mrj/macos/carbon/ org/jcp/xml/dsig/internal/]
+         quicktime/ com/apple/mrj/macos/carbon/ org/jcp/xml/dsig/internal/
+         oracle/jrockit/ jdk/internal/ jdk/nashorn/internal/ ]
 #--
 # netscape ... applet js security [2]
 # COM/rsa/ ... jsafe [4]
 # quicktime ... quicktime [5]
 # org/jcp/xml/dsig/internal ... xml dsig [6]
 # com/oracle/ ... com.oracle.net.Sdp [7]
+# oracle/jrockit/ ... [8]
+# jdk/internal/, jdk/nashorn/internal/ [8]
 
 Dir.mkdir './ClassLists' unless File.exist? './ClassLists'
 #++
