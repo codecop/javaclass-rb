@@ -37,7 +37,7 @@ module JavaClass
       def create_temporary_folder
         folder = File.join(find_temp_folder, "temp_#{File.basename(@jarfile)}_#{Time.now.to_i.to_s}")
         FileUtils.mkdir_p(folder)
-        at_exit { FileUtils.rm_r(folder) }
+        at_exit { FileUtils.rm_r(folder) if File.exist? folder }
         @folder = folder
       end
 
