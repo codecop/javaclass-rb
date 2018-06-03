@@ -24,9 +24,13 @@ module JavaClass
         DOUBLE_TAG          = 6 => Constants::ConstantDouble,
         NAME_AND_TYPE_TAG   = 12 => Constants::ConstantNameAndType,
         ASCIZ_TAG           = 1 => Constants::ConstantAsciz,
+        # Java 1.7
         METHOD_HANDLE_TAG   = 15 => Constants::ConstantMethodHandle,
         METHOD_TYPE_TAG     = 16 => Constants::ConstantMethodType,
         INVOKE_DYNAMIC_TAG  = 18 => Constants::ConstantInvokeDynamic,
+        # Java 9
+        MODULE_TAG          = 19 => Constants::ConstantModule,
+        PACKAGE_TAG         = 20 => Constants::ConstantPackage,
       }
 
       # Size of the whole constant pool in bytes.
