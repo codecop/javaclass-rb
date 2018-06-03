@@ -133,6 +133,19 @@ const #43 = Asciz       java/lang/Runnable;'
         assert_equal('InvokeDynamic', found[0].name)
         assert_equal('run:(Ljavafx/animation/Animation$1;J)Ljava/security/PrivilegedAction;', found[0].name_and_type_value)
       end
+
+      def test_java_9_tag_20
+        @cp = JavaClass::ClassFile::ConstantPool.new(load_class('constant_pool/Java9_Activation_module-info_Tag20'))
+        found = @cp.find(JavaClass::ClassFile::ConstantPool::MODULE_TAG)
+        assert_equal(4, found.size)
+        assert_equal('Module', found[0].name)
+        assert_equal('java.activation', found[0].name_value)
+
+        found = @cp.find(JavaClass::ClassFile::ConstantPool::PACKAGE_TAG)
+        assert_equal(2, found.size)
+        assert_equal('Package', found[1].name)
+        assert_equal('javax/activation', found[1].name_value)
+      end
       
     end
 

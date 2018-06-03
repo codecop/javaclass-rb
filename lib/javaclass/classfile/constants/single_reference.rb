@@ -103,6 +103,24 @@ module JavaClass
         alias name_and_type_value first_value
       end
 
+      class ConstantModule < SingleReference # ZenTest SKIP
+        alias name_index first_index
+  
+        def initialize(pool, data, start)
+          super(pool, data, start)
+        end
+        alias name_value first_value
+      end
+  
+      class ConstantPackage < SingleReference # ZenTest SKIP
+        alias name_index first_index
+  
+        def initialize(pool, data, start)
+          super(pool, data, start)
+        end
+        alias name_value first_value
+      end
+          
     end
   end
 end
