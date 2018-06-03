@@ -71,6 +71,10 @@ module JavaClass
       def annotation?
         is? ACC_ANNOTATION
       end
+
+      def module?
+        is? ACC_MODULE
+      end
       
       # Return the hex word of the flag.
       def flags_hex
