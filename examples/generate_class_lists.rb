@@ -22,8 +22,8 @@ JDK_CONFIG = Struct.new(:version, :label, :paths)
 # Windows 7 configuration for 32bit Sun/Oracle JVMs
 PROGRAMS = 'C:\Program Files (x86)\Java'
 JDKS = [
-  JDK_CONFIG.new(0, '1.0.2',    ['E:\Develop\Java\Compiler\jdk1.0.2\lib']),
-  JDK_CONFIG.new(1, '1.1.8-09', ['E:\Develop\Java\Compiler\jdk1.1.8\lib', 'E:\Develop\Java\JDK-1.1\Library\swing-1.1.1\lib']),
+  JDK_CONFIG.new(0, '1.0.2',    [PROGRAMS + '\jdk1.0.2\lib']),
+  JDK_CONFIG.new(1, '1.1.8-09', [PROGRAMS + '\jdk1.1.8\lib', 'E:\Develop\Java\JDK-1.1\Library\swing-1.1.1\lib']),
   JDK_CONFIG.new(2, '1.2.2-13', [PROGRAMS + '\jdk1.2.2_13\jre\lib', PROGRAMS + '\jdk1.2.2_13\lib\dt.jar']),
   JDK_CONFIG.new(3, '1.3.1-08', [PROGRAMS + '\jdk1.3.1_08\jre\lib', PROGRAMS + '\jdk1.3.1_08\lib\dt.jar']),
   JDK_CONFIG.new(4, '1.4.2-03', [PROGRAMS + '\jdk1.4.2_03\jre\lib', PROGRAMS + '\jdk1.4.2_03\lib\dt.jar']),
@@ -31,6 +31,7 @@ JDKS = [
   JDK_CONFIG.new(6, '1.6.0-26', [PROGRAMS + '\jdk1.6.0_26\jre\lib', PROGRAMS + '\jdk1.6.0_26\lib\dt.jar']),
   JDK_CONFIG.new(7, '1.7.0',    [PROGRAMS + '\jdk1.7.0\jre\lib',    PROGRAMS + '\jdk1.7.0\lib\dt.jar']),
   JDK_CONFIG.new(8, '1.8.0',    [PROGRAMS + '\jdk1.8.0_25\jre\lib', PROGRAMS + '\jdk1.8.0_25\lib\dt.jar']),
+  JDK_CONFIG.new(9, '9.0.4',    [PROGRAMS + '\open_jdk9.0.4-1\jmods', PROGRAMS + '\open_jdk9.0.4-1\lib\jrt-fs.jar']),
 ]
 #++
 # configuration for some JDKs
@@ -43,17 +44,18 @@ searcher.skip_inner_classes = false
 searcher.skip_package_classes = true
 
 # 2) filter out unwanted classes, e.g. vendor classes
-searcher.filters = %w[sun/ sunw/ com/oracle/ com/sun/ netscape/ COM/rsa/ 
+searcher.filters = %w[sun/ sunw/ com/oracle/ com/sun/ netscape/ com/rsa/ 
          quicktime/ com/apple/mrj/macos/carbon/ org/jcp/xml/dsig/internal/
-         oracle/jrockit/ jdk/internal/ jdk/nashorn/internal/ ]
+         oracle/jrockit/ jdk/internal/ jdk/nashorn/internal/
+         jdk/dynalink/internal/ jdk/incubator/http.internal/ jdk/javadoc/internal/ jdk/tools/jlink/internal/ ]
 #--
 # netscape ... applet js security [2]
 # COM/rsa/ ... jsafe [4]
 # quicktime ... quicktime [5]
 # org/jcp/xml/dsig/internal ... xml dsig [6]
 # com/oracle/ ... com.oracle.net.Sdp [7]
-# oracle/jrockit/ ... [8]
-# jdk/internal/, jdk/nashorn/internal/ [8]
+# oracle/jrockit/ jdk/internal/ jdk/nashorn/internal/ [8]
+# jdk/dynalink/internal/ jdk/incubator/http.internal/ jdk/javadoc/internal/ jdk/tools/jlink/internal/ [9]
 
 Dir.mkdir './ClassLists' unless File.exist? './ClassLists'
 #++
@@ -81,11 +83,11 @@ JDKS.each do |conf|
   # File.open("#{basename}_new_package_classes.txt", "w") { |f| f.print list.old_access_list.collect{|m| m.sub(/\s.*$/, '')} }
   # File.open("#{basename}_all_classes.txt", "w") { |f| f.print list.plain_class_list }
   File.open("#{basename}_all_packages.txt", "w") { |f| f.print list.to_s }
-  File.open("#{basename}_all_public_classes.txt", "w") { |f| f.print list.plain_class_list { |c| c.public? } }
-  File.open("#{basename}_new_public_classes.txt", "w") { |f| f.print list.plain_class_list { |c| c.public? and c.version.first == conf.version } }
+  File.open("#{basename}_all_public_classes.txt", "w") { |f| f.print list.plain_class_list { |c| c.public? }.join() }
+  File.open("#{basename}_new_public_classes.txt", "w") { |f| f.print list.plain_class_list { |c| c.public? and c.version.first == conf.version }.join() }
 
   baseversion = conf.label.gsub(/\.|-.+$/, '')
-  File.open("./fullClassList#{baseversion}.txt", "w") { |f| f.print list.full_class_list }
+  File.open("./fullClassList#{baseversion}.txt", "w") { |f| f.print list.full_class_list.join() }
 
   puts "processed #{conf.label}"
 end
