@@ -32,7 +32,9 @@ module JavaClass
 
       # Defines an accessible inner class, which is a static inner class which is not synthetic.
       def static_inner_class?
-        if inner_classes.find { |inner| inner.class_name == @this_class &&  inner.access_flags.static? }
+        if inner_classes.find { |inner| inner.class_name == @this_class && 
+                                         inner.access_flags.static? && 
+                                         (!inner.access_flags.private? || inner.access_flags.protected?) }
           true
         else
           false
