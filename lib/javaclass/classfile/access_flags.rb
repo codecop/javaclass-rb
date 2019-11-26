@@ -44,6 +44,14 @@ module JavaClass
       end
       alias accessible? public?
 
+      def private?
+        is? ACC_PRIVATE
+      end
+
+      def protected?
+        is? ACC_PROTECTED
+      end
+      
       def static?
         is? ACC_STATIC
       end

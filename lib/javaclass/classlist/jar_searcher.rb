@@ -58,17 +58,19 @@ module JavaClass
       end
 
       def accessible?
-        if @skip_inner_classes
-          # no inner classes here, everything is accessible
+        if @skip_inner_classes || !@header.attributes.inner_class?
+          # no inner classes have been collected, everything is accessible due its public flag
+          # or this is not an inner class, so everything is OK
           true
-        elsif !@header.attributes.inner_class?
-          # not an inner class, so everything is OK
-          true
+          
+        # it is an inner class
+          
         elsif @header.access_flags.synthetic? || @header.attributes.anonymous?
-          # the inner class is anonymous or synthetic
+          # the inner class is anonymous or synthetic, not accessible
           false
+
         else
-          # must be static to be accessible
+          # must be static (and not private nor protected) to be accessible
           @header.attributes.static_inner_class?
         end
       end

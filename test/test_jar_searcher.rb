@@ -10,6 +10,7 @@ module TestJavaClass
 
       PACKAGE_CLASS = "packagename/PackageClass.class"
       INNER_CLASS = "packagename/PublicClass$PublicClass_PackageInnerClass.class"
+      PUBLIC_INNER_CLASS = "packagename/PackageClass$PackageClass_PublicInnerClass.class"
       PUBLIC_CLASS = "packagename/PublicClass.class"
       PUBLIC_INTERFACE = "packagename/PublicInterface.class"
       CLASSES = [INNER_CLASS, PUBLIC_CLASS, PUBLIC_INTERFACE, PACKAGE_CLASS]
@@ -48,12 +49,9 @@ module TestJavaClass
         assert(!@cs.public?(@cpe, PACKAGE_CLASS))
         assert(!@cs.public?(@cpe, INNER_CLASS))
         assert(@cs.public?(@cpe, PUBLIC_CLASS))
+        assert(@cs.public?(@cpe, PUBLIC_INNER_CLASS))
       end
       
-      def create_jar_searcher
-        JavaClass::Classpath::JarClasspath.new(File.expand_path("#{TEST_DATA_PATH}/jar_searcher/JarClassListTest.jar"))
-      end
-
       def test_public_eh_fails
         @cpe = create_jar_searcher
         assert_raise(JavaClass::Classpath::ClassNotFoundError){ @cs.public?(@cpe, 'NonExistingClass') }
@@ -63,7 +61,11 @@ module TestJavaClass
           @cs.public?(@cpe, 'BrokenRunnable_102') 
         }
       end
-      
+
+      def create_jar_searcher
+        JavaClass::Classpath::JarClasspath.new(File.expand_path("#{TEST_DATA_PATH}/jar_searcher/JarClassListTest.jar"))
+      end
+
       class MockList # ZenTest SKIP mock class
         attr_reader :versions
         attr_reader :modifiers
@@ -85,9 +87,16 @@ module TestJavaClass
         def size
           @entries.size
         end
+        
+        def to_s
+          @entries.join("\n")
+        end
       end
 
-      def test_compile_list
+      def test_compile_list_no_inner_classes
+        # @cs.skip_inner_classes = true # default
+        # @cs.skip_package_classes = false # default
+
         list = @cs.compile_list(2, "#{TEST_DATA_PATH}/jar_searcher", MockList.new )
 
         assert_equal(3, list.size)
@@ -96,14 +105,30 @@ module TestJavaClass
         assert_equal([2, 2, 2], list.versions)
       end
 
-      def test_skip_package_classes_equals
+      def test_compile_list_no_inner_no_package_classes
+        # @cs.skip_inner_classes = true # default
         @cs.skip_package_classes = true
+        
         list = @cs.compile_list(3, "#{TEST_DATA_PATH}/jar_searcher", MockList.new )
 
         assert_equal(2, list.size)
         assert_equal([PUBLIC_CLASS, PUBLIC_INTERFACE], list.entries)
       end
 
+      def test_compile_list_all_public_and_package_classes
+        @cs.skip_inner_classes = false
+        # @cs.skip_package_classes = false # default
+        
+        list = @cs.compile_list(3, "#{TEST_DATA_PATH}/jar_searcher", MockList.new )
+        
+        assert_equal(3 + 2 + 2, list.size) # 3 files, 2 static inner in public, 2 static inner in package 
+      end
+      
+        # @cs.skip_inner_classes = false 
+        # @cs.skip_package_classes = true
+
+
+      
     end
 
   end
