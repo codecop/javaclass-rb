@@ -46,6 +46,11 @@ module TestJavaClass
         assert_equal('AccessFlagsTestPublic.java', @public.source_file)
         assert_equal('AccessFlagsTestPublic.java', @public_inner.source_file)
       end
+      
+      def test_outer_class
+        assert_equal('packagename/AccessFlagsTestPublic', @public.outer_class)
+        assert_equal('packagename/AccessFlagsTestPublic', @public_inner.outer_class)
+      end
     end
 
   end

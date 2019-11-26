@@ -1,3 +1,5 @@
+require 'javaclass/java_name'
+
 module JavaClass
   module ClassFile
 
@@ -44,7 +46,16 @@ module JavaClass
       def anonymous?
         inner_class? && @this_class =~ /\$\d+$/
       end
-      
+
+      # Return outer class name for inner classes, or the current class name.
+      def outer_class
+        if inner_class?
+          JavaVMName.new(@this_class[/^[^$]+/])
+        else
+          @this_class
+        end
+      end
+
     end
 
   end
