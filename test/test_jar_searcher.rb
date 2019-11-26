@@ -9,7 +9,7 @@ module TestJavaClass
     class TestJarSearcher < Test::Unit::TestCase
 
       PACKAGE_CLASS = "packagename/PackageClass.class"
-      INNER_CLASS = "packagename/PublicClass$InnerClass.class"
+      INNER_CLASS = "packagename/PublicClass$PublicClass_PackageInnerClass.class"
       PUBLIC_CLASS = "packagename/PublicClass.class"
       PUBLIC_INTERFACE = "packagename/PublicInterface.class"
       CLASSES = [INNER_CLASS, PUBLIC_CLASS, PUBLIC_INTERFACE, PACKAGE_CLASS]
@@ -44,14 +44,18 @@ module TestJavaClass
       end
 
       def test_public_eh
-        @cpe = JavaClass::Classpath::JarClasspath.new(File.expand_path("#{TEST_DATA_PATH}/jar_searcher/JarClassListTest.jar"))
+        @cpe = create_jar_searcher
         assert(!@cs.public?(@cpe, PACKAGE_CLASS))
         assert(!@cs.public?(@cpe, INNER_CLASS))
         assert(@cs.public?(@cpe, PUBLIC_CLASS))
       end
+      
+      def create_jar_searcher
+        JavaClass::Classpath::JarClasspath.new(File.expand_path("#{TEST_DATA_PATH}/jar_searcher/JarClassListTest.jar"))
+      end
 
       def test_public_eh_fails
-        @cpe = JavaClass::Classpath::JarClasspath.new(File.expand_path("#{TEST_DATA_PATH}/jar_searcher/JarClassListTest.jar"))
+        @cpe = create_jar_searcher
         assert_raise(JavaClass::Classpath::ClassNotFoundError){ @cs.public?(@cpe, 'NonExistingClass') }
 
         @cpe = JavaClass::Classpath::FolderClasspath.new(File.expand_path("#{TEST_DATA_PATH}/jar_searcher"))
