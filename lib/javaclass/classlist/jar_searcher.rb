@@ -47,6 +47,8 @@ module JavaClass
       # Return true if the _classfile_ in the given _classpath_ is public. This is expensive because the JAR file is opened and the
       # _classfile_ is extracted and read.
       def public?(classpath, classfile)
+        # temporal hack, store @classpath and @header
+        @classpath = classpath
         begin
           @header = ClassFile::JavaClassHeader.new(classpath.load_binary(classfile))
         rescue JavaClass::ClassFile::ClassFormatError => ex
@@ -58,7 +60,11 @@ module JavaClass
       end
 
       def accessible?
-        if @skip_inner_classes || !@header.attributes.inner_class?
+        if @skip_package_classes && !@header.access_flags.accessible?
+          # not public and we only want public
+          false
+        
+        elsif @skip_inner_classes || !@header.attributes.inner_class?
           # no inner classes have been collected, everything is accessible due its public flag
           # or this is not an inner class, so everything is OK
           true
@@ -69,9 +75,18 @@ module JavaClass
           # the inner class is anonymous or synthetic, not accessible
           false
 
-        else
+        elsif !@header.attributes.static_inner_class?
           # must be static (and not private nor protected) to be accessible
-          @header.attributes.static_inner_class?
+          false
+          
+        elsif !@skip_package_classes
+          # inner class is public or package access, OK
+          true
+          
+        else
+          # inner class is public, but parent class might be package only
+          public?(@classpath, @header.attributes.outer_class.to_class_file)
+          
         end
       end
       
@@ -90,8 +105,6 @@ module JavaClass
       def add_list_from_classpath(version, classpath, list)
         filter_classes(classpath.names).each do |entry|
           is_public = public?(classpath, entry)
-          next if @skip_package_classes && !is_public
-          
           next if !accessible?
           
           list.add_class(entry, is_public, version) if list

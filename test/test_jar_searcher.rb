@@ -124,10 +124,14 @@ module TestJavaClass
         assert_equal(3 + 2 + 2, list.size) # 3 files, 2 static inner in public, 2 static inner in package 
       end
       
-        # @cs.skip_inner_classes = false 
-        # @cs.skip_package_classes = true
-
-
+      def test_compile_list_all_public_and_no_package_classes
+        @cs.skip_inner_classes = false 
+        @cs.skip_package_classes = true
+        
+        list = @cs.compile_list(3, "#{TEST_DATA_PATH}/jar_searcher", MockList.new )
+        
+        assert_equal(2 + 1, list.size) # 2 files, 1 public static inner in public 
+      end
       
     end
 
