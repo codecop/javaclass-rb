@@ -1,5 +1,6 @@
 === 0.4.2 next release
 
+* added outer class name for inner classes.   
 * added new constant pool tags and access modifier for Java 9
 * added method handle and invoke dynamic constant pool tags for Java 8
 * parse class attributes: source file and inner classes.
