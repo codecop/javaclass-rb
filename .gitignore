@@ -1,17 +1,25 @@
 
-syntax: glob
 hosting/1_rubyforge.org/**
 hosting/2_googlecode.com/**
 hosting/3_cloudbees.com/**
 hosting/4_bitbucket.org/**
+hosting/5_github.com/**
+
+# generated
 html/**
 pkg/**
 api/**
 coverage/**
 complexity/**
 lib/generated/**
+
+# required libraries
 dev/gems/*.gem
+
+# generated class lists
 ClassLists
 fullClassList*.txt
+
+# work in progress marker
 TODO
 Weiter
