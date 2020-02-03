@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.summary = 'Java class files parser and disassembler for Ruby'
   s.description = 'Provides access to the package, protected, and public fields and methods of the classes passed to it together with a list of all outgoing references.'
   s.license = 'BSD'
-  s.homepage = "https://bitbucket.org/pkofler/#{HG_PROJECT}"
+  s.homepage = "https://github.com/codecop/#{HG_PROJECT}"
   s.author = 'Peter Kofler'
   s.email = 'peter dot kofler at code minus cop dot org'
   s.date = Time::gm(2015, 5, 30) # set current date for release

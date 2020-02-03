@@ -1,7 +1,7 @@
 javaclass-rb
-by {Peter 'Code Cop' Kofler}[http://www.code-cop.org/]
+by {Peter 'Code Cop' Kofler}[https://www.code-cop.org/]
 
-* {Homepage (Bitbucket)}[https://bitbucket.org/pkofler/javaclass-rb]
+* {Homepage (GitHub)}[https://github.com/codecop/javaclass-rb]
 * email peter dot kofler at code minus cop dot org
 
 == Description
@@ -27,42 +27,42 @@ which might be the base for some serious static code analysis tools. (I
   sudo gem install javaclass
 
 * {Gem Hosting}[http://rubygems.org/gems/javaclass]
-* {Download of tarballs and gems}[https://bitbucket.org/pkofler/javaclass-rb/downloads]
+* {Download of tar balls and gems}[https://www.code-cop.org/download/javaclass-rb/]
 
 == Documentation
 
 Module JavaClass is the entry point for basic functions. All advanced functions are
-available in Object through the JavaClass::Dsl::Mixin. The main class or the parser 
-is JavaClass::ClassFile::JavaClassHeader which provides access to all information 
-of a Java class file. 
+available in Object through the JavaClass::Dsl::Mixin. The main class or the parser
+is JavaClass::ClassFile::JavaClassHeader which provides access to all information
+of a Java class file.
 
-* {API RDoc}[http://www.code-cop.org/api/javaclass-rb/]
+* {API RDoc}[https://www.code-cop.org/api/javaclass-rb/]
 
-I tried hard to rdoc all classes and public methods, so just {read it}[http://www.code-cop.org/api/javaclass-rb/].
+I tried hard to rdoc all classes and public methods, so just {read it}[https://www.code-cop.org/api/javaclass-rb/].
 
 == Usage
 
-See the various examples in the examples folder of the gem. 
+See the various examples in the examples folder of the gem.
 
 * {Basic Usage}[link:/files/lib/generated/examples/simple_usage_txt.html]
-* Classes in modules/Jars, classpath 
+* Classes in modules/Jars, classpath
   * {Number of classes in modules/JARs}[link:/files/lib/generated/examples/count_classes_in_modules_txt.html]
   * {List content of a (Maven) JAR}[link:/files/lib/generated/examples/show_jar_api_txt.html]
   * {Generate lists of JDK classes}[link:/files/lib/generated/examples/generate_class_lists_txt.html]
   * {Check names of all interfaces}[link:/files/lib/generated/examples/check_interface_names_txt.html]
-* Dependencies to other classes 
+* Dependencies to other classes
   * {All imported types}[link:/files/lib/generated/examples/find_all_imported_types_txt.html]
   * {Cumulative dependencies of a class}[link:/files/lib/generated/examples/cumulative_dependencies_txt.html]
-  * {Find (un)referenced JARs}[link:/files/lib/generated/examples/find_referenced_modules_txt.html] 
+  * {Find (un)referenced JARs}[link:/files/lib/generated/examples/find_referenced_modules_txt.html]
   * {Find unused classes}[link:/files/lib/generated/examples/find_unreferenced_classes_txt.html]
   * {Extract and chart dependencies between classes}[link:/files/lib/generated/examples/chart_class_dependencies_txt.html]
   * {Extract and chart dependency info between modules}[link:/files/lib/generated/examples/chart_module_dependencies_txt.html]
   * {Find classes that are accessed from outside the module}[link:/files/lib/generated/examples/find_incoming_dependency_graph_txt.html]
   * {Based on dependencies, sort modules into layers}[link:/files/lib/generated/examples/find_layers_of_modules_txt.html]
 
-There is some experimental logic to recognize Java class name literals in Ruby 
-which are mapped to JavaClass::JavaQualifiedName. Packages have to be suffixed 
-with ".*" to be recognized. See JavaClass::Dsl::JavaNameFactory for its usage. 
+There is some experimental logic to recognize Java class name literals in Ruby
+which are mapped to JavaClass::JavaQualifiedName. Packages have to be suffixed
+with ".*" to be recognized. See JavaClass::Dsl::JavaNameFactory for its usage.
 
 == Dependencies
 
@@ -74,7 +74,7 @@ with ".*" to be recognized. See JavaClass::Dsl::JavaNameFactory for its usage.
 
 * {The Java class file lifestyle}[http://www.javaworld.com/javaworld/jw-07-1996/jw-07-classfile.html], JavaWorld 1996.
 * {The class File Format}[https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html], The Java Virtual Machine Specification, Second Edition.
-* {Similar Project by unageanu}[http://github.com/unageanu/javaclass], GitHub 2010. 
+* {Similar Project by unageanu}[http://github.com/unageanu/javaclass], GitHub 2010.
 
 == License
 

@@ -1,16 +1,17 @@
 === 0.4.2 next release
 
-* added outer class name for inner classes.   
+* moved code to GitHub
+* added outer class name for inner classes.
 * added new constant pool tags and access modifier for Java 9
 * added method handle and invoke dynamic constant pool tags for Java 8
-* parse class attributes: source file and inner classes.
+* parse class attributes: source file and inner classes
 
 === 0.4.1 30/05/2015
 
 * make compatible with Ruby 2.0
 * upgrade rubyzip to 1.x (still supports 0.x as well)
 * moved code to Bitbucket, moved API doc to code-cop.org
-* Cloudbees dropped support for Ruby 1.8.6 and 1.8.7 - not testet there anymore
+* Cloudbees dropped support for Ruby 1.8.6 and 1.8.7 - not tested there any more
 * add plain class Node for dependency graph
 * add dependency graph and classpath (module/component/plugin) implementation
 * add Maven artefact to generate classpath from group/name/version
@@ -44,7 +45,7 @@
 * integrated ClassList from another project as first analyser
 * added abstraction of Java names to all class names that are returned
 * fixed links in RDoc, update documentation
-* moved classes into submodules for classpath, classfile, etc.
+* moved classes into sub modules for classpath, class file, etc.
 * migrated to Google Code and Mercurial repository
 * added access flag $1000
 * added references to used classes
