@@ -82,18 +82,17 @@ task :uninstall_gem do
   Gem::GemRunner.new.run ['uninstall', gemspec.name]
 end
 
-# Helper method to execute Mercurial with the _params_ array.
-# The +hg+ executable must be in the path.
-def hg(params)
-  puts `hg #{params.join(' ')}`
+# Helper method to execute Git with the _params_ array.
+# The +git+ executable must be in the path.
+def git(params)
+  puts `git #{params.join(' ')}`
 end
 
-desc 'Tag current version in Hg'
+desc 'Tag current version in Git'
 task :tag do
-  hg ['tag', '-f', "-m \"Released gem version #{gemspec.version}\"", "#{full_gem_name}"]
-  # hg ['push']
+  git ['tag', "#{full_gem_name}"]
+  # git ['push']
   puts 'Tag created. Don\'t forget to push'
-  puts 'hg push'
 end
 
 # internal - desc 'Release the gem to Rubygems'
@@ -165,27 +164,22 @@ end
 
 desc 'Publish the RDoc files to repository'
 task :publish_rdoc => [:clobber_rdoc, :fix_rdoc] do
-  puts "Releasing #{full_gem_name} to API"
-  remote_repo = "https://bitbucket.org/pkofler/#{HG_PROJECT}.#{RDOC_REPO}/"
-  remote_dir = "#{gemspec.version}"
+  puts "Releasing #{full_gem_name} API"
+  version_dir = "#{gemspec.version}"
 
   FileUtils.rm_r RDOC_REPO rescue nil
-  hg ['clone', remote_repo, RDOC_REPO]
+  FileUtils.mkdir RDOC_REPO
 
-  FileUtils.rm_r "#{RDOC_REPO}/#{remote_dir}" rescue nil
-  FileUtils.cp_r RDOC_DIR, "#{RDOC_REPO}/#{remote_dir}"
+  FileUtils.rm_r "#{RDOC_REPO}/#{version_dir}" rescue nil
+  FileUtils.cp_r RDOC_DIR, "#{RDOC_REPO}/#{version_dir}"
 
   # modify index, update redirect in frameset
   file = "#{RDOC_REPO}/index.html"
-  FileUtils.cp "#{RDOC_REPO}/#{remote_dir}/index.html", file
-  add_frameset_version(file, remote_dir)
+  FileUtils.cp "#{RDOC_REPO}/#{version_dir}/index.html", file
+  add_frameset_version(file, version_dir)
 
-  hg ['addremove', '-q', "-R #{RDOC_REPO}"]
-  hg ['ci', "-m \"Update Rdoc for version #{gemspec.version}\"", "-R #{RDOC_REPO}"]
-  hg ['tag', '-f', "-m \"Released gem version #{gemspec.version}\"", "-R #{RDOC_REPO}", "#{full_gem_name}"]
-  # hg ['push', "-R #{RDOC_REPO}"]
-  puts 'API site created. Don\'t forget to push'
-  puts "hg push -R #{RDOC_REPO}"
+  puts 'API created. Copy to hosting\4_bitbucket.org\api'
+  puts 'API created. Don\'t forget to upload'
 end
 
 # :clean :clobber

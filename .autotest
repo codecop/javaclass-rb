@@ -1,7 +1,7 @@
 # -*- ruby -*-
 
 # require 'autotest/autoupdate'     # update after some time
-# require 'autotest/camping' 
+# require 'autotest/camping'
 # require 'autotest/cctray'
 # require 'autotest/emacs'
 # require 'autotest/email_notify'
@@ -40,11 +40,11 @@ $q = true # be quiet
 class Autotest
 
   alias old_path_to_classname path_to_classname
-  
+
   # Custom method for ZenTest class name conventions.
   def path_to_classname(s)
     @my_test_class_names ||= IO.readlines('test/ts_all_tests.rb').find_all{ |l| l =~ /suite <</ }.collect{ |l| l.gsub(/\s*suite\s*<<\s*|\.suite\s*/, '')}
-    
+
     cn = old_path_to_classname(s)
 
     my_cn = @my_test_class_names.find { |l| l =~ /#{cn}/ }
@@ -57,7 +57,7 @@ end
 
 # ignore other content
 Autotest.add_hook :initialize do |autotest|
-  [/(?:\.hg|hosting|test\/data)[\/\\].*$/, /\.(?:pdf|txt|bat|java)$/i ].each do |exception|
+  [/(?:\.git|\.hg|hosting|test\/data)[\/\\].*$/, /\.(?:pdf|txt|bat|java)$/i ].each do |exception|
     autotest.add_exception(exception)
   end
 end
