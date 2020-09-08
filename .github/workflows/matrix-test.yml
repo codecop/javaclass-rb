@@ -1,0 +1,25 @@
+name: Matrix Test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ 'ubuntu-latest', 'macos-latest', 'windows-latest' ]
+        ruby: [ 2.6, 1.9, 1.8 ]
+    steps:
+    - name: Check out the repo
+      uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+    - name: Install dependencies
+      run: gem install rubyzip
+    - run: gem install rdoc
+    - run: gem list
+    - name: Run tests
+      run: rake
