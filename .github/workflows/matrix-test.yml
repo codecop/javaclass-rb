@@ -1,15 +1,17 @@
-name: Matrix Test
+name: Continuous Integration Workflow
 
 on: [push, pull_request]
 
 jobs:
   test:
-    name: Test
+    name: Matrix Test
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ 'ubuntu-latest', 'macos-latest', 'windows-latest' ]
-        ruby: [ 2.6, 1.9, 1.8 ]
+        # os: [ 'ubuntu-latest', 'macos-latest', 'windows-latest' ]
+        os: [ 'ubuntu-latest' ]
+        # ruby: [ 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7 ]
+        ruby: [ 2.1 ]
     steps:
     - name: Check out the repo
       uses: actions/checkout@v2
@@ -18,8 +20,39 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby }}
     - name: Install dependencies
-      run: gem install rubyzip
-    - run: gem install rdoc
-    - run: gem list
+      run: gem install rubyzip -v 1.3.0
     - name: Run tests
       run: rake
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out the repo
+      uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.1
+    - name: Install dependencies
+      run: gem install rubyzip -v 1.1.7
+    - name: Run tests
+      run: rake
+    - name: Validate Gem
+      run: rake validate_gem
+    - name: Build package
+      run: rake package
+    - name: Keep Gem files
+      uses: actions/upload-artifact@v2
+      with:
+        name: Gems
+        path: |
+          pkg/*.gem
+          pkg/*.zip
+    - name: Build documentation
+      run: rake fix_rdoc
+    - name: Keep documentation
+      uses: actions/upload-artifact@v2
+      with:
+        name: Api-Doc
+        path: html/
