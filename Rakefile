@@ -49,7 +49,7 @@ end
 
 rescue LoadError
   # skip if not installed
-  warn("rcov not installed. coverage not available. #{$!}")
+  # warn("rcov not installed. coverage not available. #{$!}")
 end
 
 desc 'Find missing test methods with ZenTest'
