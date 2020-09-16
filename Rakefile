@@ -14,7 +14,7 @@ require File.dirname(__FILE__) + '/dev/example_task'
 # Acknowledgement::  Building this Rake file was supported as System One Research Day. Thank you System One for funding Open Source :-)
 
 RDOC_DIR = 'html'
-RDOC_REPO = 'api'
+RDOC_REPO = 'hosting/4_bitbucket.org/api'
 
 gemspec = eval(IO.readlines('javaclass.gemspec').join)
 full_gem_name = "#{gemspec.name}-#{gemspec.version}"
@@ -167,9 +167,6 @@ task :publish_rdoc => [:clobber_rdoc, :fix_rdoc] do
   puts "Releasing #{full_gem_name} API"
   version_dir = "#{gemspec.version}"
 
-  FileUtils.rm_r RDOC_REPO rescue nil
-  FileUtils.mkdir RDOC_REPO
-
   FileUtils.rm_r "#{RDOC_REPO}/#{version_dir}" rescue nil
   FileUtils.cp_r RDOC_DIR, "#{RDOC_REPO}/#{version_dir}"
 
@@ -178,11 +175,10 @@ task :publish_rdoc => [:clobber_rdoc, :fix_rdoc] do
   FileUtils.cp "#{RDOC_REPO}/#{version_dir}/index.html", file
   add_frameset_version(file, version_dir)
 
-  puts 'API created. Copy to hosting\4_bitbucket.org\api'
   puts 'API created. Don\'t forget to upload'
 end
 
 # :clean :clobber
-CLOBBER.include(RDOC_REPO, 'ClassLists', 'fullClassList*.txt')
+CLOBBER.include('ClassLists', 'fullClassList*.txt')
 
 task :default => :test

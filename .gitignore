@@ -8,7 +8,6 @@ hosting/5_github.com/**
 # generated
 html/**
 pkg/**
-api/**
 coverage/**
 complexity/**
 lib/generated/**
