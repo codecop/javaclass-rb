@@ -1,3 +1,7 @@
+=== 0.4.3 next release
+
+* tbd
+
 === 0.4.2 16/09/2020
 
 * fix license text and name

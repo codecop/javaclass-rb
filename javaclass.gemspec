@@ -2,7 +2,7 @@ GEM_NAME = 'javaclass'
 GIT_PROJECT = "#{GEM_NAME}-rb"
 
 Gem::Specification.new do |s|
-  s.version = '0.4.2'
+  s.version = '0.4.3'
   s.name = GEM_NAME
   s.rubyforge_project = 'javaclass' if s.respond_to? :rubyforge_project=
   # Gem::Specification#rubyforge_project= is deprecated with no replacement in 2.7
