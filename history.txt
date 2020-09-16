@@ -1,7 +1,10 @@
 === 0.4.2 next release
 
+* fix license text and name
+* tested with GitHub actions for Ruby 2.1 to 2.7
+* fix some warnings shown by Ruby 2.1
 * moved code to GitHub
-* added outer class name for inner classes.
+* added outer class name for inner classes
 * added new constant pool tags and access modifier for Java 9
 * added method handle and invoke dynamic constant pool tags for Java 8
 * parse class attributes: source file and inner classes
@@ -14,7 +17,7 @@
 * Cloudbees dropped support for Ruby 1.8.6 and 1.8.7 - not tested there any more
 * add plain class Node for dependency graph
 * add dependency graph and classpath (module/component/plugin) implementation
-* add Maven artefact to generate classpath from group/name/version
+* add Maven artifact to generate classpath from group/name/version
 * change version number from micro to minor which more proper reflects code
 * fix some warnings shown by Ruby 1.9.1
 
@@ -22,7 +25,7 @@
 
 * convert examples to RDOC using example_task
 * added transitive dependency trees from references
-* patched the rubyzip for invalid flags found in some JARs
+* patched the rubyzip gem for invalid flags found in some JARs
 * add some examples
 * fixed generate_class_lists.rb
 * finish first version of DSL with loading/values
