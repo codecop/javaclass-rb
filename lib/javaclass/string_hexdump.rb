@@ -18,7 +18,7 @@ class String
       
       [ offset + columns, previous_lines + [line] ]
     }
-    offset, lines = *output
+    lines = output[1]
     lines.join
   end
   
