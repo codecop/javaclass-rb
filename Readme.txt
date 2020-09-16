@@ -72,8 +72,8 @@ with ".*" to be recognized. See JavaClass::Dsl::JavaNameFactory for its usage.
 
 == References
 
-* {The Java class file lifestyle}[http://www.javaworld.com/javaworld/jw-07-1996/jw-07-classfile.html], JavaWorld 1996.
-* {The class File Format}[https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html], The Java Virtual Machine Specification, Second Edition.
+* The Java class file lifestyle, JavaWorld 1996.
+* The class File Format, The Java Virtual Machine Specification, Second Edition.
 * {Similar Project by unageanu}[http://github.com/unageanu/javaclass], GitHub 2010.
 
 == License
