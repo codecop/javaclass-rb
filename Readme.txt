@@ -66,8 +66,8 @@ with ".*" to be recognized. See JavaClass::Dsl::JavaNameFactory for its usage.
 
 == Dependencies
 
-* Ruby 1.8.7 (also tested under 1.9.3, 2.0.0 and 2.1.6)
-* {rubyzip}[https://github.com/rubyzip/rubyzip] 0.9.1 (also tested with 0.9.6.1, 0.9.9, 1.0.0 and 1.1.7)
+* Ruby 1.8.7 (also tested 1.9.3, 2.0, 2.1 to 2.7)
+* {rubyzip}[https://github.com/rubyzip/rubyzip] 0.9.1 (also tested 0.9.6.1, 0.9.9, 1.0.0, 1.1.7, 1.3.0, 2.3.0)
 * Originally Ruby 1.8.6 with rubyzip 0.9.1
 
 == References
@@ -79,4 +79,4 @@ with ".*" to be recognized. See JavaClass::Dsl::JavaNameFactory for its usage.
 == License
 
 Typically the licenses listed for the project are that of the project itself, and not of dependencies.
-* {BSD License}[http://www.opensource.org/licenses/bsd-license.php], it's enclosed in {license.txt}[link:/files/license_txt.html].
+* {The 2-Clause BSD License}[http://www.opensource.org/licenses/bsd-license.php], it's enclosed in {license.txt}[link:/files/license_txt.html].
