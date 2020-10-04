@@ -1,4 +1,4 @@
-name: Continuous Integration Workflow
+name: CI Workflow Ruby Rake Matrix
 
 on: [push, pull_request]
 
